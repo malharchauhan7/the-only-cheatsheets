@@ -1,12 +1,11 @@
-# Developer Cheatsheets📚
 
-Welcome to the Developer Cheatsheets - Your comprehensive collection of development cheatsheets.
+Welcome to the Web Development Cheatsheets - Your comprehensive collection of development cheatsheets.
 
 ## Available Cheatsheets 📑
 
 1. [**Frontend Development Cheatsheet**](frontend-development.md) - Complete guide covering HTML, CSS, JavaScript and more
 2. [**JavaScript Complete Cheetsheet**](javascript.md) - From basics to advanced JavaScript concepts
-3. [**React.js Developer Cheatsheet**](reactjs.md) - Everything you need to know about React.js
+3. [**React.js Complete Cheatsheet**](reactjs.md) - Everything you need to know about React.js
 4. [**Next.js Framework Cheatsheet**](nextjs.md) - Complete Next.js development reference
 5. [**Backend Development Cheatsheet**](backend-development.md) - Comprehensive backend development cheatsheet
 
