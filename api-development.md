@@ -1,5 +1,7 @@
 # Complete API Development Cheatsheet
 
+[Download PDF](https://gdurl.com/BmIW)
+
 ## Table of Contents
 1. [REST API Fundamentals](#rest-api-fundamentals)
 2. [Node.js & Express.js](#nodejs--expressjs)
