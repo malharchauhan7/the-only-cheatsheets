@@ -8,6 +8,7 @@ Welcome to the Web Development Cheatsheets - Your comprehensive collection of de
 3. [**React.js Complete Cheatsheet**](reactjs.md) - Everything you need to know about React.js
 4. [**Next.js Framework Cheatsheet**](nextjs.md) - Complete Next.js development reference
 5. [**Backend Development Cheatsheet**](backend-development.md) - Comprehensive backend development cheatsheet
+6. [**API Development Cheatsheet**](api-development.md) - Complete Basic to advanced API development cheatsheet
 
 ## Quick Access 🚀
 
