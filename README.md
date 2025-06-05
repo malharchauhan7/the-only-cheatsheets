@@ -1,5 +1,5 @@
 
-Welcome to the Web Development Cheatsheets - Your comprehensive collection of development cheatsheets.
+Welcome to the only Cheatsheets - Your comprehensive collection of cheatsheets.
 
 ## Available Cheatsheets 📑
 
