@@ -12,7 +12,7 @@ Welcome to the only Cheatsheets - Your comprehensive collection of cheatsheets.
 6. [**API Development Cheatsheet**](api-development.md) - Complete Basic to advanced API development cheatsheet
 
 ### DSA 🧠
-7. [**Data structures and Algorithms**](data-structure-algorithms.md) - Starter DSA Cheatsheet
+7. [**Data structures and Algorithms Cheatsheet-Python**](data-structure-algorithms.md) - Starter DSA Cheatsheet
 
 ## Quick Access 🚀
 
