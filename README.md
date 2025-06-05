@@ -3,12 +3,16 @@ Welcome to the only Cheatsheets - Your comprehensive collection of cheatsheets.
 
 ## Available Cheatsheets 📑
 
+### Web development 🕸️
 1. [**Frontend Development Cheatsheet**](frontend-development.md) - Complete guide covering HTML, CSS, JavaScript and more
 2. [**JavaScript Complete Cheetsheet**](javascript.md) - From basics to advanced JavaScript concepts
 3. [**React.js Complete Cheatsheet**](reactjs.md) - Everything you need to know about React.js
 4. [**Next.js Framework Cheatsheet**](nextjs.md) - Complete Next.js development reference
 5. [**Backend Development Cheatsheet**](backend-development.md) - Comprehensive backend development cheatsheet
 6. [**API Development Cheatsheet**](api-development.md) - Complete Basic to advanced API development cheatsheet
+
+### DSA 🧠
+7. [**Data structures and Algorithms**](data-structure-algorithms.md) - Starter DSA Cheatsheet
 
 ## Quick Access 🚀
 
