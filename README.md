@@ -10,14 +10,15 @@ Welcome to the only Cheatsheets - Your comprehensive collection of cheatsheets.
 4. [**Next.js Framework Cheatsheet**](nextjs.md) - Complete Next.js development reference
 5. [**Backend Development Cheatsheet**](backend-development.md) - Comprehensive backend development cheatsheet
 6. [**API Development Cheatsheet**](api-development.md) - Complete Basic to advanced API development cheatsheet
-
+7. [**TailwindCSS Cheatsheet**](tailwindcss.md) - Everything you need to know about TailwindCSS
+   
 ### DSA 🧠
 
-7. [**Data structures and Algorithms Cheatsheet-Python**](data-structure-algorithms.md) - Starter DSA Cheatsheet
+1. [**Data structures and Algorithms Cheatsheet-Python**](data-structure-algorithms.md) - Starter DSA Cheatsheet
 
 ### System Design ⚙️
 
-8. [**System Design Cheatsheet**](system-design.md) - System design Cheatsheet HLD & LLD
+9. [**System Design Cheatsheet**](system-design.md) - System design Cheatsheet HLD & LLD
 
 ## Quick Access 🚀
 
