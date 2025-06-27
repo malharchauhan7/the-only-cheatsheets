@@ -15,6 +15,11 @@ Welcome to the only Cheatsheets - Your comprehensive collection of cheatsheets.
 ### DSA 🧠
 
 1. [**Data structures and Algorithms Cheatsheet-Python**](data-structure-algorithms.md) - Starter DSA Cheatsheet
+2. [**Basic DSA Questions for beginners**](basic-dsa-questions.md) - Basic DSA Questions for beginners
+
+### DBMS🛢️💻
+
+1. [**DBMS Interview Questions for Beginners**](dbms-interview-questions.md) - DBMS Interview questions for beginners
 
 ### System Design ⚙️
 
