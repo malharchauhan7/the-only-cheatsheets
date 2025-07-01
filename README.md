@@ -1,53 +1,108 @@
-Welcome to the only Cheatsheets - Your comprehensive collection of cheatsheets.
+# The Only Cheatsheets 📚
+
+Your comprehensive collection of development cheatsheets, guides, and references all in one place.
+
+## 🎯 Quick Navigation
+
+- [The Only Cheatsheets 📚](#the-only-cheatsheets-)
+  - [🎯 Quick Navigation](#-quick-navigation)
+  - [Available Cheatsheets 📑](#available-cheatsheets-)
+    - [📘 Core Development Guide](#-core-development-guide)
+    - [Web Development 🕸️](#web-development-️)
+      - [Frontend](#frontend)
+      - [Backend](#backend)
+    - [Data Structures and Algorithms 🧠](#data-structures-and-algorithms-)
+    - [Database Management System 🛢️](#database-management-system-️)
+    - [System Design ⚙️](#system-design-️)
+    - [Git \& GitHub 📦](#git--github-)
+  - [Features ✨](#features-)
+  - [How to Use 📖](#how-to-use-)
+  - [Contributing 🤝](#contributing-)
+  - [License 📄](#license-)
 
 ## Available Cheatsheets 📑
 
-### Web development 🕸️
+### 📘 Core Development Guide
 
-1. [**Frontend Development Cheatsheet**](frontend-development.md) - Complete guide covering HTML, CSS, JavaScript and more
-2. [**JavaScript Complete Cheetsheet**](javascript.md) - From basics to advanced JavaScript concepts
-3. [**React.js Complete Cheatsheet**](reactjs.md) - Everything you need to know about React.js
-4. [**Next.js Framework Cheatsheet**](nextjs.md) - Complete Next.js development reference
-5. [**Backend Development Cheatsheet**](backend-development.md) - Comprehensive backend development cheatsheet
-6. [**API Development Cheatsheet**](api-development.md) - Complete Basic to advanced API development cheatsheet
-7. [**TailwindCSS Cheatsheet**](tailwindcss.md) - Everything you need to know about TailwindCSS
-   
-### DSA 🧠
+- [**Developer Guide**](/developer-guide-framework.md)
+  - Comprehensive guide for writing maintainable, secure, and scalable software
+  - Best practices across all domains
+  - Software architecture patterns
 
-1. [**Data structures and Algorithms Cheatsheet-Python**](data-structure-algorithms.md) - Starter DSA Cheatsheet
-2. [**Basic DSA Questions for beginners**](basic-dsa-questions.md) - Basic DSA Questions for beginners
+### Web Development 🕸️
 
-### DBMS🛢️💻
+#### Frontend
+- [**Frontend Development**](/web-development/frontend-development.md) - HTML, CSS, JavaScript fundamentals
+- [**JavaScript**](/web-development/javascript.md) - Complete JavaScript reference
+- [**TypeScript**](/web-development/typescript.md) - TypeScript language guide
+- [**React.js**](/web-development/reactjs.md) - React.js development guide
+- [**Next.js**](/web-development/nextjs.md) - Next.js framework reference
+- [**TailwindCSS**](/web-development/tailwindcss.md) - TailwindCSS utility framework
 
-1. [**DBMS Interview Questions for Beginners**](dbms-interview-questions.md) - DBMS Interview questions for beginners
+#### Backend
+- [**Backend Development**](/web-development/backend-development.md) - Server-side development guide
+- [**API Development**](/web-development/api-development.md) - RESTful & GraphQL API design
+
+### Data Structures and Algorithms 🧠
+
+- [**DSA in Python**](data-structure-algorithms.md) - Comprehensive DSA guide
+- [**Beginner DSA Questions**](basic-dsa-questions.md) - Practice problems for beginners
+- [**LeetCode Patterns**](/dsa/dsa-patterns.md) - Common problem-solving patterns
+
+### Database Management System 🛢️
+
+- [**DBMS Interview Guide**](dbms-interview-questions.md) - Essential concepts & questions
+- [**SQL Cheatsheet**](/database/sql-cheatsheet.md) - SQL query reference
 
 ### System Design ⚙️
 
-9. [**System Design Cheatsheet**](system-design.md) - System design Cheatsheet HLD & LLD
+- [**System Design**](/system-design/system-design.md)
+  - High-Level Design (HLD)
+  - Low-Level Design (LLD)
+  - Architecture patterns
+  - Scalability principles
 
-## Quick Access 🚀
+### Git & GitHub 📦
 
-Each cheatsheet includes:
+- [**Complete Git/GitHub Guide**](/git-github/git-github-cheatsheet.md)
+  - Basic to advanced workflows
+  - Branching strategies
+  - Best practices
 
-- Detailed code examples
-- Best practices
-- Common patterns
-- Troubleshooting guides
-- PDF downloads
+## Features ✨
+
+- 📝 Detailed code examples
+- 🎯 Best practices & patterns
+- 🔍 Searchable content
+- 📱 Mobile-friendly format
+- 💾 Downloadable PDFs
+- 🔄 Regular updates
 
 ## How to Use 📖
 
-1. Click on any cheatsheet link above to access the full documentation
-2. Each guide includes a table of contents for easy navigation
-3. Use the search functionality in your browser (Ctrl+F / Cmd+F) to find specific topics
-4. Download PDF versions for offline reference
+1. **Browse**: Navigate through sections using the quick navigation links
+2. **Search**: Use `Ctrl+F` (Windows) or `Cmd+F` (Mac) to find specific topics
+3. **Download**: Get PDF versions for offline reference
+4. **Contribute**: Help improve the content through issues or pull requests
 
 ## Contributing 🤝
 
-Found a mistake or want to contribute? Feel free to create an issue or submit a pull request!
+We welcome contributions! Here's how you can help:
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
+
+Please read our [Contributing Guidelines](CONTRIBUTING.md) for details.
 
 ## License 📄
 
-This project is licensed under the MIT License - see the individual cheatsheets for details.
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
 
 ---
+
+<p align="center">
+Made with ❤️ by developers, for developers
+</p>
