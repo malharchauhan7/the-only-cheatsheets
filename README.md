@@ -45,14 +45,13 @@ Your comprehensive collection of development cheatsheets, guides, and references
 
 ### Data Structures and Algorithms 🧠
 
-- [**DSA in Python**](data-structure-algorithms.md) - Comprehensive DSA guide
-- [**Beginner DSA Questions**](basic-dsa-questions.md) - Practice problems for beginners
+- [**DSA in Python**](/dsa/data-structure-algorithms.md) - Comprehensive DSA guide
+- [**Beginner DSA Questions**](/dsa/basic-dsa-questions.md) - Practice problems for beginners with solution
 - [**LeetCode Patterns**](/dsa/dsa-patterns.md) - Common problem-solving patterns
 
 ### Database Management System 🛢️
 
-- [**DBMS Interview Guide**](dbms-interview-questions.md) - Essential concepts & questions
-- [**SQL Cheatsheet**](/database/sql-cheatsheet.md) - SQL query reference
+- [**DBMS Interview Guide**](/dbms/dbms-interview-questions.md) - Essential concepts & questions
 
 ### System Design ⚙️
 
