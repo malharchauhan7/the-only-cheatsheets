@@ -1,6 +1,7 @@
 # The Complete Developer's Guide to Clean, Production-Ready Code
 _A comprehensive, opinionated guide for writing maintainable, secure, and scalable software across all domains_
 
+### [Download PDF](https://gdurl.com/z8oF)
 ---
 
 ## Table of Contents

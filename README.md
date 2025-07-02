@@ -26,7 +26,8 @@ If you like these Cheatsheets, please ⭐ star it on [Github](https://github.com
 
 ### 📘 Core Development Guide
 
-- [**Developer Guide**](/developer-guide-framework.md)
+- [**Programming Prerequisites**](/core-guides/programming-prerequisites.md) - Prerequisites for programmer
+- [**Developer Guide**](/core-guides/developer-guide-framework.md)
   - Comprehensive guide for writing maintainable, secure, and scalable software
   - Best practices across all domains
   - Software architecture patterns
