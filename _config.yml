@@ -4,6 +4,7 @@ plugins:
 title: The Only Cheatsheets
 description: Comprehensive collection of your cheatsheets
 show_downloads: true
+logo: /assets/logo.png
 github:
   is_project_page: true
 defaults:
