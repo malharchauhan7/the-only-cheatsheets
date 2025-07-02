@@ -1,5 +1,7 @@
 # Complete LeetCode DSA Patterns Cheatsheet
 
+### [Download PDF](https://gdurl.com/IZ38)
+
 ## Table of Contents
 
 1. [Two Pointers](#1-two-pointers)

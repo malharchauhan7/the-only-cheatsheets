@@ -1,6 +1,6 @@
 # Complete Next.js Cheat Sheet - Beginner to Advanced
 
-[Download PDF](https://gdurl.com/ZGEc)
+### [Download PDF](https://gdurl.com/7mWV)
 
 ## Table of Contents
 1. [Getting Started](#getting-started)

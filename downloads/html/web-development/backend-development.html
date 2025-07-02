@@ -1,0 +1,2407 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>backend-development.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="complete-backend-development-cheatsheet">Complete Backend Development Cheatsheet</h1>
+<p><em>From Beginner to Advanced</em></p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#backend-fundamentals">Backend Fundamentals</a></li>
+<li><a href="#javascript-essentials">JavaScript Essentials</a></li>
+<li><a href="#nodejs">Node.js</a></li>
+<li><a href="#expressjs">Express.js</a></li>
+<li><a href="#nextjs-api-routes">Next.js API Routes</a></li>
+<li><a href="#database-management">Database Management</a></li>
+<li><a href="#api-development">API Development</a></li>
+<li><a href="#authentication--security">Authentication &amp; Security</a></li>
+<li><a href="#testing">Testing</a></li>
+<li><a href="#deployment--devops">Deployment &amp; DevOps</a></li>
+<li><a href="#advanced-concepts">Advanced Concepts</a></li>
+</ol>
+<hr>
+<h2 id="backend-fundamentals">Backend Fundamentals</h2>
+<h3 id="what-is-backend-development">What is Backend Development?</h3>
+<p>Backend development involves server-side programming, database management, API creation, and server configuration. The backend handles business logic, data storage, authentication, and serves data to frontend applications.</p>
+<h3 id="key-backend-concepts">Key Backend Concepts</h3>
+<ul>
+<li><strong>Server</strong>: Computer that provides services to other computers</li>
+<li><strong>API</strong>: Application Programming Interface for communication</li>
+<li><strong>Database</strong>: Storage system for application data</li>
+<li><strong>HTTP/HTTPS</strong>: Protocol for web communication</li>
+<li><strong>REST</strong>: Architectural style for web services</li>
+<li><strong>CRUD</strong>: Create, Read, Update, Delete operations</li>
+</ul>
+<h3 id="http-methods">HTTP Methods</h3>
+<pre class="hljs"><code><div>GET     - Retrieve data
+POST    - Create new data
+PUT     - Update entire resource
+PATCH   - Partial update
+DELETE  - Remove data
+HEAD    - Headers only
+OPTIONS - Allowed methods
+</div></code></pre>
+<h3 id="http-status-codes">HTTP Status Codes</h3>
+<pre class="hljs"><code><div>2xx Success
+200 OK
+201 Created
+204 No Content
+
+3xx Redirection
+301 Moved Permanently
+302 Found
+304 Not Modified
+
+4xx Client Error
+400 Bad Request
+401 Unauthorized
+403 Forbidden
+404 Not Found
+422 Unprocessable Entity
+
+5xx Server Error
+500 Internal Server Error
+502 Bad Gateway
+503 Service Unavailable
+</div></code></pre>
+<hr>
+<h2 id="javascript-essentials">JavaScript Essentials</h2>
+<h3 id="es6-features-for-backend">ES6+ Features for Backend</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Arrow Functions</span>
+<span class="hljs-keyword">const</span> getData = <span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> fetchData();
+};
+
+<span class="hljs-comment">// Destructuring</span>
+<span class="hljs-keyword">const</span> { name, email } = user;
+<span class="hljs-keyword">const</span> [first, second] = array;
+
+<span class="hljs-comment">// Template Literals</span>
+<span class="hljs-keyword">const</span> message = <span class="hljs-string">`Hello <span class="hljs-subst">${name}</span>, welcome!`</span>;
+
+<span class="hljs-comment">// Spread Operator</span>
+<span class="hljs-keyword">const</span> newArray = [...oldArray, newItem];
+<span class="hljs-keyword">const</span> newObject = { ...oldObject, <span class="hljs-attr">newProperty</span>: value };
+
+<span class="hljs-comment">// Promises and Async/Await</span>
+<span class="hljs-keyword">const</span> fetchData = <span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> fetch(<span class="hljs-string">'/api/data'</span>);
+    <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">await</span> response.json();
+    <span class="hljs-keyword">return</span> data;
+  } <span class="hljs-keyword">catch</span> (error) {
+    <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Error:'</span>, error);
+    <span class="hljs-keyword">throw</span> error;
+  }
+};
+
+<span class="hljs-comment">// Classes</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>{
+  <span class="hljs-keyword">constructor</span>(name, email) {
+    <span class="hljs-keyword">this</span>.name = name;
+    <span class="hljs-keyword">this</span>.email = email;
+  }
+  
+  <span class="hljs-keyword">async</span> save() {
+    <span class="hljs-comment">// Save to database</span>
+  }
+}
+
+<span class="hljs-comment">// Modules</span>
+<span class="hljs-comment">// Export</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> helper = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {};
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> MyClass;
+
+<span class="hljs-comment">// Import</span>
+<span class="hljs-keyword">import</span> MyClass, { helper } <span class="hljs-keyword">from</span> <span class="hljs-string">'./module.js'</span>;
+</div></code></pre>
+<h3 id="error-handling">Error Handling</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Try-Catch</span>
+<span class="hljs-keyword">try</span> {
+  <span class="hljs-keyword">const</span> result = riskyOperation();
+} <span class="hljs-keyword">catch</span> (error) {
+  <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Error occurred:'</span>, error.message);
+} <span class="hljs-keyword">finally</span> {
+  <span class="hljs-comment">// Cleanup code</span>
+}
+
+<span class="hljs-comment">// Custom Error Classes</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ValidationError</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Error</span> </span>{
+  <span class="hljs-keyword">constructor</span>(message) {
+    <span class="hljs-keyword">super</span>(message);
+    <span class="hljs-keyword">this</span>.name = <span class="hljs-string">'ValidationError'</span>;
+  }
+}
+
+<span class="hljs-comment">// Error Middleware (Express)</span>
+<span class="hljs-keyword">const</span> errorHandler = <span class="hljs-function">(<span class="hljs-params">err, req, res, next</span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.error(err.stack);
+  res.status(<span class="hljs-number">500</span>).json({ <span class="hljs-attr">error</span>: <span class="hljs-string">'Something went wrong!'</span> });
+};
+</div></code></pre>
+<hr>
+<h2 id="nodejs">Node.js</h2>
+<h3 id="core-concepts">Core Concepts</h3>
+<p>Node.js is a JavaScript runtime built on Chrome's V8 engine, allowing JavaScript to run on servers.</p>
+<h3 id="npm-node-package-manager">NPM (Node Package Manager)</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Initialize project</span>
+npm init -y
+
+<span class="hljs-comment"># Install packages</span>
+npm install express mongoose
+npm install -D nodemon jest
+
+<span class="hljs-comment"># Scripts in package.json</span>
+{
+  <span class="hljs-string">"scripts"</span>: {
+    <span class="hljs-string">"start"</span>: <span class="hljs-string">"node server.js"</span>,
+    <span class="hljs-string">"dev"</span>: <span class="hljs-string">"nodemon server.js"</span>,
+    <span class="hljs-string">"test"</span>: <span class="hljs-string">"jest"</span>
+  }
+}
+</div></code></pre>
+<h3 id="core-modules">Core Modules</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// File System</span>
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> fsPromises = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>).promises;
+
+<span class="hljs-comment">// Read file</span>
+fs.readFile(<span class="hljs-string">'file.txt'</span>, <span class="hljs-string">'utf8'</span>, (err, data) =&gt; {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-built_in">console</span>.log(data);
+});
+
+<span class="hljs-comment">// Write file</span>
+fs.writeFile(<span class="hljs-string">'output.txt'</span>, <span class="hljs-string">'Hello World'</span>, (err) =&gt; {
+  <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'File saved!'</span>);
+});
+
+<span class="hljs-comment">// Path</span>
+<span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+<span class="hljs-keyword">const</span> fullPath = path.join(__dirname, <span class="hljs-string">'files'</span>, <span class="hljs-string">'data.txt'</span>);
+<span class="hljs-keyword">const</span> extension = path.extname(<span class="hljs-string">'file.txt'</span>);
+
+<span class="hljs-comment">// HTTP</span>
+<span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> server = http.createServer(<span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+  res.writeHead(<span class="hljs-number">200</span>, { <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'text/plain'</span> });
+  res.end(<span class="hljs-string">'Hello World'</span>);
+});
+
+<span class="hljs-comment">// URL</span>
+<span class="hljs-keyword">const</span> url = <span class="hljs-built_in">require</span>(<span class="hljs-string">'url'</span>);
+<span class="hljs-keyword">const</span> parsedUrl = url.parse(req.url, <span class="hljs-literal">true</span>);
+
+<span class="hljs-comment">// Crypto</span>
+<span class="hljs-keyword">const</span> crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+<span class="hljs-keyword">const</span> hash = crypto.createHash(<span class="hljs-string">'sha256'</span>).update(<span class="hljs-string">'password'</span>).digest(<span class="hljs-string">'hex'</span>);
+
+<span class="hljs-comment">// Events</span>
+<span class="hljs-keyword">const</span> EventEmitter = <span class="hljs-built_in">require</span>(<span class="hljs-string">'events'</span>);
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyEmitter</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">EventEmitter</span> </span>{}
+<span class="hljs-keyword">const</span> myEmitter = <span class="hljs-keyword">new</span> MyEmitter();
+myEmitter.on(<span class="hljs-string">'event'</span>, () =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Event fired!'</span>));
+</div></code></pre>
+<h3 id="environment-variables">Environment Variables</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Using dotenv</span>
+<span class="hljs-built_in">require</span>(<span class="hljs-string">'dotenv'</span>).config();
+
+<span class="hljs-keyword">const</span> PORT = process.env.PORT || <span class="hljs-number">3000</span>;
+<span class="hljs-keyword">const</span> DB_URL = process.env.DATABASE_URL;
+
+<span class="hljs-comment">// .env file</span>
+PORT=<span class="hljs-number">3000</span>
+DATABASE_URL=mongodb:<span class="hljs-comment">//localhost:27017/myapp</span>
+JWT_SECRET=your-secret-key
+</div></code></pre>
+<h3 id="process-management">Process Management</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Process events</span>
+process.on(<span class="hljs-string">'uncaughtException'</span>, (err) =&gt; {
+  <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Uncaught Exception:'</span>, err);
+  process.exit(<span class="hljs-number">1</span>);
+});
+
+process.on(<span class="hljs-string">'unhandledRejection'</span>, (reason, promise) =&gt; {
+  <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Unhandled Rejection at:'</span>, promise, <span class="hljs-string">'reason:'</span>, reason);
+});
+
+<span class="hljs-comment">// Graceful shutdown</span>
+process.on(<span class="hljs-string">'SIGTERM'</span>, () =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'SIGTERM received, shutting down gracefully'</span>);
+  server.close(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    process.exit(<span class="hljs-number">0</span>);
+  });
+});
+</div></code></pre>
+<hr>
+<h2 id="expressjs">Express.js</h2>
+<h3 id="basic-setup">Basic Setup</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>);
+<span class="hljs-keyword">const</span> app = express();
+<span class="hljs-keyword">const</span> PORT = process.env.PORT || <span class="hljs-number">3000</span>;
+
+<span class="hljs-comment">// Middleware</span>
+app.use(express.json());
+app.use(express.urlencoded({ <span class="hljs-attr">extended</span>: <span class="hljs-literal">true</span> }));
+app.use(express.static(<span class="hljs-string">'public'</span>));
+
+<span class="hljs-comment">// Routes</span>
+app.get(<span class="hljs-string">'/'</span>, (req, res) =&gt; {
+  res.json({ <span class="hljs-attr">message</span>: <span class="hljs-string">'Hello World!'</span> });
+});
+
+app.listen(PORT, () =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Server running on port <span class="hljs-subst">${PORT}</span>`</span>);
+});
+</div></code></pre>
+<h3 id="routing">Routing</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Basic routes</span>
+app.get(<span class="hljs-string">'/users'</span>, getAllUsers);
+app.get(<span class="hljs-string">'/users/:id'</span>, getUserById);
+app.post(<span class="hljs-string">'/users'</span>, createUser);
+app.put(<span class="hljs-string">'/users/:id'</span>, updateUser);
+app.patch(<span class="hljs-string">'/users/:id'</span>, partialUpdateUser);
+app.delete(<span class="hljs-string">'/users/:id'</span>, deleteUser);
+
+<span class="hljs-comment">// Route parameters</span>
+app.get(<span class="hljs-string">'/users/:id/posts/:postId'</span>, (req, res) =&gt; {
+  <span class="hljs-keyword">const</span> { id, postId } = req.params;
+  res.json({ <span class="hljs-attr">userId</span>: id, postId });
+});
+
+<span class="hljs-comment">// Query parameters</span>
+app.get(<span class="hljs-string">'/search'</span>, (req, res) =&gt; {
+  <span class="hljs-keyword">const</span> { q, page, limit } = req.query;
+  res.json({ <span class="hljs-attr">query</span>: q, page, limit });
+});
+
+<span class="hljs-comment">// Express Router</span>
+<span class="hljs-keyword">const</span> router = express.Router();
+
+router.get(<span class="hljs-string">'/'</span>, (req, res) =&gt; {
+  res.json({ <span class="hljs-attr">message</span>: <span class="hljs-string">'Users route'</span> });
+});
+
+router.post(<span class="hljs-string">'/'</span>, (req, res) =&gt; {
+  <span class="hljs-comment">// Create user logic</span>
+});
+
+app.use(<span class="hljs-string">'/api/users'</span>, router);
+</div></code></pre>
+<h3 id="middleware">Middleware</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Custom middleware</span>
+<span class="hljs-keyword">const</span> logger = <span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${req.method}</span> <span class="hljs-subst">${req.path}</span> - <span class="hljs-subst">${<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().toISOString()}</span>`</span>);
+  next();
+};
+
+<span class="hljs-comment">// Authentication middleware</span>
+<span class="hljs-keyword">const</span> authenticate = <span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> token = req.header(<span class="hljs-string">'Authorization'</span>)?.replace(<span class="hljs-string">'Bearer '</span>, <span class="hljs-string">''</span>);
+  
+  <span class="hljs-keyword">if</span> (!token) {
+    <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">401</span>).json({ <span class="hljs-attr">error</span>: <span class="hljs-string">'Access denied'</span> });
+  }
+  
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    next();
+  } <span class="hljs-keyword">catch</span> (error) {
+    res.status(<span class="hljs-number">400</span>).json({ <span class="hljs-attr">error</span>: <span class="hljs-string">'Invalid token'</span> });
+  }
+};
+
+<span class="hljs-comment">// Validation middleware</span>
+<span class="hljs-keyword">const</span> validateUser = <span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> { name, email } = req.body;
+  
+  <span class="hljs-keyword">if</span> (!name || !email) {
+    <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">400</span>).json({ <span class="hljs-attr">error</span>: <span class="hljs-string">'Name and email required'</span> });
+  }
+  
+  next();
+};
+
+<span class="hljs-comment">// Error handling middleware</span>
+<span class="hljs-keyword">const</span> errorHandler = <span class="hljs-function">(<span class="hljs-params">err, req, res, next</span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.error(err.stack);
+  
+  <span class="hljs-keyword">if</span> (err.name === <span class="hljs-string">'ValidationError'</span>) {
+    <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">400</span>).json({ <span class="hljs-attr">error</span>: err.message });
+  }
+  
+  res.status(<span class="hljs-number">500</span>).json({ <span class="hljs-attr">error</span>: <span class="hljs-string">'Internal server error'</span> });
+};
+
+<span class="hljs-comment">// Apply middleware</span>
+app.use(logger);
+app.use(<span class="hljs-string">'/api/protected'</span>, authenticate);
+app.use(errorHandler);
+</div></code></pre>
+<h3 id="request-and-response">Request and Response</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Request object</span>
+app.post(<span class="hljs-string">'/api/users'</span>, (req, res) =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Body:'</span>, req.body);
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Params:'</span>, req.params);
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Query:'</span>, req.query);
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Headers:'</span>, req.headers);
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Cookies:'</span>, req.cookies);
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Method:'</span>, req.method);
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'URL:'</span>, req.url);
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'IP:'</span>, req.ip);
+});
+
+<span class="hljs-comment">// Response methods</span>
+app.get(<span class="hljs-string">'/api/users'</span>, (req, res) =&gt; {
+  <span class="hljs-comment">// Send JSON</span>
+  res.json({ <span class="hljs-attr">users</span>: [] });
+  
+  <span class="hljs-comment">// Send status with data</span>
+  res.status(<span class="hljs-number">201</span>).json({ <span class="hljs-attr">message</span>: <span class="hljs-string">'Created'</span> });
+  
+  <span class="hljs-comment">// Send file</span>
+  res.sendFile(path.join(__dirname, <span class="hljs-string">'public'</span>, <span class="hljs-string">'index.html'</span>));
+  
+  <span class="hljs-comment">// Set headers</span>
+  res.set(<span class="hljs-string">'Custom-Header'</span>, <span class="hljs-string">'value'</span>);
+  
+  <span class="hljs-comment">// Redirect</span>
+  res.redirect(<span class="hljs-string">'/login'</span>);
+  
+  <span class="hljs-comment">// Send cookies</span>
+  res.cookie(<span class="hljs-string">'token'</span>, <span class="hljs-string">'abc123'</span>, { <span class="hljs-attr">httpOnly</span>: <span class="hljs-literal">true</span> });
+});
+</div></code></pre>
+<hr>
+<h2 id="nextjs-api-routes">Next.js API Routes</h2>
+<h3 id="api-routes-structure">API Routes Structure</h3>
+<pre class="hljs"><code><div>pages/
+  api/
+    users/
+      index.js      // /api/users
+      [id].js       // /api/users/:id
+      create.js     // /api/users/create
+    auth/
+      login.js      // /api/auth/login
+      register.js   // /api/auth/register
+</div></code></pre>
+<h3 id="basic-api-route">Basic API Route</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// pages/api/users/index.js</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handler</span>(<span class="hljs-params">req, res</span>) </span>{
+  <span class="hljs-keyword">if</span> (req.method === <span class="hljs-string">'GET'</span>) {
+    <span class="hljs-comment">// Get all users</span>
+    res.status(<span class="hljs-number">200</span>).json({ <span class="hljs-attr">users</span>: [] });
+  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (req.method === <span class="hljs-string">'POST'</span>) {
+    <span class="hljs-comment">// Create user</span>
+    <span class="hljs-keyword">const</span> { name, email } = req.body;
+    res.status(<span class="hljs-number">201</span>).json({ <span class="hljs-attr">message</span>: <span class="hljs-string">'User created'</span>, <span class="hljs-attr">user</span>: { name, email } });
+  } <span class="hljs-keyword">else</span> {
+    res.setHeader(<span class="hljs-string">'Allow'</span>, [<span class="hljs-string">'GET'</span>, <span class="hljs-string">'POST'</span>]);
+    res.status(<span class="hljs-number">405</span>).end(<span class="hljs-string">`Method <span class="hljs-subst">${req.method}</span> Not Allowed`</span>);
+  }
+}
+</div></code></pre>
+<h3 id="dynamic-api-routes">Dynamic API Routes</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// pages/api/users/[id].js</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handler</span>(<span class="hljs-params">req, res</span>) </span>{
+  <span class="hljs-keyword">const</span> { id } = req.query;
+  
+  <span class="hljs-keyword">switch</span> (req.method) {
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'GET'</span>:
+      res.status(<span class="hljs-number">200</span>).json({ <span class="hljs-attr">user</span>: { id, <span class="hljs-attr">name</span>: <span class="hljs-string">'John'</span> } });
+      <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'PUT'</span>:
+      <span class="hljs-keyword">const</span> { name, email } = req.body;
+      res.status(<span class="hljs-number">200</span>).json({ <span class="hljs-attr">message</span>: <span class="hljs-string">`User <span class="hljs-subst">${id}</span> updated`</span> });
+      <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'DELETE'</span>:
+      res.status(<span class="hljs-number">200</span>).json({ <span class="hljs-attr">message</span>: <span class="hljs-string">`User <span class="hljs-subst">${id}</span> deleted`</span> });
+      <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">default</span>:
+      res.setHeader(<span class="hljs-string">'Allow'</span>, [<span class="hljs-string">'GET'</span>, <span class="hljs-string">'PUT'</span>, <span class="hljs-string">'DELETE'</span>]);
+      res.status(<span class="hljs-number">405</span>).end(<span class="hljs-string">`Method <span class="hljs-subst">${req.method}</span> Not Allowed`</span>);
+  }
+}
+</div></code></pre>
+<h3 id="middleware-in-nextjs">Middleware in Next.js</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// middleware.js</span>
+<span class="hljs-keyword">import</span> { NextResponse } <span class="hljs-keyword">from</span> <span class="hljs-string">'next/server'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">middleware</span>(<span class="hljs-params">request</span>) </span>{
+  <span class="hljs-comment">// Check authentication</span>
+  <span class="hljs-keyword">const</span> token = request.cookies.get(<span class="hljs-string">'token'</span>);
+  
+  <span class="hljs-keyword">if</span> (!token &amp;&amp; request.nextUrl.pathname.startsWith(<span class="hljs-string">'/api/protected'</span>)) {
+    <span class="hljs-keyword">return</span> NextResponse.json({ <span class="hljs-attr">error</span>: <span class="hljs-string">'Unauthorized'</span> }, { <span class="hljs-attr">status</span>: <span class="hljs-number">401</span> });
+  }
+  
+  <span class="hljs-keyword">return</span> NextResponse.next();
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> config = {
+  <span class="hljs-attr">matcher</span>: <span class="hljs-string">'/api/protected/:path*'</span>
+};
+</div></code></pre>
+<h3 id="app-router-api-routes-nextjs-13">App Router API Routes (Next.js 13+)</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// app/api/users/route.js</span>
+<span class="hljs-keyword">import</span> { NextRequest, NextResponse } <span class="hljs-keyword">from</span> <span class="hljs-string">'next/server'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">GET</span>(<span class="hljs-params">request</span>) </span>{
+  <span class="hljs-keyword">return</span> NextResponse.json({ <span class="hljs-attr">users</span>: [] });
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">POST</span>(<span class="hljs-params">request</span>) </span>{
+  <span class="hljs-keyword">const</span> body = <span class="hljs-keyword">await</span> request.json();
+  <span class="hljs-keyword">return</span> NextResponse.json({ <span class="hljs-attr">message</span>: <span class="hljs-string">'User created'</span> }, { <span class="hljs-attr">status</span>: <span class="hljs-number">201</span> });
+}
+
+<span class="hljs-comment">// app/api/users/[id]/route.js</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">GET</span>(<span class="hljs-params">request, { params }</span>) </span>{
+  <span class="hljs-keyword">const</span> { id } = params;
+  <span class="hljs-keyword">return</span> NextResponse.json({ <span class="hljs-attr">user</span>: { id } });
+}
+</div></code></pre>
+<hr>
+<h2 id="database-management">Database Management</h2>
+<h3 id="mongodb-with-mongoose">MongoDB with Mongoose</h3>
+<h4 id="setup-and-connection">Setup and Connection</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> mongoose = <span class="hljs-built_in">require</span>(<span class="hljs-string">'mongoose'</span>);
+
+<span class="hljs-comment">// Connection</span>
+<span class="hljs-keyword">const</span> connectDB = <span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">await</span> mongoose.connect(process.env.MONGODB_URI, {
+      <span class="hljs-attr">useNewUrlParser</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">useUnifiedTopology</span>: <span class="hljs-literal">true</span>,
+    });
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'MongoDB connected'</span>);
+  } <span class="hljs-keyword">catch</span> (error) {
+    <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Database connection error:'</span>, error);
+    process.exit(<span class="hljs-number">1</span>);
+  }
+};
+
+<span class="hljs-comment">// Schema Definition</span>
+<span class="hljs-keyword">const</span> userSchema = <span class="hljs-keyword">new</span> mongoose.Schema({
+  <span class="hljs-attr">name</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-built_in">String</span>,
+    <span class="hljs-attr">required</span>: [<span class="hljs-literal">true</span>, <span class="hljs-string">'Name is required'</span>],
+    <span class="hljs-attr">trim</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">maxlength</span>: <span class="hljs-number">50</span>
+  },
+  <span class="hljs-attr">email</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-built_in">String</span>,
+    <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">unique</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">lowercase</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">match</span>: [<span class="hljs-regexp">/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/</span>, <span class="hljs-string">'Invalid email'</span>]
+  },
+  <span class="hljs-attr">password</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-built_in">String</span>,
+    <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">minlength</span>: <span class="hljs-number">6</span>
+  },
+  <span class="hljs-attr">role</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-built_in">String</span>,
+    <span class="hljs-attr">enum</span>: [<span class="hljs-string">'user'</span>, <span class="hljs-string">'admin'</span>],
+    <span class="hljs-attr">default</span>: <span class="hljs-string">'user'</span>
+  },
+  <span class="hljs-attr">createdAt</span>: {
+    <span class="hljs-attr">type</span>: <span class="hljs-built_in">Date</span>,
+    <span class="hljs-attr">default</span>: <span class="hljs-built_in">Date</span>.now
+  },
+  <span class="hljs-attr">profile</span>: {
+    <span class="hljs-attr">age</span>: <span class="hljs-built_in">Number</span>,
+    <span class="hljs-attr">bio</span>: <span class="hljs-built_in">String</span>
+  }
+}, {
+  <span class="hljs-attr">timestamps</span>: <span class="hljs-literal">true</span>
+});
+
+<span class="hljs-comment">// Middleware</span>
+userSchema.pre(<span class="hljs-string">'save'</span>, <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">next</span>) </span>{
+  <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.isModified(<span class="hljs-string">'password'</span>)) <span class="hljs-keyword">return</span> next();
+  <span class="hljs-keyword">this</span>.password = <span class="hljs-keyword">await</span> bcrypt.hash(<span class="hljs-keyword">this</span>.password, <span class="hljs-number">12</span>);
+  next();
+});
+
+<span class="hljs-comment">// Methods</span>
+userSchema.methods.comparePassword = <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">candidatePassword</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> bcrypt.compare(candidatePassword, <span class="hljs-keyword">this</span>.password);
+};
+
+<span class="hljs-comment">// Static methods</span>
+userSchema.statics.findByEmail = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">email</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.findOne({ email });
+};
+
+<span class="hljs-keyword">const</span> User = mongoose.model(<span class="hljs-string">'User'</span>, userSchema);
+</div></code></pre>
+<h4 id="crud-operations">CRUD Operations</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">// Create</span>
+<span class="hljs-keyword">const</span> createUser = <span class="hljs-keyword">async</span> (userData) =&gt; {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">new</span> User(userData);
+    <span class="hljs-keyword">await</span> user.save();
+    <span class="hljs-keyword">return</span> user;
+  } <span class="hljs-keyword">catch</span> (error) {
+    <span class="hljs-keyword">throw</span> error;
+  }
+};
+
+<span class="hljs-comment">// Read</span>
+<span class="hljs-keyword">const</span> getAllUsers = <span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> User.find().select(<span class="hljs-string">'-password'</span>);
+};
+
+<span class="hljs-keyword">const</span> getUserById = <span class="hljs-keyword">async</span> (id) =&gt; {
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> User.findById(id).select(<span class="hljs-string">'-password'</span>);
+};
+
+<span class="hljs-comment">// Update</span>
+<span class="hljs-keyword">const</span> updateUser = <span class="hljs-keyword">async</span> (id, updateData) =&gt; {
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> User.findByIdAndUpdate(
+    id, 
+    updateData, 
+    { <span class="hljs-attr">new</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">runValidators</span>: <span class="hljs-literal">true</span> }
+  ).select(<span class="hljs-string">'-password'</span>);
+};
+
+<span class="hljs-comment">// Delete</span>
+<span class="hljs-keyword">const</span> deleteUser = <span class="hljs-keyword">async</span> (id) =&gt; {
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> User.findByIdAndDelete(id);
+};
+
+<span class="hljs-comment">// Complex queries</span>
+<span class="hljs-keyword">const</span> searchUsers = <span class="hljs-keyword">async</span> (query, page = <span class="hljs-number">1</span>, limit = <span class="hljs-number">10</span>) =&gt; {
+  <span class="hljs-keyword">const</span> skip = (page - <span class="hljs-number">1</span>) * limit;
+  
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> User.find({
+    <span class="hljs-attr">$or</span>: [
+      { <span class="hljs-attr">name</span>: { <span class="hljs-attr">$regex</span>: query, <span class="hljs-attr">$options</span>: <span class="hljs-string">'i'</span> } },
+      { <span class="hljs-attr">email</span>: { <span class="hljs-attr">$regex</span>: query, <span class="hljs-attr">$options</span>: <span class="hljs-string">'i'</span> } }
+    ]
+  })
+  .select(<span class="hljs-string">'-password'</span>)
+  .skip(skip)
+  .limit(limit)
+  .sort({ <span class="hljs-attr">createdAt</span>: <span class="hljs-number">-1</span> });
+};
+</div></code></pre>
+<h3 id="sql-with-postgresql-using-pg">SQL with PostgreSQL (using pg)</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> { Pool } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'pg'</span>);
+
+<span class="hljs-comment">// Database connection</span>
+<span class="hljs-keyword">const</span> pool = <span class="hljs-keyword">new</span> Pool({
+  <span class="hljs-attr">user</span>: process.env.DB_USER,
+  <span class="hljs-attr">host</span>: process.env.DB_HOST,
+  <span class="hljs-attr">database</span>: process.env.DB_NAME,
+  <span class="hljs-attr">password</span>: process.env.DB_PASSWORD,
+  <span class="hljs-attr">port</span>: process.env.DB_PORT,
+});
+
+<span class="hljs-comment">// Create table</span>
+<span class="hljs-keyword">const</span> createUsersTable = <span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">const</span> query = <span class="hljs-string">`
+    CREATE TABLE IF NOT EXISTS users (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(100) NOT NULL,
+      email VARCHAR(100) UNIQUE NOT NULL,
+      password VARCHAR(255) NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+  `</span>;
+  
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">await</span> pool.query(query);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Users table created'</span>);
+  } <span class="hljs-keyword">catch</span> (error) {
+    <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Error creating table:'</span>, error);
+  }
+};
+
+<span class="hljs-comment">// CRUD Operations</span>
+<span class="hljs-keyword">const</span> userQueries = {
+  <span class="hljs-comment">// Create</span>
+  <span class="hljs-attr">createUser</span>: <span class="hljs-keyword">async</span> (name, email, hashedPassword) =&gt; {
+    <span class="hljs-keyword">const</span> query = <span class="hljs-string">'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id, name, email'</span>;
+    <span class="hljs-keyword">const</span> values = [name, email, hashedPassword];
+    <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> pool.query(query, values);
+    <span class="hljs-keyword">return</span> result.rows[<span class="hljs-number">0</span>];
+  },
+
+  <span class="hljs-comment">// Read</span>
+  <span class="hljs-attr">getAllUsers</span>: <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">const</span> query = <span class="hljs-string">'SELECT id, name, email, created_at FROM users ORDER BY created_at DESC'</span>;
+    <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> pool.query(query);
+    <span class="hljs-keyword">return</span> result.rows;
+  },
+
+  <span class="hljs-attr">getUserById</span>: <span class="hljs-keyword">async</span> (id) =&gt; {
+    <span class="hljs-keyword">const</span> query = <span class="hljs-string">'SELECT id, name, email, created_at FROM users WHERE id = $1'</span>;
+    <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> pool.query(query, [id]);
+    <span class="hljs-keyword">return</span> result.rows[<span class="hljs-number">0</span>];
+  },
+
+  <span class="hljs-attr">getUserByEmail</span>: <span class="hljs-keyword">async</span> (email) =&gt; {
+    <span class="hljs-keyword">const</span> query = <span class="hljs-string">'SELECT * FROM users WHERE email = $1'</span>;
+    <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> pool.query(query, [email]);
+    <span class="hljs-keyword">return</span> result.rows[<span class="hljs-number">0</span>];
+  },
+
+  <span class="hljs-comment">// Update</span>
+  <span class="hljs-attr">updateUser</span>: <span class="hljs-keyword">async</span> (id, name, email) =&gt; {
+    <span class="hljs-keyword">const</span> query = <span class="hljs-string">'UPDATE users SET name = $1, email = $2 WHERE id = $3 RETURNING id, name, email'</span>;
+    <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> pool.query(query, [name, email, id]);
+    <span class="hljs-keyword">return</span> result.rows[<span class="hljs-number">0</span>];
+  },
+
+  <span class="hljs-comment">// Delete</span>
+  <span class="hljs-attr">deleteUser</span>: <span class="hljs-keyword">async</span> (id) =&gt; {
+    <span class="hljs-keyword">const</span> query = <span class="hljs-string">'DELETE FROM users WHERE id = $1 RETURNING id'</span>;
+    <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> pool.query(query, [id]);
+    <span class="hljs-keyword">return</span> result.rows[<span class="hljs-number">0</span>];
+  }
+};
+</div></code></pre>
+<h3 id="supabase">Supabase</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> { createClient } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@supabase/supabase-js'</span>);
+
+<span class="hljs-keyword">const</span> supabaseUrl = process.env.SUPABASE_URL;
+<span class="hljs-keyword">const</span> supabaseKey = process.env.SUPABASE_ANON_KEY;
+<span class="hljs-keyword">const</span> supabase = createClient(supabaseUrl, supabaseKey);
+
+<span class="hljs-comment">// CRUD Operations</span>
+<span class="hljs-keyword">const</span> supabaseOperations = {
+  <span class="hljs-comment">// Create</span>
+  <span class="hljs-attr">createUser</span>: <span class="hljs-keyword">async</span> (userData) =&gt; {
+    <span class="hljs-keyword">const</span> { data, error } = <span class="hljs-keyword">await</span> supabase
+      .from(<span class="hljs-string">'users'</span>)
+      .insert([userData])
+      .select();
+    
+    <span class="hljs-keyword">if</span> (error) <span class="hljs-keyword">throw</span> error;
+    <span class="hljs-keyword">return</span> data[<span class="hljs-number">0</span>];
+  },
+
+  <span class="hljs-comment">// Read</span>
+  <span class="hljs-attr">getAllUsers</span>: <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">const</span> { data, error } = <span class="hljs-keyword">await</span> supabase
+      .from(<span class="hljs-string">'users'</span>)
+      .select(<span class="hljs-string">'*'</span>)
+      .order(<span class="hljs-string">'created_at'</span>, { <span class="hljs-attr">ascending</span>: <span class="hljs-literal">false</span> });
+    
+    <span class="hljs-keyword">if</span> (error) <span class="hljs-keyword">throw</span> error;
+    <span class="hljs-keyword">return</span> data;
+  },
+
+  <span class="hljs-attr">getUserById</span>: <span class="hljs-keyword">async</span> (id) =&gt; {
+    <span class="hljs-keyword">const</span> { data, error } = <span class="hljs-keyword">await</span> supabase
+      .from(<span class="hljs-string">'users'</span>)
+      .select(<span class="hljs-string">'*'</span>)
+      .eq(<span class="hljs-string">'id'</span>, id)
+      .single();
+    
+    <span class="hljs-keyword">if</span> (error) <span class="hljs-keyword">throw</span> error;
+    <span class="hljs-keyword">return</span> data;
+  },
+
+  <span class="hljs-comment">// Update</span>
+  <span class="hljs-attr">updateUser</span>: <span class="hljs-keyword">async</span> (id, updateData) =&gt; {
+    <span class="hljs-keyword">const</span> { data, error } = <span class="hljs-keyword">await</span> supabase
+      .from(<span class="hljs-string">'users'</span>)
+      .update(updateData)
+      .eq(<span class="hljs-string">'id'</span>, id)
+      .select();
+    
+    <span class="hljs-keyword">if</span> (error) <span class="hljs-keyword">throw</span> error;
+    <span class="hljs-keyword">return</span> data[<span class="hljs-number">0</span>];
+  },
+
+  <span class="hljs-comment">// Delete</span>
+  <span class="hljs-attr">deleteUser</span>: <span class="hljs-keyword">async</span> (id) =&gt; {
+    <span class="hljs-keyword">const</span> { data, error } = <span class="hljs-keyword">await</span> supabase
+      .from(<span class="hljs-string">'users'</span>)
+      .delete()
+      .eq(<span class="hljs-string">'id'</span>, id)
+      .select();
+    
+    <span class="hljs-keyword">if</span> (error) <span class="hljs-keyword">throw</span> error;
+    <span class="hljs-keyword">return</span> data[<span class="hljs-number">0</span>];
+  },
+
+  <span class="hljs-comment">// Advanced queries</span>
+  <span class="hljs-attr">searchUsers</span>: <span class="hljs-keyword">async</span> (searchTerm) =&gt; {
+    <span class="hljs-keyword">const</span> { data, error } = <span class="hljs-keyword">await</span> supabase
+      .from(<span class="hljs-string">'users'</span>)
+      .select(<span class="hljs-string">'*'</span>)
+      .or(<span class="hljs-string">`name.ilike.%<span class="hljs-subst">${searchTerm}</span>%,email.ilike.%<span class="hljs-subst">${searchTerm}</span>%`</span>);
+    
+    <span class="hljs-keyword">if</span> (error) <span class="hljs-keyword">throw</span> error;
+    <span class="hljs-keyword">return</span> data;
+  }
+};
+
+<span class="hljs-comment">// Real-time subscriptions</span>
+<span class="hljs-keyword">const</span> subscribeToUsers = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-keyword">const</span> subscription = supabase
+    .channel(<span class="hljs-string">'users'</span>)
+    .on(<span class="hljs-string">'postgres_changes'</span>, 
+      { <span class="hljs-attr">event</span>: <span class="hljs-string">'*'</span>, <span class="hljs-attr">schema</span>: <span class="hljs-string">'public'</span>, <span class="hljs-attr">table</span>: <span class="hljs-string">'users'</span> },
+      (payload) =&gt; {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Change received!'</span>, payload);
+      }
+    )
+    .subscribe();
+  
+  <span class="hljs-keyword">return</span> subscription;
+};
+</div></code></pre>
+<hr>
+<h2 id="api-development">API Development</h2>
+<h3 id="restful-api-design">RESTful API Design</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Users Resource</span>
+<span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>);
+<span class="hljs-keyword">const</span> router = express.Router();
+
+<span class="hljs-comment">// GET /api/users - Get all users</span>
+router.get(<span class="hljs-string">'/'</span>, <span class="hljs-keyword">async</span> (req, res) =&gt; {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> { page = <span class="hljs-number">1</span>, limit = <span class="hljs-number">10</span>, search } = req.query;
+    <span class="hljs-keyword">const</span> users = <span class="hljs-keyword">await</span> User.find(search ? {
+      <span class="hljs-attr">$or</span>: [
+        { <span class="hljs-attr">name</span>: { <span class="hljs-attr">$regex</span>: search, <span class="hljs-attr">$options</span>: <span class="hljs-string">'i'</span> } },
+        { <span class="hljs-attr">email</span>: { <span class="hljs-attr">$regex</span>: search, <span class="hljs-attr">$options</span>: <span class="hljs-string">'i'</span> } }
+      ]
+    } : {})
+    .select(<span class="hljs-string">'-password'</span>)
+    .limit(limit * <span class="hljs-number">1</span>)
+    .skip((page - <span class="hljs-number">1</span>) * limit)
+    .sort({ <span class="hljs-attr">createdAt</span>: <span class="hljs-number">-1</span> });
+    
+    <span class="hljs-keyword">const</span> total = <span class="hljs-keyword">await</span> User.countDocuments();
+    
+    res.json({
+      users,
+      <span class="hljs-attr">totalPages</span>: <span class="hljs-built_in">Math</span>.ceil(total / limit),
+      <span class="hljs-attr">currentPage</span>: page,
+      total
+    });
+  } <span class="hljs-keyword">catch</span> (error) {
+    res.status(<span class="hljs-number">500</span>).json({ <span class="hljs-attr">error</span>: error.message });
+  }
+});
+
+<span class="hljs-comment">// GET /api/users/:id - Get user by id</span>
+router.get(<span class="hljs-string">'/:id'</span>, <span class="hljs-keyword">async</span> (req, res) =&gt; {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> User.findById(req.params.id).select(<span class="hljs-string">'-password'</span>);
+    <span class="hljs-keyword">if</span> (!user) {
+      <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">404</span>).json({ <span class="hljs-attr">error</span>: <span class="hljs-string">'User not found'</span> });
+    }
+    res.json(user);
+  } <span class="hljs-keyword">catch</span> (error) {
+    res.status(<span class="hljs-number">500</span>).json({ <span class="hljs-attr">error</span>: error.message });
+  }
+});
+
+<span class="hljs-comment">// POST /api/users - Create new user</span>
+router.post(<span class="hljs-string">'/'</span>, <span class="hljs-keyword">async</span> (req, res) =&gt; {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> { name, email, password } = req.body;
+    
+    <span class="hljs-comment">// Validation</span>
+    <span class="hljs-keyword">if</span> (!name || !email || !password) {
+      <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">400</span>).json({ <span class="hljs-attr">error</span>: <span class="hljs-string">'All fields are required'</span> });
+    }
+    
+    <span class="hljs-comment">// Check if user exists</span>
+    <span class="hljs-keyword">const</span> existingUser = <span class="hljs-keyword">await</span> User.findOne({ email });
+    <span class="hljs-keyword">if</span> (existingUser) {
+      <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">409</span>).json({ <span class="hljs-attr">error</span>: <span class="hljs-string">'User already exists'</span> });
+    }
+    
+    <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">new</span> User({ name, email, password });
+    <span class="hljs-keyword">await</span> user.save();
+    
+    <span class="hljs-keyword">const</span> userResponse = user.toObject();
+    <span class="hljs-keyword">delete</span> userResponse.password;
+    
+    res.status(<span class="hljs-number">201</span>).json({
+      <span class="hljs-attr">message</span>: <span class="hljs-string">'User created successfully'</span>,
+      <span class="hljs-attr">user</span>: userResponse
+    });
+  } <span class="hljs-keyword">catch</span> (error) {
+    res.status(<span class="hljs-number">400</span>).json({ <span class="hljs-attr">error</span>: error.message });
+  }
+});
+
+<span class="hljs-comment">// PUT /api/users/:id - Update user</span>
+router.put(<span class="hljs-string">'/:id'</span>, <span class="hljs-keyword">async</span> (req, res) =&gt; {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> { name, email } = req.body;
+    
+    <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> User.findByIdAndUpdate(
+      req.params.id,
+      { name, email },
+      { <span class="hljs-attr">new</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">runValidators</span>: <span class="hljs-literal">true</span> }
+    ).select(<span class="hljs-string">'-password'</span>);
+    
+    <span class="hljs-keyword">if</span> (!user) {
+      <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">404</span>).json({ <span class="hljs-attr">error</span>: <span class="hljs-string">'User not found'</span> });
+    }
+    
+    res.json({
+      <span class="hljs-attr">message</span>: <span class="hljs-string">'User updated successfully'</span>,
+      user
+    });
+  } <span class="hljs-keyword">catch</span> (error) {
+    res.status(<span class="hljs-number">400</span>).json({ <span class="hljs-attr">error</span>: error.message });
+  }
+});
+
+<span class="hljs-comment">// DELETE /api/users/:id - Delete user</span>
+router.delete(<span class="hljs-string">'/:id'</span>, <span class="hljs-keyword">async</span> (req, res) =&gt; {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> User.findByIdAndDelete(req.params.id);
+    <span class="hljs-keyword">if</span> (!user) {
+      <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">404</span>).json({ <span class="hljs-attr">error</span>: <span class="hljs-string">'User not found'</span> });
+    }
+    
+    res.json({ <span class="hljs-attr">message</span>: <span class="hljs-string">'User deleted successfully'</span> });
+  } <span class="hljs-keyword">catch</span> (error) {
+    res.status(<span class="hljs-number">500</span>).json({ <span class="hljs-attr">error</span>: error.message });
+  }
+});
+
+<span class="hljs-built_in">module</span>.exports = router;
+</div></code></pre>
+<h3 id="api-validation">API Validation</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> { body, validationResult } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express-validator'</span>);
+
+<span class="hljs-comment">// Validation rules</span>
+<span class="hljs-keyword">const</span> userValidationRules = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-keyword">return</span> [
+    body(<span class="hljs-string">'name'</span>)
+      .isLength({ <span class="hljs-attr">min</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">max</span>: <span class="hljs-number">50</span> })
+      .withMessage(<span class="hljs-string">'Name must be between 2 and 50 characters'</span>)
+      .trim()
+      .escape(),
+    body(<span class="hljs-string">'email'</span>)
+      .isEmail()
+      .withMessage(<span class="hljs-string">'Invalid email format'</span>)
+      .normalizeEmail(),
+    body(<span class="hljs-string">'password'</span>)
+      .isLength({ <span class="hljs-attr">min</span>: <span class="hljs-number">6</span> })
+      .withMessage(<span class="hljs-string">'Password must be at least 6 characters'</span>)
+      .matches(<span class="hljs-regexp">/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/</span>)
+      .withMessage(<span class="hljs-string">'Password must contain uppercase, lowercase, and number'</span>)
+  ];
+};
+
+<span class="hljs-comment">// Validation middleware</span>
+<span class="hljs-keyword">const</span> validate = <span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> errors = validationResult(req);
+  <span class="hljs-keyword">if</span> (!errors.isEmpty()) {
+    <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">400</span>).json({
+      <span class="hljs-attr">error</span>: <span class="hljs-string">'Validation failed'</span>,
+      <span class="hljs-attr">details</span>: errors.array()
+    });
+  }
+  next();
+};
+
+<span class="hljs-comment">// Usage</span>
+router.post(<span class="hljs-string">'/users'</span>, userValidationRules(), validate, createUser);
+</div></code></pre>
+<h3 id="api-documentation-with-swagger">API Documentation with Swagger</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> swaggerJsdoc = <span class="hljs-built_in">require</span>(<span class="hljs-string">'swagger-jsdoc'</span>);
+<span class="hljs-keyword">const</span> swaggerUi = <span class="hljs-built_in">require</span>(<span class="hljs-string">'swagger-ui-express'</span>);
+
+<span class="hljs-keyword">const</span> options = {
+  <span class="hljs-attr">definition</span>: {
+    <span class="hljs-attr">openapi</span>: <span class="hljs-string">'3.0.0'</span>,
+    <span class="hljs-attr">info</span>: {
+      <span class="hljs-attr">title</span>: <span class="hljs-string">'My API'</span>,
+      <span class="hljs-attr">version</span>: <span class="hljs-string">'1.0.0'</span>,
+      <span class="hljs-attr">description</span>: <span class="hljs-string">'A simple Express API'</span>
+    },
+    <span class="hljs-attr">servers</span>: [
+      {
+        <span class="hljs-attr">url</span>: <span class="hljs-string">'http://localhost:3000'</span>,
+        <span class="hljs-attr">description</span>: <span class="hljs-string">'Development server'</span>
+      }
+    ]
+  },
+  <span class="hljs-attr">apis</span>: [<span class="hljs-string">'./routes/*.js'</span>]
+};
+
+<span class="hljs-keyword">const</span> specs = swaggerJsdoc(options);
+app.use(<span class="hljs-string">'/api-docs'</span>, swaggerUi.serve, swaggerUi.setup(specs));
+
+<span class="hljs-comment">/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       required:
+ *         - name
+ *         - email
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: Auto-generated user ID
+ *         name:
+ *           type: string
+ *           description: User's name
+ *         email:
+ *           type: string
+ *           description: User's email
+ */</span>
+
+<span class="hljs-comment">/**
+ * @swagger
+ * /api/users:
+ *   get:
+ *     summary: Get all users
+ *     tags: [Users]
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         description: Page number
+ *     responses:
+ *       200:
+ *         description: List of users
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 users:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/User'
+ */</span>
+</div></code></pre>
+<h3 id="rate-limiting">Rate Limiting</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> rateLimit = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express-rate-limit'</span>);
+
+<span class="hljs-comment">// Basic rate limiting</span>
+<span class="hljs-keyword">const</span> limiter = rateLimit({
+  <span class="hljs-attr">windowMs</span>: <span class="hljs-number">15</span> * <span class="hljs-number">60</span> * <span class="hljs-number">1000</span>, <span class="hljs-comment">// 15 minutes</span>
+  <span class="hljs-attr">max</span>: <span class="hljs-number">100</span>, <span class="hljs-comment">// limit each IP to 100 requests per windowMs</span>
+  <span class="hljs-attr">message</span>: <span class="hljs-string">'Too many requests from this IP'</span>
+});
+
+<span class="hljs-comment">// Strict rate limiting for auth endpoints</span>
+<span class="hljs-keyword">const</span> authLimiter = rateLimit({
+  <span class="hljs-attr">windowMs</span>: <span class="hljs-number">15</span> * <span class="hljs-number">60</span> * <span class="hljs-number">1000</span>,
+  <span class="hljs-attr">max</span>: <span class="hljs-number">5</span>,
+  <span class="hljs-attr">message</span>: <span class="hljs-string">'Too many authentication attempts'</span>
+});
+
+app.use(<span class="hljs-string">'/api/'</span>, limiter);
+app.use(<span class="hljs-string">'/api/auth/'</span>, authLimiter);
+</div></code></pre>
+<hr>
+<h2 id="authentication--security">Authentication &amp; Security</h2>
+<h3 id="jwt-authentication">JWT Authentication</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> jwt = <span class="hljs-built_in">require</span>(<span class="hljs-string">'jsonwebtoken'</span>);
+<span class="hljs-keyword">const</span> bcrypt = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bcryptjs'</span>);
+
+<span class="hljs-comment">// Generate JWT Token</span>
+<span class="hljs-keyword">const</span> generateToken = <span class="hljs-function">(<span class="hljs-params">userId</span>) =&gt;</span> {
+  <span class="hljs-keyword">return</span> jwt.sign(
+    { userId },
+    process.env.JWT_SECRET,
+    { <span class="hljs-attr">expiresIn</span>: <span class="hljs-string">'7d'</span> }
+  );
+};
+
+<span class="hljs-comment">// Auth Routes</span>
+<span class="hljs-keyword">const</span> authRoutes = {
+  <span class="hljs-comment">// Register</span>
+  <span class="hljs-attr">register</span>: <span class="hljs-keyword">async</span> (req, res) =&gt; {
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">const</span> { name, email, password } = req.body;
+      
+      <span class="hljs-comment">// Check if user exists</span>
+      <span class="hljs-keyword">const</span> existingUser = <span class="hljs-keyword">await</span> User.findOne({ email });
+      <span class="hljs-keyword">if</span> (existingUser) {
+        <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">409</span>).json({ <span class="hljs-attr">error</span>: <span class="hljs-string">'User already exists'</span> });
+      }
+      
+      <span class="hljs-comment">// Hash password</span>
+      <span class="hljs-keyword">const</span> hashedPassword = <span class="hljs-keyword">await</span> bcrypt.hash(password, <span class="hljs-number">12</span>);
+      
+      <span class="hljs-comment">// Create user</span>
+      <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">new</span> User({
+        name,
+        email,
+        <span class="hljs-attr">password</span>: hashedPassword
+      });
+      
+      <span class="hljs-keyword">await</span> user.save();
+      
+      <span class="hljs-comment">// Generate token</span>
+      <span class="hljs-keyword">const</span> token = generateToken(user._id);
+      
+      res.status(<span class="hljs-number">201</span>).json({
+        <span class="hljs-attr">message</span>: <span class="hljs-string">'User created successfully'</span>,
+        token,
+        <span class="hljs-attr">user</span>: {
+          <span class="hljs-attr">id</span>: user._id,
+          <span class="hljs-attr">name</span>: user.name,
+          <span class="hljs-attr">email</span>: user.email
+        }
+      });
+    } <span class="hljs-keyword">catch</span> (error) {
+      res.status(<span class="hljs-number">500</span>).json({ <span class="hljs-attr">error</span>: error.message });
+    }
+  },
+
+  <span class="hljs-comment">// Login</span>
+  <span class="hljs-attr">login</span>: <span class="hljs-keyword">async</span> (req, res) =&gt; {
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">const</span> { email, password } = req.body;
+      
+      <span class="hljs-comment">// Find user</span>
+      <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> User.findOne({ email });
+      <span class="hljs-keyword">if</span> (!user) {
+        <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">401</span>).json({ <span class="hljs-attr">error</span>: <span class="hljs-string">'Invalid credentials'</span> });
+      }
+      
+      <span class="hljs-comment">// Check password</span>
+      <span class="hljs-keyword">const</span> isValidPassword = <span class="hljs-keyword">await</span> bcrypt.compare(password, user.password);
+      <span class="hljs-keyword">if</span> (!isValidPassword) {
+        <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">401</span>).json({ <span class="hljs-attr">error</span>: <span class="hljs-string">'Invalid credentials'</span> });
+      }
+      
+      <span class="hljs-comment">// Generate token</span>
+      <span class="hljs-keyword">const</span> token = generateToken(user._id);
+      
+      res.json({
+        <span class="hljs-attr">message</span>: <span class="hljs-string">'Login successful'</span>,
+        token,
+        <span class="hljs-attr">user</span>: {
+          <span class="hljs-attr">id</span>: user._id,
+          <span class="hljs-attr">name</span>: user.name,
+          <span class="hljs-attr">email</span>: user.email
+        }
+      });
+    } <span class="hljs-keyword">catch</span> (error) {
+      res.status(<span class="hljs-number">500</span>).json({ <span class="hljs-attr">error</span>: error.message });
+    }
+  },
+
+  <span class="hljs-comment">// Get current user</span>
+  <span class="hljs-attr">getMe</span>: <span class="hljs-keyword">async</span> (req, res) =&gt; {
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> User.findById(req.user.userId).select(<span class="hljs-string">'-password'</span>);
+      res.json({ user });
+    } <span class="hljs-keyword">catch</span> (error) {
+      res.status(<span class="hljs-number">500</span>).json({ <span class="hljs-attr">error</span>: error.message });
+    }
+  }
+};
+
+<span class="hljs-comment">// Authentication Middleware</span>
+<span class="hljs-keyword">const</span> authenticate = <span class="hljs-keyword">async</span> (req, res, next) =&gt; {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> token = req.header(<span class="hljs-string">'Authorization'</span>)?.replace(<span class="hljs-string">'Bearer '</span>, <span class="hljs-string">''</span>);
+    
+    <span class="hljs-keyword">if</span> (!token) {
+      <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">401</span>).json({ <span class="hljs-attr">error</span>: <span class="hljs-string">'Access denied, no token provided'</span> });
+    }
+    
+    <span class="hljs-keyword">const</span> decoded = jwt.verify(token, process.env.JWT_SECRET);
+    <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> User.findById(decoded.userId);
+    
+    <span class="hljs-keyword">if</span> (!user) {
+      <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">401</span>).json({ <span class="hljs-attr">error</span>: <span class="hljs-string">'Invalid token'</span> });
+    }
+    
+    req.user = decoded;
+    next();
+  } <span class="hljs-keyword">catch</span> (error) {
+    res.status(<span class="hljs-number">401</span>).json({ <span class="hljs-attr">error</span>: <span class="hljs-string">'Invalid token'</span> });
+  }
+};
+
+<span class="hljs-comment">// Role-based Authorization</span>
+<span class="hljs-keyword">const</span> authorize = <span class="hljs-function">(<span class="hljs-params">...roles</span>) =&gt;</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">async</span> (req, res, next) =&gt; {
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> User.findById(req.user.userId);
+      
+      <span class="hljs-keyword">if</span> (!roles.includes(user.role)) {
+        <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">403</span>).json({ <span class="hljs-attr">error</span>: <span class="hljs-string">'Access denied'</span> });
+      }
+      
+      next();
+    } <span class="hljs-keyword">catch</span> (error) {
+      res.status(<span class="hljs-number">500</span>).json({ <span class="hljs-attr">error</span>: error.message });
+    }
+  };
+};
+
+<span class="hljs-comment">// Usage</span>
+app.post(<span class="hljs-string">'/api/auth/register'</span>, authRoutes.register);
+app.post(<span class="hljs-string">'/api/auth/login'</span>, authRoutes.login);
+app.get(<span class="hljs-string">'/api/auth/me'</span>, authenticate, authRoutes.getMe);
+app.get(<span class="hljs-string">'/api/admin'</span>, authenticate, authorize(<span class="hljs-string">'admin'</span>), adminRoutes);
+</div></code></pre>
+<h3 id="password-reset">Password Reset</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">'crypto'</span>);
+<span class="hljs-keyword">const</span> nodemailer = <span class="hljs-built_in">require</span>(<span class="hljs-string">'nodemailer'</span>);
+
+<span class="hljs-comment">// Password Reset Schema addition</span>
+<span class="hljs-keyword">const</span> userSchema = <span class="hljs-keyword">new</span> mongoose.Schema({
+  <span class="hljs-comment">// ... existing fields</span>
+  <span class="hljs-attr">resetPasswordToken</span>: <span class="hljs-built_in">String</span>,
+  <span class="hljs-attr">resetPasswordExpires</span>: <span class="hljs-built_in">Date</span>
+});
+
+<span class="hljs-comment">// Email transporter</span>
+<span class="hljs-keyword">const</span> transporter = nodemailer.createTransporter({
+  <span class="hljs-attr">service</span>: <span class="hljs-string">'gmail'</span>,
+  <span class="hljs-attr">auth</span>: {
+    <span class="hljs-attr">user</span>: process.env.EMAIL_USER,
+    <span class="hljs-attr">pass</span>: process.env.EMAIL_PASS
+  }
+});
+
+<span class="hljs-keyword">const</span> passwordResetRoutes = {
+  <span class="hljs-comment">// Request password reset</span>
+  <span class="hljs-attr">requestReset</span>: <span class="hljs-keyword">async</span> (req, res) =&gt; {
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">const</span> { email } = req.body;
+      <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> User.findOne({ email });
+      
+      <span class="hljs-keyword">if</span> (!user) {
+        <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">404</span>).json({ <span class="hljs-attr">error</span>: <span class="hljs-string">'User not found'</span> });
+      }
+      
+      <span class="hljs-comment">// Generate reset token</span>
+      <span class="hljs-keyword">const</span> resetToken = crypto.randomBytes(<span class="hljs-number">32</span>).toString(<span class="hljs-string">'hex'</span>);
+      user.resetPasswordToken = resetToken;
+      user.resetPasswordExpires = <span class="hljs-built_in">Date</span>.now() + <span class="hljs-number">3600000</span>; <span class="hljs-comment">// 1 hour</span>
+      
+      <span class="hljs-keyword">await</span> user.save();
+      
+      <span class="hljs-comment">// Send email</span>
+      <span class="hljs-keyword">const</span> resetUrl = <span class="hljs-string">`<span class="hljs-subst">${process.env.FRONTEND_URL}</span>/reset-password/<span class="hljs-subst">${resetToken}</span>`</span>;
+      
+      <span class="hljs-keyword">await</span> transporter.sendMail({
+        <span class="hljs-attr">to</span>: user.email,
+        <span class="hljs-attr">subject</span>: <span class="hljs-string">'Password Reset Request'</span>,
+        <span class="hljs-attr">html</span>: <span class="hljs-string">`
+          &lt;h2&gt;Password Reset Request&lt;/h2&gt;
+          &lt;p&gt;Click the link below to reset your password:&lt;/p&gt;
+          &lt;a href="<span class="hljs-subst">${resetUrl}</span>"&gt;Reset Password&lt;/a&gt;
+        `</span>
+      });
+      
+      res.json({ <span class="hljs-attr">message</span>: <span class="hljs-string">'Password reset email sent'</span> });
+    } <span class="hljs-keyword">catch</span> (error) {
+      res.status(<span class="hljs-number">500</span>).json({ <span class="hljs-attr">error</span>: error.message });
+    }
+  },
+
+  <span class="hljs-comment">// Reset password</span>
+  <span class="hljs-attr">resetPassword</span>: <span class="hljs-keyword">async</span> (req, res) =&gt; {
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">const</span> { token, newPassword } = req.body;
+      
+      <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> User.findOne({
+        <span class="hljs-attr">resetPasswordToken</span>: token,
+        <span class="hljs-attr">resetPasswordExpires</span>: { <span class="hljs-attr">$gt</span>: <span class="hljs-built_in">Date</span>.now() }
+      });
+      
+      <span class="hljs-keyword">if</span> (!user) {
+        <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">400</span>).json({ <span class="hljs-attr">error</span>: <span class="hljs-string">'Invalid or expired token'</span> });
+      }
+      
+      <span class="hljs-comment">// Update password</span>
+      user.password = <span class="hljs-keyword">await</span> bcrypt.hash(newPassword, <span class="hljs-number">12</span>);
+      user.resetPasswordToken = <span class="hljs-literal">undefined</span>;
+      user.resetPasswordExpires = <span class="hljs-literal">undefined</span>;
+      
+      <span class="hljs-keyword">await</span> user.save();
+      
+      res.json({ <span class="hljs-attr">message</span>: <span class="hljs-string">'Password reset successful'</span> });
+    } <span class="hljs-keyword">catch</span> (error) {
+      res.status(<span class="hljs-number">500</span>).json({ <span class="hljs-attr">error</span>: error.message });
+    }
+  }
+};
+</div></code></pre>
+<h3 id="security-best-practices">Security Best Practices</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> helmet = <span class="hljs-built_in">require</span>(<span class="hljs-string">'helmet'</span>);
+<span class="hljs-keyword">const</span> cors = <span class="hljs-built_in">require</span>(<span class="hljs-string">'cors'</span>);
+<span class="hljs-keyword">const</span> mongoSanitize = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express-mongo-sanitize'</span>);
+<span class="hljs-keyword">const</span> xss = <span class="hljs-built_in">require</span>(<span class="hljs-string">'xss-clean'</span>);
+<span class="hljs-keyword">const</span> hpp = <span class="hljs-built_in">require</span>(<span class="hljs-string">'hpp'</span>);
+
+<span class="hljs-comment">// Security middleware</span>
+app.use(helmet()); <span class="hljs-comment">// Set security headers</span>
+app.use(cors({
+  <span class="hljs-attr">origin</span>: process.env.FRONTEND_URL,
+  <span class="hljs-attr">credentials</span>: <span class="hljs-literal">true</span>
+}));
+app.use(mongoSanitize()); <span class="hljs-comment">// Prevent NoSQL injection</span>
+app.use(xss()); <span class="hljs-comment">// Clean user input from malicious HTML</span>
+app.use(hpp()); <span class="hljs-comment">// Prevent HTTP Parameter Pollution</span>
+
+<span class="hljs-comment">// Input sanitization</span>
+<span class="hljs-keyword">const</span> sanitizeInput = <span class="hljs-function">(<span class="hljs-params">input</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> input === <span class="hljs-string">'string'</span>) {
+    <span class="hljs-keyword">return</span> input.trim().replace(<span class="hljs-regexp">/&lt;script\b[^&lt;]*(?:(?!&lt;\/script&gt;)&lt;[^&lt;]*)*&lt;\/script&gt;/gi</span>, <span class="hljs-string">''</span>);
+  }
+  <span class="hljs-keyword">return</span> input;
+};
+
+<span class="hljs-comment">// HTTPS redirect (production)</span>
+<span class="hljs-keyword">const</span> forceHTTPS = <span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (!req.secure &amp;&amp; req.get(<span class="hljs-string">'x-forwarded-proto'</span>) !== <span class="hljs-string">'https'</span>) {
+    <span class="hljs-keyword">return</span> res.redirect(<span class="hljs-string">`https://<span class="hljs-subst">${req.get(<span class="hljs-string">'host'</span>)}</span><span class="hljs-subst">${req.url}</span>`</span>);
+  }
+  next();
+};
+
+<span class="hljs-comment">// Rate limiting by user</span>
+<span class="hljs-keyword">const</span> createAccountLimiter = rateLimit({
+  <span class="hljs-attr">windowMs</span>: <span class="hljs-number">60</span> * <span class="hljs-number">60</span> * <span class="hljs-number">1000</span>, <span class="hljs-comment">// 1 hour</span>
+  <span class="hljs-attr">max</span>: <span class="hljs-number">5</span>, <span class="hljs-comment">// 5 accounts per hour</span>
+  <span class="hljs-attr">message</span>: <span class="hljs-string">'Too many accounts created from this IP'</span>
+});
+</div></code></pre>
+<hr>
+<h2 id="testing">Testing</h2>
+<h3 id="unit-testing-with-jest">Unit Testing with Jest</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// __tests__/user.test.js</span>
+<span class="hljs-keyword">const</span> User = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../models/User'</span>);
+<span class="hljs-keyword">const</span> { createUser, getUserById } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../controllers/userController'</span>);
+
+<span class="hljs-comment">// Mock database</span>
+jest.mock(<span class="hljs-string">'../models/User'</span>);
+
+describe(<span class="hljs-string">'User Controller'</span>, () =&gt; {
+  beforeEach(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    jest.clearAllMocks();
+  });
+
+  describe(<span class="hljs-string">'createUser'</span>, () =&gt; {
+    it(<span class="hljs-string">'should create a new user successfully'</span>, <span class="hljs-keyword">async</span> () =&gt; {
+      <span class="hljs-keyword">const</span> userData = {
+        <span class="hljs-attr">name</span>: <span class="hljs-string">'John Doe'</span>,
+        <span class="hljs-attr">email</span>: <span class="hljs-string">'john@example.com'</span>,
+        <span class="hljs-attr">password</span>: <span class="hljs-string">'password123'</span>
+      };
+
+      <span class="hljs-keyword">const</span> mockUser = { <span class="hljs-attr">id</span>: <span class="hljs-string">'123'</span>, ...userData };
+      User.prototype.save = jest.fn().mockResolvedValue(mockUser);
+
+      <span class="hljs-keyword">const</span> req = { <span class="hljs-attr">body</span>: userData };
+      <span class="hljs-keyword">const</span> res = {
+        <span class="hljs-attr">status</span>: jest.fn().mockReturnThis(),
+        <span class="hljs-attr">json</span>: jest.fn()
+      };
+
+      <span class="hljs-keyword">await</span> createUser(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(<span class="hljs-number">201</span>);
+      expect(res.json).toHaveBeenCalledWith({
+        <span class="hljs-attr">message</span>: <span class="hljs-string">'User created successfully'</span>,
+        <span class="hljs-attr">user</span>: expect.objectContaining({
+          <span class="hljs-attr">name</span>: userData.name,
+          <span class="hljs-attr">email</span>: userData.email
+        })
+      });
+    });
+
+    it(<span class="hljs-string">'should return error for invalid data'</span>, <span class="hljs-keyword">async</span> () =&gt; {
+      <span class="hljs-keyword">const</span> req = { <span class="hljs-attr">body</span>: {} };
+      <span class="hljs-keyword">const</span> res = {
+        <span class="hljs-attr">status</span>: jest.fn().mockReturnThis(),
+        <span class="hljs-attr">json</span>: jest.fn()
+      };
+
+      <span class="hljs-keyword">await</span> createUser(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(<span class="hljs-number">400</span>);
+      expect(res.json).toHaveBeenCalledWith({
+        <span class="hljs-attr">error</span>: <span class="hljs-string">'All fields are required'</span>
+      });
+    });
+  });
+});
+
+<span class="hljs-comment">// Integration Testing</span>
+<span class="hljs-keyword">const</span> request = <span class="hljs-built_in">require</span>(<span class="hljs-string">'supertest'</span>);
+<span class="hljs-keyword">const</span> app = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../app'</span>);
+
+describe(<span class="hljs-string">'User API'</span>, () =&gt; {
+  it(<span class="hljs-string">'GET /api/users should return all users'</span>, <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> request(app)
+      .get(<span class="hljs-string">'/api/users'</span>)
+      .expect(<span class="hljs-number">200</span>);
+
+    expect(response.body).toHaveProperty(<span class="hljs-string">'users'</span>);
+    expect(<span class="hljs-built_in">Array</span>.isArray(response.body.users)).toBe(<span class="hljs-literal">true</span>);
+  });
+
+  it(<span class="hljs-string">'POST /api/users should create new user'</span>, <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">const</span> userData = {
+      <span class="hljs-attr">name</span>: <span class="hljs-string">'Test User'</span>,
+      <span class="hljs-attr">email</span>: <span class="hljs-string">'test@example.com'</span>,
+      <span class="hljs-attr">password</span>: <span class="hljs-string">'password123'</span>
+    };
+
+    <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> request(app)
+      .post(<span class="hljs-string">'/api/users'</span>)
+      .send(userData)
+      .expect(<span class="hljs-number">201</span>);
+
+    expect(response.body.user).toHaveProperty(<span class="hljs-string">'name'</span>, userData.name);
+    expect(response.body.user).toHaveProperty(<span class="hljs-string">'email'</span>, userData.email);
+    expect(response.body.user).not.toHaveProperty(<span class="hljs-string">'password'</span>);
+  });
+});
+</div></code></pre>
+<h3 id="api-testing-with-postmannewman">API Testing with Postman/Newman</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// package.json scripts</span>
+{
+  <span class="hljs-string">"scripts"</span>: {
+    <span class="hljs-string">"test:api"</span>: <span class="hljs-string">"newman run postman_collection.json -e postman_environment.json"</span>
+  }
+}
+
+<span class="hljs-comment">// Test helper functions</span>
+<span class="hljs-keyword">const</span> testHelpers = {
+  <span class="hljs-comment">// Create test user</span>
+  <span class="hljs-attr">createTestUser</span>: <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">const</span> userData = {
+      <span class="hljs-attr">name</span>: <span class="hljs-string">'Test User'</span>,
+      <span class="hljs-attr">email</span>: <span class="hljs-string">'test@example.com'</span>,
+      <span class="hljs-attr">password</span>: <span class="hljs-string">'password123'</span>
+    };
+    
+    <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> request(app)
+      .post(<span class="hljs-string">'/api/users'</span>)
+      .send(userData);
+    
+    <span class="hljs-keyword">return</span> response.body.user;
+  },
+
+  <span class="hljs-comment">// Get auth token</span>
+  <span class="hljs-attr">getAuthToken</span>: <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">const</span> loginData = {
+      <span class="hljs-attr">email</span>: <span class="hljs-string">'test@example.com'</span>,
+      <span class="hljs-attr">password</span>: <span class="hljs-string">'password123'</span>
+    };
+    
+    <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> request(app)
+      .post(<span class="hljs-string">'/api/auth/login'</span>)
+      .send(loginData);
+    
+    <span class="hljs-keyword">return</span> response.body.token;
+  },
+
+  <span class="hljs-comment">// Clean up test data</span>
+  <span class="hljs-attr">cleanup</span>: <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">await</span> User.deleteMany({ <span class="hljs-attr">email</span>: <span class="hljs-regexp">/test/</span> });
+  }
+};
+</div></code></pre>
+<hr>
+<h2 id="deployment--devops">Deployment &amp; DevOps</h2>
+<h3 id="environment-configuration">Environment Configuration</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// config/config.js</span>
+<span class="hljs-keyword">const</span> config = {
+  <span class="hljs-attr">development</span>: {
+    <span class="hljs-attr">port</span>: process.env.PORT || <span class="hljs-number">3000</span>,
+    <span class="hljs-attr">db</span>: {
+      <span class="hljs-attr">host</span>: process.env.DB_HOST || <span class="hljs-string">'localhost'</span>,
+      <span class="hljs-attr">port</span>: process.env.DB_PORT || <span class="hljs-number">27017</span>,
+      <span class="hljs-attr">name</span>: process.env.DB_NAME || <span class="hljs-string">'myapp_dev'</span>
+    },
+    <span class="hljs-attr">jwt</span>: {
+      <span class="hljs-attr">secret</span>: process.env.JWT_SECRET || <span class="hljs-string">'dev-secret'</span>,
+      <span class="hljs-attr">expiresIn</span>: <span class="hljs-string">'7d'</span>
+    },
+    <span class="hljs-attr">email</span>: {
+      <span class="hljs-attr">host</span>: process.env.EMAIL_HOST,
+      <span class="hljs-attr">port</span>: process.env.EMAIL_PORT,
+      <span class="hljs-attr">user</span>: process.env.EMAIL_USER,
+      <span class="hljs-attr">pass</span>: process.env.EMAIL_PASS
+    }
+  },
+  <span class="hljs-attr">production</span>: {
+    <span class="hljs-attr">port</span>: process.env.PORT,
+    <span class="hljs-attr">db</span>: {
+      <span class="hljs-attr">uri</span>: process.env.DATABASE_URL
+    },
+    <span class="hljs-attr">jwt</span>: {
+      <span class="hljs-attr">secret</span>: process.env.JWT_SECRET,
+      <span class="hljs-attr">expiresIn</span>: <span class="hljs-string">'1d'</span>
+    },
+    <span class="hljs-attr">redis</span>: {
+      <span class="hljs-attr">url</span>: process.env.REDIS_URL
+    }
+  }
+};
+
+<span class="hljs-built_in">module</span>.exports = config[process.env.NODE_ENV || <span class="hljs-string">'development'</span>];
+</div></code></pre>
+<h3 id="docker-configuration">Docker Configuration</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Dockerfile</span>
+<span class="hljs-keyword">FROM</span> node:<span class="hljs-number">18</span>-alpine
+
+<span class="hljs-keyword">WORKDIR</span><span class="bash"> /app</span>
+
+<span class="hljs-comment"># Copy package files</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> package*.json ./</span>
+
+<span class="hljs-comment"># Install dependencies</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> npm ci --only=production</span>
+
+<span class="hljs-comment"># Copy source code</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> . .</span>
+
+<span class="hljs-comment"># Create non-root user</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> addgroup -g 1001 -S nodejs</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> adduser -S nextjs -u 1001</span>
+
+<span class="hljs-comment"># Change ownership</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> chown -R nextjs:nodejs /app</span>
+<span class="hljs-keyword">USER</span> nextjs
+
+<span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">3000</span>
+
+<span class="hljs-keyword">CMD</span><span class="bash"> [<span class="hljs-string">"npm"</span>, <span class="hljs-string">"start"</span>]</span>
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment"># docker-compose.yml</span>
+<span class="hljs-attr">version:</span> <span class="hljs-string">'3.8'</span>
+
+<span class="hljs-attr">services:</span>
+  <span class="hljs-attr">app:</span>
+    <span class="hljs-attr">build:</span> <span class="hljs-string">.</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"3000:3000"</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">NODE_ENV=production</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">DATABASE_URL=mongodb://mongo:27017/myapp</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">REDIS_URL=redis://redis:6379</span>
+    <span class="hljs-attr">depends_on:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">mongo</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">redis</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">./logs:/app/logs</span>
+
+  <span class="hljs-attr">mongo:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">mongo:5</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">mongo_data:/data/db</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">MONGO_INITDB_ROOT_USERNAME=admin</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">MONGO_INITDB_ROOT_PASSWORD=password</span>
+
+  <span class="hljs-attr">redis:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">redis:7-alpine</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">redis_data:/data</span>
+
+<span class="hljs-attr">volumes:</span>
+  <span class="hljs-attr">mongo_data:</span>
+  <span class="hljs-attr">redis_data:</span>
+</div></code></pre>
+<h3 id="process-management-with-pm2">Process Management with PM2</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// ecosystem.config.js</span>
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-attr">apps</span>: [{
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'myapp'</span>,
+    <span class="hljs-attr">script</span>: <span class="hljs-string">'server.js'</span>,
+    <span class="hljs-attr">instances</span>: <span class="hljs-string">'max'</span>,
+    <span class="hljs-attr">exec_mode</span>: <span class="hljs-string">'cluster'</span>,
+    <span class="hljs-attr">env</span>: {
+      <span class="hljs-attr">NODE_ENV</span>: <span class="hljs-string">'development'</span>
+    },
+    <span class="hljs-attr">env_production</span>: {
+      <span class="hljs-attr">NODE_ENV</span>: <span class="hljs-string">'production'</span>,
+      <span class="hljs-attr">PORT</span>: <span class="hljs-number">3000</span>
+    },
+    <span class="hljs-attr">error_file</span>: <span class="hljs-string">'./logs/err.log'</span>,
+    <span class="hljs-attr">out_file</span>: <span class="hljs-string">'./logs/out.log'</span>,
+    <span class="hljs-attr">log_file</span>: <span class="hljs-string">'./logs/combined.log'</span>,
+    <span class="hljs-attr">time</span>: <span class="hljs-literal">true</span>
+  }]
+};
+
+<span class="hljs-comment">// package.json scripts</span>
+{
+  <span class="hljs-string">"scripts"</span>: {
+    <span class="hljs-string">"start"</span>: <span class="hljs-string">"node server.js"</span>,
+    <span class="hljs-string">"dev"</span>: <span class="hljs-string">"nodemon server.js"</span>,
+    <span class="hljs-string">"pm2:start"</span>: <span class="hljs-string">"pm2 start ecosystem.config.js --env production"</span>,
+    <span class="hljs-string">"pm2:reload"</span>: <span class="hljs-string">"pm2 reload ecosystem.config.js --env production"</span>,
+    <span class="hljs-string">"pm2:stop"</span>: <span class="hljs-string">"pm2 stop ecosystem.config.js"</span>,
+    <span class="hljs-string">"pm2:delete"</span>: <span class="hljs-string">"pm2 delete ecosystem.config.js"</span>
+  }
+}
+</div></code></pre>
+<h3 id="nginx-configuration">Nginx Configuration</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># /etc/nginx/sites-available/myapp</span>
+<span class="hljs-section">server</span> {
+    <span class="hljs-attribute">listen</span> <span class="hljs-number">80</span>;
+    <span class="hljs-attribute">server_name</span> yourdomain.com;
+
+    <span class="hljs-attribute">location</span> / {
+        <span class="hljs-attribute">proxy_pass</span> http://localhost:3000;
+        <span class="hljs-attribute">proxy_http_version</span> <span class="hljs-number">1</span>.<span class="hljs-number">1</span>;
+        <span class="hljs-attribute">proxy_set_header</span> Upgrade <span class="hljs-variable">$http_upgrade</span>;
+        <span class="hljs-attribute">proxy_set_header</span> Connection <span class="hljs-string">'upgrade'</span>;
+        <span class="hljs-attribute">proxy_set_header</span> Host <span class="hljs-variable">$host</span>;
+        <span class="hljs-attribute">proxy_set_header</span> X-Real-IP <span class="hljs-variable">$remote_addr</span>;
+        <span class="hljs-attribute">proxy_set_header</span> X-Forwarded-For <span class="hljs-variable">$proxy_add_x_forwarded_for</span>;
+        <span class="hljs-attribute">proxy_set_header</span> X-Forwarded-Proto <span class="hljs-variable">$scheme</span>;
+        <span class="hljs-attribute">proxy_cache_bypass</span> <span class="hljs-variable">$http_upgrade</span>;
+    }
+}
+</div></code></pre>
+<h3 id="health-checks-and-monitoring">Health Checks and Monitoring</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Health check endpoint</span>
+app.get(<span class="hljs-string">'/health'</span>, <span class="hljs-keyword">async</span> (req, res) =&gt; {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-comment">// Check database connection</span>
+    <span class="hljs-keyword">await</span> mongoose.connection.db.admin().ping();
+    
+    <span class="hljs-comment">// Check Redis connection (if using)</span>
+    <span class="hljs-comment">// await redis.ping();</span>
+    
+    res.status(<span class="hljs-number">200</span>).json({
+      <span class="hljs-attr">status</span>: <span class="hljs-string">'OK'</span>,
+      <span class="hljs-attr">timestamp</span>: <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().toISOString(),
+      <span class="hljs-attr">uptime</span>: process.uptime(),
+      <span class="hljs-attr">memory</span>: process.memoryUsage(),
+      <span class="hljs-attr">database</span>: <span class="hljs-string">'connected'</span>
+    });
+  } <span class="hljs-keyword">catch</span> (error) {
+    res.status(<span class="hljs-number">503</span>).json({
+      <span class="hljs-attr">status</span>: <span class="hljs-string">'ERROR'</span>,
+      <span class="hljs-attr">error</span>: error.message
+    });
+  }
+});
+
+<span class="hljs-comment">// Graceful shutdown</span>
+<span class="hljs-keyword">const</span> gracefulShutdown = <span class="hljs-function">(<span class="hljs-params">signal</span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Received <span class="hljs-subst">${signal}</span>. Graceful shutdown...`</span>);
+  
+  server.close(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'HTTP server closed.'</span>);
+    
+    mongoose.connection.close(<span class="hljs-literal">false</span>, () =&gt; {
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'MongoDB connection closed.'</span>);
+      process.exit(<span class="hljs-number">0</span>);
+    });
+  });
+};
+
+process.on(<span class="hljs-string">'SIGTERM'</span>, gracefulShutdown);
+process.on(<span class="hljs-string">'SIGINT'</span>, gracefulShutdown);
+</div></code></pre>
+<hr>
+<h2 id="advanced-concepts">Advanced Concepts</h2>
+<h3 id="caching-with-redis">Caching with Redis</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> redis = <span class="hljs-built_in">require</span>(<span class="hljs-string">'redis'</span>);
+<span class="hljs-keyword">const</span> client = redis.createClient(process.env.REDIS_URL);
+
+<span class="hljs-comment">// Cache middleware</span>
+<span class="hljs-keyword">const</span> cache = <span class="hljs-function">(<span class="hljs-params">duration = <span class="hljs-number">300</span></span>) =&gt;</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">async</span> (req, res, next) =&gt; {
+    <span class="hljs-keyword">const</span> key = <span class="hljs-string">`cache:<span class="hljs-subst">${req.originalUrl}</span>`</span>;
+    
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">const</span> cached = <span class="hljs-keyword">await</span> client.get(key);
+      <span class="hljs-keyword">if</span> (cached) {
+        <span class="hljs-keyword">return</span> res.json(<span class="hljs-built_in">JSON</span>.parse(cached));
+      }
+      
+      <span class="hljs-comment">// Store original res.json</span>
+      <span class="hljs-keyword">const</span> originalJson = res.json;
+      
+      res.json = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{
+        <span class="hljs-comment">// Cache the response</span>
+        client.setex(key, duration, <span class="hljs-built_in">JSON</span>.stringify(data));
+        
+        <span class="hljs-comment">// Call original json method</span>
+        originalJson.call(<span class="hljs-keyword">this</span>, data);
+      };
+      
+      next();
+    } <span class="hljs-keyword">catch</span> (error) {
+      next();
+    }
+  };
+};
+
+<span class="hljs-comment">// Usage</span>
+app.get(<span class="hljs-string">'/api/users'</span>, cache(<span class="hljs-number">600</span>), getAllUsers);
+
+<span class="hljs-comment">// Cache invalidation</span>
+<span class="hljs-keyword">const</span> invalidateCache = <span class="hljs-function">(<span class="hljs-params">pattern</span>) =&gt;</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">async</span> (req, res, next) =&gt; {
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">const</span> keys = <span class="hljs-keyword">await</span> client.keys(pattern);
+      <span class="hljs-keyword">if</span> (keys.length &gt; <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">await</span> client.del(keys);
+      }
+    } <span class="hljs-keyword">catch</span> (error) {
+      <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Cache invalidation error:'</span>, error);
+    }
+    next();
+  };
+};
+
+<span class="hljs-comment">// Invalidate user cache after operations</span>
+app.post(<span class="hljs-string">'/api/users'</span>, invalidateCache(<span class="hljs-string">'cache:/api/users*'</span>), createUser);
+</div></code></pre>
+<h3 id="file-upload-handling">File Upload Handling</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> multer = <span class="hljs-built_in">require</span>(<span class="hljs-string">'multer'</span>);
+<span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>).promises;
+
+<span class="hljs-comment">// Storage configuration</span>
+<span class="hljs-keyword">const</span> storage = multer.diskStorage({
+  <span class="hljs-attr">destination</span>: <span class="hljs-keyword">async</span> (req, file, cb) =&gt; {
+    <span class="hljs-keyword">const</span> uploadPath = <span class="hljs-string">'uploads/'</span>;
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">await</span> fs.mkdir(uploadPath, { <span class="hljs-attr">recursive</span>: <span class="hljs-literal">true</span> });
+      cb(<span class="hljs-literal">null</span>, uploadPath);
+    } <span class="hljs-keyword">catch</span> (error) {
+      cb(error);
+    }
+  },
+  <span class="hljs-attr">filename</span>: <span class="hljs-function">(<span class="hljs-params">req, file, cb</span>) =&gt;</span> {
+    <span class="hljs-keyword">const</span> uniqueSuffix = <span class="hljs-built_in">Date</span>.now() + <span class="hljs-string">'-'</span> + <span class="hljs-built_in">Math</span>.round(<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">1E9</span>);
+    cb(<span class="hljs-literal">null</span>, file.fieldname + <span class="hljs-string">'-'</span> + uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+<span class="hljs-comment">// File filter</span>
+<span class="hljs-keyword">const</span> fileFilter = <span class="hljs-function">(<span class="hljs-params">req, file, cb</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> allowedTypes = [<span class="hljs-string">'image/jpeg'</span>, <span class="hljs-string">'image/png'</span>, <span class="hljs-string">'image/gif'</span>];
+  
+  <span class="hljs-keyword">if</span> (allowedTypes.includes(file.mimetype)) {
+    cb(<span class="hljs-literal">null</span>, <span class="hljs-literal">true</span>);
+  } <span class="hljs-keyword">else</span> {
+    cb(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Invalid file type'</span>), <span class="hljs-literal">false</span>);
+  }
+};
+
+<span class="hljs-keyword">const</span> upload = multer({
+  storage,
+  fileFilter,
+  <span class="hljs-attr">limits</span>: {
+    <span class="hljs-attr">fileSize</span>: <span class="hljs-number">5</span> * <span class="hljs-number">1024</span> * <span class="hljs-number">1024</span> <span class="hljs-comment">// 5MB</span>
+  }
+});
+
+<span class="hljs-comment">// Upload routes</span>
+app.post(<span class="hljs-string">'/api/upload/single'</span>, upload.single(<span class="hljs-string">'image'</span>), (req, res) =&gt; {
+  <span class="hljs-keyword">if</span> (!req.file) {
+    <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">400</span>).json({ <span class="hljs-attr">error</span>: <span class="hljs-string">'No file uploaded'</span> });
+  }
+  
+  res.json({
+    <span class="hljs-attr">message</span>: <span class="hljs-string">'File uploaded successfully'</span>,
+    <span class="hljs-attr">file</span>: {
+      <span class="hljs-attr">filename</span>: req.file.filename,
+      <span class="hljs-attr">originalname</span>: req.file.originalname,
+      <span class="hljs-attr">mimetype</span>: req.file.mimetype,
+      <span class="hljs-attr">size</span>: req.file.size
+    }
+  });
+});
+
+app.post(<span class="hljs-string">'/api/upload/multiple'</span>, upload.array(<span class="hljs-string">'images'</span>, <span class="hljs-number">5</span>), (req, res) =&gt; {
+  <span class="hljs-keyword">if</span> (!req.files || req.files.length === <span class="hljs-number">0</span>) {
+    <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">400</span>).json({ <span class="hljs-attr">error</span>: <span class="hljs-string">'No files uploaded'</span> });
+  }
+  
+  <span class="hljs-keyword">const</span> files = req.files.map(<span class="hljs-function"><span class="hljs-params">file</span> =&gt;</span> ({
+    <span class="hljs-attr">filename</span>: file.filename,
+    <span class="hljs-attr">originalname</span>: file.originalname,
+    <span class="hljs-attr">mimetype</span>: file.mimetype,
+    <span class="hljs-attr">size</span>: file.size
+  }));
+  
+  res.json({
+    <span class="hljs-attr">message</span>: <span class="hljs-string">'Files uploaded successfully'</span>,
+    files
+  });
+});
+</div></code></pre>
+<h3 id="websocket-implementation">WebSocket Implementation</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+<span class="hljs-keyword">const</span> socketIo = <span class="hljs-built_in">require</span>(<span class="hljs-string">'socket.io'</span>);
+
+<span class="hljs-keyword">const</span> server = http.createServer(app);
+<span class="hljs-keyword">const</span> io = socketIo(server, {
+  <span class="hljs-attr">cors</span>: {
+    <span class="hljs-attr">origin</span>: process.env.FRONTEND_URL,
+    <span class="hljs-attr">methods</span>: [<span class="hljs-string">"GET"</span>, <span class="hljs-string">"POST"</span>]
+  }
+});
+
+<span class="hljs-comment">// Socket authentication middleware</span>
+io.use(<span class="hljs-keyword">async</span> (socket, next) =&gt; {
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> token = socket.handshake.auth.token;
+    <span class="hljs-keyword">const</span> decoded = jwt.verify(token, process.env.JWT_SECRET);
+    <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> User.findById(decoded.userId);
+    
+    socket.user = user;
+    next();
+  } <span class="hljs-keyword">catch</span> (error) {
+    next(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Authentication error'</span>));
+  }
+});
+
+<span class="hljs-comment">// Socket connection handling</span>
+io.on(<span class="hljs-string">'connection'</span>, (socket) =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`User <span class="hljs-subst">${socket.user.name}</span> connected`</span>);
+  
+  <span class="hljs-comment">// Join user to their room</span>
+  socket.join(<span class="hljs-string">`user_<span class="hljs-subst">${socket.user._id}</span>`</span>);
+  
+  <span class="hljs-comment">// Handle chat messages</span>
+  socket.on(<span class="hljs-string">'send_message'</span>, <span class="hljs-keyword">async</span> (data) =&gt; {
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">const</span> message = <span class="hljs-keyword">new</span> Message({
+        <span class="hljs-attr">sender</span>: socket.user._id,
+        <span class="hljs-attr">content</span>: data.content,
+        <span class="hljs-attr">room</span>: data.room
+      });
+      
+      <span class="hljs-keyword">await</span> message.save();
+      
+      <span class="hljs-comment">// Broadcast to room</span>
+      socket.to(data.room).emit(<span class="hljs-string">'new_message'</span>, {
+        <span class="hljs-attr">id</span>: message._id,
+        <span class="hljs-attr">content</span>: message.content,
+        <span class="hljs-attr">sender</span>: {
+          <span class="hljs-attr">id</span>: socket.user._id,
+          <span class="hljs-attr">name</span>: socket.user.name
+        },
+        <span class="hljs-attr">timestamp</span>: message.createdAt
+      });
+    } <span class="hljs-keyword">catch</span> (error) {
+      socket.emit(<span class="hljs-string">'error'</span>, { <span class="hljs-attr">message</span>: error.message });
+    }
+  });
+  
+  <span class="hljs-comment">// Handle disconnect</span>
+  socket.on(<span class="hljs-string">'disconnect'</span>, () =&gt; {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`User <span class="hljs-subst">${socket.user.name}</span> disconnected`</span>);
+  });
+});
+
+server.listen(PORT, () =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Server running on port <span class="hljs-subst">${PORT}</span>`</span>);
+});
+</div></code></pre>
+<h3 id="background-jobs-with-bull-queue">Background Jobs with Bull Queue</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> Queue = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bull'</span>);
+<span class="hljs-keyword">const</span> nodemailer = <span class="hljs-built_in">require</span>(<span class="hljs-string">'nodemailer'</span>);
+
+<span class="hljs-comment">// Create queues</span>
+<span class="hljs-keyword">const</span> emailQueue = <span class="hljs-keyword">new</span> Queue(<span class="hljs-string">'email processing'</span>, process.env.REDIS_URL);
+<span class="hljs-keyword">const</span> imageQueue = <span class="hljs-keyword">new</span> Queue(<span class="hljs-string">'image processing'</span>, process.env.REDIS_URL);
+
+<span class="hljs-comment">// Email job processor</span>
+emailQueue.process(<span class="hljs-keyword">async</span> (job) =&gt; {
+  <span class="hljs-keyword">const</span> { to, subject, html } = job.data;
+  
+  <span class="hljs-keyword">const</span> transporter = nodemailer.createTransporter({
+    <span class="hljs-comment">// email config</span>
+  });
+  
+  <span class="hljs-keyword">await</span> transporter.sendMail({
+    <span class="hljs-attr">from</span>: process.env.FROM_EMAIL,
+    to,
+    subject,
+    html
+  });
+  
+  <span class="hljs-keyword">return</span> { <span class="hljs-attr">sent</span>: <span class="hljs-literal">true</span> };
+});
+
+<span class="hljs-comment">// Image processing job</span>
+imageQueue.process(<span class="hljs-keyword">async</span> (job) =&gt; {
+  <span class="hljs-keyword">const</span> { imagePath, sizes } = job.data;
+  
+  <span class="hljs-comment">// Process image with sharp or similar</span>
+  <span class="hljs-keyword">const</span> sharp = <span class="hljs-built_in">require</span>(<span class="hljs-string">'sharp'</span>);
+  
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> size <span class="hljs-keyword">of</span> sizes) {
+    <span class="hljs-keyword">await</span> sharp(imagePath)
+      .resize(size.width, size.height)
+      .toFile(<span class="hljs-string">`processed/<span class="hljs-subst">${size.name}</span>_<span class="hljs-subst">${path.basename(imagePath)}</span>`</span>);
+  }
+  
+  <span class="hljs-keyword">return</span> { <span class="hljs-attr">processed</span>: <span class="hljs-literal">true</span> };
+});
+
+<span class="hljs-comment">// Add jobs to queue</span>
+<span class="hljs-keyword">const</span> sendWelcomeEmail = <span class="hljs-keyword">async</span> (userEmail, userName) =&gt; {
+  <span class="hljs-keyword">await</span> emailQueue.add(<span class="hljs-string">'welcome email'</span>, {
+    <span class="hljs-attr">to</span>: userEmail,
+    <span class="hljs-attr">subject</span>: <span class="hljs-string">'Welcome!'</span>,
+    <span class="hljs-attr">html</span>: <span class="hljs-string">`&lt;h1&gt;Welcome <span class="hljs-subst">${userName}</span>!&lt;/h1&gt;`</span>
+  });
+};
+
+<span class="hljs-keyword">const</span> processUserImage = <span class="hljs-keyword">async</span> (imagePath) =&gt; {
+  <span class="hljs-keyword">await</span> imageQueue.add(<span class="hljs-string">'resize image'</span>, {
+    imagePath,
+    <span class="hljs-attr">sizes</span>: [
+      { <span class="hljs-attr">name</span>: <span class="hljs-string">'thumbnail'</span>, <span class="hljs-attr">width</span>: <span class="hljs-number">150</span>, <span class="hljs-attr">height</span>: <span class="hljs-number">150</span> },
+      { <span class="hljs-attr">name</span>: <span class="hljs-string">'medium'</span>, <span class="hljs-attr">width</span>: <span class="hljs-number">500</span>, <span class="hljs-attr">height</span>: <span class="hljs-number">500</span> }
+    ]
+  });
+};
+
+<span class="hljs-comment">// Queue monitoring</span>
+emailQueue.on(<span class="hljs-string">'completed'</span>, (job) =&gt; {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Email job <span class="hljs-subst">${job.id}</span> completed`</span>);
+});
+
+emailQueue.on(<span class="hljs-string">'failed'</span>, (job, err) =&gt; {
+  <span class="hljs-built_in">console</span>.error(<span class="hljs-string">`Email job <span class="hljs-subst">${job.id}</span> failed:`</span>, err);
+});
+</div></code></pre>
+<h3 id="database-migrations">Database Migrations</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// migrations/001_create_users_table.js</span>
+<span class="hljs-keyword">const</span> mongoose = <span class="hljs-built_in">require</span>(<span class="hljs-string">'mongoose'</span>);
+
+<span class="hljs-keyword">const</span> up = <span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-comment">// Create indexes</span>
+  <span class="hljs-keyword">await</span> mongoose.connection.collection(<span class="hljs-string">'users'</span>).createIndex({ <span class="hljs-attr">email</span>: <span class="hljs-number">1</span> }, { <span class="hljs-attr">unique</span>: <span class="hljs-literal">true</span> });
+  <span class="hljs-keyword">await</span> mongoose.connection.collection(<span class="hljs-string">'users'</span>).createIndex({ <span class="hljs-attr">createdAt</span>: <span class="hljs-number">-1</span> });
+};
+
+<span class="hljs-keyword">const</span> down = <span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-comment">// Drop indexes</span>
+  <span class="hljs-keyword">await</span> mongoose.connection.collection(<span class="hljs-string">'users'</span>).dropIndex({ <span class="hljs-attr">email</span>: <span class="hljs-number">1</span> });
+  <span class="hljs-keyword">await</span> mongoose.connection.collection(<span class="hljs-string">'users'</span>).dropIndex({ <span class="hljs-attr">createdAt</span>: <span class="hljs-number">-1</span> });
+};
+
+<span class="hljs-built_in">module</span>.exports = { up, down };
+
+<span class="hljs-comment">// Migration runner</span>
+<span class="hljs-keyword">const</span> runMigrations = <span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">const</span> migrations = [
+    <span class="hljs-built_in">require</span>(<span class="hljs-string">'./migrations/001_create_users_table'</span>),
+    <span class="hljs-comment">// Add more migrations</span>
+  ];
+  
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> migration <span class="hljs-keyword">of</span> migrations) {
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">await</span> migration.up();
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Migration <span class="hljs-subst">${migration.name}</span> completed`</span>);
+    } <span class="hljs-keyword">catch</span> (error) {
+      <span class="hljs-built_in">console</span>.error(<span class="hljs-string">`Migration <span class="hljs-subst">${migration.name}</span> failed:`</span>, error);
+      <span class="hljs-keyword">break</span>;
+    }
+  }
+};
+</div></code></pre>
+<h3 id="logging">Logging</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> winston = <span class="hljs-built_in">require</span>(<span class="hljs-string">'winston'</span>);
+
+<span class="hljs-comment">// Configure logger</span>
+<span class="hljs-keyword">const</span> logger = winston.createLogger({
+  <span class="hljs-attr">level</span>: <span class="hljs-string">'info'</span>,
+  <span class="hljs-attr">format</span>: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.errors({ <span class="hljs-attr">stack</span>: <span class="hljs-literal">true</span> }),
+    winston.format.json()
+  ),
+  <span class="hljs-attr">defaultMeta</span>: { <span class="hljs-attr">service</span>: <span class="hljs-string">'api'</span> },
+  <span class="hljs-attr">transports</span>: [
+    <span class="hljs-keyword">new</span> winston.transports.File({ <span class="hljs-attr">filename</span>: <span class="hljs-string">'logs/error.log'</span>, <span class="hljs-attr">level</span>: <span class="hljs-string">'error'</span> }),
+    <span class="hljs-keyword">new</span> winston.transports.File({ <span class="hljs-attr">filename</span>: <span class="hljs-string">'logs/combined.log'</span> }),
+  ],
+});
+
+<span class="hljs-keyword">if</span> (process.env.NODE_ENV !== <span class="hljs-string">'production'</span>) {
+  logger.add(<span class="hljs-keyword">new</span> winston.transports.Console({
+    <span class="hljs-attr">format</span>: winston.format.simple()
+  }));
+}
+
+<span class="hljs-comment">// Request logging middleware</span>
+<span class="hljs-keyword">const</span> requestLogger = <span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> start = <span class="hljs-built_in">Date</span>.now();
+  
+  res.on(<span class="hljs-string">'finish'</span>, () =&gt; {
+    <span class="hljs-keyword">const</span> duration = <span class="hljs-built_in">Date</span>.now() - start;
+    logger.info({
+      <span class="hljs-attr">method</span>: req.method,
+      <span class="hljs-attr">url</span>: req.url,
+      <span class="hljs-attr">status</span>: res.statusCode,
+      <span class="hljs-attr">duration</span>: <span class="hljs-string">`<span class="hljs-subst">${duration}</span>ms`</span>,
+      <span class="hljs-attr">userAgent</span>: req.get(<span class="hljs-string">'User-Agent'</span>),
+      <span class="hljs-attr">ip</span>: req.ip
+    });
+  });
+  
+  next();
+};
+
+app.use(requestLogger);
+
+<span class="hljs-comment">// Usage in routes</span>
+app.get(<span class="hljs-string">'/api/users'</span>, <span class="hljs-keyword">async</span> (req, res) =&gt; {
+  <span class="hljs-keyword">try</span> {
+    logger.info(<span class="hljs-string">'Fetching users'</span>);
+    <span class="hljs-keyword">const</span> users = <span class="hljs-keyword">await</span> User.find();
+    res.json(users);
+  } <span class="hljs-keyword">catch</span> (error) {
+    logger.error(<span class="hljs-string">'Error fetching users'</span>, { <span class="hljs-attr">error</span>: error.message, <span class="hljs-attr">stack</span>: error.stack });
+    res.status(<span class="hljs-number">500</span>).json({ <span class="hljs-attr">error</span>: <span class="hljs-string">'Internal server error'</span> });
+  }
+});
+</div></code></pre>
+<hr>
+<h2 id="quick-reference-commands">Quick Reference Commands</h2>
+<h3 id="npm-commands">NPM Commands</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Initialize project</span>
+npm init -y
+
+<span class="hljs-comment"># Install dependencies</span>
+npm install express mongoose dotenv
+npm install -D nodemon jest
+
+<span class="hljs-comment"># Run scripts</span>
+npm start
+npm run dev
+npm <span class="hljs-built_in">test</span>
+
+<span class="hljs-comment"># Update packages</span>
+npm update
+npm audit fix
+</div></code></pre>
+<h3 id="git-commands">Git Commands</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Initialize repository</span>
+git init
+git add .
+git commit -m <span class="hljs-string">"Initial commit"</span>
+
+<span class="hljs-comment"># Create and switch branches</span>
+git checkout -b feature/api-endpoints
+git push -u origin feature/api-endpoints
+
+<span class="hljs-comment"># Merge changes</span>
+git checkout main
+git merge feature/api-endpoints
+</div></code></pre>
+<h3 id="docker-commands">Docker Commands</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Build image</span>
+docker build -t myapp .
+
+<span class="hljs-comment"># Run container</span>
+docker run -p 3000:3000 myapp
+
+<span class="hljs-comment"># Docker compose</span>
+docker-compose up -d
+docker-compose down
+docker-compose logs -f
+</div></code></pre>
+<h3 id="database-commands">Database Commands</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># MongoDB</span>
+mongosh
+use myapp
+db.users.find()
+db.users.createIndex({ email: 1 }, { unique: <span class="hljs-literal">true</span> })
+
+<span class="hljs-comment"># PostgreSQL</span>
+psql -U username -d database
+\dt
+SELECT * FROM users;
+CREATE INDEX idx_users_email ON users(email);
+</div></code></pre>
+<hr>
+<p>This comprehensive cheatsheet covers all essential backend development concepts from beginner to advanced levels. Use it as a reference guide for building robust, scalable backend applications with modern technologies and best practices.</p>
+
+</body>
+</html>

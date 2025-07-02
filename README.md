@@ -52,6 +52,7 @@ Your comprehensive collection of development cheatsheets, guides, and references
 ### Database Management System 🛢️
 
 - [**DBMS Interview Guide**](/dbms/dbms-interview-questions.md) - Essential concepts & questions
+- [**SQL & PostgreSQL**](/dbms/sql-postgresql-cheatsheet.md) - Complete SQL & PostgreSQL Cheatsheet
 
 ### System Design ⚙️
 

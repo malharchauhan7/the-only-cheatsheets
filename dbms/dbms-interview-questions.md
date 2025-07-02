@@ -1,6 +1,6 @@
 # DBMS Interview Questions for Beginners - Complete Guide
 
-[Download PDF](https://gdurl.com/VJ7l)
+### [Download PDF](https://gdurl.com/szeU)
 
 ## **1. What is DBMS? What are its advantages?**
 

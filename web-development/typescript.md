@@ -1,5 +1,7 @@
 # Complete TypeScript Cheatsheet - Beginner to Advanced
 
+### [Download PDF](https://gdurl.com/AZKA)
+
 ## Table of Contents
 
 1. [Introduction to TypeScript](#1-introduction-to-typescript)

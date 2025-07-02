@@ -1,6 +1,6 @@
 # Complete System Design Cheatsheet - Beginner to Advanced
 
-[Download PDF](https://gdurl.com/0oiJ)
+### [Download PDF](https://gdurl.com/py0h)
 
 ## Table of Contents
 

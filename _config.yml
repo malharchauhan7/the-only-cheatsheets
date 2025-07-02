@@ -6,3 +6,9 @@ description: Comprehensive collection of your cheatsheets
 show_downloads: true
 github:
   is_project_page: true
+defaults:
+  - scope:
+      path: ""
+    values:
+      head_include: |
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">

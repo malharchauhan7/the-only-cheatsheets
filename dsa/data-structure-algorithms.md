@@ -1,6 +1,6 @@
 # Complete Data Structures & Algorithms Cheatsheet - Python
 
-[Download PDF](https://gdurl.com/OXtU)
+### [Download PDF](https://gdurl.com/1You)
 
 ## Table of Contents
 

@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>git-github-cheatsheet.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="complete-gitgithub-cheatsheet---beginner-to-advanced">Complete Git/GitHub Cheatsheet - Beginner to Advanced</h1>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#what-is-git-and-github">What is Git and GitHub?</a></li>
+<li><a href="#installation-and-setup">Installation and Setup</a></li>
+<li><a href="#basic-git-concepts">Basic Git Concepts</a></li>
+<li><a href="#repository-basics">Repository Basics</a></li>
+<li><a href="#file-operations">File Operations</a></li>
+<li><a href="#commit-management">Commit Management</a></li>
+<li><a href="#branching-fundamentals">Branching Fundamentals</a></li>
+<li><a href="#remote-repositories">Remote Repositories</a></li>
+<li><a href="#merging-strategies">Merging Strategies</a></li>
+<li><a href="#rebasing">Rebasing</a></li>
+<li><a href="#conflict-resolution">Conflict Resolution</a></li>
+<li><a href="#stashing">Stashing</a></li>
+<li><a href="#tagging">Tagging</a></li>
+<li><a href="#history-and-logs">History and Logs</a></li>
+<li><a href="#undoing-changes">Undoing Changes</a></li>
+<li><a href="#github-specific-features">GitHub Specific Features</a></li>
+<li><a href="#advanced-git-operations">Advanced Git Operations</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#troubleshooting-common-issues">Troubleshooting Common Issues</a></li>
+<li><a href="#quick-reference">Quick Reference</a></li>
+</ol>
+<hr>
+<h2 id="what-is-git-and-github">What is Git and GitHub?</h2>
+<p><strong>Git</strong> is a distributed version control system that tracks changes in files and coordinates work among multiple people. It's like having a detailed history of every change made to your project.</p>
+<p><strong>GitHub</strong> is a cloud-based hosting service for Git repositories. Think of it as a social media platform for code where you can store, share, and collaborate on projects.</p>
+<p><strong>Key Differences:</strong></p>
+<ul>
+<li>Git = The tool (works locally on your computer)</li>
+<li>GitHub = The service (cloud-based platform)</li>
+</ul>
+<hr>
+<h2 id="installation-and-setup">Installation and Setup</h2>
+<h3 id="installing-git">Installing Git</h3>
+<p><strong>Windows:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment"># Download from https://git-scm.com/download/win</span>
+<span class="hljs-comment"># Or use chocolatey</span>
+choco install git
+</div></code></pre>
+<p><strong>macOS:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment"># Using Homebrew</span>
+brew install git
+<span class="hljs-comment"># Or download from https://git-scm.com/download/mac</span>
+</div></code></pre>
+<p><strong>Linux (Ubuntu/Debian):</strong></p>
+<pre class="hljs"><code><div>sudo apt update
+sudo apt install git
+</div></code></pre>
+<h3 id="initial-configuration">Initial Configuration</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Set your name and email (required for commits)</span>
+git config --global user.name <span class="hljs-string">"Your Name"</span>
+git config --global user.email <span class="hljs-string">"your.email@example.com"</span>
+
+<span class="hljs-comment"># Set default branch name</span>
+git config --global init.defaultBranch main
+
+<span class="hljs-comment"># Set default editor</span>
+git config --global core.editor <span class="hljs-string">"code --wait"</span>  <span class="hljs-comment"># VS Code</span>
+git config --global core.editor <span class="hljs-string">"nano"</span>         <span class="hljs-comment"># Nano</span>
+
+<span class="hljs-comment"># Check your configuration</span>
+git config --list
+git config user.name  <span class="hljs-comment"># Check specific setting</span>
+</div></code></pre>
+<hr>
+<h2 id="basic-git-concepts">Basic Git Concepts</h2>
+<h3 id="the-three-states">The Three States</h3>
+<ol>
+<li><strong>Working Directory</strong> - Where you modify files</li>
+<li><strong>Staging Area (Index)</strong> - Where you prepare files for commit</li>
+<li><strong>Repository</strong> - Where Git stores committed snapshots</li>
+</ol>
+<h3 id="basic-workflow">Basic Workflow</h3>
+<pre class="hljs"><code><div>Working Directory → Staging Area → Repository
+     (edit)         (git add)      (git commit)
+</div></code></pre>
+<hr>
+<h2 id="repository-basics">Repository Basics</h2>
+<h3 id="creating-a-repository">Creating a Repository</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Create a new repository in current directory</span>
+git init
+
+<span class="hljs-comment"># Create a new repository in a specific directory</span>
+git init my-project
+<span class="hljs-built_in">cd</span> my-project
+
+<span class="hljs-comment"># Clone an existing repository</span>
+git <span class="hljs-built_in">clone</span> https://github.com/username/repository-name.git
+git <span class="hljs-built_in">clone</span> https://github.com/username/repository-name.git my-folder
+
+<span class="hljs-comment"># Clone with SSH (more secure)</span>
+git <span class="hljs-built_in">clone</span> git@github.com:username/repository-name.git
+</div></code></pre>
+<h3 id="repository-status">Repository Status</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Check repository status</span>
+git status
+
+<span class="hljs-comment"># Short status format</span>
+git status -s
+<span class="hljs-comment"># M  = modified</span>
+<span class="hljs-comment"># A  = added</span>
+<span class="hljs-comment"># D  = deleted</span>
+<span class="hljs-comment"># R  = renamed</span>
+<span class="hljs-comment"># C  = copied</span>
+<span class="hljs-comment"># U  = updated but unmerged</span>
+</div></code></pre>
+<hr>
+<h2 id="file-operations">File Operations</h2>
+<h3 id="adding-files-to-staging-area">Adding Files to Staging Area</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Add specific file</span>
+git add filename.txt
+
+<span class="hljs-comment"># Add multiple files</span>
+git add file1.txt file2.txt
+
+<span class="hljs-comment"># Add all files in current directory</span>
+git add .
+
+<span class="hljs-comment"># Add all files in repository</span>
+git add -A
+
+<span class="hljs-comment"># Add files by pattern</span>
+git add *.txt
+git add src/
+
+<span class="hljs-comment"># Add interactively (choose what to stage)</span>
+git add -i
+git add -p  <span class="hljs-comment"># Patch mode - stage parts of files</span>
+</div></code></pre>
+<h3 id="removing-files">Removing Files</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Remove file from working directory and staging area</span>
+git rm filename.txt
+
+<span class="hljs-comment"># Remove file only from staging area (keep in working directory)</span>
+git rm --cached filename.txt
+
+<span class="hljs-comment"># Remove directory</span>
+git rm -r directory-name/
+
+<span class="hljs-comment"># Remove files matching pattern</span>
+git rm <span class="hljs-string">"*.log"</span>
+</div></code></pre>
+<h3 id="movingrenaming-files">Moving/Renaming Files</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Rename/move file</span>
+git mv old-filename.txt new-filename.txt
+git mv file.txt folder/file.txt
+
+<span class="hljs-comment"># This is equivalent to:</span>
+mv old-filename.txt new-filename.txt
+git rm old-filename.txt
+git add new-filename.txt
+</div></code></pre>
+<hr>
+<h2 id="commit-management">Commit Management</h2>
+<h3 id="creating-commits">Creating Commits</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Commit with message</span>
+git commit -m <span class="hljs-string">"Add user authentication feature"</span>
+
+<span class="hljs-comment"># Commit with detailed message</span>
+git commit -m <span class="hljs-string">"Add user authentication"</span> -m <span class="hljs-string">"- Added login form validation
+- Implemented JWT token handling
+- Added password hashing"</span>
+
+<span class="hljs-comment"># Add and commit in one step</span>
+git commit -am <span class="hljs-string">"Fix bug in user registration"</span>
+
+<span class="hljs-comment"># Commit with editor for longer message</span>
+git commit
+
+<span class="hljs-comment"># Amend last commit (change message or add files)</span>
+git commit --amend -m <span class="hljs-string">"Better commit message"</span>
+git add forgotten-file.txt
+git commit --amend --no-edit
+</div></code></pre>
+<h3 id="commit-message-best-practices">Commit Message Best Practices</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Good commit message format:</span>
+<span class="hljs-comment"># &lt;type&gt;: &lt;description&gt;</span>
+<span class="hljs-comment"># </span>
+<span class="hljs-comment"># [optional body]</span>
+<span class="hljs-comment"># </span>
+<span class="hljs-comment"># [optional footer]</span>
+
+git commit -m <span class="hljs-string">"feat: add user authentication system
+
+- Implement login/logout functionality
+- Add password hashing with bcrypt
+- Create JWT token management
+
+Closes #123"</span>
+
+<span class="hljs-comment"># Common types:</span>
+<span class="hljs-comment"># feat: new feature</span>
+<span class="hljs-comment"># fix: bug fix</span>
+<span class="hljs-comment"># docs: documentation</span>
+<span class="hljs-comment"># style: formatting</span>
+<span class="hljs-comment"># refactor: code restructuring</span>
+<span class="hljs-comment"># test: adding tests</span>
+<span class="hljs-comment"># chore: maintenance</span>
+</div></code></pre>
+<hr>
+<h2 id="branching-fundamentals">Branching Fundamentals</h2>
+<h3 id="understanding-branches">Understanding Branches</h3>
+<p>A branch is a moveable pointer to a specific commit. The default branch is usually called <code>main</code> or <code>master</code>.</p>
+<h3 id="basic-branch-operations">Basic Branch Operations</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># List all branches</span>
+git branch          <span class="hljs-comment"># Local branches</span>
+git branch -r       <span class="hljs-comment"># Remote branches</span>
+git branch -a       <span class="hljs-comment"># All branches</span>
+
+<span class="hljs-comment"># Create new branch</span>
+git branch feature-login
+
+<span class="hljs-comment"># Create and switch to new branch</span>
+git checkout -b feature-login
+git switch -c feature-login  <span class="hljs-comment"># Newer syntax</span>
+
+<span class="hljs-comment"># Switch between branches</span>
+git checkout main
+git switch main      <span class="hljs-comment"># Newer syntax</span>
+
+<span class="hljs-comment"># Switch to previous branch</span>
+git checkout -
+git switch -
+</div></code></pre>
+<h3 id="branch-management">Branch Management</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Rename current branch</span>
+git branch -m new-branch-name
+
+<span class="hljs-comment"># Rename any branch</span>
+git branch -m old-name new-name
+
+<span class="hljs-comment"># Delete branch (safe - prevents deletion if unmerged)</span>
+git branch -d feature-login
+
+<span class="hljs-comment"># Force delete branch (dangerous)</span>
+git branch -D feature-login
+
+<span class="hljs-comment"># Delete remote branch</span>
+git push origin --delete feature-login
+</div></code></pre>
+<h3 id="working-with-branches">Working with Branches</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Create branch from specific commit</span>
+git branch feature-x 9fceb02
+
+<span class="hljs-comment"># Create branch from another branch</span>
+git checkout -b feature-y feature-x
+
+<span class="hljs-comment"># Show branch information</span>
+git show-branch
+git branch -v        <span class="hljs-comment"># Show last commit on each branch</span>
+git branch --merged  <span class="hljs-comment"># Show merged branches</span>
+git branch --no-merged  <span class="hljs-comment"># Show unmerged branches</span>
+</div></code></pre>
+<hr>
+<h2 id="remote-repositories">Remote Repositories</h2>
+<h3 id="setting-up-remotes">Setting Up Remotes</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Add remote repository</span>
+git remote add origin https://github.com/username/repo.git
+
+<span class="hljs-comment"># List remotes</span>
+git remote
+git remote -v  <span class="hljs-comment"># Show URLs</span>
+
+<span class="hljs-comment"># Show remote information</span>
+git remote show origin
+
+<span class="hljs-comment"># Rename remote</span>
+git remote rename origin upstream
+
+<span class="hljs-comment"># Remove remote</span>
+git remote remove upstream
+</div></code></pre>
+<h3 id="pushing-and-pulling">Pushing and Pulling</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Push to remote</span>
+git push origin main
+git push origin feature-branch
+
+<span class="hljs-comment"># Push and set upstream</span>
+git push -u origin main
+git push --<span class="hljs-built_in">set</span>-upstream origin feature-branch
+
+<span class="hljs-comment"># Push all branches</span>
+git push origin --all
+
+<span class="hljs-comment"># Push tags</span>
+git push origin --tags
+
+<span class="hljs-comment"># Force push (dangerous - rewrites history)</span>
+git push --force origin main
+git push --force-with-lease origin main  <span class="hljs-comment"># Safer force push</span>
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment"># Fetch changes from remote (doesn't merge)</span>
+git fetch origin
+git fetch --all
+
+<span class="hljs-comment"># Pull changes (fetch + merge)</span>
+git pull origin main
+git pull  <span class="hljs-comment"># If upstream is set</span>
+
+<span class="hljs-comment"># Pull with rebase</span>
+git pull --rebase origin main
+
+<span class="hljs-comment"># Pull specific branch</span>
+git pull origin feature-branch
+</div></code></pre>
+<h3 id="tracking-branches">Tracking Branches</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Create local branch tracking remote branch</span>
+git checkout -b feature-x origin/feature-x
+git checkout --track origin/feature-x
+
+<span class="hljs-comment"># Set upstream for existing branch</span>
+git branch --<span class="hljs-built_in">set</span>-upstream-to=origin/main main
+
+<span class="hljs-comment"># Show tracking information</span>
+git branch -vv
+</div></code></pre>
+<hr>
+<h2 id="merging-strategies">Merging Strategies</h2>
+<h3 id="types-of-merges">Types of Merges</h3>
+<p><strong>1. Fast-Forward Merge</strong></p>
+<ul>
+<li>Happens when target branch hasn't diverged</li>
+<li>Simply moves pointer forward</li>
+</ul>
+<p><strong>2. Three-Way Merge</strong></p>
+<ul>
+<li>Creates a new merge commit</li>
+<li>Combines changes from both branches</li>
+</ul>
+<p><strong>3. Squash Merge</strong></p>
+<ul>
+<li>Combines all commits into one</li>
+</ul>
+<h3 id="merge-commands">Merge Commands</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Basic merge</span>
+git checkout main
+git merge feature-branch
+
+<span class="hljs-comment"># Merge with custom message</span>
+git merge feature-branch -m <span class="hljs-string">"Merge feature-branch into main"</span>
+
+<span class="hljs-comment"># No fast-forward merge (always create merge commit)</span>
+git merge --no-ff feature-branch
+
+<span class="hljs-comment"># Squash merge (combine all commits into one)</span>
+git merge --squash feature-branch
+git commit -m <span class="hljs-string">"Add feature X"</span>
+
+<span class="hljs-comment"># Abort merge if there are conflicts</span>
+git merge --abort
+</div></code></pre>
+<h3 id="merge-vs-rebase-decision-tree">Merge vs Rebase Decision Tree</h3>
+<pre class="hljs"><code><div>Use MERGE when:
+- Working on a team
+- Want to preserve exact history
+- Working on public branches
+- Want to show when features were integrated
+
+Use REBASE when:
+- Want clean, linear history
+- Working on private branches
+- Want to avoid merge commits
+- Preparing feature branch for merge
+</div></code></pre>
+<hr>
+<h2 id="rebasing">Rebasing</h2>
+<h3 id="what-is-rebasing">What is Rebasing?</h3>
+<p>Rebasing replays commits from one branch onto another, creating a linear history.</p>
+<h3 id="basic-rebase">Basic Rebase</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Rebase current branch onto main</span>
+git rebase main
+
+<span class="hljs-comment"># Rebase specific branch</span>
+git rebase main feature-branch
+
+<span class="hljs-comment"># Interactive rebase (edit commit history)</span>
+git rebase -i HEAD~3  <span class="hljs-comment"># Last 3 commits</span>
+git rebase -i main    <span class="hljs-comment"># All commits since main</span>
+
+<span class="hljs-comment"># Continue rebase after resolving conflicts</span>
+git rebase --<span class="hljs-built_in">continue</span>
+
+<span class="hljs-comment"># Skip current commit during rebase</span>
+git rebase --skip
+
+<span class="hljs-comment"># Abort rebase</span>
+git rebase --abort
+</div></code></pre>
+<h3 id="interactive-rebase-options">Interactive Rebase Options</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># During interactive rebase, you can:</span>
+pick f7f3f6d  <span class="hljs-comment"># Keep commit as is</span>
+reword f7f3f6d  <span class="hljs-comment"># Keep commit but edit message</span>
+edit f7f3f6d  <span class="hljs-comment"># Stop to amend commit</span>
+squash f7f3f6d  <span class="hljs-comment"># Combine with previous commit</span>
+fixup f7f3f6d  <span class="hljs-comment"># Like squash but discard message</span>
+drop f7f3f6d  <span class="hljs-comment"># Remove commit entirely</span>
+
+<span class="hljs-comment"># Example interactive rebase:</span>
+git rebase -i HEAD~4
+<span class="hljs-comment"># This opens editor with last 4 commits</span>
+</div></code></pre>
+<h3 id="rebase-examples">Rebase Examples</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Clean up commits before pushing</span>
+git rebase -i HEAD~3
+
+<span class="hljs-comment"># Update feature branch with latest main</span>
+git checkout feature-branch
+git rebase main
+
+<span class="hljs-comment"># Rebase and push</span>
+git rebase main
+git push --force-with-lease origin feature-branch
+</div></code></pre>
+<hr>
+<h2 id="conflict-resolution">Conflict Resolution</h2>
+<h3 id="understanding-conflicts">Understanding Conflicts</h3>
+<p>Conflicts occur when Git can't automatically merge changes because the same lines were modified in different ways.</p>
+<h3 id="conflict-markers">Conflict Markers</h3>
+<pre class="hljs"><code><div>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+Your current branch changes
+=======
+Changes from other branch
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; branch-name
+</div></code></pre>
+<h3 id="resolving-conflicts">Resolving Conflicts</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Check which files have conflicts</span>
+git status
+
+<span class="hljs-comment"># View conflicts</span>
+git diff
+
+<span class="hljs-comment"># After manually editing files to resolve conflicts:</span>
+git add resolved-file.txt
+git commit  <span class="hljs-comment"># For merge conflicts</span>
+git rebase --<span class="hljs-built_in">continue</span>  <span class="hljs-comment"># For rebase conflicts</span>
+
+<span class="hljs-comment"># Use merge tools</span>
+git mergetool
+git mergetool --tool=vimdiff
+</div></code></pre>
+<h3 id="conflict-resolution-tools">Conflict Resolution Tools</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Configure merge tool</span>
+git config --global merge.tool vimdiff
+git config --global merge.tool vscode
+
+<span class="hljs-comment"># For VS Code</span>
+git config --global merge.tool vscode
+git config --global mergetool.vscode.cmd <span class="hljs-string">'code --wait $MERGED'</span>
+</div></code></pre>
+<h3 id="preventing-conflicts">Preventing Conflicts</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Regularly sync with main branch</span>
+git checkout main
+git pull origin main
+git checkout feature-branch
+git rebase main
+
+<span class="hljs-comment"># Use smaller, focused commits</span>
+<span class="hljs-comment"># Communicate with team about file changes</span>
+<span class="hljs-comment"># Use feature flags for long-running features</span>
+</div></code></pre>
+<hr>
+<h2 id="stashing">Stashing</h2>
+<h3 id="what-is-stashing">What is Stashing?</h3>
+<p>Stashing temporarily saves your uncommitted changes so you can work on something else, then come back and re-apply them.</p>
+<h3 id="basic-stashing">Basic Stashing</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Stash current changes</span>
+git stash
+git stash push -m <span class="hljs-string">"Work in progress on feature X"</span>
+
+<span class="hljs-comment"># Stash including untracked files</span>
+git stash -u
+git stash --include-untracked
+
+<span class="hljs-comment"># List stashes</span>
+git stash list
+
+<span class="hljs-comment"># Apply latest stash</span>
+git stash apply
+git stash pop  <span class="hljs-comment"># Apply and remove from stash list</span>
+
+<span class="hljs-comment"># Apply specific stash</span>
+git stash apply stash@{2}
+git stash pop stash@{1}
+</div></code></pre>
+<h3 id="advanced-stashing">Advanced Stashing</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Stash only specific files</span>
+git stash push -m <span class="hljs-string">"Partial stash"</span> file1.txt file2.txt
+
+<span class="hljs-comment"># Stash with pathspec</span>
+git stash push -m <span class="hljs-string">"Stash CSS changes"</span> -- <span class="hljs-string">"*.css"</span>
+
+<span class="hljs-comment"># Create branch from stash</span>
+git stash branch new-feature-branch stash@{1}
+
+<span class="hljs-comment"># Show stash contents</span>
+git stash show
+git stash show -p stash@{1}  <span class="hljs-comment"># Show diff</span>
+
+<span class="hljs-comment"># Drop stash</span>
+git stash drop stash@{1}
+git stash clear  <span class="hljs-comment"># Remove all stashes</span>
+</div></code></pre>
+<h3 id="stashing-use-cases">Stashing Use Cases</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Quick bug fix while working on feature</span>
+git stash -m <span class="hljs-string">"WIP: feature development"</span>
+git checkout main
+git checkout -b hotfix-bug
+<span class="hljs-comment"># ... fix bug ...</span>
+git checkout feature-branch
+git stash pop
+
+<span class="hljs-comment"># Switch branches with uncommitted changes</span>
+git stash
+git checkout other-branch
+<span class="hljs-comment"># ... do work ...</span>
+git checkout original-branch
+git stash pop
+</div></code></pre>
+<hr>
+<h2 id="tagging">Tagging</h2>
+<h3 id="understanding-tags">Understanding Tags</h3>
+<p>Tags are references to specific commits, typically used to mark release points.</p>
+<h3 id="types-of-tags">Types of Tags</h3>
+<ul>
+<li><strong>Lightweight tags</strong>: Just a pointer to a commit</li>
+<li><strong>Annotated tags</strong>: Full objects with metadata</li>
+</ul>
+<h3 id="creating-tags">Creating Tags</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Lightweight tag</span>
+git tag v1.0
+
+<span class="hljs-comment"># Annotated tag (recommended)</span>
+git tag -a v1.0 -m <span class="hljs-string">"Version 1.0 release"</span>
+
+<span class="hljs-comment"># Tag specific commit</span>
+git tag -a v0.9 -m <span class="hljs-string">"Beta release"</span> 9fceb02
+
+<span class="hljs-comment"># Tag with GPG signature</span>
+git tag -s v1.0 -m <span class="hljs-string">"Signed version 1.0"</span>
+</div></code></pre>
+<h3 id="managing-tags">Managing Tags</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># List tags</span>
+git tag
+git tag -l <span class="hljs-string">"v1.*"</span>  <span class="hljs-comment"># List tags matching pattern</span>
+
+<span class="hljs-comment"># Show tag information</span>
+git show v1.0
+
+<span class="hljs-comment"># Delete tag</span>
+git tag -d v1.0
+
+<span class="hljs-comment"># Push tags to remote</span>
+git push origin v1.0
+git push origin --tags  <span class="hljs-comment"># Push all tags</span>
+
+<span class="hljs-comment"># Delete remote tag</span>
+git push origin --delete v1.0
+</div></code></pre>
+<h3 id="tag-best-practices">Tag Best Practices</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Semantic versioning: MAJOR.MINOR.PATCH</span>
+git tag -a v1.2.3 -m <span class="hljs-string">"Release version 1.2.3"</span>
+
+<span class="hljs-comment"># Pre-release tags</span>
+git tag -a v2.0.0-beta.1 -m <span class="hljs-string">"Beta release for v2.0.0"</span>
+
+<span class="hljs-comment"># Build metadata</span>
+git tag -a v1.0.0+20230615 -m <span class="hljs-string">"Release with build metadata"</span>
+</div></code></pre>
+<hr>
+<h2 id="history-and-logs">History and Logs</h2>
+<h3 id="basic-log-commands">Basic Log Commands</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Show commit history</span>
+git <span class="hljs-built_in">log</span>
+
+<span class="hljs-comment"># One line per commit</span>
+git <span class="hljs-built_in">log</span> --oneline
+
+<span class="hljs-comment"># Show last n commits</span>
+git <span class="hljs-built_in">log</span> -n 5
+git <span class="hljs-built_in">log</span> -5
+
+<span class="hljs-comment"># Show commits with file changes</span>
+git <span class="hljs-built_in">log</span> --<span class="hljs-built_in">stat</span>
+git <span class="hljs-built_in">log</span> --name-only
+git <span class="hljs-built_in">log</span> --name-status
+</div></code></pre>
+<h3 id="advanced-log-formatting">Advanced Log Formatting</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Custom format</span>
+git <span class="hljs-built_in">log</span> --pretty=format:<span class="hljs-string">"%h - %an, %ar : %s"</span>
+<span class="hljs-comment"># %h = short hash, %an = author name, %ar = author date relative, %s = subject</span>
+
+<span class="hljs-comment"># Graphical representation</span>
+git <span class="hljs-built_in">log</span> --graph --oneline --all
+
+<span class="hljs-comment"># Show commits affecting specific file</span>
+git <span class="hljs-built_in">log</span> -- filename.txt
+git <span class="hljs-built_in">log</span> -p -- filename.txt  <span class="hljs-comment"># Show diffs</span>
+
+<span class="hljs-comment"># Show commits by author</span>
+git <span class="hljs-built_in">log</span> --author=<span class="hljs-string">"John Doe"</span>
+
+<span class="hljs-comment"># Show commits in date range</span>
+git <span class="hljs-built_in">log</span> --since=<span class="hljs-string">"2023-01-01"</span> --until=<span class="hljs-string">"2023-12-31"</span>
+git <span class="hljs-built_in">log</span> --since=<span class="hljs-string">"2 weeks ago"</span>
+</div></code></pre>
+<h3 id="specialized-log-commands">Specialized Log Commands</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Show who changed each line of a file</span>
+git blame filename.txt
+git blame -L 10,20 filename.txt  <span class="hljs-comment"># Lines 10-20 only</span>
+
+<span class="hljs-comment"># Show file history</span>
+git <span class="hljs-built_in">log</span> --follow filename.txt
+
+<span class="hljs-comment"># Show commits that changed specific string</span>
+git <span class="hljs-built_in">log</span> -S <span class="hljs-string">"function_name"</span>
+git <span class="hljs-built_in">log</span> -G <span class="hljs-string">"regex_pattern"</span>
+
+<span class="hljs-comment"># Show merge commits only</span>
+git <span class="hljs-built_in">log</span> --merges
+
+<span class="hljs-comment"># Show non-merge commits only</span>
+git <span class="hljs-built_in">log</span> --no-merges
+</div></code></pre>
+<h3 id="visual-history-tools">Visual History Tools</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Built-in GUI</span>
+gitk
+gitk --all
+
+<span class="hljs-comment"># Show commits in specific format</span>
+git <span class="hljs-built_in">log</span> --graph --pretty=format:<span class="hljs-string">'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset'</span> --abbrev-commit
+</div></code></pre>
+<hr>
+<h2 id="undoing-changes">Undoing Changes</h2>
+<h3 id="undoing-working-directory-changes">Undoing Working Directory Changes</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Discard changes in working directory</span>
+git checkout -- filename.txt
+git restore filename.txt  <span class="hljs-comment"># Newer syntax</span>
+
+<span class="hljs-comment"># Discard all changes in working directory</span>
+git checkout -- .
+git restore .
+
+<span class="hljs-comment"># Restore file to specific commit</span>
+git checkout 9fceb02 -- filename.txt
+git restore --<span class="hljs-built_in">source</span>=HEAD~2 filename.txt
+</div></code></pre>
+<h3 id="undoing-staged-changes">Undoing Staged Changes</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Unstage file (keep changes in working directory)</span>
+git reset HEAD filename.txt
+git restore --staged filename.txt  <span class="hljs-comment"># Newer syntax</span>
+
+<span class="hljs-comment"># Unstage all files</span>
+git reset HEAD
+git restore --staged .
+</div></code></pre>
+<h3 id="undoing-commits">Undoing Commits</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Undo last commit (keep changes in working directory)</span>
+git reset --soft HEAD~1
+
+<span class="hljs-comment"># Undo last commit (keep changes in staging area)</span>
+git reset --mixed HEAD~1
+git reset HEAD~1  <span class="hljs-comment"># Same as --mixed</span>
+
+<span class="hljs-comment"># Undo last commit (discard all changes)</span>
+git reset --hard HEAD~1
+
+<span class="hljs-comment"># Undo multiple commits</span>
+git reset --hard HEAD~3
+
+<span class="hljs-comment"># Reset to specific commit</span>
+git reset --hard 9fceb02
+</div></code></pre>
+<h3 id="safe-undoing-with-revert">Safe Undoing with Revert</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Create new commit that undoes previous commit</span>
+git revert HEAD
+git revert 9fceb02
+
+<span class="hljs-comment"># Revert merge commit</span>
+git revert -m 1 HEAD
+
+<span class="hljs-comment"># Revert multiple commits</span>
+git revert HEAD~3..HEAD
+</div></code></pre>
+<h3 id="emergency-recovery">Emergency Recovery</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Show reference log (recent actions)</span>
+git reflog
+
+<span class="hljs-comment"># Recover lost commits</span>
+git reflog
+git checkout 9fceb02  <span class="hljs-comment"># From reflog</span>
+
+<span class="hljs-comment"># Recover deleted branch</span>
+git reflog
+git checkout -b recovered-branch 9fceb02
+</div></code></pre>
+<hr>
+<h2 id="github-specific-features">GitHub Specific Features</h2>
+<h3 id="repository-management">Repository Management</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Create repository on GitHub using CLI</span>
+gh repo create my-new-repo --public
+gh repo create my-new-repo --private
+
+<span class="hljs-comment"># Clone your own repository</span>
+gh repo <span class="hljs-built_in">clone</span> username/repository-name
+
+<span class="hljs-comment"># Fork repository</span>
+gh repo fork original-owner/repo-name
+</div></code></pre>
+<h3 id="pull-requests">Pull Requests</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Create pull request</span>
+gh pr create --title <span class="hljs-string">"Add new feature"</span> --body <span class="hljs-string">"Description of changes"</span>
+
+<span class="hljs-comment"># List pull requests</span>
+gh pr list
+
+<span class="hljs-comment"># View pull request</span>
+gh pr view 123
+
+<span class="hljs-comment"># Checkout pull request locally</span>
+gh pr checkout 123
+
+<span class="hljs-comment"># Merge pull request</span>
+gh pr merge 123 --merge
+gh pr merge 123 --squash
+gh pr merge 123 --rebase
+</div></code></pre>
+<h3 id="issues">Issues</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Create issue</span>
+gh issue create --title <span class="hljs-string">"Bug report"</span> --body <span class="hljs-string">"Description"</span>
+
+<span class="hljs-comment"># List issues</span>
+gh issue list
+
+<span class="hljs-comment"># View issue</span>
+gh issue view 123
+
+<span class="hljs-comment"># Close issue</span>
+gh issue close 123
+</div></code></pre>
+<h3 id="github-actions">GitHub Actions</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># View workflow runs</span>
+gh run list
+
+<span class="hljs-comment"># View specific run</span>
+gh run view 123456
+
+<span class="hljs-comment"># Re-run workflow</span>
+gh run rerun 123456
+</div></code></pre>
+<hr>
+<h2 id="advanced-git-operations">Advanced Git Operations</h2>
+<h3 id="cherry-picking">Cherry-picking</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Apply specific commit to current branch</span>
+git cherry-pick 9fceb02
+
+<span class="hljs-comment"># Cherry-pick multiple commits</span>
+git cherry-pick 9fceb02 1234567
+
+<span class="hljs-comment"># Cherry-pick range of commits</span>
+git cherry-pick 9fceb02..1234567
+
+<span class="hljs-comment"># Cherry-pick without committing</span>
+git cherry-pick --no-commit 9fceb02
+</div></code></pre>
+<h3 id="bisecting-finding-bugs">Bisecting (Finding Bugs)</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Start bisecting</span>
+git bisect start
+git bisect bad          <span class="hljs-comment"># Current commit is bad</span>
+git bisect good v1.0    <span class="hljs-comment"># v1.0 was good</span>
+
+<span class="hljs-comment"># Git will checkout middle commit</span>
+<span class="hljs-comment"># Test and mark as good or bad</span>
+git bisect good   <span class="hljs-comment"># or git bisect bad</span>
+
+<span class="hljs-comment"># Continue until bug is found</span>
+git bisect reset  <span class="hljs-comment"># Return to original state</span>
+</div></code></pre>
+<h3 id="subtrees-and-submodules">Subtrees and Submodules</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Add subtree</span>
+git subtree add --prefix=lib/mylib https://github.com/user/mylib.git main --squash
+
+<span class="hljs-comment"># Update subtree</span>
+git subtree pull --prefix=lib/mylib https://github.com/user/mylib.git main --squash
+
+<span class="hljs-comment"># Add submodule</span>
+git submodule add https://github.com/user/mylib.git lib/mylib
+
+<span class="hljs-comment"># Initialize submodules after cloning</span>
+git submodule init
+git submodule update
+<span class="hljs-comment"># Or in one command:</span>
+git submodule update --init --recursive
+</div></code></pre>
+<h3 id="advanced-merging">Advanced Merging</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Merge with custom strategy</span>
+git merge -X theirs feature-branch    <span class="hljs-comment"># Prefer their changes</span>
+git merge -X ours feature-branch      <span class="hljs-comment"># Prefer our changes</span>
+
+<span class="hljs-comment"># Merge specific files only</span>
+git checkout feature-branch -- specific-file.txt
+git commit -m <span class="hljs-string">"Merge specific file from feature-branch"</span>
+
+<span class="hljs-comment"># Merge without checkout</span>
+git merge --no-commit feature-branch
+</div></code></pre>
+<hr>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="commit-best-practices">Commit Best Practices</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Make atomic commits (one logical change per commit)</span>
+git add user-auth.js
+git commit -m <span class="hljs-string">"Add user authentication logic"</span>
+
+git add user-auth.test.js
+git commit -m <span class="hljs-string">"Add tests for user authentication"</span>
+
+<span class="hljs-comment"># Write clear commit messages</span>
+<span class="hljs-comment"># Good:</span>
+git commit -m <span class="hljs-string">"Fix null pointer exception in user login"</span>
+
+<span class="hljs-comment"># Bad:</span>
+git commit -m <span class="hljs-string">"Fix bug"</span>
+</div></code></pre>
+<h3 id="branching-strategy">Branching Strategy</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Git Flow example</span>
+git checkout -b develop           <span class="hljs-comment"># Development branch</span>
+git checkout -b feature/login     <span class="hljs-comment"># Feature branch</span>
+<span class="hljs-comment"># Work on feature</span>
+git checkout develop
+git merge --no-ff feature/login
+git branch -d feature/login
+
+<span class="hljs-comment"># Release branch</span>
+git checkout -b release/1.0 develop
+<span class="hljs-comment"># Bug fixes only</span>
+git checkout main
+git merge --no-ff release/1.0
+git tag -a v1.0 -m <span class="hljs-string">"Version 1.0"</span>
+git checkout develop
+git merge --no-ff release/1.0
+</div></code></pre>
+<h3 id="workflow-best-practices">Workflow Best Practices</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Always pull before starting work</span>
+git checkout main
+git pull origin main
+git checkout -b feature/new-feature
+
+<span class="hljs-comment"># Regularly sync feature branch</span>
+git checkout main
+git pull origin main
+git checkout feature/new-feature
+git rebase main
+
+<span class="hljs-comment"># Clean up before pushing</span>
+git rebase -i HEAD~3  <span class="hljs-comment"># Clean up commits</span>
+git push -u origin feature/new-feature
+</div></code></pre>
+<h3 id="gitignore-best-practices">.gitignore Best Practices</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Create .gitignore file</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"node_modules/"</span> &gt;&gt; .gitignore
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"*.log"</span> &gt;&gt; .gitignore
+<span class="hljs-built_in">echo</span> <span class="hljs-string">".env"</span> &gt;&gt; .gitignore
+
+<span class="hljs-comment"># Common patterns:</span>
+<span class="hljs-comment"># Dependencies</span>
+node_modules/
+vendor/
+
+<span class="hljs-comment"># Build outputs</span>
+dist/
+build/
+*.o
+*.exe
+
+<span class="hljs-comment"># Environment files</span>
+.env
+.env.local
+
+<span class="hljs-comment"># IDE files</span>
+.vscode/
+.idea/
+*.swp
+
+<span class="hljs-comment"># OS files</span>
+.DS_Store
+Thumbs.db
+
+<span class="hljs-comment"># Logs</span>
+*.<span class="hljs-built_in">log</span>
+logs/
+</div></code></pre>
+<hr>
+<h2 id="troubleshooting-common-issues">Troubleshooting Common Issues</h2>
+<h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Problem: Accidental commit to wrong branch</span>
+<span class="hljs-comment"># Solution: Move commit to correct branch</span>
+git <span class="hljs-built_in">log</span> --oneline -n 5  <span class="hljs-comment"># Find commit hash</span>
+git checkout correct-branch
+git cherry-pick &lt;commit-hash&gt;
+git checkout wrong-branch
+git reset --hard HEAD~1
+
+<span class="hljs-comment"># Problem: Need to change last commit message</span>
+<span class="hljs-comment"># Solution: Amend commit</span>
+git commit --amend -m <span class="hljs-string">"Corrected commit message"</span>
+
+<span class="hljs-comment"># Problem: Pushed wrong commit</span>
+<span class="hljs-comment"># Solution: Revert (safe for shared repositories)</span>
+git revert HEAD
+git push origin main
+
+<span class="hljs-comment"># Problem: Merge conflicts</span>
+<span class="hljs-comment"># Solution: Resolve manually</span>
+git status  <span class="hljs-comment"># See conflicted files</span>
+<span class="hljs-comment"># Edit files to resolve conflicts</span>
+git add resolved-file.txt
+git commit
+
+<span class="hljs-comment"># Problem: Lost commits</span>
+<span class="hljs-comment"># Solution: Use reflog</span>
+git reflog
+git checkout &lt;lost-commit-hash&gt;
+git checkout -b recovery-branch
+</div></code></pre>
+<h3 id="performance-issues">Performance Issues</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Large repository cleanup</span>
+git gc --aggressive
+git prune
+
+<span class="hljs-comment"># Reduce repository size</span>
+git filter-branch --tree-filter <span class="hljs-string">'rm -rf large-folder'</span> HEAD
+<span class="hljs-comment"># Modern alternative:</span>
+git filter-repo --path large-folder --invert-paths
+
+<span class="hljs-comment"># Shallow clone for large repositories</span>
+git <span class="hljs-built_in">clone</span> --depth 1 https://github.com/user/large-repo.git
+</div></code></pre>
+<h3 id="configuration-issues">Configuration Issues</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Fix line ending issues</span>
+git config --global core.autocrlf <span class="hljs-literal">true</span>   <span class="hljs-comment"># Windows</span>
+git config --global core.autocrlf input  <span class="hljs-comment"># Mac/Linux</span>
+
+<span class="hljs-comment"># Fix permission issues</span>
+git config --global core.filemode <span class="hljs-literal">false</span>
+
+<span class="hljs-comment"># Fix SSL issues</span>
+git config --global http.sslverify <span class="hljs-literal">false</span>  <span class="hljs-comment"># Not recommended for production</span>
+</div></code></pre>
+<hr>
+<h2 id="quick-reference">Quick Reference</h2>
+<h3 id="essential-commands">Essential Commands</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Setup</span>
+git init
+git <span class="hljs-built_in">clone</span> &lt;url&gt;
+git config --global user.name <span class="hljs-string">"Name"</span>
+git config --global user.email <span class="hljs-string">"email"</span>
+
+<span class="hljs-comment"># Basic workflow</span>
+git status
+git add &lt;file&gt;
+git commit -m <span class="hljs-string">"message"</span>
+git push origin main
+git pull origin main
+
+<span class="hljs-comment"># Branching</span>
+git branch                    <span class="hljs-comment"># List branches</span>
+git branch &lt;name&gt;            <span class="hljs-comment"># Create branch</span>
+git checkout &lt;branch&gt;        <span class="hljs-comment"># Switch branch</span>
+git checkout -b &lt;branch&gt;     <span class="hljs-comment"># Create and switch</span>
+git merge &lt;branch&gt;           <span class="hljs-comment"># Merge branch</span>
+git branch -d &lt;branch&gt;       <span class="hljs-comment"># Delete branch</span>
+
+<span class="hljs-comment"># History</span>
+git <span class="hljs-built_in">log</span>
+git <span class="hljs-built_in">log</span> --oneline
+git show &lt;commit&gt;
+git diff
+
+<span class="hljs-comment"># Undo</span>
+git checkout -- &lt;file&gt;       <span class="hljs-comment"># Discard changes</span>
+git reset HEAD &lt;file&gt;        <span class="hljs-comment"># Unstage</span>
+git reset --hard HEAD~1      <span class="hljs-comment"># Undo commit</span>
+git revert &lt;commit&gt;          <span class="hljs-comment"># Safe undo</span>
+</div></code></pre>
+<h3 id="useful-aliases">Useful Aliases</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Add to ~/.gitconfig or use git config --global alias.&lt;name&gt; "&lt;command&gt;"</span>
+git config --global alias.co checkout
+git config --global alias.br branch
+git config --global alias.ci commit
+git config --global alias.st status
+git config --global alias.unstage <span class="hljs-string">'reset HEAD --'</span>
+git config --global alias.last <span class="hljs-string">'log -1 HEAD'</span>
+git config --global alias.visual <span class="hljs-string">'!gitk'</span>
+git config --global alias.tree <span class="hljs-string">'log --graph --pretty=format:"%h - %an, %ar : %s"'</span>
+</div></code></pre>
+<h3 id="keyboard-shortcuts-terminal">Keyboard Shortcuts (Terminal)</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Command history</span>
+Ctrl+R          <span class="hljs-comment"># Search command history</span>
+!!              <span class="hljs-comment"># Repeat last command</span>
+!git            <span class="hljs-comment"># Repeat last git command</span>
+
+<span class="hljs-comment"># Navigation</span>
+Ctrl+A          <span class="hljs-comment"># Beginning of line</span>
+Ctrl+E          <span class="hljs-comment"># End of line</span>
+Ctrl+W          <span class="hljs-comment"># Delete word backward</span>
+Ctrl+U          <span class="hljs-comment"># Delete line backward</span>
+</div></code></pre>
+<hr>
+<h2 id="summary">Summary</h2>
+<p>This cheatsheet covers Git and GitHub from basic concepts to advanced techniques. Remember:</p>
+<ol>
+<li><strong>Start simple</strong> - Master basic commands before moving to advanced features</li>
+<li><strong>Practice regularly</strong> - Use Git daily to build muscle memory</li>
+<li><strong>Read commit messages</strong> - They tell the story of your project</li>
+<li><strong>Use branches</strong> - They're cheap and powerful</li>
+<li><strong>Backup important work</strong> - Push to remote repositories regularly</li>
+<li><strong>Learn from mistakes</strong> - Git's reflog can save you from most disasters</li>
+</ol>
+<p>Keep this cheatsheet handy and refer to specific sections as needed. The more you use Git, the more natural these commands will become!</p>
+
+</body>
+</html>

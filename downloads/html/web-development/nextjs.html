@@ -1,0 +1,2357 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>nextjs.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="complete-nextjs-cheat-sheet---beginner-to-advanced">Complete Next.js Cheat Sheet - Beginner to Advanced</h1>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#project-structure">Project Structure</a></li>
+<li><a href="#pages-and-routing">Pages and Routing</a></li>
+<li><a href="#components">Components</a></li>
+<li><a href="#styling">Styling</a></li>
+<li><a href="#data-fetching">Data Fetching</a></li>
+<li><a href="#api-routes">API Routes</a></li>
+<li><a href="#state-management">State Management</a></li>
+<li><a href="#authentication">Authentication</a></li>
+<li><a href="#performance-optimization">Performance Optimization</a></li>
+<li><a href="#deployment">Deployment</a></li>
+<li><a href="#advanced-features">Advanced Features</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+</ol>
+<hr>
+<h2 id="getting-started">Getting Started</h2>
+<h3 id="installation--setup">Installation &amp; Setup</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Create new Next.js app</span>
+npx create-next-app@latest my-app
+<span class="hljs-built_in">cd</span> my-app
+
+<span class="hljs-comment"># With TypeScript</span>
+npx create-next-app@latest my-app --typescript
+
+<span class="hljs-comment"># With specific template</span>
+npx create-next-app@latest my-app --example with-tailwindcss
+
+<span class="hljs-comment"># Start development server</span>
+npm run dev
+<span class="hljs-comment"># or</span>
+yarn dev
+<span class="hljs-comment"># or</span>
+pnpm dev
+</div></code></pre>
+<h3 id="essential-dependencies">Essential Dependencies</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Core dependencies (usually included)</span>
+npm install next react react-dom
+
+<span class="hljs-comment"># TypeScript support</span>
+npm install --save-dev typescript @types/react @types/node
+
+<span class="hljs-comment"># Styling</span>
+npm install tailwindcss postcss autoprefixer
+npm install styled-components
+npm install @emotion/react @emotion/styled
+
+<span class="hljs-comment"># State Management</span>
+npm install zustand
+npm install @reduxjs/toolkit react-redux
+
+<span class="hljs-comment"># Forms</span>
+npm install react-hook-form
+npm install formik yup
+
+<span class="hljs-comment"># HTTP Client</span>
+npm install axios
+npm install swr
+
+<span class="hljs-comment"># Authentication</span>
+npm install next-auth
+npm install @auth0/nextjs-auth0
+
+<span class="hljs-comment"># Database</span>
+npm install prisma @prisma/client
+npm install mongoose
+</div></code></pre>
+<hr>
+<h2 id="project-structure">Project Structure</h2>
+<h3 id="app-router-structure-nextjs-13">App Router Structure (Next.js 13+)</h3>
+<pre class="hljs"><code><div>my-app/
+├── app/
+│   ├── globals.css
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── loading.tsx
+│   ├── error.tsx
+│   ├── not-found.tsx
+│   ├── about/
+│   │   └── page.tsx
+│   ├── blog/
+│   │   ├── page.tsx
+│   │   └── [slug]/
+│   │       └── page.tsx
+│   └── api/
+│       ├── auth/
+│       └── users/
+├── components/
+├── lib/
+├── public/
+├── styles/
+└── next.config.js
+</div></code></pre>
+<h3 id="pages-router-structure-legacy">Pages Router Structure (Legacy)</h3>
+<pre class="hljs"><code><div>my-app/
+├── pages/
+│   ├── _app.tsx
+│   ├── _document.tsx
+│   ├── index.tsx
+│   ├── about.tsx
+│   ├── blog/
+│   │   ├── index.tsx
+│   │   └── [slug].tsx
+│   └── api/
+│       ├── auth/
+│       └── users.ts
+├── components/
+├── lib/
+├── public/
+├── styles/
+└── next.config.js
+</div></code></pre>
+<hr>
+<h2 id="pages-and-routing">Pages and Routing</h2>
+<h3 id="app-router-nextjs-13">App Router (Next.js 13+)</h3>
+<h4 id="basic-page-creation">Basic Page Creation</h4>
+<pre class="hljs"><code><div>// app/page.tsx (Home page)
+export default function HomePage() {
+  return &lt;h1&gt;Welcome to Next.js!&lt;/h1&gt;
+}
+
+// app/about/page.tsx
+export default function AboutPage() {
+  return &lt;h1&gt;About Us&lt;/h1&gt;
+}
+
+// app/blog/[slug]/page.tsx (Dynamic route)
+export default function BlogPost({ params }: { params: { slug: string } }) {
+  return &lt;h1&gt;Blog Post: {params.slug}&lt;/h1&gt;
+}
+</div></code></pre>
+<h4 id="layout-components">Layout Components</h4>
+<pre class="hljs"><code><div>// app/layout.tsx (Root layout)
+import './globals.css'
+
+export const metadata = {
+  title: 'My App',
+  description: 'Generated by Next.js',
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    &lt;html lang=&quot;en&quot;&gt;
+      &lt;body&gt;
+        &lt;nav&gt;Navigation&lt;/nav&gt;
+        &lt;main&gt;{children}&lt;/main&gt;
+        &lt;footer&gt;Footer&lt;/footer&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  )
+}
+
+// app/blog/layout.tsx (Nested layout)
+export default function BlogLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    &lt;div className=&quot;blog-container&quot;&gt;
+      &lt;aside&gt;Blog Sidebar&lt;/aside&gt;
+      &lt;div&gt;{children}&lt;/div&gt;
+    &lt;/div&gt;
+  )
+}
+</div></code></pre>
+<h4 id="special-files">Special Files</h4>
+<pre class="hljs"><code><div>// app/loading.tsx
+export default function Loading() {
+  return &lt;div&gt;Loading...&lt;/div&gt;
+}
+
+// app/error.tsx
+'use client'
+
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error &amp; { digest?: string }
+  reset: () =&gt; void
+}) {
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;Something went wrong!&lt;/h2&gt;
+      &lt;button onClick={() =&gt; reset()}&gt;Try again&lt;/button&gt;
+    &lt;/div&gt;
+  )
+}
+
+// app/not-found.tsx
+export default function NotFound() {
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;Not Found&lt;/h2&gt;
+      &lt;p&gt;Could not find requested resource&lt;/p&gt;
+    &lt;/div&gt;
+  )
+}
+</div></code></pre>
+<h3 id="pages-router-legacy">Pages Router (Legacy)</h3>
+<h4 id="basic-pages">Basic Pages</h4>
+<pre class="hljs"><code><div>// pages/index.tsx
+export default function Home() {
+  return &lt;h1&gt;Home Page&lt;/h1&gt;
+}
+
+// pages/about.tsx
+export default function About() {
+  return &lt;h1&gt;About Page&lt;/h1&gt;
+}
+
+// pages/blog/[slug].tsx
+import { useRouter } from 'next/router'
+
+export default function BlogPost() {
+  const router = useRouter()
+  const { slug } = router.query
+
+  return &lt;h1&gt;Blog Post: {slug}&lt;/h1&gt;
+}
+</div></code></pre>
+<h4 id="custom-app-and-document">Custom App and Document</h4>
+<pre class="hljs"><code><div>// pages/_app.tsx
+import type { AppProps } from 'next/app'
+import '../styles/globals.css'
+
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    &lt;div&gt;
+      &lt;nav&gt;Navigation&lt;/nav&gt;
+      &lt;Component {...pageProps} /&gt;
+    &lt;/div&gt;
+  )
+}
+
+// pages/_document.tsx
+import { Html, Head, Main, NextScript } from 'next/document'
+
+export default function Document() {
+  return (
+    &lt;Html lang=&quot;en&quot;&gt;
+      &lt;Head /&gt;
+      &lt;body&gt;
+        &lt;Main /&gt;
+        &lt;NextScript /&gt;
+      &lt;/body&gt;
+    &lt;/Html&gt;
+  )
+}
+</div></code></pre>
+<h3 id="navigation">Navigation</h3>
+<h4 id="link-component">Link Component</h4>
+<pre class="hljs"><code><div>import Link from 'next/link'
+
+// Basic link
+&lt;Link href=&quot;/about&quot;&gt;About&lt;/Link&gt;
+
+// Dynamic link
+&lt;Link href={`/blog/${post.slug}`}&gt;Read More&lt;/Link&gt;
+
+// External link
+&lt;Link href=&quot;https://example.com&quot; target=&quot;_blank&quot;&gt;
+  External Link
+&lt;/Link&gt;
+
+// With custom styling
+&lt;Link href=&quot;/about&quot; className=&quot;nav-link&quot;&gt;
+  About
+&lt;/Link&gt;
+</div></code></pre>
+<h4 id="programmatic-navigation">Programmatic Navigation</h4>
+<pre class="hljs"><code><div>// App Router
+import { useRouter } from 'next/navigation'
+
+function MyComponent() {
+  const router = useRouter()
+  
+  const handleClick = () =&gt; {
+    router.push('/about')
+    router.replace('/about') // No history entry
+    router.back()
+    router.forward()
+    router.refresh()
+  }
+}
+
+// Pages Router
+import { useRouter } from 'next/router'
+
+function MyComponent() {
+  const router = useRouter()
+  
+  const handleClick = () =&gt; {
+    router.push('/about')
+    router.replace('/about')
+    router.back()
+    router.reload()
+  }
+}
+</div></code></pre>
+<hr>
+<h2 id="components">Components</h2>
+<h3 id="client-vs-server-components-app-router">Client vs Server Components (App Router)</h3>
+<h4 id="server-components-default">Server Components (Default)</h4>
+<pre class="hljs"><code><div>// app/components/ServerComponent.tsx
+// Server components run on the server
+async function ServerComponent() {
+  const data = await fetch('https://api.example.com/data')
+  const json = await data.json()
+  
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Server Component&lt;/h1&gt;
+      &lt;pre&gt;{JSON.stringify(json, null, 2)}&lt;/pre&gt;
+    &lt;/div&gt;
+  )
+}
+</div></code></pre>
+<h4 id="client-components">Client Components</h4>
+<pre class="hljs"><code><div>// app/components/ClientComponent.tsx
+'use client'
+
+import { useState, useEffect } from 'react'
+
+export default function ClientComponent() {
+  const [count, setCount] = useState(0)
+  
+  useEffect(() =&gt; {
+    console.log('Client component mounted')
+  }, [])
+  
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Client Component&lt;/h1&gt;
+      &lt;p&gt;Count: {count}&lt;/p&gt;
+      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
+        Increment
+      &lt;/button&gt;
+    &lt;/div&gt;
+  )
+}
+</div></code></pre>
+<h3 id="component-patterns">Component Patterns</h3>
+<h4 id="higher-order-component-hoc">Higher-Order Component (HOC)</h4>
+<pre class="hljs"><code><div>function withAuth&lt;T extends object&gt;(Component: React.ComponentType&lt;T&gt;) {
+  return function AuthenticatedComponent(props: T) {
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    
+    if (!isAuthenticated) {
+      return &lt;div&gt;Please log in&lt;/div&gt;
+    }
+    
+    return &lt;Component {...props} /&gt;
+  }
+}
+
+// Usage
+const ProtectedPage = withAuth(MyPage)
+</div></code></pre>
+<h4 id="custom-hooks">Custom Hooks</h4>
+<pre class="hljs"><code><div>// hooks/useCounter.ts
+import { useState } from 'react'
+
+export function useCounter(initialValue: number = 0) {
+  const [count, setCount] = useState(initialValue)
+  
+  const increment = () =&gt; setCount(count + 1)
+  const decrement = () =&gt; setCount(count - 1)
+  const reset = () =&gt; setCount(initialValue)
+  
+  return { count, increment, decrement, reset }
+}
+
+// Usage in component
+function Counter() {
+  const { count, increment, decrement, reset } = useCounter(0)
+  
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Count: {count}&lt;/p&gt;
+      &lt;button onClick={increment}&gt;+&lt;/button&gt;
+      &lt;button onClick={decrement}&gt;-&lt;/button&gt;
+      &lt;button onClick={reset}&gt;Reset&lt;/button&gt;
+    &lt;/div&gt;
+  )
+}
+</div></code></pre>
+<hr>
+<h2 id="styling">Styling</h2>
+<h3 id="css-modules">CSS Modules</h3>
+<pre class="hljs"><code><div>// styles/Home.module.css
+.container {
+  padding: 2rem;
+  background-color: #f0f0f0;
+}
+
+.title {
+  font-size: 2rem;
+  color: #333;
+}
+
+// components/Home.tsx
+import styles from '../styles/Home.module.css'
+
+export default function Home() {
+  return (
+    &lt;div className={styles.container}&gt;
+      &lt;h1 className={styles.title}&gt;Home Page&lt;/h1&gt;
+    &lt;/div&gt;
+  )
+}
+</div></code></pre>
+<h3 id="tailwind-css">Tailwind CSS</h3>
+<pre class="hljs"><code><div>// tailwind.config.js
+module.exports = {
+  content: [
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+    './app/**/*.{js,ts,jsx,tsx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: '#3b82f6',
+        secondary: '#64748b',
+      },
+    },
+  },
+  plugins: [],
+}
+
+// Component usage
+export default function Button({ children, variant = 'primary' }) {
+  const baseClasses = 'px-4 py-2 rounded font-medium'
+  const variantClasses = {
+    primary: 'bg-blue-500 text-white hover:bg-blue-600',
+    secondary: 'bg-gray-500 text-white hover:bg-gray-600',
+  }
+  
+  return (
+    &lt;button className={`${baseClasses} ${variantClasses[variant]}`}&gt;
+      {children}
+    &lt;/button&gt;
+  )
+}
+</div></code></pre>
+<h3 id="styled-components">Styled Components</h3>
+<pre class="hljs"><code><div>// components/StyledButton.tsx
+import styled from 'styled-components'
+
+const StyledButton = styled.button`
+  background-color: ${props =&gt; props.primary ? '#3b82f6' : '#64748b'};
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  
+  &amp;:hover {
+    opacity: 0.8;
+  }
+`
+
+export default function Button({ primary, children }) {
+  return (
+    &lt;StyledButton primary={primary}&gt;
+      {children}
+    &lt;/StyledButton&gt;
+  )
+}
+</div></code></pre>
+<h3 id="global-styles">Global Styles</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">/* styles/globals.css */</span>
+<span class="hljs-keyword">@tailwind</span> base;
+<span class="hljs-keyword">@tailwind</span> components;
+<span class="hljs-keyword">@tailwind</span> utilities;
+
+* {
+  <span class="hljs-attribute">box-sizing</span>: border-box;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span>;
+  <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>;
+}
+
+<span class="hljs-selector-tag">html</span>,
+<span class="hljs-selector-tag">body</span> {
+  <span class="hljs-attribute">max-width</span>: <span class="hljs-number">100vw</span>;
+  <span class="hljs-attribute">overflow-x</span>: hidden;
+  <span class="hljs-attribute">font-family</span>: Inter, sans-serif;
+}
+
+<span class="hljs-keyword">@layer</span> components {
+  <span class="hljs-selector-class">.btn-primary</span> {
+    @apply bg-blue-500 <span class="hljs-attribute">hover</span>:bg-blue-<span class="hljs-number">700</span> text-white font-bold py-<span class="hljs-number">2</span> px-<span class="hljs-number">4</span> rounded;
+  }
+}
+</div></code></pre>
+<hr>
+<h2 id="data-fetching">Data Fetching</h2>
+<h3 id="app-router-data-fetching">App Router Data Fetching</h3>
+<h4 id="server-components-recommended">Server Components (Recommended)</h4>
+<pre class="hljs"><code><div>// app/posts/page.tsx
+async function getPosts() {
+  const res = await fetch('https://jsonplaceholder.typicode.com/posts', {
+    cache: 'force-cache', // Default caching
+  })
+  
+  if (!res.ok) {
+    throw new Error('Failed to fetch data')
+  }
+  
+  return res.json()
+}
+
+export default async function PostsPage() {
+  const posts = await getPosts()
+  
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Posts&lt;/h1&gt;
+      {posts.map(post =&gt; (
+        &lt;div key={post.id}&gt;
+          &lt;h2&gt;{post.title}&lt;/h2&gt;
+          &lt;p&gt;{post.body}&lt;/p&gt;
+        &lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  )
+}
+</div></code></pre>
+<h4 id="caching-options">Caching Options</h4>
+<pre class="hljs"><code><div>// No caching
+fetch('https://api.example.com/data', { cache: 'no-store' })
+
+// Revalidate every 60 seconds
+fetch('https://api.example.com/data', { next: { revalidate: 60 } })
+
+// Cache forever (default)
+fetch('https://api.example.com/data', { cache: 'force-cache' })
+</div></code></pre>
+<h4 id="dynamic-data-with-client-components">Dynamic Data with Client Components</h4>
+<pre class="hljs"><code><div>'use client'
+
+import { useState, useEffect } from 'react'
+
+export default function ClientPosts() {
+  const [posts, setPosts] = useState([])
+  const [loading, setLoading] = useState(true)
+  
+  useEffect(() =&gt; {
+    async function fetchPosts() {
+      try {
+        const res = await fetch('/api/posts')
+        const data = await res.json()
+        setPosts(data)
+      } catch (error) {
+        console.error('Error fetching posts:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    
+    fetchPosts()
+  }, [])
+  
+  if (loading) return &lt;div&gt;Loading...&lt;/div&gt;
+  
+  return (
+    &lt;div&gt;
+      {posts.map(post =&gt; (
+        &lt;div key={post.id}&gt;{post.title}&lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  )
+}
+</div></code></pre>
+<h3 id="pages-router-data-fetching">Pages Router Data Fetching</h3>
+<h4 id="getstaticprops-ssg">getStaticProps (SSG)</h4>
+<pre class="hljs"><code><div>// pages/posts.tsx
+export async function getStaticProps() {
+  const res = await fetch('https://jsonplaceholder.typicode.com/posts')
+  const posts = await res.json()
+  
+  return {
+    props: {
+      posts,
+    },
+    revalidate: 60, // ISR - revalidate every 60 seconds
+  }
+}
+
+export default function Posts({ posts }) {
+  return (
+    &lt;div&gt;
+      {posts.map(post =&gt; (
+        &lt;div key={post.id}&gt;{post.title}&lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  )
+}
+</div></code></pre>
+<h4 id="getserversideprops-ssr">getServerSideProps (SSR)</h4>
+<pre class="hljs"><code><div>// pages/profile.tsx
+export async function getServerSideProps(context) {
+  const { req, res, params, query } = context
+  
+  // Access cookies, headers, etc.
+  const token = req.cookies.token
+  
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    }
+  }
+  
+  const userData = await fetchUserData(token)
+  
+  return {
+    props: {
+      user: userData,
+    },
+  }
+}
+</div></code></pre>
+<h4 id="getstaticpaths-dynamic-ssg">getStaticPaths (Dynamic SSG)</h4>
+<pre class="hljs"><code><div>// pages/posts/[id].tsx
+export async function getStaticPaths() {
+  const res = await fetch('https://jsonplaceholder.typicode.com/posts')
+  const posts = await res.json()
+  
+  const paths = posts.map(post =&gt; ({
+    params: { id: post.id.toString() },
+  }))
+  
+  return {
+    paths,
+    fallback: 'blocking', // or false, true
+  }
+}
+
+export async function getStaticProps({ params }) {
+  const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${params.id}`)
+  const post = await res.json()
+  
+  return {
+    props: {
+      post,
+    },
+  }
+}
+</div></code></pre>
+<h3 id="swr-for-client-side-data-fetching">SWR for Client-Side Data Fetching</h3>
+<pre class="hljs"><code><div>import useSWR from 'swr'
+
+const fetcher = (url: string) =&gt; fetch(url).then(res =&gt; res.json())
+
+export default function Profile() {
+  const { data, error, isLoading } = useSWR('/api/user', fetcher)
+  
+  if (error) return &lt;div&gt;Failed to load&lt;/div&gt;
+  if (isLoading) return &lt;div&gt;Loading...&lt;/div&gt;
+  
+  return &lt;div&gt;Hello {data.name}!&lt;/div&gt;
+}
+
+// With custom hook
+function useUser(id: string) {
+  const { data, error, isLoading } = useSWR(
+    id ? `/api/user/${id}` : null,
+    fetcher
+  )
+  
+  return {
+    user: data,
+    isLoading,
+    isError: error
+  }
+}
+</div></code></pre>
+<hr>
+<h2 id="api-routes">API Routes</h2>
+<h3 id="app-router-api-routes">App Router API Routes</h3>
+<h4 id="basic-api-route">Basic API Route</h4>
+<pre class="hljs"><code><div>// app/api/users/route.ts
+import { NextRequest, NextResponse } from 'next/server'
+
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams
+  const query = searchParams.get('query')
+  
+  // Fetch data from database
+  const users = await fetchUsers(query)
+  
+  return NextResponse.json({ users })
+}
+
+export async function POST(request: NextRequest) {
+  const body = await request.json()
+  
+  // Validate data
+  if (!body.name || !body.email) {
+    return NextResponse.json(
+      { error: 'Name and email are required' },
+      { status: 400 }
+    )
+  }
+  
+  // Create user
+  const user = await createUser(body)
+  
+  return NextResponse.json({ user }, { status: 201 })
+}
+</div></code></pre>
+<h4 id="dynamic-api-routes">Dynamic API Routes</h4>
+<pre class="hljs"><code><div>// app/api/users/[id]/route.ts
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const id = params.id
+  const user = await fetchUserById(id)
+  
+  if (!user) {
+    return NextResponse.json(
+      { error: 'User not found' },
+      { status: 404 }
+    )
+  }
+  
+  return NextResponse.json({ user })
+}
+
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const id = params.id
+  const body = await request.json()
+  
+  const updatedUser = await updateUser(id, body)
+  
+  return NextResponse.json({ user: updatedUser })
+}
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const id = params.id
+  await deleteUser(id)
+  
+  return NextResponse.json({ message: 'User deleted' })
+}
+</div></code></pre>
+<h3 id="pages-router-api-routes">Pages Router API Routes</h3>
+<h4 id="basic-api-route">Basic API Route</h4>
+<pre class="hljs"><code><div>// pages/api/users.ts
+import type { NextApiRequest, NextApiResponse } from 'next'
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const { method } = req
+  
+  switch (method) {
+    case 'GET':
+      const users = await fetchUsers()
+      res.status(200).json({ users })
+      break
+      
+    case 'POST':
+      const { name, email } = req.body
+      
+      if (!name || !email) {
+        return res.status(400).json({ error: 'Name and email required' })
+      }
+      
+      const user = await createUser({ name, email })
+      res.status(201).json({ user })
+      break
+      
+    default:
+      res.setHeader('Allow', ['GET', 'POST'])
+      res.status(405).end(`Method ${method} Not Allowed`)
+  }
+}
+</div></code></pre>
+<h4 id="dynamic-api-route">Dynamic API Route</h4>
+<pre class="hljs"><code><div>// pages/api/users/[id].ts
+export default async function handler(req, res) {
+  const { id } = req.query
+  const { method } = req
+  
+  switch (method) {
+    case 'GET':
+      const user = await fetchUserById(id)
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' })
+      }
+      res.status(200).json({ user })
+      break
+      
+    case 'PUT':
+      const updatedUser = await updateUser(id, req.body)
+      res.status(200).json({ user: updatedUser })
+      break
+      
+    case 'DELETE':
+      await deleteUser(id)
+      res.status(200).json({ message: 'User deleted' })
+      break
+      
+    default:
+      res.setHeader('Allow', ['GET', 'PUT', 'DELETE'])
+      res.status(405).end(`Method ${method} Not Allowed`)
+  }
+}
+</div></code></pre>
+<h3 id="middleware">Middleware</h3>
+<pre class="hljs"><code><div>// middleware.ts
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+
+export function middleware(request: NextRequest) {
+  // Check authentication
+  const token = request.cookies.get('token')
+  
+  if (!token &amp;&amp; request.nextUrl.pathname.startsWith('/dashboard')) {
+    return NextResponse.redirect(new URL('/login', request.url))
+  }
+  
+  // Add custom headers
+  const response = NextResponse.next()
+  response.headers.set('X-Custom-Header', 'custom-value')
+  
+  return response
+}
+
+export const config = {
+  matcher: [
+    '/dashboard/:path*',
+    '/api/:path*',
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+  ],
+}
+</div></code></pre>
+<hr>
+<h2 id="state-management">State Management</h2>
+<h3 id="react-built-in-state">React Built-in State</h3>
+<pre class="hljs"><code><div>// useState
+import { useState } from 'react'
+
+function Counter() {
+  const [count, setCount] = useState(0)
+  
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Count: {count}&lt;/p&gt;
+      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;Increment&lt;/button&gt;
+    &lt;/div&gt;
+  )
+}
+
+// useReducer
+import { useReducer } from 'react'
+
+const initialState = { count: 0 }
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return { count: state.count + 1 }
+    case 'decrement':
+      return { count: state.count - 1 }
+    case 'reset':
+      return initialState
+    default:
+      throw new Error()
+  }
+}
+
+function Counter() {
+  const [state, dispatch] = useReducer(reducer, initialState)
+  
+  return (
+    &lt;div&gt;
+      Count: {state.count}
+      &lt;button onClick={() =&gt; dispatch({ type: 'increment' })}&gt;+&lt;/button&gt;
+      &lt;button onClick={() =&gt; dispatch({ type: 'decrement' })}&gt;-&lt;/button&gt;
+      &lt;button onClick={() =&gt; dispatch({ type: 'reset' })}&gt;Reset&lt;/button&gt;
+    &lt;/div&gt;
+  )
+}
+</div></code></pre>
+<h3 id="context-api">Context API</h3>
+<pre class="hljs"><code><div>// contexts/AuthContext.tsx
+import { createContext, useContext, useState } from 'react'
+
+type AuthContextType = {
+  user: User | null
+  login: (user: User) =&gt; void
+  logout: () =&gt; void
+}
+
+const AuthContext = createContext&lt;AuthContextType | undefined&gt;(undefined)
+
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState&lt;User | null&gt;(null)
+  
+  const login = (user: User) =&gt; {
+    setUser(user)
+    localStorage.setItem('user', JSON.stringify(user))
+  }
+  
+  const logout = () =&gt; {
+    setUser(null)
+    localStorage.removeItem('user')
+  }
+  
+  return (
+    &lt;AuthContext.Provider value={{ user, login, logout }}&gt;
+      {children}
+    &lt;/AuthContext.Provider&gt;
+  )
+}
+
+export function useAuth() {
+  const context = useContext(AuthContext)
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider')
+  }
+  return context
+}
+
+// Usage in component
+function Profile() {
+  const { user, logout } = useAuth()
+  
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Welcome, {user?.name}&lt;/h1&gt;
+      &lt;button onClick={logout}&gt;Logout&lt;/button&gt;
+    &lt;/div&gt;
+  )
+}
+</div></code></pre>
+<h3 id="zustand">Zustand</h3>
+<pre class="hljs"><code><div>// store/useStore.ts
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
+
+interface CounterState {
+  count: number
+  increment: () =&gt; void
+  decrement: () =&gt; void
+  reset: () =&gt; void
+}
+
+export const useCounterStore = create&lt;CounterState&gt;()(
+  persist(
+    (set) =&gt; ({
+      count: 0,
+      increment: () =&gt; set((state) =&gt; ({ count: state.count + 1 })),
+      decrement: () =&gt; set((state) =&gt; ({ count: state.count - 1 })),
+      reset: () =&gt; set({ count: 0 }),
+    }),
+    {
+      name: 'counter-storage',
+    }
+  )
+)
+
+// Usage in component
+function Counter() {
+  const { count, increment, decrement, reset } = useCounterStore()
+  
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Count: {count}&lt;/p&gt;
+      &lt;button onClick={increment}&gt;+&lt;/button&gt;
+      &lt;button onClick={decrement}&gt;-&lt;/button&gt;
+      &lt;button onClick={reset}&gt;Reset&lt;/button&gt;
+    &lt;/div&gt;
+  )
+}
+</div></code></pre>
+<h3 id="redux-toolkit">Redux Toolkit</h3>
+<pre class="hljs"><code><div>// store/store.ts
+import { configureStore } from '@reduxjs/toolkit'
+import counterReducer from './counterSlice'
+
+export const store = configureStore({
+  reducer: {
+    counter: counterReducer,
+  },
+})
+
+export type RootState = ReturnType&lt;typeof store.getState&gt;
+export type AppDispatch = typeof store.dispatch
+
+// store/counterSlice.ts
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+
+interface CounterState {
+  value: number
+}
+
+const initialState: CounterState = {
+  value: 0,
+}
+
+export const counterSlice = createSlice({
+  name: 'counter',
+  initialState,
+  reducers: {
+    increment: (state) =&gt; {
+      state.value += 1
+    },
+    decrement: (state) =&gt; {
+      state.value -= 1
+    },
+    incrementByAmount: (state, action: PayloadAction&lt;number&gt;) =&gt; {
+      state.value += action.payload
+    },
+  },
+})
+
+export const { increment, decrement, incrementByAmount } = counterSlice.actions
+export default counterSlice.reducer
+
+// Usage in component
+import { useSelector, useDispatch } from 'react-redux'
+import { RootState } from '../store/store'
+import { increment, decrement } from '../store/counterSlice'
+
+function Counter() {
+  const count = useSelector((state: RootState) =&gt; state.counter.value)
+  const dispatch = useDispatch()
+  
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Count: {count}&lt;/p&gt;
+      &lt;button onClick={() =&gt; dispatch(increment())}&gt;+&lt;/button&gt;
+      &lt;button onClick={() =&gt; dispatch(decrement())}&gt;-&lt;/button&gt;
+    &lt;/div&gt;
+  )
+}
+</div></code></pre>
+<hr>
+<h2 id="authentication">Authentication</h2>
+<h3 id="nextauthjs-setup">NextAuth.js Setup</h3>
+<pre class="hljs"><code><div>// app/api/auth/[...nextauth]/route.ts
+import NextAuth from 'next-auth'
+import GoogleProvider from 'next-auth/providers/google'
+import CredentialsProvider from 'next-auth/providers/credentials'
+
+const handler = NextAuth({
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+    CredentialsProvider({
+      name: 'credentials',
+      credentials: {
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' }
+      },
+      async authorize(credentials) {
+        // Validate credentials
+        const user = await validateUser(credentials)
+        
+        if (user) {
+          return {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+          }
+        }
+        return null
+      }
+    })
+  ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id
+      }
+      return token
+    },
+    async session({ session, token }) {
+      session.user.id = token.id
+      return session
+    },
+  },
+  pages: {
+    signIn: '/auth/signin',
+    signOut: '/auth/signout',
+    error: '/auth/error',
+  },
+})
+
+export { handler as GET, handler as POST }
+</div></code></pre>
+<h3 id="session-provider-setup">Session Provider Setup</h3>
+<pre class="hljs"><code><div>// app/providers.tsx
+'use client'
+
+import { SessionProvider } from 'next-auth/react'
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  return &lt;SessionProvider&gt;{children}&lt;/SessionProvider&gt;
+}
+
+// app/layout.tsx
+import { Providers } from './providers'
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    &lt;html lang=&quot;en&quot;&gt;
+      &lt;body&gt;
+        &lt;Providers&gt;{children}&lt;/Providers&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  )
+}
+</div></code></pre>
+<h3 id="using-authentication-in-components">Using Authentication in Components</h3>
+<pre class="hljs"><code><div>'use client'
+
+import { useSession, signIn, signOut } from 'next-auth/react'
+
+export default function Component() {
+  const { data: session, status } = useSession()
+  
+  if (status === 'loading') return &lt;p&gt;Loading...&lt;/p&gt;
+  
+  if (session) {
+    return (
+      &lt;&gt;
+        &lt;p&gt;Signed in as {session.user?.email}&lt;/p&gt;
+        &lt;button onClick={() =&gt; signOut()}&gt;Sign out&lt;/button&gt;
+      &lt;/&gt;
+    )
+  }
+  
+  return (
+    &lt;&gt;
+      &lt;p&gt;Not signed in&lt;/p&gt;
+      &lt;button onClick={() =&gt; signIn()}&gt;Sign in&lt;/button&gt;
+    &lt;/&gt;
+  )
+}
+</div></code></pre>
+<h3 id="server-side-authentication">Server-Side Authentication</h3>
+<pre class="hljs"><code><div>// app/protected/page.tsx
+import { getServerSession } from 'next-auth/next'
+import { redirect } from 'next/navigation'
+
+export default async function ProtectedPage() {
+  const session = await getServerSession()
+  
+  if (!session) {
+    redirect('/auth/signin')
+  }
+  
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Protected Content&lt;/h1&gt;
+      &lt;p&gt;Welcome, {session.user?.name}!&lt;/p&gt;
+    &lt;/div&gt;
+  )
+}
+</div></code></pre>
+<h3 id="custom-login-page">Custom Login Page</h3>
+<pre class="hljs"><code><div>// app/auth/signin/page.tsx
+'use client'
+
+import { signIn, getProviders } from 'next-auth/react'
+import { useState, useEffect } from 'react'
+
+export default function SignIn() {
+  const [providers, setProviders] = useState(null)
+  
+  useEffect(() =&gt; {
+    const fetchProviders = async () =&gt; {
+      const res = await getProviders()
+      setProviders(res)
+    }
+    fetchProviders()
+  }, [])
+  
+  return (
+    &lt;div className=&quot;min-h-screen flex items-center justify-center&quot;&gt;
+      &lt;div className=&quot;max-w-md w-full space-y-8&quot;&gt;
+        &lt;h2 className=&quot;text-center text-3xl font-bold&quot;&gt;Sign in&lt;/h2&gt;
+        
+        {providers &amp;&amp; Object.values(providers).map((provider) =&gt; (
+          &lt;div key={provider.name}&gt;
+            &lt;button
+              onClick={() =&gt; signIn(provider.id)}
+              className=&quot;w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700&quot;
+            &gt;
+              Sign in with {provider.name}
+            &lt;/button&gt;
+          &lt;/div&gt;
+        ))}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+}
+</div></code></pre>
+<hr>
+<h2 id="performance-optimization">Performance Optimization</h2>
+<h3 id="image-optimization">Image Optimization</h3>
+<pre class="hljs"><code><div>import Image from 'next/image'
+
+// Basic usage
+&lt;Image
+  src=&quot;/hero.jpg&quot;
+  alt=&quot;Hero image&quot;
+  width={800}
+  height={600}
+/&gt;
+
+// With priority loading
+&lt;Image
+  src=&quot;/hero.jpg&quot;
+  alt=&quot;Hero image&quot;
+  width={800}
+  height={600}
+  priority
+/&gt;
+
+// Fill container
+&lt;div style={{ position: 'relative', width: '100%', height: '400px' }}&gt;
+  &lt;Image
+    src=&quot;/hero.jpg&quot;
+    alt=&quot;Hero image&quot;
+    fill
+    style={{ objectFit: 'cover' }}
+  /&gt;
+&lt;/div&gt;
+
+// Responsive images
+&lt;Image
+  src=&quot;/hero.jpg&quot;
+  alt=&quot;Hero image&quot;
+  width={800}
+  height={600}
+  sizes=&quot;(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw&quot;
+/&gt;
+</div></code></pre>
+<h3 id="font-optimization">Font Optimization</h3>
+<pre class="hljs"><code><div>// app/layout.tsx
+import { Inter, Roboto_Mono } from 'next/font/google'
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+})
+
+const robotoMono = Roboto_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+})
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    &lt;html lang=&quot;en&quot; className={inter.className}&gt;
+      &lt;body&gt;{children}&lt;/body&gt;
+    &lt;/html&gt;
+  )
+}
+</div></code></pre>
+<h3 id="code-splitting">Code Splitting</h3>
+<pre class="hljs"><code><div>// Dynamic imports
+import dynamic from 'next/dynamic'
+
+const DynamicComponent = dynamic(() =&gt; import('../components/MyComponent'), {
+  loading: () =&gt; &lt;p&gt;Loading...&lt;/p&gt;,
+  ssr: false, // Disable server-side rendering
+})
+
+// Conditional loading
+const DynamicChart = dynamic(() =&gt; import('../components/Chart'), {
+  loading: () =&gt; &lt;p&gt;Loading chart...&lt;/p&gt;,
+})
+
+function Dashboard() {
+  const [showChart, setShowChart] = useState(false)
+  
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Dashboard&lt;/h1&gt;
+      &lt;button onClick={() =&gt; setShowChart(true)}&gt;Show Chart&lt;/button&gt;
+      {showChart &amp;&amp; &lt;DynamicChart /&gt;}
+    &lt;/div&gt;
+  )
+}
+</div></code></pre>
+<h3 id="memoization">Memoization</h3>
+<pre class="hljs"><code><div>import { memo, useMemo, useCallback } from 'react'
+
+// Component memoization
+const ExpensiveComponent = memo(function ExpensiveComponent({ data }) {
+  return (
+    &lt;div&gt;
+      {data.map(item =&gt; (
+        &lt;div key={item.id}&gt;{item.name}&lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  )
+})
+
+// Value memoization
+function Component({ items, filter }) {
+  const filteredItems = useMemo(() =&gt; {
+    return items.filter(item =&gt; item.category === filter)
+  }, [items, filter])
+  
+  const handleClick = useCallback((id) =&gt; {
+    console.log('Item clicked:', id)
+  }, [])
+  
+  return (
+    &lt;div&gt;
+      {filteredItems.map(item =&gt; (
+        &lt;div key={item.id} onClick={() =&gt; handleClick(item.id)}&gt;
+          {item.name}
+        &lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  )
+}
+</div></code></pre>
+<h3 id="bundle-analysis">Bundle Analysis</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Install bundle analyzer</span>
+npm install --save-dev @next/bundle-analyzer
+
+<span class="hljs-comment"># Add to next.config.js</span>
+const withBundleAnalyzer = require(<span class="hljs-string">'@next/bundle-analyzer'</span>)({
+  enabled: process.env.ANALYZE === <span class="hljs-string">'true'</span>,
+})
+
+module.exports = withBundleAnalyzer({
+  // Your Next.js config
+})
+
+<span class="hljs-comment"># Run analysis</span>
+ANALYZE=<span class="hljs-literal">true</span> npm run build
+</div></code></pre>
+<hr>
+<h2 id="deployment">Deployment</h2>
+<h3 id="vercel-deployment">Vercel Deployment</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Install Vercel CLI</span>
+npm install -g vercel
+
+<span class="hljs-comment"># Deploy</span>
+vercel
+
+<span class="hljs-comment"># Environment variables</span>
+vercel env add NEXT_PUBLIC_API_URL
+vercel env add DATABASE_URL
+</div></code></pre>
+<h3 id="docker-deployment">Docker Deployment</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Dockerfile</span>
+<span class="hljs-keyword">FROM</span> node:<span class="hljs-number">18</span>-alpine AS deps
+<span class="hljs-keyword">WORKDIR</span><span class="bash"> /app</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> package.json package-lock.json ./</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> npm ci --only=production</span>
+
+<span class="hljs-keyword">FROM</span> node:<span class="hljs-number">18</span>-alpine AS builder
+<span class="hljs-keyword">WORKDIR</span><span class="bash"> /app</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> --from=deps /app/node_modules ./node_modules</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> . .</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> npm run build</span>
+
+<span class="hljs-keyword">FROM</span> node:<span class="hljs-number">18</span>-alpine AS runner
+<span class="hljs-keyword">WORKDIR</span><span class="bash"> /app</span>
+<span class="hljs-keyword">ENV</span> NODE_ENV production
+
+<span class="hljs-keyword">RUN</span><span class="bash"> addgroup --system --gid 1001 nodejs</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> adduser --system --uid 1001 nextjs</span>
+
+<span class="hljs-keyword">COPY</span><span class="bash"> --from=builder /app/public ./public</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> --from=builder --chown=nextjs:nodejs /app/.next/standalone ./</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static</span>
+
+<span class="hljs-keyword">USER</span> nextjs
+<span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">3000</span>
+<span class="hljs-keyword">ENV</span> PORT <span class="hljs-number">3000</span>
+
+<span class="hljs-keyword">CMD</span><span class="bash"> [<span class="hljs-string">"node"</span>, <span class="hljs-string">"server.js"</span>]</span>
+</div></code></pre>
+<h3 id="environment-variables">Environment Variables</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># .env.local</span>
+NEXT_PUBLIC_API_URL=https://api.example.com
+DATABASE_URL=postgresql://username:password@localhost:5432/mydb
+NEXTAUTH_SECRET=your-secret-key
+NEXTAUTH_URL=http://localhost:3000
+</div></code></pre>
+<h3 id="nextjs-configuration">Next.js Configuration</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// next.config.js</span>
+<span class="hljs-comment">/** <span class="hljs-doctag">@type <span class="hljs-type">{import('next').NextConfig}</span> </span>*/</span>
+<span class="hljs-keyword">const</span> nextConfig = {
+  <span class="hljs-attr">experimental</span>: {
+    <span class="hljs-attr">appDir</span>: <span class="hljs-literal">true</span>,
+  },
+  <span class="hljs-attr">images</span>: {
+    <span class="hljs-attr">domains</span>: [<span class="hljs-string">'example.com'</span>, <span class="hljs-string">'cdn.example.com'</span>],
+  },
+  <span class="hljs-attr">env</span>: {
+    <span class="hljs-attr">CUSTOM_KEY</span>: <span class="hljs-string">'custom-value'</span>,
+  },
+  <span class="hljs-keyword">async</span> redirects() {
+    <span class="hljs-keyword">return</span> [
+      {
+        <span class="hljs-attr">source</span>: <span class="hljs-string">'/old-path'</span>,
+        <span class="hljs-attr">destination</span>: <span class="hljs-string">'/new-path'</span>,
+        <span class="hljs-attr">permanent</span>: <span class="hljs-literal">true</span>,
+      },
+    ]
+  },
+  <span class="hljs-keyword">async</span> rewrites() {
+    <span class="hljs-keyword">return</span> [
+      {
+        <span class="hljs-attr">source</span>: <span class="hljs-string">'/api/:path*'</span>,
+        <span class="hljs-attr">destination</span>: <span class="hljs-string">'https://api.example.com/:path*'</span>,
+      },
+    ]
+  },
+  <span class="hljs-keyword">async</span> headers() {
+    <span class="hljs-keyword">return</span> [
+      {
+        <span class="hljs-attr">source</span>: <span class="hljs-string">'/(.*)'</span>,
+        <span class="hljs-attr">headers</span>: [
+          {
+            <span class="hljs-attr">key</span>: <span class="hljs-string">'X-Custom-Header'</span>,
+            <span class="hljs-attr">value</span>: <span class="hljs-string">'custom-value'</span>,
+          },
+        ],
+      },
+    ]
+  },
+}
+
+<span class="hljs-built_in">module</span>.exports = nextConfig
+</div></code></pre>
+<hr>
+<h2 id="advanced-features">Advanced Features</h2>
+<h3 id="internationalization-i18n">Internationalization (i18n)</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// next.config.js</span>
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-attr">i18n</span>: {
+    <span class="hljs-attr">locales</span>: [<span class="hljs-string">'en'</span>, <span class="hljs-string">'fr'</span>, <span class="hljs-string">'es'</span>],
+    <span class="hljs-attr">defaultLocale</span>: <span class="hljs-string">'en'</span>,
+    <span class="hljs-attr">domains</span>: [
+      {
+        <span class="hljs-attr">domain</span>: <span class="hljs-string">'example.com'</span>,
+        <span class="hljs-attr">defaultLocale</span>: <span class="hljs-string">'en'</span>,
+      },
+      {
+        <span class="hljs-attr">domain</span>: <span class="hljs-string">'example.fr'</span>,
+        <span class="hljs-attr">defaultLocale</span>: <span class="hljs-string">'fr'</span>,
+      },
+    ],
+  },
+}
+</div></code></pre>
+<pre class="hljs"><code><div>// pages/index.tsx
+import { useRouter } from 'next/router'
+import { GetStaticProps } from 'next'
+
+export default function Home({ translations }) {
+  const { locale, locales, asPath } = useRouter()
+  
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;{translations.title}&lt;/h1&gt;
+      &lt;p&gt;Current locale: {locale}&lt;/p&gt;
+      &lt;p&gt;Available locales: {locales.join(', ')}&lt;/p&gt;
+    &lt;/div&gt;
+  )
+}
+
+export const getStaticProps: GetStaticProps = async ({ locale }) =&gt; {
+  const translations = await import(`../locales/${locale}.json`)
+  
+  return {
+    props: {
+      translations: translations.default,
+    },
+  }
+}
+</div></code></pre>
+<h3 id="progressive-web-app-pwa">Progressive Web App (PWA)</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// next.config.js</span>
+<span class="hljs-keyword">const</span> withPWA = <span class="hljs-built_in">require</span>(<span class="hljs-string">'next-pwa'</span>)({
+  <span class="hljs-attr">dest</span>: <span class="hljs-string">'public'</span>,
+  <span class="hljs-attr">register</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">skipWaiting</span>: <span class="hljs-literal">true</span>,
+})
+
+<span class="hljs-built_in">module</span>.exports = withPWA({
+  <span class="hljs-comment">// Your Next.js config</span>
+})
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment">// public/manifest.json</span>
+{
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"My Next.js App"</span>,
+  <span class="hljs-attr">"short_name"</span>: <span class="hljs-string">"NextApp"</span>,
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"A Next.js PWA"</span>,
+  <span class="hljs-attr">"start_url"</span>: <span class="hljs-string">"/"</span>,
+  <span class="hljs-attr">"display"</span>: <span class="hljs-string">"standalone"</span>,
+  <span class="hljs-attr">"background_color"</span>: <span class="hljs-string">"#ffffff"</span>,
+  <span class="hljs-attr">"theme_color"</span>: <span class="hljs-string">"#000000"</span>,
+  <span class="hljs-attr">"icons"</span>: [
+    {
+      <span class="hljs-attr">"src"</span>: <span class="hljs-string">"/icons/icon-192x192.png"</span>,
+      <span class="hljs-attr">"sizes"</span>: <span class="hljs-string">"192x192"</span>,
+      <span class="hljs-attr">"type"</span>: <span class="hljs-string">"image/png"</span>
+    },
+    {
+      <span class="hljs-attr">"src"</span>: <span class="hljs-string">"/icons/icon-512x512.png"</span>,
+      <span class="hljs-attr">"sizes"</span>: <span class="hljs-string">"512x512"</span>,
+      <span class="hljs-attr">"type"</span>: <span class="hljs-string">"image/png"</span>
+    }
+  ]
+}
+</div></code></pre>
+<h3 id="streaming-and-suspense">Streaming and Suspense</h3>
+<pre class="hljs"><code><div>// App Router with Streaming
+import { Suspense } from 'react'
+
+async function SlowComponent() {
+  await new Promise(resolve =&gt; setTimeout(resolve, 2000))
+  return &lt;div&gt;Slow content loaded!&lt;/div&gt;
+}
+
+export default function Page() {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Fast content&lt;/h1&gt;
+      &lt;Suspense fallback={&lt;div&gt;Loading slow content...&lt;/div&gt;}&gt;
+        &lt;SlowComponent /&gt;
+      &lt;/Suspense&gt;
+    &lt;/div&gt;
+  )
+}
+</div></code></pre>
+<h3 id="edge-runtime">Edge Runtime</h3>
+<pre class="hljs"><code><div>// app/api/edge/route.ts
+export const runtime = 'edge'
+
+export async function GET() {
+  return new Response('Hello from Edge Runtime!')
+}
+</div></code></pre>
+<h3 id="server-actions-app-router">Server Actions (App Router)</h3>
+<pre class="hljs"><code><div>// app/actions.ts
+'use server'
+
+import { revalidatePath } from 'next/cache'
+
+export async function createPost(formData: FormData) {
+  const title = formData.get('title') as string
+  const content = formData.get('content') as string
+  
+  // Save to database
+  await savePost({ title, content })
+  
+  // Revalidate the posts page
+  revalidatePath('/posts')
+}
+
+// app/create-post/page.tsx
+import { createPost } from '../actions'
+
+export default function CreatePost() {
+  return (
+    &lt;form action={createPost}&gt;
+      &lt;input name=&quot;title&quot; placeholder=&quot;Title&quot; required /&gt;
+      &lt;textarea name=&quot;content&quot; placeholder=&quot;Content&quot; required /&gt;
+      &lt;button type=&quot;submit&quot;&gt;Create Post&lt;/button&gt;
+    &lt;/form&gt;
+  )
+}
+</div></code></pre>
+<hr>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="file-and-folder-structure">File and Folder Structure</h3>
+<pre class="hljs"><code><div>src/
+├── app/
+│   ├── (auth)/
+│   │   ├── login/
+│   │   └── register/
+│   ├── dashboard/
+│   │   ├── analytics/
+│   │   └── settings/
+│   └── globals.css
+├── components/
+│   ├── ui/
+│   │   ├── Button.tsx
+│   │   ├── Input.tsx
+│   │   └── Modal.tsx
+│   ├── forms/
+│   └── layout/
+├── lib/
+│   ├── auth.ts
+│   ├── db.ts
+│   └── utils.ts
+├── hooks/
+│   ├── useAuth.ts
+│   └── useLocalStorage.ts
+├── types/
+│   └── index.ts
+└── utils/
+    ├── constants.ts
+    └── helpers.ts
+</div></code></pre>
+<h3 id="error-handling">Error Handling</h3>
+<pre class="hljs"><code><div>// Global error boundary
+'use client'
+
+import { useEffect } from 'react'
+
+export default function GlobalError({
+  error,
+  reset,
+}: {
+  error: Error &amp; { digest?: string }
+  reset: () =&gt; void
+}) {
+  useEffect(() =&gt; {
+    // Log the error to an error reporting service
+    console.error(error)
+  }, [error])
+
+  return (
+    &lt;html&gt;
+      &lt;body&gt;
+        &lt;h2&gt;Something went wrong!&lt;/h2&gt;
+        &lt;button onClick={() =&gt; reset()}&gt;Try again&lt;/button&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  )
+}
+
+// Custom error page for specific routes
+// app/dashboard/error.tsx
+'use client'
+
+export default function DashboardError({
+  error,
+  reset,
+}: {
+  error: Error &amp; { digest?: string }
+  reset: () =&gt; void
+}) {
+  return (
+    &lt;div className=&quot;error-container&quot;&gt;
+      &lt;h2&gt;Dashboard Error&lt;/h2&gt;
+      &lt;p&gt;{error.message}&lt;/p&gt;
+      &lt;button onClick={reset}&gt;Try again&lt;/button&gt;
+    &lt;/div&gt;
+  )
+}
+</div></code></pre>
+<h3 id="seo-optimization">SEO Optimization</h3>
+<pre class="hljs"><code><div>// app/blog/[slug]/page.tsx
+import { Metadata } from 'next'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string }
+}): Promise&lt;Metadata&gt; {
+  const post = await getPost(params.slug)
+  
+  return {
+    title: post.title,
+    description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      images: [post.image],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+      images: [post.image],
+    },
+  }
+}
+
+// JSON-LD structured data
+export default function BlogPost({ params }) {
+  const post = await getPost(params.slug)
+  
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt,
+    author: {
+      '@type': 'Person',
+      name: post.author.name,
+    },
+    datePublished: post.publishedAt,
+  }
+  
+  return (
+    &lt;&gt;
+      &lt;script
+        type=&quot;application/ld+json&quot;
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      /&gt;
+      &lt;article&gt;
+        &lt;h1&gt;{post.title}&lt;/h1&gt;
+        &lt;p&gt;{post.content}&lt;/p&gt;
+      &lt;/article&gt;
+    &lt;/&gt;
+  )
+}
+</div></code></pre>
+<h3 id="testing">Testing</h3>
+<pre class="hljs"><code><div>// __tests__/components/Button.test.tsx
+import { render, screen, fireEvent } from '@testing-library/react'
+import Button from '../components/Button'
+
+describe('Button', () =&gt; {
+  it('renders button with text', () =&gt; {
+    render(&lt;Button&gt;Click me&lt;/Button&gt;)
+    expect(screen.getByText('Click me')).toBeInTheDocument()
+  })
+  
+  it('calls onClick handler when clicked', () =&gt; {
+    const handleClick = jest.fn()
+    render(&lt;Button onClick={handleClick}&gt;Click me&lt;/Button&gt;)
+    
+    fireEvent.click(screen.getByText('Click me'))
+    expect(handleClick).toHaveBeenCalledTimes(1)
+  })
+})
+
+// __tests__/pages/api/users.test.ts
+import { createMocks } from 'node-mocks-http'
+import handler from '../pages/api/users'
+
+describe('/api/users', () =&gt; {
+  it('returns users for GET request', async () =&gt; {
+    const { req, res } = createMocks({
+      method: 'GET',
+    })
+    
+    await handler(req, res)
+    
+    expect(res._getStatusCode()).toBe(200)
+    const data = JSON.parse(res._getData())
+    expect(data).toHaveProperty('users')
+  })
+})
+</div></code></pre>
+<h3 id="security-best-practices">Security Best Practices</h3>
+<pre class="hljs"><code><div>// Content Security Policy
+// next.config.js
+const securityHeaders = [
+  {
+    key: 'Content-Security-Policy',
+    value: &quot;default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline';&quot;,
+  },
+  {
+    key: 'X-Frame-Options',
+    value: 'DENY',
+  },
+  {
+    key: 'X-Content-Type-Options',
+    value: 'nosniff',
+  },
+]
+
+module.exports = {
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: securityHeaders,
+      },
+    ]
+  },
+}
+
+// Input validation and sanitization
+import { z } from 'zod'
+
+const userSchema = z.object({
+  name: z.string().min(1).max(50),
+  email: z.string().email(),
+  age: z.number().min(18).max(120),
+})
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json()
+    const validatedData = userSchema.parse(body)
+    
+    // Process validated data
+    const user = await createUser(validatedData)
+    
+    return NextResponse.json({ user })
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { error: 'Invalid input', details: error.errors },
+        { status: 400 }
+      )
+    }
+    
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    )
+  }
+}
+</div></code></pre>
+<hr>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="common-issues-and-solutions">Common Issues and Solutions</h3>
+<h4 id="hydration-errors">Hydration Errors</h4>
+<pre class="hljs"><code><div>// Problem: Hydration mismatch
+function MyComponent() {
+  const [mounted, setMounted] = useState(false)
+  
+  useEffect(() =&gt; {
+    setMounted(true)
+  }, [])
+  
+  if (!mounted) {
+    return null // or loading skeleton
+  }
+  
+  return &lt;div&gt;{new Date().toLocaleDateString()}&lt;/div&gt;
+}
+
+// Alternative: Use dynamic import with ssr: false
+const DynamicComponent = dynamic(() =&gt; import('./MyComponent'), {
+  ssr: false,
+})
+</div></code></pre>
+<h4 id="cors-issues">CORS Issues</h4>
+<pre class="hljs"><code><div>// pages/api/cors-example.ts
+import { NextApiRequest, NextApiResponse } from 'next'
+
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  // Set CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version')
+  
+  if (req.method === 'OPTIONS') {
+    res.status(200).end()
+    return
+  }
+  
+  // Handle other methods
+  res.status(200).json({ message: 'Hello World' })
+}
+</div></code></pre>
+<h4 id="memory-leaks">Memory Leaks</h4>
+<pre class="hljs"><code><div>// Cleanup useEffect
+useEffect(() =&gt; {
+  const timer = setInterval(() =&gt; {
+    console.log('Timer tick')
+  }, 1000)
+  
+  return () =&gt; {
+    clearInterval(timer) // Cleanup
+  }
+}, [])
+
+// Cleanup event listeners
+useEffect(() =&gt; {
+  const handleResize = () =&gt; {
+    console.log('Window resized')
+  }
+  
+  window.addEventListener('resize', handleResize)
+  
+  return () =&gt; {
+    window.removeEventListener('resize', handleResize)
+  }
+}, [])
+</div></code></pre>
+<h4 id="performance-issues">Performance Issues</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Check bundle size</span>
+npm run build
+
+<span class="hljs-comment"># Analyze bundle</span>
+npm install --save-dev webpack-bundle-analyzer
+ANALYZE=<span class="hljs-literal">true</span> npm run build
+
+<span class="hljs-comment"># Check core web vitals</span>
+npm install --save-dev @next/bundle-analyzer
+</div></code></pre>
+<h3 id="debugging-tools">Debugging Tools</h3>
+<pre class="hljs"><code><div>// Custom debug component
+function DebugInfo({ data }) {
+  if (process.env.NODE_ENV !== 'development') {
+    return null
+  }
+  
+  return (
+    &lt;div style={{ 
+      position: 'fixed', 
+      bottom: 0, 
+      right: 0, 
+      background: 'black', 
+      color: 'white', 
+      padding: '1rem',
+      fontSize: '12px',
+      maxWidth: '300px',
+      overflow: 'auto'
+    }}&gt;
+      &lt;pre&gt;{JSON.stringify(data, null, 2)}&lt;/pre&gt;
+    &lt;/div&gt;
+  )
+}
+
+// Usage
+function MyComponent() {
+  const [state, setState] = useState({ count: 0 })
+  
+  return (
+    &lt;div&gt;
+      &lt;button onClick={() =&gt; setState({ count: state.count + 1 })}&gt;
+        Count: {state.count}
+      &lt;/button&gt;
+      &lt;DebugInfo data={state} /&gt;
+    &lt;/div&gt;
+  )
+}
+</div></code></pre>
+<hr>
+<h2 id="useful-resources">Useful Resources</h2>
+<h3 id="official-documentation">Official Documentation</h3>
+<ul>
+<li><a href="https://nextjs.org/docs">Next.js Documentation</a></li>
+<li><a href="https://react.dev">React Documentation</a></li>
+<li><a href="https://www.typescriptlang.org/docs">TypeScript Documentation</a></li>
+</ul>
+<h3 id="community-resources">Community Resources</h3>
+<ul>
+<li><a href="https://github.com/vercel/next.js/tree/canary/examples">Next.js Examples</a></li>
+<li><a href="https://github.com/unicodeveloper/awesome-nextjs">Awesome Next.js</a></li>
+<li><a href="https://discord.gg/nextjs">Next.js Discord</a></li>
+</ul>
+<h3 id="tools-and-libraries">Tools and Libraries</h3>
+<ul>
+<li><a href="https://tailwindcss.com">Tailwind CSS</a></li>
+<li><a href="https://next-auth.js.org">NextAuth.js</a></li>
+<li><a href="https://prisma.io">Prisma</a></li>
+<li><a href="https://vercel.com">Vercel</a></li>
+<li><a href="https://swr.vercel.app">SWR</a></li>
+<li><a href="https://react-hook-form.com">React Hook Form</a></li>
+</ul>
+<p>This cheat sheet covers the essential concepts and patterns you'll need for Next.js development, from basic setup to advanced features. Keep it handy as a reference while building your applications!</p>
+
+</body>
+</html>

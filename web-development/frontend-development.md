@@ -2,7 +2,7 @@
 
 _From Beginner to Advanced - Your Ultimate Reference Guide_
 
-[Download PDF](https://gdurl.com/Qn-k)
+### [Download PDF](https://gdurl.com/87h9)
 
 ---
 

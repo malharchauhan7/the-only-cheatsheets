@@ -1,0 +1,2719 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>reactjs.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="complete-reactjs-cheat-sheet---beginner-to-advanced">Complete React.js Cheat Sheet - Beginner to Advanced</h1>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#jsx-fundamentals">JSX Fundamentals</a></li>
+<li><a href="#components">Components</a></li>
+<li><a href="#props">Props</a></li>
+<li><a href="#state--usestate-hook">State &amp; useState Hook</a></li>
+<li><a href="#event-handling">Event Handling</a></li>
+<li><a href="#conditional-rendering">Conditional Rendering</a></li>
+<li><a href="#lists--keys">Lists &amp; Keys</a></li>
+<li><a href="#forms">Forms</a></li>
+<li><a href="#useeffect-hook">useEffect Hook</a></li>
+<li><a href="#usecontext-hook">useContext Hook</a></li>
+<li><a href="#usereducer-hook">useReducer Hook</a></li>
+<li><a href="#custom-hooks">Custom Hooks</a></li>
+<li><a href="#component-lifecycle">Component Lifecycle</a></li>
+<li><a href="#error-boundaries">Error Boundaries</a></li>
+<li><a href="#performance-optimization">Performance Optimization</a></li>
+<li><a href="#advanced-patterns">Advanced Patterns</a></li>
+<li><a href="#testing">Testing</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+</ol>
+<hr>
+<h2 id="getting-started">Getting Started</h2>
+<h3 id="installation">Installation</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Create React App</span>
+npx create-react-app my-app
+<span class="hljs-built_in">cd</span> my-app
+npm start
+
+<span class="hljs-comment"># With Vite (faster alternative)</span>
+npm create vite@latest my-app -- --template react
+<span class="hljs-built_in">cd</span> my-app
+npm install
+npm run dev
+
+<span class="hljs-comment"># With TypeScript</span>
+npx create-react-app my-app --template typescript
+</div></code></pre>
+<h3 id="basic-app-structure">Basic App Structure</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// App.js</span>
+<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">"./App.css"</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"App"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello, React!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> App;
+</div></code></pre>
+<hr>
+<h2 id="jsx-fundamentals">JSX Fundamentals</h2>
+<h3 id="jsx-syntax-rules">JSX Syntax Rules</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// JSX must return a single parent element</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Component</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Title<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Content<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-comment">// Or use React Fragment</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Component</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Title<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Content<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/&gt;</span></span>
+  );
+}
+
+<span class="hljs-comment">// Or explicit Fragment</span>
+<span class="hljs-keyword">import</span> { Fragment } <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Component</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Fragment</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Title<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Content<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Fragment</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="javascript-in-jsx">JavaScript in JSX</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Greeting</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> name = <span class="hljs-string">"John"</span>;
+  <span class="hljs-keyword">const</span> age = <span class="hljs-number">25</span>;
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello, {name}!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>You are {age} years old<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Next year you'll be {age + 1}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>{age &gt;= 18 ? "Adult" : "Minor"}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="jsx-attributes">JSX Attributes</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Example</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> imgSrc = <span class="hljs-string">"image.jpg"</span>;
+  <span class="hljs-keyword">const</span> isActive = <span class="hljs-literal">true</span>;
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      {/* className instead of class */}
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">{isActive</span> ? "<span class="hljs-attr">active</span>" <span class="hljs-attr">:</span> "<span class="hljs-attr">inactive</span>"}&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">{imgSrc}</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">"Description"</span> /&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+      {/* camelCase for attributes */}
+      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">onChange</span>=<span class="hljs-string">{handleChange}</span> <span class="hljs-attr">maxLength</span>=<span class="hljs-string">{50}</span> <span class="hljs-attr">autoFocus</span> /&gt;</span>
+
+      {/* Style as object */}
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>
+        <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span>
+          <span class="hljs-attr">backgroundColor:</span> "<span class="hljs-attr">blue</span>",
+          <span class="hljs-attr">fontSize:</span> "<span class="hljs-attr">16px</span>",
+          <span class="hljs-attr">marginTop:</span> "<span class="hljs-attr">10px</span>",
+        }}
+      &gt;</span>
+        Styled div
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<hr>
+<h2 id="components">Components</h2>
+<h3 id="function-components">Function Components</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Basic function component</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Welcome</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello, World!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>;
+}
+
+<span class="hljs-comment">// Arrow function component</span>
+<span class="hljs-keyword">const</span> Welcome = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello, World!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>;
+};
+
+<span class="hljs-comment">// Implicit return</span>
+<span class="hljs-keyword">const</span> Welcome = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello, World!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>;
+
+<span class="hljs-comment">// With parameters (props)</span>
+<span class="hljs-keyword">const</span> Welcome = <span class="hljs-function">(<span class="hljs-params">props</span>) =&gt;</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello, {props.name}!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>;
+
+<span class="hljs-comment">// With destructuring</span>
+<span class="hljs-keyword">const</span> Welcome = <span class="hljs-function">(<span class="hljs-params">{ name, age }</span>) =&gt;</span> (
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello, {name}!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Age: {age}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+);
+</div></code></pre>
+<h3 id="class-components-legacy">Class Components (Legacy)</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> React, { Component } <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Welcome</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>{
+  <span class="hljs-keyword">constructor</span>(props) {
+    <span class="hljs-keyword">super</span>(props);
+    <span class="hljs-keyword">this</span>.state = {
+      <span class="hljs-attr">count</span>: <span class="hljs-number">0</span>,
+    };
+  }
+
+  render() {
+    <span class="hljs-keyword">return</span> (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello, {this.props.name}!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Count: {this.state.count}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+    );
+  }
+}
+</div></code></pre>
+<h3 id="component-composition">Component Composition</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Header</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>My Website<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Sidebar</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">aside</span>&gt;</span>Sidebar content<span class="hljs-tag">&lt;/<span class="hljs-name">aside</span>&gt;</span></span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Main</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">main</span>&gt;</span>Main content<span class="hljs-tag">&lt;/<span class="hljs-name">main</span>&gt;</span></span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Layout</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Header</span> /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"container"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Sidebar</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Main</span> /&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<hr>
+<h2 id="props">Props</h2>
+<h3 id="basic-props">Basic Props</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Parent component</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Welcome</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"Alice"</span> <span class="hljs-attr">age</span>=<span class="hljs-string">{30}</span> /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Welcome</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"Bob"</span> <span class="hljs-attr">age</span>=<span class="hljs-string">{25}</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-comment">// Child component</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Welcome</span>(<span class="hljs-params">props</span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello, {props.name}!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Age: {props.age}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-comment">// With destructuring</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Welcome</span>(<span class="hljs-params">{ name, age }</span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello, {name}!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Age: {age}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="default-props">Default Props</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Welcome</span>(<span class="hljs-params">{ name = <span class="hljs-string">"Guest"</span>, age = <span class="hljs-number">0</span> }</span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello, {name}!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Age: {age}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-comment">// Or using defaultProps (legacy)</span>
+Welcome.defaultProps = {
+  <span class="hljs-attr">name</span>: <span class="hljs-string">"Guest"</span>,
+  <span class="hljs-attr">age</span>: <span class="hljs-number">0</span>,
+};
+</div></code></pre>
+<h3 id="props-children">Props Children</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Card</span>(<span class="hljs-params">{ children, title }</span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"card"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{title}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"card-content"</span>&gt;</span>{children}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-comment">// Usage</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Card</span> <span class="hljs-attr">title</span>=<span class="hljs-string">"My Card"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>This is inside the card<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>Click me<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Card</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="prop-types-for-type-checking">Prop Types (for type checking)</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> PropTypes <span class="hljs-keyword">from</span> <span class="hljs-string">"prop-types"</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Welcome</span>(<span class="hljs-params">{ name, age, isActive }</span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello, {name}!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Age: {age}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Status: {isActive ? "Active" : "Inactive"}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+
+Welcome.propTypes = {
+  <span class="hljs-attr">name</span>: PropTypes.string.isRequired,
+  <span class="hljs-attr">age</span>: PropTypes.number,
+  <span class="hljs-attr">isActive</span>: PropTypes.bool,
+};
+
+Welcome.defaultProps = {
+  <span class="hljs-attr">age</span>: <span class="hljs-number">0</span>,
+  <span class="hljs-attr">isActive</span>: <span class="hljs-literal">false</span>,
+};
+</div></code></pre>
+<hr>
+<h2 id="state--usestate-hook">State &amp; useState Hook</h2>
+<h3 id="basic-usestate">Basic useState</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> { useState } <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Counter</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> [count, setCount] = useState(<span class="hljs-number">0</span>);
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Count: {count}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setCount(count + 1)}&gt;Increment<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setCount(count - 1)}&gt;Decrement<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setCount(0)}&gt;Reset<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="multiple-state-variables">Multiple State Variables</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">UserProfile</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> [name, setName] = useState(<span class="hljs-string">""</span>);
+  <span class="hljs-keyword">const</span> [email, setEmail] = useState(<span class="hljs-string">""</span>);
+  <span class="hljs-keyword">const</span> [age, setAge] = useState(<span class="hljs-number">0</span>);
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+        <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span>
+        <span class="hljs-attr">value</span>=<span class="hljs-string">{name}</span>
+        <span class="hljs-attr">onChange</span>=<span class="hljs-string">{(e)</span> =&gt;</span> setName(e.target.value)}
+        placeholder="Name"
+      /&gt;
+      <span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+        <span class="hljs-attr">type</span>=<span class="hljs-string">"email"</span>
+        <span class="hljs-attr">value</span>=<span class="hljs-string">{email}</span>
+        <span class="hljs-attr">onChange</span>=<span class="hljs-string">{(e)</span> =&gt;</span> setEmail(e.target.value)}
+        placeholder="Email"
+      /&gt;
+      <span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+        <span class="hljs-attr">type</span>=<span class="hljs-string">"number"</span>
+        <span class="hljs-attr">value</span>=<span class="hljs-string">{age}</span>
+        <span class="hljs-attr">onChange</span>=<span class="hljs-string">{(e)</span> =&gt;</span> setAge(parseInt(e.target.value))}
+        placeholder="Age"
+      /&gt;
+    <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="object-state">Object State</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">UserProfile</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> [user, setUser] = useState({
+    <span class="hljs-attr">name</span>: <span class="hljs-string">""</span>,
+    <span class="hljs-attr">email</span>: <span class="hljs-string">""</span>,
+    <span class="hljs-attr">age</span>: <span class="hljs-number">0</span>,
+  });
+
+  <span class="hljs-keyword">const</span> updateUser = <span class="hljs-function">(<span class="hljs-params">field, value</span>) =&gt;</span> {
+    setUser(<span class="hljs-function">(<span class="hljs-params">prevUser</span>) =&gt;</span> ({
+      ...prevUser,
+      [field]: value,
+    }));
+  };
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+        <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span>
+        <span class="hljs-attr">value</span>=<span class="hljs-string">{user.name}</span>
+        <span class="hljs-attr">onChange</span>=<span class="hljs-string">{(e)</span> =&gt;</span> updateUser("name", e.target.value)}
+        placeholder="Name"
+      /&gt;
+      <span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+        <span class="hljs-attr">type</span>=<span class="hljs-string">"email"</span>
+        <span class="hljs-attr">value</span>=<span class="hljs-string">{user.email}</span>
+        <span class="hljs-attr">onChange</span>=<span class="hljs-string">{(e)</span> =&gt;</span> updateUser("email", e.target.value)}
+        placeholder="Email"
+      /&gt;
+    <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="array-state">Array State</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">TodoList</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> [todos, setTodos] = useState([]);
+  <span class="hljs-keyword">const</span> [input, setInput] = useState(<span class="hljs-string">""</span>);
+
+  <span class="hljs-keyword">const</span> addTodo = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">if</span> (input.trim()) {
+      setTodos([
+        ...todos,
+        {
+          <span class="hljs-attr">id</span>: <span class="hljs-built_in">Date</span>.now(),
+          <span class="hljs-attr">text</span>: input,
+          <span class="hljs-attr">completed</span>: <span class="hljs-literal">false</span>,
+        },
+      ]);
+      setInput(<span class="hljs-string">""</span>);
+    }
+  };
+
+  <span class="hljs-keyword">const</span> removeTodo = <span class="hljs-function">(<span class="hljs-params">id</span>) =&gt;</span> {
+    setTodos(todos.filter(<span class="hljs-function">(<span class="hljs-params">todo</span>) =&gt;</span> todo.id !== id));
+  };
+
+  <span class="hljs-keyword">const</span> toggleTodo = <span class="hljs-function">(<span class="hljs-params">id</span>) =&gt;</span> {
+    setTodos(
+      todos.map(<span class="hljs-function">(<span class="hljs-params">todo</span>) =&gt;</span>
+        todo.id === id ? { ...todo, <span class="hljs-attr">completed</span>: !todo.completed } : todo
+      )
+    );
+  };
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+        <span class="hljs-attr">value</span>=<span class="hljs-string">{input}</span>
+        <span class="hljs-attr">onChange</span>=<span class="hljs-string">{(e)</span> =&gt;</span> setInput(e.target.value)}
+        onKeyPress={(e) =&gt; e.key === "Enter" &amp;&amp; addTodo()}
+      /&gt;
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{addTodo}</span>&gt;</span>Add Todo<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+        {todos.map((todo) =&gt; (
+          <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{todo.id}</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">span</span>
+              <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span>
+                <span class="hljs-attr">textDecoration:</span> <span class="hljs-attr">todo.completed</span> ? "<span class="hljs-attr">line-through</span>" <span class="hljs-attr">:</span> "<span class="hljs-attr">none</span>",
+              }}
+              <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> toggleTodo(todo.id)}
+            &gt;
+              {todo.text}
+            <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> removeTodo(todo.id)}&gt;Delete<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+        ))}
+      <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<hr>
+<h2 id="event-handling">Event Handling</h2>
+<h3 id="basic-event-handling">Basic Event Handling</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">EventExample</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> handleClick = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    alert(<span class="hljs-string">"Button clicked!"</span>);
+  };
+
+  <span class="hljs-keyword">const</span> handleInputChange = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Input value:"</span>, e.target.value);
+  };
+
+  <span class="hljs-keyword">const</span> handleSubmit = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+    e.preventDefault(); <span class="hljs-comment">// Prevent default form submission</span>
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Form submitted"</span>);
+  };
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{handleClick}</span>&gt;</span>Click me<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">onChange</span>=<span class="hljs-string">{handleInputChange}</span> /&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">onSubmit</span>=<span class="hljs-string">{handleSubmit}</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"submit"</span>&gt;</span>Submit<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="event-object-properties">Event Object Properties</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">EventDetails</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> handleEvent = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Event type:"</span>, e.type);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Target element:"</span>, e.target);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Current target:"</span>, e.currentTarget);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Key pressed:"</span>, e.key); <span class="hljs-comment">// for keyboard events</span>
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Mouse button:"</span>, e.button); <span class="hljs-comment">// for mouse events</span>
+  };
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{handleEvent}</span>&gt;</span>Click<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">onKeyDown</span>=<span class="hljs-string">{handleEvent}</span> /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">onMouseEnter</span>=<span class="hljs-string">{handleEvent}</span>&gt;</span>Hover me<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="passing-parameters-to-event-handlers">Passing Parameters to Event Handlers</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ParameterExample</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> handleClick = <span class="hljs-function">(<span class="hljs-params">message, e</span>) =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(message);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Event:"</span>, e);
+  };
+
+  <span class="hljs-keyword">const</span> items = [<span class="hljs-string">"Apple"</span>, <span class="hljs-string">"Banana"</span>, <span class="hljs-string">"Cherry"</span>];
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      {/* Method 1: Arrow function */}
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{(e)</span> =&gt;</span> handleClick("Hello!", e)}&gt;Click me<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+
+      {/* Method 2: In a list */}
+      {items.map((item, index) =&gt; (
+        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{index}</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> console.log(`Clicked ${item}`)}&gt;
+          {item}
+        <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+      ))}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<hr>
+<h2 id="conditional-rendering">Conditional Rendering</h2>
+<h3 id="if-else-with">If-Else with &amp;&amp;</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ConditionalExample</span>(<span class="hljs-params">{ isLoggedIn, user }</span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      {isLoggedIn &amp;&amp; <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Welcome back, {user.name}!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>}
+      {!isLoggedIn &amp;&amp; <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Please log in<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="ternary-operator">Ternary Operator</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">LoginStatus</span>(<span class="hljs-params">{ isLoggedIn, user }</span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>{isLoggedIn ? `Welcome, ${user.name}!` : "Please log in"}<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>{isLoggedIn ? "Logout" : "Login"}<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="switch-like-conditional-rendering">Switch-like Conditional Rendering</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">StatusMessage</span>(<span class="hljs-params">{ status }</span>) </span>{
+  <span class="hljs-keyword">const</span> getStatusMessage = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">switch</span> (status) {
+      <span class="hljs-keyword">case</span> <span class="hljs-string">"loading"</span>:
+        <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;
+      <span class="hljs-keyword">case</span> <span class="hljs-string">"success"</span>:
+        <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Success!<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;
+      <span class="hljs-keyword">case</span> <span class="hljs-string">"error"</span>:
+        <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Something went wrong<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;
+      <span class="hljs-keyword">default</span>:
+        <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Unknown status<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;
+    }
+  };
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Status<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+      {getStatusMessage()}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="conditional-styling">Conditional Styling</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ConditionalStyling</span>(<span class="hljs-params">{ isActive, isError }</span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>
+      <span class="hljs-attr">className</span>=<span class="hljs-string">{</span>`
+        <span class="hljs-attr">button</span> 
+        ${<span class="hljs-attr">isActive</span> ? "<span class="hljs-attr">active</span>" <span class="hljs-attr">:</span> ""} 
+        ${<span class="hljs-attr">isError</span> ? "<span class="hljs-attr">error</span>" <span class="hljs-attr">:</span> ""}
+      `<span class="hljs-attr">.trim</span>()}
+      <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span>
+        <span class="hljs-attr">backgroundColor:</span> <span class="hljs-attr">isError</span> ? "<span class="hljs-attr">red</span>" <span class="hljs-attr">:</span> <span class="hljs-attr">isActive</span> ? "<span class="hljs-attr">green</span>" <span class="hljs-attr">:</span> "<span class="hljs-attr">gray</span>",
+        <span class="hljs-attr">opacity:</span> <span class="hljs-attr">isActive</span> ? <span class="hljs-attr">1</span> <span class="hljs-attr">:</span> <span class="hljs-attr">0.5</span>,
+      }}
+    &gt;</span>
+      Button
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<hr>
+<h2 id="lists--keys">Lists &amp; Keys</h2>
+<h3 id="basic-list-rendering">Basic List Rendering</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ItemList</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> items = [<span class="hljs-string">"Apple"</span>, <span class="hljs-string">"Banana"</span>, <span class="hljs-string">"Cherry"</span>, <span class="hljs-string">"Date"</span>];
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+      {items.map((item, index) =&gt; (
+        <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{index}</span>&gt;</span>{item}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+      ))}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="complex-list-with-objects">Complex List with Objects</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">UserList</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> users = [
+    { <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">"Alice"</span>, <span class="hljs-attr">email</span>: <span class="hljs-string">"alice@example.com"</span> },
+    { <span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">"Bob"</span>, <span class="hljs-attr">email</span>: <span class="hljs-string">"bob@example.com"</span> },
+    { <span class="hljs-attr">id</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">"Charlie"</span>, <span class="hljs-attr">email</span>: <span class="hljs-string">"charlie@example.com"</span> },
+  ];
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      {users.map((user) =&gt; (
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{user.id}</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"user-card"</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>{user.name}<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>{user.email}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+      ))}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="filtered-lists">Filtered Lists</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">FilteredList</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> [filter, setFilter] = useState(<span class="hljs-string">""</span>);
+  <span class="hljs-keyword">const</span> items = [<span class="hljs-string">"Apple"</span>, <span class="hljs-string">"Banana"</span>, <span class="hljs-string">"Cherry"</span>, <span class="hljs-string">"Date"</span>, <span class="hljs-string">"Elderberry"</span>];
+
+  <span class="hljs-keyword">const</span> filteredItems = items.filter(<span class="hljs-function">(<span class="hljs-params">item</span>) =&gt;</span>
+    item.toLowerCase().includes(filter.toLowerCase())
+  );
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+        <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span>
+        <span class="hljs-attr">value</span>=<span class="hljs-string">{filter}</span>
+        <span class="hljs-attr">onChange</span>=<span class="hljs-string">{(e)</span> =&gt;</span> setFilter(e.target.value)}
+        placeholder="Filter items..."
+      /&gt;
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+        {filteredItems.map((item, index) =&gt; (
+          <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{item}</span>&gt;</span>{item}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+        ))}
+      <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="keys-best-practices">Keys Best Practices</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// ❌ Bad: Using array index as key</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">BadList</span>(<span class="hljs-params">{ items }</span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+      {items.map((item, index) =&gt; (
+        <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{index}</span>&gt;</span>{item.name}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+      ))}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-comment">// ✅ Good: Using unique identifier as key</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">GoodList</span>(<span class="hljs-params">{ items }</span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+      {items.map((item) =&gt; (
+        <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{item.id}</span>&gt;</span>{item.name}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+      ))}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-comment">// ✅ Good: Using stable content as key (if no unique id)</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ContentKeyList</span>(<span class="hljs-params">{ items }</span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+      {items.map((item) =&gt; (
+        <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{item.name}</span>&gt;</span>{item.name}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+      ))}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<hr>
+<h2 id="forms">Forms</h2>
+<h3 id="controlled-components">Controlled Components</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ContactForm</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> [formData, setFormData] = useState({
+    <span class="hljs-attr">name</span>: <span class="hljs-string">""</span>,
+    <span class="hljs-attr">email</span>: <span class="hljs-string">""</span>,
+    <span class="hljs-attr">message</span>: <span class="hljs-string">""</span>,
+    <span class="hljs-attr">category</span>: <span class="hljs-string">"general"</span>,
+    <span class="hljs-attr">subscribe</span>: <span class="hljs-literal">false</span>,
+  });
+
+  <span class="hljs-keyword">const</span> handleInputChange = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+    <span class="hljs-keyword">const</span> { name, value, type, checked } = e.target;
+    setFormData(<span class="hljs-function">(<span class="hljs-params">prev</span>) =&gt;</span> ({
+      ...prev,
+      [name]: type === <span class="hljs-string">"checkbox"</span> ? checked : value,
+    }));
+  };
+
+  <span class="hljs-keyword">const</span> handleSubmit = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+    e.preventDefault();
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Form submitted:"</span>, formData);
+    <span class="hljs-comment">// Handle form submission</span>
+  };
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">onSubmit</span>=<span class="hljs-string">{handleSubmit}</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>
+          Name:
+          <span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+            <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span>
+            <span class="hljs-attr">name</span>=<span class="hljs-string">"name"</span>
+            <span class="hljs-attr">value</span>=<span class="hljs-string">{formData.name}</span>
+            <span class="hljs-attr">onChange</span>=<span class="hljs-string">{handleInputChange}</span>
+            <span class="hljs-attr">required</span>
+          /&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>
+          Email:
+          <span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+            <span class="hljs-attr">type</span>=<span class="hljs-string">"email"</span>
+            <span class="hljs-attr">name</span>=<span class="hljs-string">"email"</span>
+            <span class="hljs-attr">value</span>=<span class="hljs-string">{formData.email}</span>
+            <span class="hljs-attr">onChange</span>=<span class="hljs-string">{handleInputChange}</span>
+            <span class="hljs-attr">required</span>
+          /&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>
+          Message:
+          <span class="hljs-tag">&lt;<span class="hljs-name">textarea</span>
+            <span class="hljs-attr">name</span>=<span class="hljs-string">"message"</span>
+            <span class="hljs-attr">value</span>=<span class="hljs-string">{formData.message}</span>
+            <span class="hljs-attr">onChange</span>=<span class="hljs-string">{handleInputChange}</span>
+            <span class="hljs-attr">rows</span>=<span class="hljs-string">{4}</span>
+          /&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>
+          Category:
+          <span class="hljs-tag">&lt;<span class="hljs-name">select</span>
+            <span class="hljs-attr">name</span>=<span class="hljs-string">"category"</span>
+            <span class="hljs-attr">value</span>=<span class="hljs-string">{formData.category}</span>
+            <span class="hljs-attr">onChange</span>=<span class="hljs-string">{handleInputChange}</span>
+          &gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"general"</span>&gt;</span>General<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"support"</span>&gt;</span>Support<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"feedback"</span>&gt;</span>Feedback<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+            <span class="hljs-attr">type</span>=<span class="hljs-string">"checkbox"</span>
+            <span class="hljs-attr">name</span>=<span class="hljs-string">"subscribe"</span>
+            <span class="hljs-attr">checked</span>=<span class="hljs-string">{formData.subscribe}</span>
+            <span class="hljs-attr">onChange</span>=<span class="hljs-string">{handleInputChange}</span>
+          /&gt;</span>
+          Subscribe to newsletter
+        <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"submit"</span>&gt;</span>Submit<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="form-validation">Form Validation</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ValidatedForm</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> [formData, setFormData] = useState({
+    <span class="hljs-attr">email</span>: <span class="hljs-string">""</span>,
+    <span class="hljs-attr">password</span>: <span class="hljs-string">""</span>,
+    <span class="hljs-attr">confirmPassword</span>: <span class="hljs-string">""</span>,
+  });
+  <span class="hljs-keyword">const</span> [errors, setErrors] = useState({});
+
+  <span class="hljs-keyword">const</span> validateForm = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">const</span> newErrors = {};
+
+    <span class="hljs-comment">// Email validation</span>
+    <span class="hljs-keyword">if</span> (!formData.email) {
+      newErrors.email = <span class="hljs-string">"Email is required"</span>;
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!<span class="hljs-regexp">/\S+@\S+\.\S+/</span>.test(formData.email)) {
+      newErrors.email = <span class="hljs-string">"Email is invalid"</span>;
+    }
+
+    <span class="hljs-comment">// Password validation</span>
+    <span class="hljs-keyword">if</span> (!formData.password) {
+      newErrors.password = <span class="hljs-string">"Password is required"</span>;
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (formData.password.length &lt; <span class="hljs-number">6</span>) {
+      newErrors.password = <span class="hljs-string">"Password must be at least 6 characters"</span>;
+    }
+
+    <span class="hljs-comment">// Confirm password validation</span>
+    <span class="hljs-keyword">if</span> (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = <span class="hljs-string">"Passwords do not match"</span>;
+    }
+
+    setErrors(newErrors);
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.keys(newErrors).length === <span class="hljs-number">0</span>;
+  };
+
+  <span class="hljs-keyword">const</span> handleSubmit = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+    e.preventDefault();
+    <span class="hljs-keyword">if</span> (validateForm()) {
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Form is valid:"</span>, formData);
+    }
+  };
+
+  <span class="hljs-keyword">const</span> handleChange = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+    <span class="hljs-keyword">const</span> { name, value } = e.target;
+    setFormData(<span class="hljs-function">(<span class="hljs-params">prev</span>) =&gt;</span> ({
+      ...prev,
+      [name]: value,
+    }));
+
+    <span class="hljs-comment">// Clear error when user starts typing</span>
+    <span class="hljs-keyword">if</span> (errors[name]) {
+      setErrors(<span class="hljs-function">(<span class="hljs-params">prev</span>) =&gt;</span> ({
+        ...prev,
+        [name]: <span class="hljs-string">""</span>,
+      }));
+    }
+  };
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">onSubmit</span>=<span class="hljs-string">{handleSubmit}</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+          <span class="hljs-attr">type</span>=<span class="hljs-string">"email"</span>
+          <span class="hljs-attr">name</span>=<span class="hljs-string">"email"</span>
+          <span class="hljs-attr">value</span>=<span class="hljs-string">{formData.email}</span>
+          <span class="hljs-attr">onChange</span>=<span class="hljs-string">{handleChange}</span>
+          <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Email"</span>
+        /&gt;</span>
+        {errors.email &amp;&amp; <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"error"</span>&gt;</span>{errors.email}<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>}
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+          <span class="hljs-attr">type</span>=<span class="hljs-string">"password"</span>
+          <span class="hljs-attr">name</span>=<span class="hljs-string">"password"</span>
+          <span class="hljs-attr">value</span>=<span class="hljs-string">{formData.password}</span>
+          <span class="hljs-attr">onChange</span>=<span class="hljs-string">{handleChange}</span>
+          <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Password"</span>
+        /&gt;</span>
+        {errors.password &amp;&amp; <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"error"</span>&gt;</span>{errors.password}<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>}
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+          <span class="hljs-attr">type</span>=<span class="hljs-string">"password"</span>
+          <span class="hljs-attr">name</span>=<span class="hljs-string">"confirmPassword"</span>
+          <span class="hljs-attr">value</span>=<span class="hljs-string">{formData.confirmPassword}</span>
+          <span class="hljs-attr">onChange</span>=<span class="hljs-string">{handleChange}</span>
+          <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Confirm Password"</span>
+        /&gt;</span>
+        {errors.confirmPassword &amp;&amp; (
+          <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"error"</span>&gt;</span>{errors.confirmPassword}<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+        )}
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"submit"</span>&gt;</span>Submit<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<hr>
+<h2 id="useeffect-hook">useEffect Hook</h2>
+<h3 id="basic-useeffect">Basic useEffect</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> { useState, useEffect } <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">BasicEffect</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> [count, setCount] = useState(<span class="hljs-number">0</span>);
+
+  <span class="hljs-comment">// Effect runs after every render</span>
+  useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-built_in">document</span>.title = <span class="hljs-string">`Count: <span class="hljs-subst">${count}</span>`</span>;
+  });
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Count: {count}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setCount(count + 1)}&gt;Increment<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="useeffect-with-dependencies">useEffect with Dependencies</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">EffectWithDependencies</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> [count, setCount] = useState(<span class="hljs-number">0</span>);
+  <span class="hljs-keyword">const</span> [name, setName] = useState(<span class="hljs-string">""</span>);
+
+  <span class="hljs-comment">// Effect runs only when count changes</span>
+  useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-built_in">document</span>.title = <span class="hljs-string">`Count: <span class="hljs-subst">${count}</span>`</span>;
+  }, [count]);
+
+  <span class="hljs-comment">// Effect runs only once (component mount)</span>
+  useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Component mounted"</span>);
+  }, []);
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Count: {count}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setCount(count + 1)}&gt;Increment<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+        <span class="hljs-attr">value</span>=<span class="hljs-string">{name}</span>
+        <span class="hljs-attr">onChange</span>=<span class="hljs-string">{(e)</span> =&gt;</span> setName(e.target.value)}
+        placeholder="Name"
+      /&gt;
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="cleanup-with-useeffect">Cleanup with useEffect</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Timer</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> [seconds, setSeconds] = useState(<span class="hljs-number">0</span>);
+
+  useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">const</span> intervalId = setInterval(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      setSeconds(<span class="hljs-function">(<span class="hljs-params">prev</span>) =&gt;</span> prev + <span class="hljs-number">1</span>);
+    }, <span class="hljs-number">1000</span>);
+
+    <span class="hljs-comment">// Cleanup function</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      clearInterval(intervalId);
+    };
+  }, []); <span class="hljs-comment">// Empty dependency array = runs once</span>
+
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Timer: {seconds} seconds<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">WindowSize</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> [windowSize, setWindowSize] = useState({
+    <span class="hljs-attr">width</span>: <span class="hljs-built_in">window</span>.innerWidth,
+    <span class="hljs-attr">height</span>: <span class="hljs-built_in">window</span>.innerHeight,
+  });
+
+  useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">const</span> handleResize = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      setWindowSize({
+        <span class="hljs-attr">width</span>: <span class="hljs-built_in">window</span>.innerWidth,
+        <span class="hljs-attr">height</span>: <span class="hljs-built_in">window</span>.innerHeight,
+      });
+    };
+
+    <span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">"resize"</span>, handleResize);
+
+    <span class="hljs-comment">// Cleanup</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      <span class="hljs-built_in">window</span>.removeEventListener(<span class="hljs-string">"resize"</span>, handleResize);
+    };
+  }, []);
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      Window size: {windowSize.width} x {windowSize.height}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="data-fetching-with-useeffect">Data Fetching with useEffect</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">UserProfile</span>(<span class="hljs-params">{ userId }</span>) </span>{
+  <span class="hljs-keyword">const</span> [user, setUser] = useState(<span class="hljs-literal">null</span>);
+  <span class="hljs-keyword">const</span> [loading, setLoading] = useState(<span class="hljs-literal">true</span>);
+  <span class="hljs-keyword">const</span> [error, setError] = useState(<span class="hljs-literal">null</span>);
+
+  useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">let</span> isCancelled = <span class="hljs-literal">false</span>;
+
+    <span class="hljs-keyword">const</span> fetchUser = <span class="hljs-keyword">async</span> () =&gt; {
+      <span class="hljs-keyword">try</span> {
+        setLoading(<span class="hljs-literal">true</span>);
+        setError(<span class="hljs-literal">null</span>);
+
+        <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> fetch(<span class="hljs-string">`/api/users/<span class="hljs-subst">${userId}</span>`</span>);
+        <span class="hljs-keyword">if</span> (!response.ok) {
+          <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"User not found"</span>);
+        }
+
+        <span class="hljs-keyword">const</span> userData = <span class="hljs-keyword">await</span> response.json();
+
+        <span class="hljs-keyword">if</span> (!isCancelled) {
+          setUser(userData);
+        }
+      } <span class="hljs-keyword">catch</span> (err) {
+        <span class="hljs-keyword">if</span> (!isCancelled) {
+          setError(err.message);
+        }
+      } <span class="hljs-keyword">finally</span> {
+        <span class="hljs-keyword">if</span> (!isCancelled) {
+          setLoading(<span class="hljs-literal">false</span>);
+        }
+      }
+    };
+
+    fetchUser();
+
+    <span class="hljs-comment">// Cleanup to prevent setting state on unmounted component</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      isCancelled = <span class="hljs-literal">true</span>;
+    };
+  }, [userId]);
+
+  <span class="hljs-keyword">if</span> (loading) <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;
+  <span class="hljs-keyword">if</span> (error) <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Error: {error}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{user.name}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>{user.email}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<hr>
+<h2 id="usecontext-hook">useContext Hook</h2>
+<h3 id="creating-and-using-context">Creating and Using Context</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> { createContext, useContext, useState } <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
+
+<span class="hljs-comment">// Create context</span>
+<span class="hljs-keyword">const</span> ThemeContext = createContext();
+
+<span class="hljs-comment">// Context provider component</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ThemeProvider</span>(<span class="hljs-params">{ children }</span>) </span>{
+  <span class="hljs-keyword">const</span> [theme, setTheme] = useState(<span class="hljs-string">"light"</span>);
+
+  <span class="hljs-keyword">const</span> toggleTheme = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    setTheme(<span class="hljs-function">(<span class="hljs-params">prev</span>) =&gt;</span> (prev === <span class="hljs-string">"light"</span> ? <span class="hljs-string">"dark"</span> : <span class="hljs-string">"light"</span>));
+  };
+
+  <span class="hljs-keyword">const</span> value = {
+    theme,
+    toggleTheme,
+  };
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ThemeContext.Provider</span> <span class="hljs-attr">value</span>=<span class="hljs-string">{value}</span>&gt;</span>{children}<span class="hljs-tag">&lt;/<span class="hljs-name">ThemeContext.Provider</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-comment">// Custom hook to use theme context</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">useTheme</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> context = useContext(ThemeContext);
+  <span class="hljs-keyword">if</span> (!context) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"useTheme must be used within ThemeProvider"</span>);
+  }
+  <span class="hljs-keyword">return</span> context;
+}
+
+<span class="hljs-comment">// Component using context</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Header</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> { theme, toggleTheme } = useTheme();
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">header</span>
+      <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span>
+        <span class="hljs-attr">backgroundColor:</span> <span class="hljs-attr">theme</span> === <span class="hljs-string">"light"</span> ? "#<span class="hljs-attr">fff</span>" <span class="hljs-attr">:</span> "#<span class="hljs-attr">333</span>",
+        <span class="hljs-attr">color:</span> <span class="hljs-attr">theme</span> === <span class="hljs-string">"light"</span> ? "#<span class="hljs-attr">333</span>" <span class="hljs-attr">:</span> "#<span class="hljs-attr">fff</span>",
+      }}
+    &gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>My App<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{toggleTheme}</span>&gt;</span>
+        Switch to {theme === "light" ? "dark" : "light"} theme
+      <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">header</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-comment">// App component</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ThemeProvider</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Header</span> /&gt;</span>
+      {/* Other components */}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ThemeProvider</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="user-authentication-context">User Authentication Context</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> AuthContext = createContext();
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">AuthProvider</span>(<span class="hljs-params">{ children }</span>) </span>{
+  <span class="hljs-keyword">const</span> [user, setUser] = useState(<span class="hljs-literal">null</span>);
+  <span class="hljs-keyword">const</span> [loading, setLoading] = useState(<span class="hljs-literal">true</span>);
+
+  useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-comment">// Check if user is logged in</span>
+    <span class="hljs-keyword">const</span> token = localStorage.getItem(<span class="hljs-string">"token"</span>);
+    <span class="hljs-keyword">if</span> (token) {
+      <span class="hljs-comment">// Validate token and get user data</span>
+      fetchUserProfile(token);
+    } <span class="hljs-keyword">else</span> {
+      setLoading(<span class="hljs-literal">false</span>);
+    }
+  }, []);
+
+  <span class="hljs-keyword">const</span> login = <span class="hljs-keyword">async</span> (email, password) =&gt; {
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> fetch(<span class="hljs-string">"/api/login"</span>, {
+        <span class="hljs-attr">method</span>: <span class="hljs-string">"POST"</span>,
+        <span class="hljs-attr">headers</span>: { <span class="hljs-string">"Content-Type"</span>: <span class="hljs-string">"application/json"</span> },
+        <span class="hljs-attr">body</span>: <span class="hljs-built_in">JSON</span>.stringify({ email, password }),
+      });
+
+      <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">await</span> response.json();
+
+      <span class="hljs-keyword">if</span> (response.ok) {
+        localStorage.setItem(<span class="hljs-string">"token"</span>, data.token);
+        setUser(data.user);
+        <span class="hljs-keyword">return</span> { <span class="hljs-attr">success</span>: <span class="hljs-literal">true</span> };
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">return</span> { <span class="hljs-attr">success</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">error</span>: data.message };
+      }
+    } <span class="hljs-keyword">catch</span> (error) {
+      <span class="hljs-keyword">return</span> { <span class="hljs-attr">success</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">error</span>: <span class="hljs-string">"Network error"</span> };
+    }
+  };
+
+  <span class="hljs-keyword">const</span> logout = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    localStorage.removeItem(<span class="hljs-string">"token"</span>);
+    setUser(<span class="hljs-literal">null</span>);
+  };
+
+  <span class="hljs-keyword">const</span> value = {
+    user,
+    login,
+    logout,
+    loading,
+  };
+
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">AuthContext.Provider</span> <span class="hljs-attr">value</span>=<span class="hljs-string">{value}</span>&gt;</span>{children}<span class="hljs-tag">&lt;/<span class="hljs-name">AuthContext.Provider</span>&gt;</span></span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">useAuth</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> context = useContext(AuthContext);
+  <span class="hljs-keyword">if</span> (!context) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"useAuth must be used within AuthProvider"</span>);
+  }
+  <span class="hljs-keyword">return</span> context;
+}
+</div></code></pre>
+<hr>
+<h2 id="usereducer-hook">useReducer Hook</h2>
+<h3 id="basic-usereducer">Basic useReducer</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> { useReducer } <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
+
+<span class="hljs-comment">// Reducer function</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">counterReducer</span>(<span class="hljs-params">state, action</span>) </span>{
+  <span class="hljs-keyword">switch</span> (action.type) {
+    <span class="hljs-keyword">case</span> <span class="hljs-string">"INCREMENT"</span>:
+      <span class="hljs-keyword">return</span> { <span class="hljs-attr">count</span>: state.count + <span class="hljs-number">1</span> };
+    <span class="hljs-keyword">case</span> <span class="hljs-string">"DECREMENT"</span>:
+      <span class="hljs-keyword">return</span> { <span class="hljs-attr">count</span>: state.count - <span class="hljs-number">1</span> };
+    <span class="hljs-keyword">case</span> <span class="hljs-string">"RESET"</span>:
+      <span class="hljs-keyword">return</span> { <span class="hljs-attr">count</span>: <span class="hljs-number">0</span> };
+    <span class="hljs-keyword">case</span> <span class="hljs-string">"SET"</span>:
+      <span class="hljs-keyword">return</span> { <span class="hljs-attr">count</span>: action.payload };
+    <span class="hljs-keyword">default</span>:
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">`Unknown action type: <span class="hljs-subst">${action.type}</span>`</span>);
+  }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Counter</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> [state, dispatch] = useReducer(counterReducer, { <span class="hljs-attr">count</span>: <span class="hljs-number">0</span> });
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Count: {state.count}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> dispatch({ type: "INCREMENT" })}&gt;Increment<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> dispatch({ type: "DECREMENT" })}&gt;Decrement<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> dispatch({ type: "RESET" })}&gt;Reset<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> dispatch({ type: "SET", payload: 10 })}&gt;
+        Set to 10
+      <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="complex-state-with-usereducer">Complex State with useReducer</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Todo list reducer</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">todoReducer</span>(<span class="hljs-params">state, action</span>) </span>{
+  <span class="hljs-keyword">switch</span> (action.type) {
+    <span class="hljs-keyword">case</span> <span class="hljs-string">"ADD_TODO"</span>:
+      <span class="hljs-keyword">return</span> {
+        ...state,
+        <span class="hljs-attr">todos</span>: [
+          ...state.todos,
+          {
+            <span class="hljs-attr">id</span>: <span class="hljs-built_in">Date</span>.now(),
+            <span class="hljs-attr">text</span>: action.payload,
+            <span class="hljs-attr">completed</span>: <span class="hljs-literal">false</span>,
+          },
+        ],
+      };
+    <span class="hljs-keyword">case</span> <span class="hljs-string">"TOGGLE_TODO"</span>:
+      <span class="hljs-keyword">return</span> {
+        ...state,
+        <span class="hljs-attr">todos</span>: state.todos.map(<span class="hljs-function">(<span class="hljs-params">todo</span>) =&gt;</span>
+          todo.id === action.payload
+            ? { ...todo, <span class="hljs-attr">completed</span>: !todo.completed }
+            : todo
+        ),
+      };
+    <span class="hljs-keyword">case</span> <span class="hljs-string">"DELETE_TODO"</span>:
+      <span class="hljs-keyword">return</span> {
+        ...state,
+        <span class="hljs-attr">todos</span>: state.todos.filter(<span class="hljs-function">(<span class="hljs-params">todo</span>) =&gt;</span> todo.id !== action.payload),
+      };
+    <span class="hljs-keyword">case</span> <span class="hljs-string">"SET_FILTER"</span>:
+      <span class="hljs-keyword">return</span> {
+        ...state,
+        <span class="hljs-attr">filter</span>: action.payload,
+      };
+    <span class="hljs-keyword">case</span> <span class="hljs-string">"CLEAR_COMPLETED"</span>:
+      <span class="hljs-keyword">return</span> {
+        ...state,
+        <span class="hljs-attr">todos</span>: state.todos.filter(<span class="hljs-function">(<span class="hljs-params">todo</span>) =&gt;</span> !todo.completed),
+      };
+    <span class="hljs-keyword">default</span>:
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">`Unknown action type: <span class="hljs-subst">${action.type}</span>`</span>);
+  }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">TodoApp</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> initialState = {
+    <span class="hljs-attr">todos</span>: [],
+    <span class="hljs-attr">filter</span>: <span class="hljs-string">"all"</span>, <span class="hljs-comment">// 'all', 'active', 'completed'</span>
+  };
+
+  <span class="hljs-keyword">const</span> [state, dispatch] = useReducer(todoReducer, initialState);
+  <span class="hljs-keyword">const</span> [input, setInput] = useState(<span class="hljs-string">""</span>);
+
+  <span class="hljs-keyword">const</span> addTodo = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">if</span> (input.trim()) {
+      dispatch({ <span class="hljs-attr">type</span>: <span class="hljs-string">"ADD_TODO"</span>, <span class="hljs-attr">payload</span>: input });
+      setInput(<span class="hljs-string">""</span>);
+    }
+  };
+
+  <span class="hljs-keyword">const</span> filteredTodos = state.todos.filter(<span class="hljs-function">(<span class="hljs-params">todo</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (state.filter === <span class="hljs-string">"active"</span>) <span class="hljs-keyword">return</span> !todo.completed;
+    <span class="hljs-keyword">if</span> (state.filter === <span class="hljs-string">"completed"</span>) <span class="hljs-keyword">return</span> todo.completed;
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+  });
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+        <span class="hljs-attr">value</span>=<span class="hljs-string">{input}</span>
+        <span class="hljs-attr">onChange</span>=<span class="hljs-string">{(e)</span> =&gt;</span> setInput(e.target.value)}
+        onKeyPress={(e) =&gt; e.key === "Enter" &amp;&amp; addTodo()}
+      /&gt;
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{addTodo}</span>&gt;</span>Add Todo<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">button</span>
+          <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> dispatch({ type: "SET_FILTER", payload: "all" })}
+          style={{ fontWeight: state.filter === "all" ? "bold" : "normal" }}
+        &gt;
+          All
+        <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">button</span>
+          <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> dispatch({ type: "SET_FILTER", payload: "active" })}
+          style={{ fontWeight: state.filter === "active" ? "bold" : "normal" }}
+        &gt;
+          Active
+        <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">button</span>
+          <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> dispatch({ type: "SET_FILTER", payload: "completed" })}
+          style={{
+            fontWeight: state.filter === "completed" ? "bold" : "normal",
+          }}
+        &gt;
+          Completed
+        <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+        {filteredTodos.map((todo) =&gt; (
+          <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{todo.id}</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">span</span>
+              <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span>
+                <span class="hljs-attr">textDecoration:</span> <span class="hljs-attr">todo.completed</span> ? "<span class="hljs-attr">line-through</span>" <span class="hljs-attr">:</span> "<span class="hljs-attr">none</span>",
+                <span class="hljs-attr">cursor:</span> "<span class="hljs-attr">pointer</span>",
+              }}
+              <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span>
+                dispatch({ type: "TOGGLE_TODO", payload: todo.id })
+              }
+            &gt;
+              {todo.text}
+            <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">button</span>
+              <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span>
+                dispatch({ type: "DELETE_TODO", payload: todo.id })
+              }
+            &gt;
+              Delete
+            <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+        ))}
+      <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> dispatch({ type: "CLEAR_COMPLETED" })}&gt;
+        Clear Completed
+      <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<hr>
+<h2 id="custom-hooks">Custom Hooks</h2>
+<h3 id="basic-custom-hook">Basic Custom Hook</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Custom hook for local storage</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">useLocalStorage</span>(<span class="hljs-params">key, initialValue</span>) </span>{
+  <span class="hljs-keyword">const</span> [storedValue, setStoredValue] = useState(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">const</span> item = <span class="hljs-built_in">window</span>.localStorage.getItem(key);
+      <span class="hljs-keyword">return</span> item ? <span class="hljs-built_in">JSON</span>.parse(item) : initialValue;
+    } <span class="hljs-keyword">catch</span> (error) {
+      <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"Error reading from localStorage:"</span>, error);
+      <span class="hljs-keyword">return</span> initialValue;
+    }
+  });
+
+  <span class="hljs-keyword">const</span> setValue = <span class="hljs-function">(<span class="hljs-params">value</span>) =&gt;</span> {
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">const</span> valueToStore =
+        value <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Function</span> ? value(storedValue) : value;
+      setStoredValue(valueToStore);
+      <span class="hljs-built_in">window</span>.localStorage.setItem(key, <span class="hljs-built_in">JSON</span>.stringify(valueToStore));
+    } <span class="hljs-keyword">catch</span> (error) {
+      <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"Error writing to localStorage:"</span>, error);
+    }
+  };
+
+  <span class="hljs-keyword">return</span> [storedValue, setValue];
+}
+
+<span class="hljs-comment">// Usage</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Settings</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> [theme, setTheme] = useLocalStorage(<span class="hljs-string">"theme"</span>, <span class="hljs-string">"light"</span>);
+  <span class="hljs-keyword">const</span> [language, setLanguage] = useLocalStorage(<span class="hljs-string">"language"</span>, <span class="hljs-string">"en"</span>);
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setTheme(theme === "light" ? "dark" : "light")}&gt;
+        Theme: {theme}
+      <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">value</span>=<span class="hljs-string">{language}</span> <span class="hljs-attr">onChange</span>=<span class="hljs-string">{(e)</span> =&gt;</span> setLanguage(e.target.value)}&gt;
+        <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"en"</span>&gt;</span>English<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"es"</span>&gt;</span>Spanish<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"fr"</span>&gt;</span>French<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="fetch-data-hook">Fetch Data Hook</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">useFetch</span>(<span class="hljs-params">url, options = {}</span>) </span>{
+  <span class="hljs-keyword">const</span> [data, setData] = useState(<span class="hljs-literal">null</span>);
+  <span class="hljs-keyword">const</span> [loading, setLoading] = useState(<span class="hljs-literal">true</span>);
+  <span class="hljs-keyword">const</span> [error, setError] = useState(<span class="hljs-literal">null</span>);
+
+  useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">let</span> isCancelled = <span class="hljs-literal">false</span>;
+
+    <span class="hljs-keyword">const</span> fetchData = <span class="hljs-keyword">async</span> () =&gt; {
+      <span class="hljs-keyword">try</span> {
+        setLoading(<span class="hljs-literal">true</span>);
+        setError(<span class="hljs-literal">null</span>);
+
+        <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> fetch(url, options);
+        <span class="hljs-keyword">if</span> (!response.ok) {
+          <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">`HTTP error! status: <span class="hljs-subst">${response.status}</span>`</span>);
+        }
+
+        <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> response.json();
+
+        <span class="hljs-keyword">if</span> (!isCancelled) {
+          setData(result);
+        }
+      } <span class="hljs-keyword">catch</span> (err) {
+        <span class="hljs-keyword">if</span> (!isCancelled) {
+          setError(err.message);
+        }
+      } <span class="hljs-keyword">finally</span> {
+        <span class="hljs-keyword">if</span> (!isCancelled) {
+          setLoading(<span class="hljs-literal">false</span>);
+        }
+      }
+    };
+
+    fetchData();
+
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      isCancelled = <span class="hljs-literal">true</span>;
+    };
+  }, [url, <span class="hljs-built_in">JSON</span>.stringify(options)]);
+
+  <span class="hljs-keyword">return</span> { data, loading, error };
+}
+
+<span class="hljs-comment">// Usage</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">UserList</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> { <span class="hljs-attr">data</span>: users, loading, error } = useFetch(<span class="hljs-string">"/api/users"</span>);
+
+  <span class="hljs-keyword">if</span> (loading) <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;
+  <span class="hljs-keyword">if</span> (error) <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Error: {error}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+      {users.map((user) =&gt; (
+        <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{user.id}</span>&gt;</span>{user.name}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+      ))}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="form-hook">Form Hook</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">useForm</span>(<span class="hljs-params">initialValues, validate</span>) </span>{
+  <span class="hljs-keyword">const</span> [values, setValues] = useState(initialValues);
+  <span class="hljs-keyword">const</span> [errors, setErrors] = useState({});
+  <span class="hljs-keyword">const</span> [touched, setTouched] = useState({});
+
+  <span class="hljs-keyword">const</span> handleChange = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+    <span class="hljs-keyword">const</span> { name, value, type, checked } = e.target;
+    <span class="hljs-keyword">const</span> newValue = type === <span class="hljs-string">"checkbox"</span> ? checked : value;
+
+    setValues(<span class="hljs-function">(<span class="hljs-params">prev</span>) =&gt;</span> ({
+      ...prev,
+      [name]: newValue,
+    }));
+
+    <span class="hljs-comment">// Clear error when user starts typing</span>
+    <span class="hljs-keyword">if</span> (errors[name]) {
+      setErrors(<span class="hljs-function">(<span class="hljs-params">prev</span>) =&gt;</span> ({
+        ...prev,
+        [name]: <span class="hljs-string">""</span>,
+      }));
+    }
+  };
+
+  <span class="hljs-keyword">const</span> handleBlur = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+    <span class="hljs-keyword">const</span> { name } = e.target;
+    setTouched(<span class="hljs-function">(<span class="hljs-params">prev</span>) =&gt;</span> ({
+      ...prev,
+      [name]: <span class="hljs-literal">true</span>,
+    }));
+
+    <span class="hljs-keyword">if</span> (validate) {
+      <span class="hljs-keyword">const</span> fieldErrors = validate(values);
+      setErrors(<span class="hljs-function">(<span class="hljs-params">prev</span>) =&gt;</span> ({
+        ...prev,
+        [name]: fieldErrors[name] || <span class="hljs-string">""</span>,
+      }));
+    }
+  };
+
+  <span class="hljs-keyword">const</span> handleSubmit = <span class="hljs-function">(<span class="hljs-params">onSubmit</span>) =&gt;</span> <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+    e.preventDefault();
+
+    <span class="hljs-keyword">if</span> (validate) {
+      <span class="hljs-keyword">const</span> formErrors = validate(values);
+      setErrors(formErrors);
+
+      <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Object</span>.keys(formErrors).length === <span class="hljs-number">0</span>) {
+        onSubmit(values);
+      }
+    } <span class="hljs-keyword">else</span> {
+      onSubmit(values);
+    }
+  };
+
+  <span class="hljs-keyword">const</span> reset = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    setValues(initialValues);
+    setErrors({});
+    setTouched({});
+  };
+
+  <span class="hljs-keyword">return</span> {
+    values,
+    errors,
+    touched,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    reset,
+  };
+}
+
+<span class="hljs-comment">// Usage</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">LoginForm</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> validate = <span class="hljs-function">(<span class="hljs-params">values</span>) =&gt;</span> {
+    <span class="hljs-keyword">const</span> errors = {};
+
+    <span class="hljs-keyword">if</span> (!values.email) {
+      errors.email = <span class="hljs-string">"Email is required"</span>;
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!<span class="hljs-regexp">/\S+@\S+\.\S+/</span>.test(values.email)) {
+      errors.email = <span class="hljs-string">"Email is invalid"</span>;
+    }
+
+    <span class="hljs-keyword">if</span> (!values.password) {
+      errors.password = <span class="hljs-string">"Password is required"</span>;
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (values.password.length &lt; <span class="hljs-number">6</span>) {
+      errors.password = <span class="hljs-string">"Password must be at least 6 characters"</span>;
+    }
+
+    <span class="hljs-keyword">return</span> errors;
+  };
+
+  <span class="hljs-keyword">const</span> {
+    values,
+    errors,
+    touched,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    reset,
+  } = useForm({ <span class="hljs-attr">email</span>: <span class="hljs-string">""</span>, <span class="hljs-attr">password</span>: <span class="hljs-string">""</span> }, validate);
+
+  <span class="hljs-keyword">const</span> onSubmit = <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Form submitted:"</span>, data);
+    reset();
+  };
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">onSubmit</span>=<span class="hljs-string">{handleSubmit(onSubmit)}</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+          <span class="hljs-attr">type</span>=<span class="hljs-string">"email"</span>
+          <span class="hljs-attr">name</span>=<span class="hljs-string">"email"</span>
+          <span class="hljs-attr">value</span>=<span class="hljs-string">{values.email}</span>
+          <span class="hljs-attr">onChange</span>=<span class="hljs-string">{handleChange}</span>
+          <span class="hljs-attr">onBlur</span>=<span class="hljs-string">{handleBlur}</span>
+          <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Email"</span>
+        /&gt;</span>
+        {touched.email &amp;&amp; errors.email &amp;&amp; (
+          <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"error"</span>&gt;</span>{errors.email}<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+        )}
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">input</span>
+          <span class="hljs-attr">type</span>=<span class="hljs-string">"password"</span>
+          <span class="hljs-attr">name</span>=<span class="hljs-string">"password"</span>
+          <span class="hljs-attr">value</span>=<span class="hljs-string">{values.password}</span>
+          <span class="hljs-attr">onChange</span>=<span class="hljs-string">{handleChange}</span>
+          <span class="hljs-attr">onBlur</span>=<span class="hljs-string">{handleBlur}</span>
+          <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Password"</span>
+        /&gt;</span>
+        {touched.password &amp;&amp; errors.password &amp;&amp; (
+          <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"error"</span>&gt;</span>{errors.password}<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+        )}
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"submit"</span>&gt;</span>Login<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<hr>
+<h2 id="component-lifecycle">Component Lifecycle</h2>
+<h3 id="functional-component-lifecycle-with-hooks">Functional Component Lifecycle with Hooks</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">LifecycleExample</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> [count, setCount] = useState(<span class="hljs-number">0</span>);
+
+  <span class="hljs-comment">// ComponentDidMount equivalent</span>
+  useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Component mounted"</span>);
+
+    <span class="hljs-comment">// ComponentWillUnmount equivalent (cleanup)</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Component will unmount"</span>);
+    };
+  }, []);
+
+  <span class="hljs-comment">// ComponentDidUpdate equivalent</span>
+  useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Component updated, count:"</span>, count);
+  }, [count]);
+
+  <span class="hljs-comment">// Combined mount and update</span>
+  useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Component mounted or count updated"</span>);
+  }, [count]);
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Count: {count}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setCount(count + 1)}&gt;Increment<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="class-component-lifecycle-legacy">Class Component Lifecycle (Legacy)</h3>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LifecycleClass</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  <span class="hljs-keyword">constructor</span>(props) {
+    <span class="hljs-keyword">super</span>(props);
+    <span class="hljs-keyword">this</span>.state = { <span class="hljs-attr">count</span>: <span class="hljs-number">0</span> };
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Constructor"</span>);
+  }
+
+  <span class="hljs-keyword">static</span> getDerivedStateFromProps(props, state) {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"getDerivedStateFromProps"</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>; <span class="hljs-comment">// No state update needed</span>
+  }
+
+  componentDidMount() {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Component mounted"</span>);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"shouldComponentUpdate"</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>; <span class="hljs-comment">// Always update</span>
+  }
+
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"getSnapshotBeforeUpdate"</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Component updated"</span>);
+  }
+
+  componentWillUnmount() {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Component will unmount"</span>);
+  }
+
+  render() {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Render"</span>);
+    <span class="hljs-keyword">return</span> (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Count: {this.state.count}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> this.setState({ count: this.state.count + 1 })}&gt;
+          Increment
+        <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+    );
+  }
+}
+</div></code></pre>
+<hr>
+<h2 id="error-boundaries">Error Boundaries</h2>
+<h3 id="class-based-error-boundary">Class-based Error Boundary</h3>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ErrorBoundary</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  <span class="hljs-keyword">constructor</span>(props) {
+    <span class="hljs-keyword">super</span>(props);
+    <span class="hljs-keyword">this</span>.state = { <span class="hljs-attr">hasError</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">error</span>: <span class="hljs-literal">null</span>, <span class="hljs-attr">errorInfo</span>: <span class="hljs-literal">null</span> };
+  }
+
+  <span class="hljs-keyword">static</span> getDerivedStateFromError(error) {
+    <span class="hljs-comment">// Update state to show error UI</span>
+    <span class="hljs-keyword">return</span> { <span class="hljs-attr">hasError</span>: <span class="hljs-literal">true</span> };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    <span class="hljs-comment">// Log error details</span>
+    <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"Error caught by boundary:"</span>, error, errorInfo);
+    <span class="hljs-keyword">this</span>.setState({
+      <span class="hljs-attr">error</span>: error,
+      <span class="hljs-attr">errorInfo</span>: errorInfo,
+    });
+  }
+
+  render() {
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.state.hasError) {
+      <span class="hljs-keyword">return</span> (
+        <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">padding:</span> "<span class="hljs-attr">20px</span>", <span class="hljs-attr">border:</span> "<span class="hljs-attr">1px</span> <span class="hljs-attr">solid</span> <span class="hljs-attr">red</span>" }}&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Something went wrong.<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">details</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">whiteSpace:</span> "<span class="hljs-attr">pre-wrap</span>" }}&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">summary</span>&gt;</span>Error details<span class="hljs-tag">&lt;/<span class="hljs-name">summary</span>&gt;</span>
+            {this.state.error &amp;&amp; this.state.error.toString()}
+            <span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span>
+            {this.state.errorInfo.componentStack}
+          <span class="hljs-tag">&lt;/<span class="hljs-name">details</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">button</span>
+            <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span>
+              this.setState({ hasError: false, error: null, errorInfo: null })
+            }
+          &gt;
+            Try again
+          <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+      );
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.props.children;
+  }
+}
+
+<span class="hljs-comment">// Usage</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ErrorBoundary</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Header</span> /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Main</span> /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Footer</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ErrorBoundary</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="hook-based-error-boundary-with-react-error-boundary">Hook-based Error Boundary (with react-error-boundary)</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Install: npm install react-error-boundary</span>
+<span class="hljs-keyword">import</span> { ErrorBoundary } <span class="hljs-keyword">from</span> <span class="hljs-string">"react-error-boundary"</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ErrorFallback</span>(<span class="hljs-params">{ error, resetErrorBoundary }</span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"alert"</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">padding:</span> "<span class="hljs-attr">20px</span>", <span class="hljs-attr">border:</span> "<span class="hljs-attr">1px</span> <span class="hljs-attr">solid</span> <span class="hljs-attr">red</span>" }}&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Something went wrong:<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">pre</span>&gt;</span>{error.message}<span class="hljs-tag">&lt;/<span class="hljs-name">pre</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{resetErrorBoundary}</span>&gt;</span>Try again<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MyErrorBoundary</span>(<span class="hljs-params">{ children }</span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ErrorBoundary</span>
+      <span class="hljs-attr">FallbackComponent</span>=<span class="hljs-string">{ErrorFallback}</span>
+      <span class="hljs-attr">onError</span>=<span class="hljs-string">{(error,</span> <span class="hljs-attr">errorInfo</span>) =&gt;</span> {
+        console.error("Error logged:", error, errorInfo);
+        // Send to error reporting service
+      }}
+      onReset={() =&gt; {
+        // Reset app state if needed
+      }}
+    &gt;
+      {children}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ErrorBoundary</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<hr>
+<h2 id="performance-optimization">Performance Optimization</h2>
+<h3 id="reactmemo">React.memo</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Memoize component to prevent unnecessary re-renders</span>
+<span class="hljs-keyword">const</span> ExpensiveComponent = React.memo(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ExpensiveComponent</span>(<span class="hljs-params">{
+  name,
+  value,
+}</span>) </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"ExpensiveComponent rendered"</span>);
+
+  <span class="hljs-comment">// Expensive calculation</span>
+  <span class="hljs-keyword">const</span> expensiveValue = useMemo(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Array</span>.from({ <span class="hljs-attr">length</span>: <span class="hljs-number">1000000</span> }, (_, i) =&gt; i).reduce(
+      <span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a + b,
+      <span class="hljs-number">0</span>
+    );
+  }, []);
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>{name}<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Value: {value}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Expensive calculation: {expensiveValue}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+});
+
+<span class="hljs-comment">// With custom comparison function</span>
+<span class="hljs-keyword">const</span> CustomMemoComponent = React.memo(
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">CustomMemoComponent</span>(<span class="hljs-params">{ user, posts }</span>) </span>{
+    <span class="hljs-keyword">return</span> (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>{user.name}<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Posts: {posts.length}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+    );
+  },
+  (prevProps, nextProps) =&gt; {
+    <span class="hljs-comment">// Custom comparison logic</span>
+    <span class="hljs-keyword">return</span> (
+      prevProps.user.id === nextProps.user.id &amp;&amp;
+      prevProps.posts.length === nextProps.posts.length
+    );
+  }
+);
+</div></code></pre>
+<h3 id="usememo-hook">useMemo Hook</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ExpensiveCalculation</span>(<span class="hljs-params">{ items, multiplier }</span>) </span>{
+  <span class="hljs-comment">// Memoize expensive calculation</span>
+  <span class="hljs-keyword">const</span> expensiveValue = useMemo(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Calculating expensive value..."</span>);
+    <span class="hljs-keyword">return</span> items.reduce(<span class="hljs-function">(<span class="hljs-params">sum, item</span>) =&gt;</span> sum + item.value, <span class="hljs-number">0</span>) * multiplier;
+  }, [items, multiplier]);
+
+  <span class="hljs-comment">// Memoize filtered items</span>
+  <span class="hljs-keyword">const</span> filteredItems = useMemo(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Filtering items..."</span>);
+    <span class="hljs-keyword">return</span> items.filter(<span class="hljs-function">(<span class="hljs-params">item</span>) =&gt;</span> item.active);
+  }, [items]);
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Total value: {expensiveValue}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Active items: {filteredItems.length}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="usecallback-hook">useCallback Hook</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">TodoList</span>(<span class="hljs-params">{ todos }</span>) </span>{
+  <span class="hljs-keyword">const</span> [filter, setFilter] = useState(<span class="hljs-string">"all"</span>);
+
+  <span class="hljs-comment">// Memoize callback to prevent child re-renders</span>
+  <span class="hljs-keyword">const</span> handleToggle = useCallback(<span class="hljs-function">(<span class="hljs-params">id</span>) =&gt;</span> {
+    setTodos(<span class="hljs-function">(<span class="hljs-params">prevTodos</span>) =&gt;</span>
+      prevTodos.map(<span class="hljs-function">(<span class="hljs-params">todo</span>) =&gt;</span>
+        todo.id === id ? { ...todo, <span class="hljs-attr">completed</span>: !todo.completed } : todo
+      )
+    );
+  }, []);
+
+  <span class="hljs-keyword">const</span> handleDelete = useCallback(<span class="hljs-function">(<span class="hljs-params">id</span>) =&gt;</span> {
+    setTodos(<span class="hljs-function">(<span class="hljs-params">prevTodos</span>) =&gt;</span> prevTodos.filter(<span class="hljs-function">(<span class="hljs-params">todo</span>) =&gt;</span> todo.id !== id));
+  }, []);
+
+  <span class="hljs-keyword">const</span> filteredTodos = useMemo(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">return</span> todos.filter(<span class="hljs-function">(<span class="hljs-params">todo</span>) =&gt;</span> {
+      <span class="hljs-keyword">if</span> (filter === <span class="hljs-string">"active"</span>) <span class="hljs-keyword">return</span> !todo.completed;
+      <span class="hljs-keyword">if</span> (filter === <span class="hljs-string">"completed"</span>) <span class="hljs-keyword">return</span> todo.completed;
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    });
+  }, [todos, filter]);
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">FilterButtons</span> <span class="hljs-attr">filter</span>=<span class="hljs-string">{filter}</span> <span class="hljs-attr">onFilterChange</span>=<span class="hljs-string">{setFilter}</span> /&gt;</span>
+      {filteredTodos.map((todo) =&gt; (
+        <span class="hljs-tag">&lt;<span class="hljs-name">TodoItem</span>
+          <span class="hljs-attr">key</span>=<span class="hljs-string">{todo.id}</span>
+          <span class="hljs-attr">todo</span>=<span class="hljs-string">{todo}</span>
+          <span class="hljs-attr">onToggle</span>=<span class="hljs-string">{handleToggle}</span>
+          <span class="hljs-attr">onDelete</span>=<span class="hljs-string">{handleDelete}</span>
+        /&gt;</span>
+      ))}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-keyword">const</span> TodoItem = React.memo(<span class="hljs-function">(<span class="hljs-params">{ todo, onToggle, onDelete }</span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`TodoItem <span class="hljs-subst">${todo.id}</span> rendered`</span>);
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">span</span>
+        <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> onToggle(todo.id)}
+        style={{ textDecoration: todo.completed ? "line-through" : "none" }}
+      &gt;
+        {todo.text}
+      <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> onDelete(todo.id)}&gt;Delete<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+});
+</div></code></pre>
+<h3 id="lazy-loading">Lazy Loading</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> { lazy, Suspense } <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
+
+<span class="hljs-comment">// Lazy load components</span>
+<span class="hljs-keyword">const</span> LazyComponent = lazy(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">"./LazyComponent"</span>));
+<span class="hljs-keyword">const</span> Dashboard = lazy(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">"./Dashboard"</span>));
+<span class="hljs-keyword">const</span> Profile = lazy(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">"./Profile"</span>));
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Suspense</span> <span class="hljs-attr">fallback</span>=<span class="hljs-string">{</span>&lt;<span class="hljs-attr">div</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>}&gt;
+        <span class="hljs-tag">&lt;<span class="hljs-name">LazyComponent</span> /&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">Suspense</span>&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">Suspense</span> <span class="hljs-attr">fallback</span>=<span class="hljs-string">{</span>&lt;<span class="hljs-attr">div</span>&gt;</span>Loading dashboard...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>}&gt;
+        <span class="hljs-tag">&lt;<span class="hljs-name">Dashboard</span> /&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">Suspense</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-comment">// Lazy loading with error boundary</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">LazyWithErrorBoundary</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ErrorBoundary</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Suspense</span> <span class="hljs-attr">fallback</span>=<span class="hljs-string">{</span>&lt;<span class="hljs-attr">div</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>}&gt;
+        <span class="hljs-tag">&lt;<span class="hljs-name">Profile</span> /&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">Suspense</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ErrorBoundary</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<hr>
+<h2 id="advanced-patterns">Advanced Patterns</h2>
+<h3 id="higher-order-components-hoc">Higher-Order Components (HOC)</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// HOC for authentication</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">withAuth</span>(<span class="hljs-params">WrappedComponent</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">AuthenticatedComponent</span>(<span class="hljs-params">props</span>) </span>{
+    <span class="hljs-keyword">const</span> { user, loading } = useAuth();
+
+    <span class="hljs-keyword">if</span> (loading) {
+      <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;
+    }
+
+    <span class="hljs-keyword">if</span> (!user) {
+      <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Please log in to access this page.<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;
+    }
+
+    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">WrappedComponent</span> {<span class="hljs-attr">...props</span>} <span class="hljs-attr">user</span>=<span class="hljs-string">{user}</span> /&gt;</span></span>;
+  };
+}
+
+<span class="hljs-comment">// Usage</span>
+<span class="hljs-keyword">const</span> ProtectedDashboard = withAuth(Dashboard);
+
+<span class="hljs-comment">// HOC for loading state</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">withLoading</span>(<span class="hljs-params">WrappedComponent</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">LoadingComponent</span>(<span class="hljs-params">{ isLoading, ...props }</span>) </span>{
+    <span class="hljs-keyword">if</span> (isLoading) {
+      <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;
+    }
+
+    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">WrappedComponent</span> {<span class="hljs-attr">...props</span>} /&gt;</span></span>;
+  };
+}
+
+<span class="hljs-keyword">const</span> UserListWithLoading = withLoading(UserList);
+</div></code></pre>
+<h3 id="render-props-pattern">Render Props Pattern</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Mouse tracker with render props</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">MouseTracker</span>(<span class="hljs-params">{ render }</span>) </span>{
+  <span class="hljs-keyword">const</span> [position, setPosition] = useState({ <span class="hljs-attr">x</span>: <span class="hljs-number">0</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">0</span> });
+
+  useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">const</span> handleMouseMove = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> {
+      setPosition({ <span class="hljs-attr">x</span>: e.clientX, <span class="hljs-attr">y</span>: e.clientY });
+    };
+
+    <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">"mousemove"</span>, handleMouseMove);
+
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      <span class="hljs-built_in">document</span>.removeEventListener(<span class="hljs-string">"mousemove"</span>, handleMouseMove);
+    };
+  }, []);
+
+  <span class="hljs-keyword">return</span> render(position);
+}
+
+<span class="hljs-comment">// Usage</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">MouseTracker</span>
+        <span class="hljs-attr">render</span>=<span class="hljs-string">{({</span> <span class="hljs-attr">x</span>, <span class="hljs-attr">y</span> }) =&gt;</span> (
+          <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+            Mouse position: {x}, {y}
+          <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        )}
+      /&gt;
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">MouseTracker</span>
+        <span class="hljs-attr">render</span>=<span class="hljs-string">{({</span> <span class="hljs-attr">x</span>, <span class="hljs-attr">y</span> }) =&gt;</span> (
+          <span class="hljs-tag">&lt;<span class="hljs-name">div</span>
+            <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span>
+              <span class="hljs-attr">position:</span> "<span class="hljs-attr">absolute</span>",
+              <span class="hljs-attr">left:</span> <span class="hljs-attr">x</span>,
+              <span class="hljs-attr">top:</span> <span class="hljs-attr">y</span>,
+              <span class="hljs-attr">width:</span> <span class="hljs-attr">10</span>,
+              <span class="hljs-attr">height:</span> <span class="hljs-attr">10</span>,
+              <span class="hljs-attr">backgroundColor:</span> "<span class="hljs-attr">red</span>",
+              <span class="hljs-attr">borderRadius:</span> "<span class="hljs-attr">50</span>%",
+            }}
+          /&gt;</span>
+        )}
+      /&gt;
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="compound-components-pattern">Compound Components Pattern</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Tabs compound component</span>
+<span class="hljs-keyword">const</span> TabsContext = createContext();
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Tabs</span>(<span class="hljs-params">{ children, defaultTab = <span class="hljs-number">0</span> }</span>) </span>{
+  <span class="hljs-keyword">const</span> [activeTab, setActiveTab] = useState(defaultTab);
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">TabsContext.Provider</span> <span class="hljs-attr">value</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">activeTab</span>, <span class="hljs-attr">setActiveTab</span> }}&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"tabs"</span>&gt;</span>{children}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">TabsContext.Provider</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">TabList</span>(<span class="hljs-params">{ children }</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"tab-list"</span>&gt;</span>{children}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Tab</span>(<span class="hljs-params">{ index, children }</span>) </span>{
+  <span class="hljs-keyword">const</span> { activeTab, setActiveTab } = useContext(TabsContext);
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span>
+      <span class="hljs-attr">className</span>=<span class="hljs-string">{</span>`<span class="hljs-attr">tab</span> ${<span class="hljs-attr">activeTab</span> === <span class="hljs-string">index</span> ? "<span class="hljs-attr">active</span>" <span class="hljs-attr">:</span> ""}`}
+      <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setActiveTab(index)}
+    &gt;
+      {children}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">TabPanels</span>(<span class="hljs-params">{ children }</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"tab-panels"</span>&gt;</span>{children}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">TabPanel</span>(<span class="hljs-params">{ index, children }</span>) </span>{
+  <span class="hljs-keyword">const</span> { activeTab } = useContext(TabsContext);
+
+  <span class="hljs-keyword">if</span> (activeTab !== index) <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"tab-panel"</span>&gt;</span>{children}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;
+}
+
+<span class="hljs-comment">// Attach components to main component</span>
+Tabs.List = TabList;
+Tabs.Tab = Tab;
+Tabs.Panels = TabPanels;
+Tabs.Panel = TabPanel;
+
+<span class="hljs-comment">// Usage</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Tabs</span> <span class="hljs-attr">defaultTab</span>=<span class="hljs-string">{0}</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Tabs.List</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Tabs.Tab</span> <span class="hljs-attr">index</span>=<span class="hljs-string">{0}</span>&gt;</span>Tab 1<span class="hljs-tag">&lt;/<span class="hljs-name">Tabs.Tab</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Tabs.Tab</span> <span class="hljs-attr">index</span>=<span class="hljs-string">{1}</span>&gt;</span>Tab 2<span class="hljs-tag">&lt;/<span class="hljs-name">Tabs.Tab</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Tabs.Tab</span> <span class="hljs-attr">index</span>=<span class="hljs-string">{2}</span>&gt;</span>Tab 3<span class="hljs-tag">&lt;/<span class="hljs-name">Tabs.Tab</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">Tabs.List</span>&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">Tabs.Panels</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Tabs.Panel</span> <span class="hljs-attr">index</span>=<span class="hljs-string">{0}</span>&gt;</span>Content for Tab 1<span class="hljs-tag">&lt;/<span class="hljs-name">Tabs.Panel</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Tabs.Panel</span> <span class="hljs-attr">index</span>=<span class="hljs-string">{1}</span>&gt;</span>Content for Tab 2<span class="hljs-tag">&lt;/<span class="hljs-name">Tabs.Panel</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Tabs.Panel</span> <span class="hljs-attr">index</span>=<span class="hljs-string">{2}</span>&gt;</span>Content for Tab 3<span class="hljs-tag">&lt;/<span class="hljs-name">Tabs.Panel</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">Tabs.Panels</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Tabs</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<h3 id="portal-pattern">Portal Pattern</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> { createPortal } <span class="hljs-keyword">from</span> <span class="hljs-string">"react-dom"</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Modal</span>(<span class="hljs-params">{ isOpen, onClose, children }</span>) </span>{
+  <span class="hljs-keyword">if</span> (!isOpen) <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+
+  <span class="hljs-keyword">return</span> createPortal(
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"modal-overlay"</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{onClose}</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"modal-content"</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{(e)</span> =&gt;</span> e.stopPropagation()}&gt;
+        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"modal-close"</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{onClose}</span>&gt;</span>
+          ×
+        <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+        {children}
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>,
+    <span class="hljs-built_in">document</span>.body
+  );
+}
+
+<span class="hljs-comment">// Usage</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> [isModalOpen, setIsModalOpen] = useState(<span class="hljs-literal">false</span>);
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setIsModalOpen(true)}&gt;Open Modal<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+
+      <span class="hljs-tag">&lt;<span class="hljs-name">Modal</span> <span class="hljs-attr">isOpen</span>=<span class="hljs-string">{isModalOpen}</span> <span class="hljs-attr">onClose</span>=<span class="hljs-string">{()</span> =&gt;</span> setIsModalOpen(false)}&gt;
+        <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Modal Title<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Modal content goes here<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">Modal</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+</div></code></pre>
+<hr>
+<h2 id="testing">Testing</h2>
+<h3 id="jest-and-react-testing-library">Jest and React Testing Library</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Component to test</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Counter</span>(<span class="hljs-params">{ initialCount = <span class="hljs-number">0</span> }</span>) </span>{
+  <span class="hljs-keyword">const</span> [count, setCount] = useState(initialCount);
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">data-testid</span>=<span class="hljs-string">"count"</span>&gt;</span>Count: {count}<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setCount(count + 1)}&gt;Increment<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setCount(count - 1)}&gt;Decrement<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{()</span> =&gt;</span> setCount(0)}&gt;Reset<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+  );
+}
+
+<span class="hljs-comment">// Test file: Counter.test.js</span>
+<span class="hljs-keyword">import</span> { render, screen, fireEvent } <span class="hljs-keyword">from</span> <span class="hljs-string">"@testing-library/react"</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">"@testing-library/jest-dom"</span>;
+<span class="hljs-keyword">import</span> Counter <span class="hljs-keyword">from</span> <span class="hljs-string">"./Counter"</span>;
+
+describe(<span class="hljs-string">"Counter Component"</span>, () =&gt; {
+  test(<span class="hljs-string">"renders initial count"</span>, () =&gt; {
+    render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Counter</span> <span class="hljs-attr">initialCount</span>=<span class="hljs-string">{5}</span> /&gt;</span></span>);
+    expect(screen.getByTestId(<span class="hljs-string">"count"</span>)).toHaveTextContent(<span class="hljs-string">"Count: 5"</span>);
+  });
+
+  test(<span class="hljs-string">"increments count when increment button is clicked"</span>, () =&gt; {
+    render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Counter</span> /&gt;</span></span>);
+    <span class="hljs-keyword">const</span> incrementButton = screen.getByText(<span class="hljs-string">"Increment"</span>);
+
+    fireEvent.click(incrementButton);
+    expect(screen.getByTestId(<span class="hljs-string">"count"</span>)).toHaveTextContent(<span class="hljs-string">"Count: 1"</span>);
+  });
+
+  test(<span class="hljs-string">"decrements count when decrement button is clicked"</span>, () =&gt; {
+    render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Counter</span> <span class="hljs-attr">initialCount</span>=<span class="hljs-string">{5}</span> /&gt;</span></span>);
+    <span class="hljs-keyword">const</span> decrementButton = screen.getByText(<span class="hljs-string">"Decrement"</span>);
+
+    fireEvent.click(decrementButton);
+    expect(screen.getByTestId(<span class="hljs-string">"count"</span>)).toHaveTextContent(<span class="hljs-string">"Count: 4"</span>);
+  });
+
+  test(<span class="hljs-string">"resets count when reset button is clicked"</span>, () =&gt; {
+    render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Counter</span> <span class="hljs-attr">initialCount</span>=<span class="hljs-string">{10}</span> /&gt;</span></span>);
+    <span class="hljs-keyword">const</span> resetButton = screen.getByText(<span class="hljs-string">"Reset"</span>);
+
+    fireEvent.click(resetButton);
+    expect(screen.getByTestId(<span class="hljs-string">"count"</span>)).toHaveTextContent(<span class="hljs-string">"Count: 0"</span>);
+  });
+});
+</div></code></pre>
+<h3 id="testing-hooks">Testing Hooks</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Custom hook to test</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">useCounter</span>(<span class="hljs-params">initialValue = <span class="hljs-number">0</span></span>) </span>{
+  <span class="hljs-keyword">const</span> [count, setCount] = useState(initialValue);
+
+  <span class="hljs-keyword">const</span> increment = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> setCount(count + <span class="hljs-number">1</span>);
+  <span class="hljs-keyword">const</span> decrement = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> setCount(count - <span class="hljs-number">1</span>);
+  <span class="hljs-keyword">const</span> reset = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> setCount(initialValue);
+
+  <span class="hljs-keyword">return</span> { count, increment, decrement, reset };
+}
+
+<span class="hljs-comment">// Test file: useCounter.test.js</span>
+<span class="hljs-keyword">import</span> { renderHook, act } <span class="hljs-keyword">from</span> <span class="hljs-string">"@testing-library/react"</span>;
+<span class="hljs-keyword">import</span> useCounter <span class="hljs-keyword">from</span> <span class="hljs-string">"./useCounter"</span>;
+
+describe(<span class="hljs-string">"useCounter Hook"</span>, () =&gt; {
+  test(<span class="hljs-string">"should initialize with default value"</span>, () =&gt; {
+    <span class="hljs-keyword">const</span> { result } = renderHook(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> useCounter());
+    expect(result.current.count).toBe(<span class="hljs-number">0</span>);
+  });
+
+  test(<span class="hljs-string">"should initialize with provided value"</span>, () =&gt; {
+    <span class="hljs-keyword">const</span> { result } = renderHook(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> useCounter(<span class="hljs-number">10</span>));
+    expect(result.current.count).toBe(<span class="hljs-number">10</span>);
+  });
+
+  test(<span class="hljs-string">"should increment count"</span>, () =&gt; {
+    <span class="hljs-keyword">const</span> { result } = renderHook(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> useCounter());
+
+    act(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      result.current.increment();
+    });
+
+    expect(result.current.count).toBe(<span class="hljs-number">1</span>);
+  });
+
+  test(<span class="hljs-string">"should decrement count"</span>, () =&gt; {
+    <span class="hljs-keyword">const</span> { result } = renderHook(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> useCounter(<span class="hljs-number">5</span>));
+
+    act(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      result.current.decrement();
+    });
+
+    expect(result.current.count).toBe(<span class="hljs-number">4</span>);
+  });
+
+  test(<span class="hljs-string">"should reset count"</span>, () =&gt; {
+    <span class="hljs-keyword">const</span> { result } = renderHook(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> useCounter(<span class="hljs-number">10</span>));
+
+    act(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      result.current.increment();
+      result.current.reset();
+    });
+
+    expect(result.current.count).toBe(<span class="hljs-number">10</span>);
+  });
+});
+</div></code></pre>
+<h3 id="testing-with-context">Testing with Context</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Test with context provider</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">renderWithTheme</span>(<span class="hljs-params">ui, { theme = <span class="hljs-string">'light'</span>, ...renderOptions } = {}</span>) </span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Wrapper</span>(<span class="hljs-params">{ children }</span>) </span>{
+    <span class="hljs-keyword">return</span> (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ThemeProvider</span> <span class="hljs-attr">value</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">theme</span>, <span class="hljs-attr">toggleTheme:</span> <span class="hljs-attr">jest.fn</span>() }}&gt;</span>
+        {children}
+      <span class="hljs-tag">&lt;/<span class="hljs-name">ThemeProvider</span>&gt;</span></span>
+    );
+  }
+
+  <span class="hljs-keyword">return</span> render(ui, { <span class="hljs-attr">wrapper</span>: Wrapper, ...renderOptions });
+}
+
+test(<span class="hljs-string">'renders with theme context'</span>, () =&gt; {
+  renderWithTheme(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ThemedComponent</span> /&gt;</span></span>);
+  expect(screen.getByTestId(<span class="hljs-string">'theme'</span>)).toHaveTextContent(<span class="hljs-string">'light'</span>);
+});
+
+### Mocking Functions and Modules
+<span class="hljs-string">``</span><span class="hljs-string">`jsx
+// Mocking fetch or API calls
+import { render, screen, waitFor } from '@testing-library/react';
+import App from './App';
+
+global.fetch = jest.fn(() =&gt;
+  Promise.resolve({
+    ok: true,
+    json: () =&gt; Promise.resolve({ data: 'Hello' })
+  })
+);
+
+test('fetches and displays data', async () =&gt; {
+  render(&lt;App /&gt;);
+  await waitFor(() =&gt; expect(screen.getByText('Hello')).toBeInTheDocument());
+});
+</span></div></code></pre>
+<h3 id="testing-async-logic">Testing Async Logic</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> { render, screen, fireEvent, waitFor } <span class="hljs-keyword">from</span> <span class="hljs-string">"@testing-library/react"</span>;
+<span class="hljs-keyword">import</span> AsyncComponent <span class="hljs-keyword">from</span> <span class="hljs-string">"./AsyncComponent"</span>;
+
+test(<span class="hljs-string">"shows loading and then data"</span>, <span class="hljs-keyword">async</span> () =&gt; {
+  render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">AsyncComponent</span> /&gt;</span></span>);
+  expect(screen.getByText(<span class="hljs-regexp">/loading/i</span>)).toBeInTheDocument();
+  <span class="hljs-keyword">await</span> waitFor(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span>
+    expect(screen.getByText(<span class="hljs-regexp">/data loaded/i</span>)).toBeInTheDocument()
+  );
+});
+</div></code></pre>
+<h3 id="code-coverage">Code Coverage</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># With Create React App</span>
+npm <span class="hljs-built_in">test</span> -- --coverage
+
+<span class="hljs-comment"># With Vite + Vitest</span>
+npx vitest run --coverage
+</div></code></pre>
+<h3 id="useful-testing-tips">Useful Testing Tips</h3>
+<ul>
+<li>Use <code>data-testid</code> for selecting elements when necessary, but prefer queries like <code>getByRole</code>, <code>getByLabelText</code>, or <code>getByText</code> for more robust tests.</li>
+<li>Mock timers with <code>jest.useFakeTimers()</code> for time-based logic.</li>
+<li>Use <code>act()</code> for updates that trigger React state changes outside of user events.</li>
+<li>Clean up after tests with <code>afterEach(cleanup)</code> if not handled automatically.</li>
+<li>Test accessibility: use <code>axe</code> or <code>jest-axe</code> to check for a11y issues.</li>
+</ul>
+<hr>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="1-code-organization--structure">1. Code Organization &amp; Structure</h3>
+<ul>
+<li><strong>Keep components small and focused.</strong> Each should do one thing well.</li>
+<li><strong>Group by feature/folder, not by type.</strong><pre class="hljs"><code><div>src/
+  features/
+    user/
+      UserProfile.jsx
+      userAPI.js
+      userSlice.js
+    product/
+      ProductList.jsx
+      productAPI.js
+  components/
+    Button.jsx
+    Modal.jsx
+  utils/
+    formatDate.js
+</div></code></pre>
+</li>
+<li><strong>Use index.js for re-exports</strong> to simplify imports.</li>
+</ul>
+<h3 id="2-naming-conventions">2. Naming Conventions</h3>
+<ul>
+<li>Use <code>PascalCase</code> for components, <code>camelCase</code> for functions/variables.</li>
+<li>File names should match the component name: <code>UserProfile.jsx</code>.</li>
+<li>Use clear, descriptive names for props and state.</li>
+</ul>
+<h3 id="3-state-management">3. State Management</h3>
+<ul>
+<li>Use local state for UI, <code>useContext</code> or state libraries (Redux, Zustand) for global state.</li>
+<li>Avoid prop drilling by using context or composition.</li>
+<li>Keep state as flat as possible; avoid deeply nested objects.</li>
+</ul>
+<h3 id="4-side-effects">4. Side Effects</h3>
+<ul>
+<li>Use <code>useEffect</code> for side effects (fetching, subscriptions, timers).</li>
+<li>Always clean up subscriptions or timers in the cleanup function.</li>
+<li>Avoid unnecessary effects by specifying correct dependencies.</li>
+</ul>
+<h3 id="5-performance-optimization">5. Performance Optimization</h3>
+<ul>
+<li>Use <code>React.memo</code>, <code>useMemo</code>, and <code>useCallback</code> to prevent unnecessary re-renders.</li>
+<li>Lazy load heavy components with <code>React.lazy</code> and <code>Suspense</code>.</li>
+<li>Split code with dynamic imports for faster initial loads.</li>
+<li>Avoid inline functions/objects in props when possible.</li>
+</ul>
+<h3 id="6-accessibility-a11y">6. Accessibility (a11y)</h3>
+<ul>
+<li>Use semantic HTML elements (<code>&lt;button&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, etc.).</li>
+<li>Always provide <code>alt</code> text for images.</li>
+<li>Use labels for form fields and ensure keyboard navigation works.</li>
+<li>Test with screen readers and a11y tools.</li>
+</ul>
+<h3 id="7-security">7. Security</h3>
+<ul>
+<li>Never trust user input; always validate and sanitize.</li>
+<li>Avoid dangerouslySetInnerHTML unless absolutely necessary.</li>
+<li>Store sensitive data securely (never in client-side code).</li>
+<li>Use HTTPS and secure cookies for authentication.</li>
+</ul>
+<h3 id="8-testing">8. Testing</h3>
+<ul>
+<li>Write tests for components, hooks, and utilities.</li>
+<li>Use React Testing Library for user-centric tests.</li>
+<li>Mock APIs and external dependencies.</li>
+<li>Aim for high code coverage, but focus on meaningful tests.</li>
+</ul>
+<h3 id="9-code-quality">9. Code Quality</h3>
+<ul>
+<li>Use a linter (ESLint) and formatter (Prettier) for consistent style.</li>
+<li>Use TypeScript or PropTypes for type safety.</li>
+<li>Review code with pull requests and code reviews.</li>
+<li>Document components and utilities with comments or Storybook.</li>
+</ul>
+<h3 id="10-deployment--cicd">10. Deployment &amp; CI/CD</h3>
+<ul>
+<li>Use environment variables for config (never hardcode secrets).</li>
+<li>Automate tests and builds with CI/CD pipelines (GitHub Actions, GitLab CI, etc.).</li>
+<li>Monitor performance and errors in production (Sentry, LogRocket, etc.).</li>
+</ul>
+<hr>
+<p>This cheat sheet covers the essentials and advanced topics for React.js development. For more, check the <a href="https://reactjs.org/docs/getting-started.html">React docs</a> and keep practicing!</p>
+
+</body>
+</html>

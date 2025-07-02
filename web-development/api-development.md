@@ -1,6 +1,6 @@
 # Complete API Development Cheatsheet
 
-[Download PDF](https://gdurl.com/BmIW)
+### [Download PDF](https://gdurl.com/qf3N)
 
 ## Table of Contents
 1. [REST API Fundamentals](#rest-api-fundamentals)

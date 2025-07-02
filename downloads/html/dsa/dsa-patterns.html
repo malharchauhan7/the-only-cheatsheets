@@ -1,0 +1,3053 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>dsa-patterns.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="complete-leetcode-dsa-patterns-cheatsheet">Complete LeetCode DSA Patterns Cheatsheet</h1>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#1-two-pointers">Two Pointers</a></li>
+<li><a href="#2-sliding-window">Sliding Window</a></li>
+<li><a href="#3-fast--slow-pointers">Fast &amp; Slow Pointers</a></li>
+<li><a href="#4-merge-intervals">Merge Intervals</a></li>
+<li><a href="#5-cyclic-sort">Cyclic Sort</a></li>
+<li><a href="#6-in-place-reversal-of-linkedlist">In-place Reversal of LinkedList</a></li>
+<li><a href="#7-tree-breadth-first-search">Tree Breadth First Search</a></li>
+<li><a href="#8-tree-depth-first-search">Tree Depth First Search</a></li>
+<li><a href="#9-two-heaps">Two Heaps</a></li>
+<li><a href="#10-subsets">Subsets</a></li>
+<li><a href="#11-modified-binary-search">Modified Binary Search</a></li>
+<li><a href="#12-bitwise-xor">Bitwise XOR</a></li>
+<li><a href="#13-top-k-elements">Top K Elements</a></li>
+<li><a href="#14-k-way-merge">K-way Merge</a></li>
+<li><a href="#15-01-knapsack">0/1 Knapsack</a></li>
+<li><a href="#16-unbounded-knapsack">Unbounded Knapsack</a></li>
+<li><a href="#17-fibonacci-numbers">Fibonacci Numbers</a></li>
+<li><a href="#18-palindromic-subsequence">Palindromic Subsequence</a></li>
+<li><a href="#19-longest-common-substring">Longest Common Substring</a></li>
+<li><a href="#20-topological-sort">Topological Sort</a></li>
+<li><a href="#21-trie">Trie</a></li>
+<li><a href="#22-union-find">Union Find</a></li>
+<li><a href="#23-monotonic-stack">Monotonic Stack</a></li>
+<li><a href="#24-backtracking">Backtracking</a></li>
+<li><a href="#25-best-practices--next-steps">Best Practices &amp; Next Steps</a></li>
+</ol>
+<hr>
+<h2 id="1-two-pointers">1. Two Pointers</h2>
+<p><strong>When to use:</strong> Problems involving sorted arrays, pairs, triplets, or subarrays.</p>
+<p><strong>Time Complexity:</strong> O(n) or O(n²) <strong>Space Complexity:</strong> O(1)</p>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>Target sum problems</li>
+<li>Removing duplicates</li>
+<li>Comparing elements from both ends</li>
+<li>Palindrome verification</li>
+</ul>
+<h3 id="template">Template:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">two_pointers</span><span class="hljs-params">(arr)</span>:</span>
+    left, right = <span class="hljs-number">0</span>, len(arr) - <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">while</span> left &lt; right:
+        <span class="hljs-comment"># Process current pair</span>
+        current_sum = arr[left] + arr[right]
+        
+        <span class="hljs-keyword">if</span> current_sum == target:
+            <span class="hljs-keyword">return</span> [left, right]
+        <span class="hljs-keyword">elif</span> current_sum &lt; target:
+            left += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:
+            right -= <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">return</span> []
+</div></code></pre>
+<h3 id="example-two-sum-ii-sorted-array">Example: Two Sum II (Sorted Array)</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">two_sum</span><span class="hljs-params">(numbers, target)</span>:</span>
+    left, right = <span class="hljs-number">0</span>, len(numbers) - <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">while</span> left &lt; right:
+        current_sum = numbers[left] + numbers[right]
+        <span class="hljs-keyword">if</span> current_sum == target:
+            <span class="hljs-keyword">return</span> [left + <span class="hljs-number">1</span>, right + <span class="hljs-number">1</span>]  <span class="hljs-comment"># 1-indexed</span>
+        <span class="hljs-keyword">elif</span> current_sum &lt; target:
+            left += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:
+            right -= <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">return</span> []
+</div></code></pre>
+<h3 id="three-sum-pattern">Three Sum Pattern:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">three_sum</span><span class="hljs-params">(nums)</span>:</span>
+    nums.sort()
+    result = []
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(nums) - <span class="hljs-number">2</span>):
+        <span class="hljs-keyword">if</span> i &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> nums[i] == nums[i<span class="hljs-number">-1</span>]:  <span class="hljs-comment"># Skip duplicates</span>
+            <span class="hljs-keyword">continue</span>
+            
+        left, right = i + <span class="hljs-number">1</span>, len(nums) - <span class="hljs-number">1</span>
+        
+        <span class="hljs-keyword">while</span> left &lt; right:
+            current_sum = nums[i] + nums[left] + nums[right]
+            
+            <span class="hljs-keyword">if</span> current_sum == <span class="hljs-number">0</span>:
+                result.append([nums[i], nums[left], nums[right]])
+                
+                <span class="hljs-comment"># Skip duplicates</span>
+                <span class="hljs-keyword">while</span> left &lt; right <span class="hljs-keyword">and</span> nums[left] == nums[left + <span class="hljs-number">1</span>]:
+                    left += <span class="hljs-number">1</span>
+                <span class="hljs-keyword">while</span> left &lt; right <span class="hljs-keyword">and</span> nums[right] == nums[right - <span class="hljs-number">1</span>]:
+                    right -= <span class="hljs-number">1</span>
+                    
+                left += <span class="hljs-number">1</span>
+                right -= <span class="hljs-number">1</span>
+            <span class="hljs-keyword">elif</span> current_sum &lt; <span class="hljs-number">0</span>:
+                left += <span class="hljs-number">1</span>
+            <span class="hljs-keyword">else</span>:
+                right -= <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Two Sum II - Input array is sorted (LeetCode 167)</li>
+<li>3Sum (LeetCode 15)</li>
+<li>3Sum Closest (LeetCode 16)</li>
+<li>Remove Duplicates from Sorted Array (LeetCode 26)</li>
+<li>Container With Most Water (LeetCode 11)</li>
+</ol>
+<hr>
+<h2 id="2-sliding-window">2. Sliding Window</h2>
+<p><strong>When to use:</strong> Problems involving contiguous subarrays/substrings with specific conditions.</p>
+<p><strong>Time Complexity:</strong> O(n) <strong>Space Complexity:</strong> O(1) to O(k)</p>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>Maximum/minimum subarray of size K</li>
+<li>Substrings with K distinct characters</li>
+<li>String permutation problems</li>
+<li>Longest substring with condition</li>
+</ul>
+<h3 id="fixed-window-template">Fixed Window Template:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sliding_window_fixed</span><span class="hljs-params">(arr, k)</span>:</span>
+    window_sum = sum(arr[:k])
+    max_sum = window_sum
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(k, len(arr)):
+        <span class="hljs-comment"># Slide window: remove first element, add new element</span>
+        window_sum = window_sum - arr[i - k] + arr[i]
+        max_sum = max(max_sum, window_sum)
+    
+    <span class="hljs-keyword">return</span> max_sum
+</div></code></pre>
+<h3 id="variable-window-template">Variable Window Template:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sliding_window_variable</span><span class="hljs-params">(s, condition)</span>:</span>
+    left = <span class="hljs-number">0</span>
+    result = <span class="hljs-number">0</span>
+    window_state = {}
+    
+    <span class="hljs-keyword">for</span> right <span class="hljs-keyword">in</span> range(len(s)):
+        <span class="hljs-comment"># Expand window</span>
+        char = s[right]
+        window_state[char] = window_state.get(char, <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>
+        
+        <span class="hljs-comment"># Contract window if condition violated</span>
+        <span class="hljs-keyword">while</span> <span class="hljs-keyword">not</span> is_valid(window_state, condition):
+            left_char = s[left]
+            window_state[left_char] -= <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> window_state[left_char] == <span class="hljs-number">0</span>:
+                <span class="hljs-keyword">del</span> window_state[left_char]
+            left += <span class="hljs-number">1</span>
+        
+        <span class="hljs-comment"># Update result</span>
+        result = max(result, right - left + <span class="hljs-number">1</span>)
+    
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="example-longest-substring-without-repeating-characters">Example: Longest Substring Without Repeating Characters</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">length_of_longest_substring</span><span class="hljs-params">(s)</span>:</span>
+    char_index = {}
+    left = <span class="hljs-number">0</span>
+    max_length = <span class="hljs-number">0</span>
+    
+    <span class="hljs-keyword">for</span> right <span class="hljs-keyword">in</span> range(len(s)):
+        <span class="hljs-keyword">if</span> s[right] <span class="hljs-keyword">in</span> char_index <span class="hljs-keyword">and</span> char_index[s[right]] &gt;= left:
+            left = char_index[s[right]] + <span class="hljs-number">1</span>
+        
+        char_index[s[right]] = right
+        max_length = max(max_length, right - left + <span class="hljs-number">1</span>)
+    
+    <span class="hljs-keyword">return</span> max_length
+</div></code></pre>
+<h3 id="example-minimum-window-substring">Example: Minimum Window Substring</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">min_window</span><span class="hljs-params">(s, t)</span>:</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> s <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> t:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">""</span>
+    
+    <span class="hljs-comment"># Count characters in t</span>
+    dict_t = {}
+    <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> t:
+        dict_t[char] = dict_t.get(char, <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>
+    
+    required = len(dict_t)
+    left, right = <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
+    formed = <span class="hljs-number">0</span>
+    window_counts = {}
+    
+    ans = float(<span class="hljs-string">"inf"</span>), <span class="hljs-literal">None</span>, <span class="hljs-literal">None</span>
+    
+    <span class="hljs-keyword">while</span> right &lt; len(s):
+        char = s[right]
+        window_counts[char] = window_counts.get(char, <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>
+        
+        <span class="hljs-keyword">if</span> char <span class="hljs-keyword">in</span> dict_t <span class="hljs-keyword">and</span> window_counts[char] == dict_t[char]:
+            formed += <span class="hljs-number">1</span>
+        
+        <span class="hljs-keyword">while</span> left &lt;= right <span class="hljs-keyword">and</span> formed == required:
+            char = s[left]
+            
+            <span class="hljs-keyword">if</span> right - left + <span class="hljs-number">1</span> &lt; ans[<span class="hljs-number">0</span>]:
+                ans = (right - left + <span class="hljs-number">1</span>, left, right)
+            
+            window_counts[char] -= <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> char <span class="hljs-keyword">in</span> dict_t <span class="hljs-keyword">and</span> window_counts[char] &lt; dict_t[char]:
+                formed -= <span class="hljs-number">1</span>
+            
+            left += <span class="hljs-number">1</span>
+        
+        right += <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">return</span> <span class="hljs-string">""</span> <span class="hljs-keyword">if</span> ans[<span class="hljs-number">0</span>] == float(<span class="hljs-string">"inf"</span>) <span class="hljs-keyword">else</span> s[ans[<span class="hljs-number">1</span>]:ans[<span class="hljs-number">2</span>] + <span class="hljs-number">1</span>]
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Maximum Average Subarray I (LeetCode 643)</li>
+<li>Longest Substring Without Repeating Characters (LeetCode 3)</li>
+<li>Minimum Window Substring (LeetCode 76)</li>
+<li>Longest Substring with At Most K Distinct Characters (LeetCode 340)</li>
+<li>Permutation in String (LeetCode 567)</li>
+</ol>
+<hr>
+<h2 id="3-fast--slow-pointers">3. Fast &amp; Slow Pointers</h2>
+<p><strong>When to use:</strong> Linked list cycle detection, finding middle element, palindrome checking.</p>
+<p><strong>Time Complexity:</strong> O(n) <strong>Space Complexity:</strong> O(1)</p>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>Cycle detection in linked lists</li>
+<li>Finding middle of linked list</li>
+<li>Palindrome linked list</li>
+<li>Happy number problem</li>
+</ul>
+<h3 id="template">Template:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">has_cycle</span><span class="hljs-params">(head)</span>:</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> head <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> head.next:
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+    
+    slow = fast = head
+    
+    <span class="hljs-keyword">while</span> fast <span class="hljs-keyword">and</span> fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        
+        <span class="hljs-keyword">if</span> slow == fast:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+    
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+</div></code></pre>
+<h3 id="finding-cycle-start">Finding Cycle Start:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">detect_cycle</span><span class="hljs-params">(head)</span>:</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> head <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> head.next:
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>
+    
+    <span class="hljs-comment"># Phase 1: Detect if cycle exists</span>
+    slow = fast = head
+    <span class="hljs-keyword">while</span> fast <span class="hljs-keyword">and</span> fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        <span class="hljs-keyword">if</span> slow == fast:
+            <span class="hljs-keyword">break</span>
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>  <span class="hljs-comment"># No cycle</span>
+    
+    <span class="hljs-comment"># Phase 2: Find cycle start</span>
+    slow = head
+    <span class="hljs-keyword">while</span> slow != fast:
+        slow = slow.next
+        fast = fast.next
+    
+    <span class="hljs-keyword">return</span> slow
+</div></code></pre>
+<h3 id="finding-middle-node">Finding Middle Node:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find_middle</span><span class="hljs-params">(head)</span>:</span>
+    slow = fast = head
+    
+    <span class="hljs-keyword">while</span> fast <span class="hljs-keyword">and</span> fast.next:
+        slow = slow.next
+        fast = fast.next.next
+    
+    <span class="hljs-keyword">return</span> slow
+</div></code></pre>
+<h3 id="palindrome-linked-list">Palindrome Linked List:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">is_palindrome</span><span class="hljs-params">(head)</span>:</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> head <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> head.next:
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+    
+    <span class="hljs-comment"># Find middle</span>
+    slow = fast = head
+    <span class="hljs-keyword">while</span> fast.next <span class="hljs-keyword">and</span> fast.next.next:
+        slow = slow.next
+        fast = fast.next.next
+    
+    <span class="hljs-comment"># Reverse second half</span>
+    second_half = reverse_list(slow.next)
+    
+    <span class="hljs-comment"># Compare</span>
+    first_half = head
+    <span class="hljs-keyword">while</span> second_half:
+        <span class="hljs-keyword">if</span> first_half.val != second_half.val:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        first_half = first_half.next
+        second_half = second_half.next
+    
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">reverse_list</span><span class="hljs-params">(head)</span>:</span>
+    prev = <span class="hljs-literal">None</span>
+    current = head
+    
+    <span class="hljs-keyword">while</span> current:
+        next_temp = current.next
+        current.next = prev
+        prev = current
+        current = next_temp
+    
+    <span class="hljs-keyword">return</span> prev
+</div></code></pre>
+<h3 id="happy-number">Happy Number:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">is_happy</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_sum_of_squares</span><span class="hljs-params">(num)</span>:</span>
+        total_sum = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> num &gt; <span class="hljs-number">0</span>:
+            digit = num % <span class="hljs-number">10</span>
+            total_sum += digit * digit
+            num //= <span class="hljs-number">10</span>
+        <span class="hljs-keyword">return</span> total_sum
+    
+    slow = fast = n
+    
+    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:
+        slow = get_sum_of_squares(slow)
+        fast = get_sum_of_squares(get_sum_of_squares(fast))
+        
+        <span class="hljs-keyword">if</span> fast == <span class="hljs-number">1</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">if</span> slow == fast:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Linked List Cycle (LeetCode 141)</li>
+<li>Linked List Cycle II (LeetCode 142)</li>
+<li>Middle of the Linked List (LeetCode 876)</li>
+<li>Palindrome Linked List (LeetCode 234)</li>
+<li>Happy Number (LeetCode 202)</li>
+</ol>
+<hr>
+<h2 id="4-merge-intervals">4. Merge Intervals</h2>
+<p><strong>When to use:</strong> Problems involving overlapping intervals, scheduling, range merging.</p>
+<p><strong>Time Complexity:</strong> O(n log n) <strong>Space Complexity:</strong> O(n)</p>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>Overlapping intervals</li>
+<li>Meeting room problems</li>
+<li>Insert intervals</li>
+<li>Interval intersection</li>
+</ul>
+<h3 id="template">Template:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">merge_intervals</span><span class="hljs-params">(intervals)</span>:</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> intervals:
+        <span class="hljs-keyword">return</span> []
+    
+    <span class="hljs-comment"># Sort by start time</span>
+    intervals.sort(key=<span class="hljs-keyword">lambda</span> x: x[<span class="hljs-number">0</span>])
+    merged = [intervals[<span class="hljs-number">0</span>]]
+    
+    <span class="hljs-keyword">for</span> current <span class="hljs-keyword">in</span> intervals[<span class="hljs-number">1</span>:]:
+        last_merged = merged[<span class="hljs-number">-1</span>]
+        
+        <span class="hljs-keyword">if</span> current[<span class="hljs-number">0</span>] &lt;= last_merged[<span class="hljs-number">1</span>]:  <span class="hljs-comment"># Overlapping</span>
+            merged[<span class="hljs-number">-1</span>] = [last_merged[<span class="hljs-number">0</span>], max(last_merged[<span class="hljs-number">1</span>], current[<span class="hljs-number">1</span>])]
+        <span class="hljs-keyword">else</span>:  <span class="hljs-comment"># Non-overlapping</span>
+            merged.append(current)
+    
+    <span class="hljs-keyword">return</span> merged
+</div></code></pre>
+<h3 id="example-insert-interval">Example: Insert Interval</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">insert</span><span class="hljs-params">(intervals, newInterval)</span>:</span>
+    result = []
+    i = <span class="hljs-number">0</span>
+    n = len(intervals)
+    
+    <span class="hljs-comment"># Add all intervals that end before newInterval starts</span>
+    <span class="hljs-keyword">while</span> i &lt; n <span class="hljs-keyword">and</span> intervals[i][<span class="hljs-number">1</span>] &lt; newInterval[<span class="hljs-number">0</span>]:
+        result.append(intervals[i])
+        i += <span class="hljs-number">1</span>
+    
+    <span class="hljs-comment"># Merge overlapping intervals</span>
+    <span class="hljs-keyword">while</span> i &lt; n <span class="hljs-keyword">and</span> intervals[i][<span class="hljs-number">0</span>] &lt;= newInterval[<span class="hljs-number">1</span>]:
+        newInterval[<span class="hljs-number">0</span>] = min(newInterval[<span class="hljs-number">0</span>], intervals[i][<span class="hljs-number">0</span>])
+        newInterval[<span class="hljs-number">1</span>] = max(newInterval[<span class="hljs-number">1</span>], intervals[i][<span class="hljs-number">1</span>])
+        i += <span class="hljs-number">1</span>
+    
+    result.append(newInterval)
+    
+    <span class="hljs-comment"># Add remaining intervals</span>
+    <span class="hljs-keyword">while</span> i &lt; n:
+        result.append(intervals[i])
+        i += <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="example-meeting-rooms-ii">Example: Meeting Rooms II</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">min_meeting_rooms</span><span class="hljs-params">(intervals)</span>:</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> intervals:
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+    
+    starts = sorted([interval[<span class="hljs-number">0</span>] <span class="hljs-keyword">for</span> interval <span class="hljs-keyword">in</span> intervals])
+    ends = sorted([interval[<span class="hljs-number">1</span>] <span class="hljs-keyword">for</span> interval <span class="hljs-keyword">in</span> intervals])
+    
+    start_pointer = end_pointer = <span class="hljs-number">0</span>
+    used_rooms = <span class="hljs-number">0</span>
+    
+    <span class="hljs-keyword">while</span> start_pointer &lt; len(intervals):
+        <span class="hljs-keyword">if</span> starts[start_pointer] &gt;= ends[end_pointer]:
+            used_rooms -= <span class="hljs-number">1</span>
+            end_pointer += <span class="hljs-number">1</span>
+        
+        used_rooms += <span class="hljs-number">1</span>
+        start_pointer += <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">return</span> used_rooms
+</div></code></pre>
+<h3 id="example-interval-intersection">Example: Interval Intersection</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">interval_intersection</span><span class="hljs-params">(A, B)</span>:</span>
+    result = []
+    i = j = <span class="hljs-number">0</span>
+    
+    <span class="hljs-keyword">while</span> i &lt; len(A) <span class="hljs-keyword">and</span> j &lt; len(B):
+        <span class="hljs-comment"># Find intersection</span>
+        start = max(A[i][<span class="hljs-number">0</span>], B[j][<span class="hljs-number">0</span>])
+        end = min(A[i][<span class="hljs-number">1</span>], B[j][<span class="hljs-number">1</span>])
+        
+        <span class="hljs-keyword">if</span> start &lt;= end:
+            result.append([start, end])
+        
+        <span class="hljs-comment"># Move pointer with smaller end time</span>
+        <span class="hljs-keyword">if</span> A[i][<span class="hljs-number">1</span>] &lt; B[j][<span class="hljs-number">1</span>]:
+            i += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:
+            j += <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Merge Intervals (LeetCode 56)</li>
+<li>Insert Interval (LeetCode 57)</li>
+<li>Meeting Rooms (LeetCode 252)</li>
+<li>Meeting Rooms II (LeetCode 253)</li>
+<li>Interval List Intersections (LeetCode 986)</li>
+</ol>
+<hr>
+<h2 id="5-cyclic-sort">5. Cyclic Sort</h2>
+<p><strong>When to use:</strong> Problems with arrays containing numbers in a given range, missing numbers.</p>
+<p><strong>Time Complexity:</strong> O(n) <strong>Space Complexity:</strong> O(1)</p>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>Array contains numbers from 1 to n</li>
+<li>Finding missing/duplicate numbers</li>
+<li>First missing positive</li>
+</ul>
+<h3 id="template">Template:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">cyclic_sort</span><span class="hljs-params">(nums)</span>:</span>
+    i = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> i &lt; len(nums):
+        correct_index = nums[i] - <span class="hljs-number">1</span>
+        
+        <span class="hljs-keyword">if</span> nums[i] != nums[correct_index]:
+            nums[i], nums[correct_index] = nums[correct_index], nums[i]
+        <span class="hljs-keyword">else</span>:
+            i += <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">return</span> nums
+</div></code></pre>
+<h3 id="example-find-missing-number">Example: Find Missing Number</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find_missing_number</span><span class="hljs-params">(nums)</span>:</span>
+    i = <span class="hljs-number">0</span>
+    n = len(nums)
+    
+    <span class="hljs-comment"># Cyclic sort</span>
+    <span class="hljs-keyword">while</span> i &lt; n:
+        <span class="hljs-keyword">if</span> nums[i] &lt; n <span class="hljs-keyword">and</span> nums[i] != nums[nums[i]]:
+            nums[nums[i]], nums[i] = nums[i], nums[nums[i]]
+        <span class="hljs-keyword">else</span>:
+            i += <span class="hljs-number">1</span>
+    
+    <span class="hljs-comment"># Find missing number</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(n):
+        <span class="hljs-keyword">if</span> nums[i] != i:
+            <span class="hljs-keyword">return</span> i
+    
+    <span class="hljs-keyword">return</span> n
+</div></code></pre>
+<h3 id="example-find-all-duplicates">Example: Find All Duplicates</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find_duplicates</span><span class="hljs-params">(nums)</span>:</span>
+    i = <span class="hljs-number">0</span>
+    
+    <span class="hljs-comment"># Cyclic sort</span>
+    <span class="hljs-keyword">while</span> i &lt; len(nums):
+        correct_index = nums[i] - <span class="hljs-number">1</span>
+        <span class="hljs-keyword">if</span> nums[i] != nums[correct_index]:
+            nums[i], nums[correct_index] = nums[correct_index], nums[i]
+        <span class="hljs-keyword">else</span>:
+            i += <span class="hljs-number">1</span>
+    
+    <span class="hljs-comment"># Find duplicates</span>
+    duplicates = []
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(nums)):
+        <span class="hljs-keyword">if</span> nums[i] != i + <span class="hljs-number">1</span>:
+            duplicates.append(nums[i])
+    
+    <span class="hljs-keyword">return</span> duplicates
+</div></code></pre>
+<h3 id="example-first-missing-positive">Example: First Missing Positive</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">first_missing_positive</span><span class="hljs-params">(nums)</span>:</span>
+    n = len(nums)
+    
+    <span class="hljs-comment"># Place each positive number at its correct position</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(n):
+        <span class="hljs-keyword">while</span> <span class="hljs-number">1</span> &lt;= nums[i] &lt;= n <span class="hljs-keyword">and</span> nums[nums[i] - <span class="hljs-number">1</span>] != nums[i]:
+            nums[nums[i] - <span class="hljs-number">1</span>], nums[i] = nums[i], nums[nums[i] - <span class="hljs-number">1</span>]
+    
+    <span class="hljs-comment"># Find first missing positive</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(n):
+        <span class="hljs-keyword">if</span> nums[i] != i + <span class="hljs-number">1</span>:
+            <span class="hljs-keyword">return</span> i + <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">return</span> n + <span class="hljs-number">1</span>
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Missing Number (LeetCode 268)</li>
+<li>Find All Numbers Disappeared in an Array (LeetCode 448)</li>
+<li>Find All Duplicates in an Array (LeetCode 442)</li>
+<li>First Missing Positive (LeetCode 41)</li>
+<li>Find the Duplicate Number (LeetCode 287)</li>
+</ol>
+<hr>
+<h2 id="6-in-place-reversal-of-linkedlist">6. In-place Reversal of LinkedList</h2>
+<p><strong>When to use:</strong> Reversing linked lists or parts of linked lists without extra space.</p>
+<p><strong>Time Complexity:</strong> O(n) <strong>Space Complexity:</strong> O(1)</p>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>Reverse entire linked list</li>
+<li>Reverse sublist</li>
+<li>Reverse in groups</li>
+</ul>
+<h3 id="basic-reversal-template">Basic Reversal Template:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">reverse_list</span><span class="hljs-params">(head)</span>:</span>
+    prev = <span class="hljs-literal">None</span>
+    current = head
+    
+    <span class="hljs-keyword">while</span> current:
+        next_temp = current.next
+        current.next = prev
+        prev = current
+        current = next_temp
+    
+    <span class="hljs-keyword">return</span> prev
+</div></code></pre>
+<h3 id="example-reverse-sublist">Example: Reverse Sublist</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">reverse_between</span><span class="hljs-params">(head, m, n)</span>:</span>
+    <span class="hljs-keyword">if</span> m == n:
+        <span class="hljs-keyword">return</span> head
+    
+    <span class="hljs-comment"># Find the node before position m</span>
+    dummy = ListNode(<span class="hljs-number">0</span>)
+    dummy.next = head
+    prev = dummy
+    
+    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(m - <span class="hljs-number">1</span>):
+        prev = prev.next
+    
+    <span class="hljs-comment"># Reverse sublist from m to n</span>
+    current = prev.next
+    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(n - m):
+        next_node = current.next
+        current.next = next_node.next
+        next_node.next = prev.next
+        prev.next = next_node
+    
+    <span class="hljs-keyword">return</span> dummy.next
+</div></code></pre>
+<h3 id="example-reverse-nodes-in-k-group">Example: Reverse Nodes in k-Group</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">reverse_k_group</span><span class="hljs-params">(head, k)</span>:</span>
+    <span class="hljs-comment"># Check if we have k nodes left</span>
+    count = <span class="hljs-number">0</span>
+    current = head
+    <span class="hljs-keyword">while</span> current <span class="hljs-keyword">and</span> count &lt; k:
+        current = current.next
+        count += <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">if</span> count == k:  <span class="hljs-comment"># We have k nodes</span>
+        current = reverse_k_group(current, k)  <span class="hljs-comment"># Recursively process rest</span>
+        
+        <span class="hljs-comment"># Reverse current k nodes</span>
+        <span class="hljs-keyword">while</span> count &gt; <span class="hljs-number">0</span>:
+            next_temp = head.next
+            head.next = current
+            current = head
+            head = next_temp
+            count -= <span class="hljs-number">1</span>
+        
+        head = current
+    
+    <span class="hljs-keyword">return</span> head
+</div></code></pre>
+<h3 id="example-reverse-alternate-k-group">Example: Reverse Alternate k-Group</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">reverse_alternate_k_group</span><span class="hljs-params">(head, k)</span>:</span>
+    <span class="hljs-keyword">if</span> k &lt;= <span class="hljs-number">1</span> <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> head:
+        <span class="hljs-keyword">return</span> head
+    
+    current = head
+    prev = <span class="hljs-literal">None</span>
+    
+    <span class="hljs-keyword">while</span> current:
+        last_node_prev_part = prev
+        last_node_sub_list = current
+        
+        <span class="hljs-comment"># Skip k nodes</span>
+        <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(k):
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> current:
+                <span class="hljs-keyword">break</span>
+            next_temp = current.next
+            current.next = prev
+            prev = current
+            current = next_temp
+        
+        <span class="hljs-keyword">if</span> last_node_prev_part:
+            last_node_prev_part.next = prev
+        <span class="hljs-keyword">else</span>:
+            head = prev
+        
+        last_node_sub_list.next = current
+        
+        <span class="hljs-comment"># Skip k nodes</span>
+        <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(k):
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> current:
+                <span class="hljs-keyword">break</span>
+            prev = current
+            current = current.next
+    
+    <span class="hljs-keyword">return</span> head
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Reverse Linked List (LeetCode 206)</li>
+<li>Reverse Linked List II (LeetCode 92)</li>
+<li>Reverse Nodes in k-Group (LeetCode 25)</li>
+<li>Swap Nodes in Pairs (LeetCode 24)</li>
+<li>Rotate List (LeetCode 61)</li>
+</ol>
+<hr>
+<h2 id="7-tree-breadth-first-search">7. Tree Breadth First Search</h2>
+<p><strong>When to use:</strong> Level-order traversal, finding shortest path in unweighted trees.</p>
+<p><strong>Time Complexity:</strong> O(n) <strong>Space Complexity:</strong> O(w) where w is maximum width of tree</p>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>Level-order traversal</li>
+<li>Finding minimum depth</li>
+<li>Connecting nodes at same level</li>
+<li>Zigzag traversal</li>
+</ul>
+<h3 id="template">Template:</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> deque
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">level_order</span><span class="hljs-params">(root)</span>:</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> root:
+        <span class="hljs-keyword">return</span> []
+    
+    result = []
+    queue = deque([root])
+    
+    <span class="hljs-keyword">while</span> queue:
+        level_size = len(queue)
+        current_level = []
+        
+        <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(level_size):
+            node = queue.popleft()
+            current_level.append(node.val)
+            
+            <span class="hljs-keyword">if</span> node.left:
+                queue.append(node.left)
+            <span class="hljs-keyword">if</span> node.right:
+                queue.append(node.right)
+        
+        result.append(current_level)
+    
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="example-binary-tree-right-side-view">Example: Binary Tree Right Side View</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">right_side_view</span><span class="hljs-params">(root)</span>:</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> root:
+        <span class="hljs-keyword">return</span> []
+    
+    result = []
+    queue = deque([root])
+    
+    <span class="hljs-keyword">while</span> queue:
+        level_size = len(queue)
+        
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(level_size):
+            node = queue.popleft()
+            
+            <span class="hljs-comment"># Add rightmost node of each level</span>
+            <span class="hljs-keyword">if</span> i == level_size - <span class="hljs-number">1</span>:
+                result.append(node.val)
+            
+            <span class="hljs-keyword">if</span> node.left:
+                queue.append(node.left)
+            <span class="hljs-keyword">if</span> node.right:
+                queue.append(node.right)
+    
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="example-zigzag-level-order">Example: Zigzag Level Order</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">zigzag_level_order</span><span class="hljs-params">(root)</span>:</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> root:
+        <span class="hljs-keyword">return</span> []
+    
+    result = []
+    queue = deque([root])
+    left_to_right = <span class="hljs-literal">True</span>
+    
+    <span class="hljs-keyword">while</span> queue:
+        level_size = len(queue)
+        current_level = deque()
+        
+        <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(level_size):
+            node = queue.popleft()
+            
+            <span class="hljs-keyword">if</span> left_to_right:
+                current_level.append(node.val)
+            <span class="hljs-keyword">else</span>:
+                current_level.appendleft(node.val)
+            
+            <span class="hljs-keyword">if</span> node.left:
+                queue.append(node.left)
+            <span class="hljs-keyword">if</span> node.right:
+                queue.append(node.right)
+        
+        result.append(list(current_level))
+        left_to_right = <span class="hljs-keyword">not</span> left_to_right
+    
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="example-minimum-depth">Example: Minimum Depth</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">min_depth</span><span class="hljs-params">(root)</span>:</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> root:
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+    
+    queue = deque([(root, <span class="hljs-number">1</span>)])
+    
+    <span class="hljs-keyword">while</span> queue:
+        node, depth = queue.popleft()
+        
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> node.left <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> node.right:
+            <span class="hljs-keyword">return</span> depth
+        
+        <span class="hljs-keyword">if</span> node.left:
+            queue.append((node.left, depth + <span class="hljs-number">1</span>))
+        <span class="hljs-keyword">if</span> node.right:
+            queue.append((node.right, depth + <span class="hljs-number">1</span>))
+    
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Binary Tree Level Order Traversal (LeetCode 102)</li>
+<li>Binary Tree Right Side View (LeetCode 199)</li>
+<li>Binary Tree Zigzag Level Order Traversal (LeetCode 103)</li>
+<li>Minimum Depth of Binary Tree (LeetCode 111)</li>
+<li>Average of Levels in Binary Tree (LeetCode 637)</li>
+</ol>
+<hr>
+<h2 id="8-tree-depth-first-search">8. Tree Depth First Search</h2>
+<p><strong>When to use:</strong> Path problems, tree validation, finding all paths.</p>
+<p><strong>Time Complexity:</strong> O(n) <strong>Space Complexity:</strong> O(h) where h is height of tree</p>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>All root-to-leaf paths</li>
+<li>Path sum problems</li>
+<li>Tree validation</li>
+<li>Finding diameter/height</li>
+</ul>
+<h3 id="template-recursive">Template (Recursive):</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dfs</span><span class="hljs-params">(root)</span>:</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> root:
+        <span class="hljs-keyword">return</span>
+    
+    <span class="hljs-comment"># Process current node</span>
+    print(root.val)
+    
+    <span class="hljs-comment"># Recursively process children</span>
+    dfs(root.left)
+    dfs(root.right)
+</div></code></pre>
+<h3 id="template-iterative">Template (Iterative):</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dfs_iterative</span><span class="hljs-params">(root)</span>:</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> root:
+        <span class="hljs-keyword">return</span>
+    
+    stack = [root]
+    
+    <span class="hljs-keyword">while</span> stack:
+        node = stack.pop()
+        
+        <span class="hljs-comment"># Process current node</span>
+        print(node.val)
+        
+        <span class="hljs-comment"># Add children to stack (right first for left-to-right processing)</span>
+        <span class="hljs-keyword">if</span> node.right:
+            stack.append(node.right)
+        <span class="hljs-keyword">if</span> node.left:
+            stack.append(node.left)
+</div></code></pre>
+<h3 id="example-path-sum">Example: Path Sum</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">has_path_sum</span><span class="hljs-params">(root, sum_target)</span>:</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> root:
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+    
+    <span class="hljs-comment"># Leaf node</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> root.left <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> root.right:
+        <span class="hljs-keyword">return</span> root.val == sum_target
+    
+    <span class="hljs-comment"># Recursively check left and right subtrees</span>
+    remaining_sum = sum_target - root.val
+    <span class="hljs-keyword">return</span> (has_path_sum(root.left, remaining_sum) <span class="hljs-keyword">or</span> 
+            has_path_sum(root.right, remaining_sum))
+</div></code></pre>
+<h3 id="example-all-root-to-leaf-paths">Example: All Root-to-Leaf Paths</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">binary_tree_paths</span><span class="hljs-params">(root)</span>:</span>
+    result = []
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dfs</span><span class="hljs-params">(node, path)</span>:</span>
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> node:
+            <span class="hljs-keyword">return</span>
+        
+        path.append(str(node.val))
+        
+        <span class="hljs-comment"># Leaf node</span>
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> node.left <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> node.right:
+            result.append(<span class="hljs-string">"-&gt;"</span>.join(path))
+        <span class="hljs-keyword">else</span>:
+            dfs(node.left, path)
+            dfs(node.right, path)
+        
+        path.pop()  <span class="hljs-comment"># Backtrack</span>
+    
+    dfs(root, [])
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="example-maximum-path-sum">Example: Maximum Path Sum</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">max_path_sum</span><span class="hljs-params">(root)</span>:</span>
+    max_sum = float(<span class="hljs-string">'-inf'</span>)
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">max_gain</span><span class="hljs-params">(node)</span>:</span>
+        <span class="hljs-keyword">nonlocal</span> max_sum
+        
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> node:
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+        
+        <span class="hljs-comment"># Maximum gain from left and right subtrees</span>
+        left_gain = max(max_gain(node.left), <span class="hljs-number">0</span>)
+        right_gain = max(max_gain(node.right), <span class="hljs-number">0</span>)
+        
+        <span class="hljs-comment"># Maximum path sum through current node</span>
+        current_max = node.val + left_gain + right_gain
+        max_sum = max(max_sum, current_max)
+        
+        <span class="hljs-comment"># Return maximum gain if we continue path through current node</span>
+        <span class="hljs-keyword">return</span> node.val + max(left_gain, right_gain)
+    
+    max_gain(root)
+    <span class="hljs-keyword">return</span> max_sum
+</div></code></pre>
+<h3 id="example-diameter-of-binary-tree">Example: Diameter of Binary Tree</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">diameter_of_binary_tree</span><span class="hljs-params">(root)</span>:</span>
+    diameter = <span class="hljs-number">0</span>
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">depth</span><span class="hljs-params">(node)</span>:</span>
+        <span class="hljs-keyword">nonlocal</span> diameter
+        
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> node:
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+        
+        left_depth = depth(node.left)
+        right_depth = depth(node.right)
+        
+        <span class="hljs-comment"># Update diameter</span>
+        diameter = max(diameter, left_depth + right_depth)
+        
+        <span class="hljs-keyword">return</span> max(left_depth, right_depth) + <span class="hljs-number">1</span>
+    
+    depth(root)
+    <span class="hljs-keyword">return</span> diameter
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Path Sum (LeetCode 112)</li>
+<li>Path Sum II (LeetCode 113)</li>
+<li>Binary Tree Paths (LeetCode 257)</li>
+<li>Maximum Path Sum (LeetCode 124)</li>
+<li>Diameter of Binary Tree (LeetCode 543)</li>
+</ol>
+<hr>
+<h2 id="9-two-heaps">9. Two Heaps</h2>
+<p><strong>When to use:</strong> Finding median in data stream, sliding window median.</p>
+<p><strong>Time Complexity:</strong> O(log n) for insertion, O(1) for median <strong>Space Complexity:</strong> O(n)</p>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>Finding median</li>
+<li>Sliding window median</li>
+<li>Scheduling problems with priorities</li>
+</ul>
+<h3 id="template">Template:</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> heapq
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MedianFinder</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span>
+        self.small_heap = []  <span class="hljs-comment"># Max heap (negate values)</span>
+        self.large_heap = []  <span class="hljs-comment"># Min heap</span>
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add_num</span><span class="hljs-params">(self, num)</span>:</span>
+        <span class="hljs-comment"># Add to appropriate heap</span>
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> self.small_heap <span class="hljs-keyword">or</span> num &lt;= -self.small_heap[<span class="hljs-number">0</span>]:
+            heapq.heappush(self.small_heap, -num)
+        <span class="hljs-keyword">else</span>:
+            heapq.heappush(self.large_heap, num)
+        
+        <span class="hljs-comment"># Balance heaps</span>
+        <span class="hljs-keyword">if</span> len(self.small_heap) &gt; len(self.large_heap) + <span class="hljs-number">1</span>:
+            val = -heapq.heappop(self.small_heap)
+            heapq.heappush(self.large_heap, val)
+        <span class="hljs-keyword">elif</span> len(self.large_heap) &gt; len(self.small_heap) + <span class="hljs-number">1</span>:
+            val = heapq.heappop(self.large_heap)
+            heapq.heappush(self.small_heap, -val)
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find_median</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">if</span> len(self.small_heap) == len(self.large_heap):
+            <span class="hljs-keyword">return</span> (-self.small_heap[<span class="hljs-number">0</span>] + self.large_heap[<span class="hljs-number">0</span>]) / <span class="hljs-number">2.0</span>
+        <span class="hljs-keyword">elif</span> len(self.small_heap) &gt; len(self.large_heap):
+            <span class="hljs-keyword">return</span> -self.small_heap[<span class="hljs-number">0</span>]
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">return</span> self.large_heap[<span class="hljs-number">0</span>]
+</div></code></pre>
+<h3 id="example-sliding-window-median">Example: Sliding Window Median</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">median_sliding_window</span><span class="hljs-params">(nums, k)</span>:</span>
+    result = []
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(nums) - k + <span class="hljs-number">1</span>):
+        window = sorted(nums[i:i+k])
+        
+        <span class="hljs-keyword">if</span> k % <span class="hljs-number">2</span> == <span class="hljs-number">1</span>:
+            result.append(float(window[k // <span class="hljs-number">2</span>]))
+        <span class="hljs-keyword">else</span>:
+            result.append((window[k // <span class="hljs-number">2</span> - <span class="hljs-number">1</span>] + window[k // <span class="hljs-number">2</span>]) / <span class="hljs-number">2.0</span>)
+    
+    <span class="hljs-keyword">return</span> result
+
+<span class="hljs-comment"># Optimized version using two heaps</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">median_sliding_window_optimized</span><span class="hljs-params">(nums, k)</span>:</span>
+    <span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> defaultdict
+    <span class="hljs-keyword">import</span> heapq
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_median</span><span class="hljs-params">(max_heap, min_heap, k)</span>:</span>
+        <span class="hljs-keyword">if</span> k % <span class="hljs-number">2</span> == <span class="hljs-number">1</span>:
+            <span class="hljs-keyword">return</span> -max_heap[<span class="hljs-number">0</span>]
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">return</span> (-max_heap[<span class="hljs-number">0</span>] + min_heap[<span class="hljs-number">0</span>]) / <span class="hljs-number">2.0</span>
+    
+    max_heap = []  <span class="hljs-comment"># Left half (negated for max heap)</span>
+    min_heap = []  <span class="hljs-comment"># Right half</span>
+    hash_table = defaultdict(int)
+    result = []
+    
+    <span class="hljs-comment"># Initialize first window</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(k):
+        heapq.heappush(max_heap, -nums[i])
+    
+    <span class="hljs-comment"># Move half to min_heap</span>
+    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(k // <span class="hljs-number">2</span>):
+        val = -heapq.heappop(max_heap)
+        heapq.heappush(min_heap, val)
+    
+    result.append(get_median(max_heap, min_heap, k))
+    
+    <span class="hljs-comment"># Slide window</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(k, len(nums)):
+        <span class="hljs-comment"># Remove outgoing element</span>
+        out_num = nums[i - k]
+        hash_table[out_num] += <span class="hljs-number">1</span>
+        
+        <span class="hljs-comment"># Add incoming element</span>
+        in_num = nums[i]
+        <span class="hljs-keyword">if</span> max_heap <span class="hljs-keyword">and</span> in_num &lt;= -max_heap[<span class="hljs-number">0</span>]:
+            heapq.heappush(max_heap, -in_num)
+        <span class="hljs-keyword">else</span>:
+            heapq.heappush(min_heap, in_num)
+        
+        <span class="hljs-comment"># Balance heaps and clean invalid elements</span>
+        balance_heaps(max_heap, min_heap, hash_table)
+        result.append(get_median(max_heap, min_heap, k))
+    
+    <span class="hljs-keyword">return</span> result
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">balance_heaps</span><span class="hljs-params">(max_heap, min_heap, hash_table)</span>:</span>
+    <span class="hljs-comment"># Remove invalid elements from tops</span>
+    <span class="hljs-keyword">while</span> max_heap <span class="hljs-keyword">and</span> hash_table[-max_heap[<span class="hljs-number">0</span>]] &gt; <span class="hljs-number">0</span>:
+        hash_table[-max_heap[<span class="hljs-number">0</span>]] -= <span class="hljs-number">1</span>
+        heapq.heappop(max_heap)
+    
+    <span class="hljs-keyword">while</span> min_heap <span class="hljs-keyword">and</span> hash_table[min_heap[<span class="hljs-number">0</span>]] &gt; <span class="hljs-number">0</span>:
+        hash_table[min_heap[<span class="hljs-number">0</span>]] -= <span class="hljs-number">1</span>
+        heapq.heappop(min_heap)
+    
+    <span class="hljs-comment"># Balance heap sizes</span>
+    <span class="hljs-keyword">if</span> len(max_heap) &gt; len(min_heap) + <span class="hljs-number">1</span>:
+        val = -heapq.heappop(max_heap)
+        heapq.heappush(min_heap, val)
+    <span class="hljs-keyword">elif</span> len(min_heap) &gt; len(max_heap) + <span class="hljs-number">1</span>:
+        val = heapq.heappop(min_heap)
+        heapq.heappush(max_heap, -val)
+</div></code></pre>
+<h3 id="example-ipo-problem">Example: IPO Problem</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find_maximized_capital</span><span class="hljs-params">(k, w, profits, capital)</span>:</span>
+    <span class="hljs-keyword">import</span> heapq
+    
+    <span class="hljs-comment"># Min heap for projects by capital requirement</span>
+    min_capital_heap = []
+    <span class="hljs-comment"># Max heap for profits of affordable projects</span>
+    max_profit_heap = []
+    
+    <span class="hljs-comment"># Add all projects to capital heap</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(profits)):
+        heapq.heappush(min_capital_heap, (capital[i], profits[i]))
+    
+    <span class="hljs-comment"># Select up to k projects</span>
+    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(k):
+        <span class="hljs-comment"># Move all affordable projects to profit heap</span>
+        <span class="hljs-keyword">while</span> min_capital_heap <span class="hljs-keyword">and</span> min_capital_heap[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] &lt;= w:
+            cap, profit = heapq.heappop(min_capital_heap)
+            heapq.heappush(max_profit_heap, -profit)
+        
+        <span class="hljs-comment"># If no affordable projects, break</span>
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> max_profit_heap:
+            <span class="hljs-keyword">break</span>
+        
+        <span class="hljs-comment"># Select most profitable project</span>
+        w += -heapq.heappop(max_profit_heap)
+    
+    <span class="hljs-keyword">return</span> w
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Find Median from Data Stream (LeetCode 295)</li>
+<li>Sliding Window Median (LeetCode 480)</li>
+<li>IPO (LeetCode 502)</li>
+<li>Find Right Interval (LeetCode 436)</li>
+<li>Maximum Capital (Custom problem)</li>
+</ol>
+<hr>
+<h2 id="10-subsets">10. Subsets</h2>
+<p><strong>When to use:</strong> Generating all combinations, permutations, or subsets.</p>
+<p><strong>Time Complexity:</strong> O(2^n) for subsets, O(n!) for permutations <strong>Space Complexity:</strong> O(n) for recursion depth</p>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>Generate all subsets/combinations</li>
+<li>Generate all permutations</li>
+<li>Parentheses generation</li>
+<li>Letter combinations</li>
+</ul>
+<h3 id="subsets-template">Subsets Template:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">subsets</span><span class="hljs-params">(nums)</span>:</span>
+    result = []
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">backtrack</span><span class="hljs-params">(start, path)</span>:</span>
+        <span class="hljs-comment"># Add current subset</span>
+        result.append(path[:])
+        
+        <span class="hljs-comment"># Generate subsets starting from 'start'</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(start, len(nums)):
+            path.append(nums[i])
+            backtrack(i + <span class="hljs-number">1</span>, path)
+            path.pop()
+    
+    backtrack(<span class="hljs-number">0</span>, [])
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="iterative-subsets">Iterative Subsets:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">subsets_iterative</span><span class="hljs-params">(nums)</span>:</span>
+    result = [[]]
+    
+    <span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> nums:
+        new_subsets = []
+        <span class="hljs-keyword">for</span> subset <span class="hljs-keyword">in</span> result:
+            new_subsets.append(subset + [num])
+        result.extend(new_subsets)
+    
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="example-subsets-with-duplicates">Example: Subsets with Duplicates</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">subsets_with_dup</span><span class="hljs-params">(nums)</span>:</span>
+    nums.sort()  <span class="hljs-comment"># Sort to handle duplicates</span>
+    result = []
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">backtrack</span><span class="hljs-params">(start, path)</span>:</span>
+        result.append(path[:])
+        
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(start, len(nums)):
+            <span class="hljs-comment"># Skip duplicates</span>
+            <span class="hljs-keyword">if</span> i &gt; start <span class="hljs-keyword">and</span> nums[i] == nums[i<span class="hljs-number">-1</span>]:
+                <span class="hljs-keyword">continue</span>
+            
+            path.append(nums[i])
+            backtrack(i + <span class="hljs-number">1</span>, path)
+            path.pop()
+    
+    backtrack(<span class="hljs-number">0</span>, [])
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="example-permutations">Example: Permutations</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">permute</span><span class="hljs-params">(nums)</span>:</span>
+    result = []
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">backtrack</span><span class="hljs-params">(path)</span>:</span>
+        <span class="hljs-keyword">if</span> len(path) == len(nums):
+            result.append(path[:])
+            <span class="hljs-keyword">return</span>
+        
+        <span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> nums:
+            <span class="hljs-keyword">if</span> num <span class="hljs-keyword">in</span> path:
+                <span class="hljs-keyword">continue</span>
+            
+            path.append(num)
+            backtrack(path)
+            path.pop()
+    
+    backtrack([])
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="example-generate-parentheses">Example: Generate Parentheses</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">generate_parenthesis</span><span class="hljs-params">(n)</span>:</span>
+    result = []
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">backtrack</span><span class="hljs-params">(path, open_count, close_count)</span>:</span>
+        <span class="hljs-keyword">if</span> len(path) == <span class="hljs-number">2</span> * n:
+            result.append(path)
+            <span class="hljs-keyword">return</span>
+        
+        <span class="hljs-comment"># Add opening parenthesis</span>
+        <span class="hljs-keyword">if</span> open_count &lt; n:
+            backtrack(path + <span class="hljs-string">'('</span>, open_count + <span class="hljs-number">1</span>, close_count)
+        
+        <span class="hljs-comment"># Add closing parenthesis</span>
+        <span class="hljs-keyword">if</span> close_count &lt; open_count:
+            backtrack(path + <span class="hljs-string">')'</span>, open_count, close_count + <span class="hljs-number">1</span>)
+    
+    backtrack(<span class="hljs-string">''</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="example-letter-combinations-of-phone-number">Example: Letter Combinations of Phone Number</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">letter_combinations</span><span class="hljs-params">(digits)</span>:</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> digits:
+        <span class="hljs-keyword">return</span> []
+    
+    phone_map = {
+        <span class="hljs-string">'2'</span>: <span class="hljs-string">'abc'</span>, <span class="hljs-string">'3'</span>: <span class="hljs-string">'def'</span>, <span class="hljs-string">'4'</span>: <span class="hljs-string">'ghi'</span>, <span class="hljs-string">'5'</span>: <span class="hljs-string">'jkl'</span>,
+        <span class="hljs-string">'6'</span>: <span class="hljs-string">'mno'</span>, <span class="hljs-string">'7'</span>: <span class="hljs-string">'pqrs'</span>, <span class="hljs-string">'8'</span>: <span class="hljs-string">'tuv'</span>, <span class="hljs-string">'9'</span>: <span class="hljs-string">'wxyz'</span>
+    }
+    
+    result = []
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">backtrack</span><span class="hljs-params">(index, path)</span>:</span>
+        <span class="hljs-keyword">if</span> index == len(digits):
+            result.append(path)
+            <span class="hljs-keyword">return</span>
+        
+        letters = phone_map[digits[index]]
+        <span class="hljs-keyword">for</span> letter <span class="hljs-keyword">in</span> letters:
+            backtrack(index + <span class="hljs-number">1</span>, path + letter)
+    
+    backtrack(<span class="hljs-number">0</span>, <span class="hljs-string">''</span>)
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Subsets (LeetCode 78)</li>
+<li>Subsets II (LeetCode 90)</li>
+<li>Permutations (LeetCode 46)</li>
+<li>Generate Parentheses (LeetCode 22)</li>
+<li>Letter Combinations of a Phone Number (LeetCode 17)</li>
+</ol>
+<hr>
+<h2 id="11-modified-binary-search">11. Modified Binary Search</h2>
+<p><strong>When to use:</strong> Searching in rotated/modified sorted arrays, finding peak elements.</p>
+<p><strong>Time Complexity:</strong> O(log n) <strong>Space Complexity:</strong> O(1)</p>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>Search in rotated sorted array</li>
+<li>Find peak element</li>
+<li>Search in infinite array</li>
+<li>Find minimum in rotated sorted array</li>
+</ul>
+<h3 id="template">Template:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">binary_search_modified</span><span class="hljs-params">(arr, target)</span>:</span>
+    left, right = <span class="hljs-number">0</span>, len(arr) - <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">while</span> left &lt;= right:
+        mid = left + (right - left) // <span class="hljs-number">2</span>
+        
+        <span class="hljs-keyword">if</span> arr[mid] == target:
+            <span class="hljs-keyword">return</span> mid
+        
+        <span class="hljs-comment"># Determine which side is sorted</span>
+        <span class="hljs-keyword">if</span> arr[left] &lt;= arr[mid]:  <span class="hljs-comment"># Left side is sorted</span>
+            <span class="hljs-keyword">if</span> arr[left] &lt;= target &lt; arr[mid]:
+                right = mid - <span class="hljs-number">1</span>
+            <span class="hljs-keyword">else</span>:
+                left = mid + <span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:  <span class="hljs-comment"># Right side is sorted</span>
+            <span class="hljs-keyword">if</span> arr[mid] &lt; target &lt;= arr[right]:
+                left = mid + <span class="hljs-number">1</span>
+            <span class="hljs-keyword">else</span>:
+                right = mid - <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>
+</div></code></pre>
+<h3 id="example-search-in-rotated-sorted-array">Example: Search in Rotated Sorted Array</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">search</span><span class="hljs-params">(nums, target)</span>:</span>
+    left, right = <span class="hljs-number">0</span>, len(nums) - <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">while</span> left &lt;= right:
+        mid = (left + right) // <span class="hljs-number">2</span>
+        
+        <span class="hljs-keyword">if</span> nums[mid] == target:
+            <span class="hljs-keyword">return</span> mid
+        
+        <span class="hljs-comment"># Left half is sorted</span>
+        <span class="hljs-keyword">if</span> nums[left] &lt;= nums[mid]:
+            <span class="hljs-keyword">if</span> nums[left] &lt;= target &lt; nums[mid]:
+                right = mid - <span class="hljs-number">1</span>
+            <span class="hljs-keyword">else</span>:
+                left = mid + <span class="hljs-number">1</span>
+        <span class="hljs-comment"># Right half is sorted</span>
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">if</span> nums[mid] &lt; target &lt;= nums[right]:
+                left = mid + <span class="hljs-number">1</span>
+            <span class="hljs-keyword">else</span>:
+                right = mid - <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>
+</div></code></pre>
+<h3 id="example-find-minimum-in-rotated-sorted-array">Example: Find Minimum in Rotated Sorted Array</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find_min</span><span class="hljs-params">(nums)</span>:</span>
+    left, right = <span class="hljs-number">0</span>, len(nums) - <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">while</span> left &lt; right:
+        mid = (left + right) // <span class="hljs-number">2</span>
+        
+        <span class="hljs-comment"># Right half has minimum</span>
+        <span class="hljs-keyword">if</span> nums[mid] &gt; nums[right]:
+            left = mid + <span class="hljs-number">1</span>
+        <span class="hljs-comment"># Left half has minimum</span>
+        <span class="hljs-keyword">else</span>:
+            right = mid
+    
+    <span class="hljs-keyword">return</span> nums[left]
+</div></code></pre>
+<h3 id="example-find-peak-element">Example: Find Peak Element</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find_peak_element</span><span class="hljs-params">(nums)</span>:</span>
+    left, right = <span class="hljs-number">0</span>, len(nums) - <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">while</span> left &lt; right:
+        mid = (left + right) // <span class="hljs-number">2</span>
+        
+        <span class="hljs-comment"># Peak is on the right</span>
+        <span class="hljs-keyword">if</span> nums[mid] &lt; nums[mid + <span class="hljs-number">1</span>]:
+            left = mid + <span class="hljs-number">1</span>
+        <span class="hljs-comment"># Peak is on the left</span>
+        <span class="hljs-keyword">else</span>:
+            right = mid
+    
+    <span class="hljs-keyword">return</span> left
+</div></code></pre>
+<h3 id="example-search-in-infinite-array">Example: Search in Infinite Array</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">search_in_infinite_array</span><span class="hljs-params">(reader, target)</span>:</span>
+    <span class="hljs-comment"># Find bounds</span>
+    left, right = <span class="hljs-number">0</span>, <span class="hljs-number">1</span>
+    <span class="hljs-keyword">while</span> reader.get(right) &lt; target:
+        left = right
+        right *= <span class="hljs-number">2</span>
+    
+    <span class="hljs-comment"># Binary search in bounds</span>
+    <span class="hljs-keyword">while</span> left &lt;= right:
+        mid = (left + right) // <span class="hljs-number">2</span>
+        val = reader.get(mid)
+        
+        <span class="hljs-keyword">if</span> val == target:
+            <span class="hljs-keyword">return</span> mid
+        <span class="hljs-keyword">elif</span> val &lt; target:
+            left = mid + <span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:
+            right = mid - <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>
+</div></code></pre>
+<h3 id="example-find-first-and-last-position">Example: Find First and Last Position</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">search_range</span><span class="hljs-params">(nums, target)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find_first</span><span class="hljs-params">()</span>:</span>
+        left, right = <span class="hljs-number">0</span>, len(nums) - <span class="hljs-number">1</span>
+        result = <span class="hljs-number">-1</span>
+        
+        <span class="hljs-keyword">while</span> left &lt;= right:
+            mid = (left + right) // <span class="hljs-number">2</span>
+            
+            <span class="hljs-keyword">if</span> nums[mid] == target:
+                result = mid
+                right = mid - <span class="hljs-number">1</span>  <span class="hljs-comment"># Continue searching left</span>
+            <span class="hljs-keyword">elif</span> nums[mid] &lt; target:
+                left = mid + <span class="hljs-number">1</span>
+            <span class="hljs-keyword">else</span>:
+                right = mid - <span class="hljs-number">1</span>
+        
+        <span class="hljs-keyword">return</span> result
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find_last</span><span class="hljs-params">()</span>:</span>
+        left, right = <span class="hljs-number">0</span>, len(nums) - <span class="hljs-number">1</span>
+        result = <span class="hljs-number">-1</span>
+        
+        <span class="hljs-keyword">while</span> left &lt;= right:
+            mid = (left + right) // <span class="hljs-number">2</span>
+            
+            <span class="hljs-keyword">if</span> nums[mid] == target:
+                result = mid
+                left = mid + <span class="hljs-number">1</span>  <span class="hljs-comment"># Continue searching right</span>
+            <span class="hljs-keyword">elif</span> nums[mid] &lt; target:
+                left = mid + <span class="hljs-number">1</span>
+            <span class="hljs-keyword">else</span>:
+                right = mid - <span class="hljs-number">1</span>
+        
+        <span class="hljs-keyword">return</span> result
+    
+    <span class="hljs-keyword">return</span> [find_first(), find_last()]
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Search in Rotated Sorted Array (LeetCode 33)</li>
+<li>Find Minimum in Rotated Sorted Array (LeetCode 153)</li>
+<li>Find Peak Element (LeetCode 162)</li>
+<li>Search for a Range (LeetCode 34)</li>
+<li>Search in a Sorted Array of Unknown Size (LeetCode 702)</li>
+</ol>
+<hr>
+<h2 id="12-bitwise-xor">12. Bitwise XOR</h2>
+<p><strong>When to use:</strong> Finding single numbers, missing numbers in arrays.</p>
+<p><strong>Time Complexity:</strong> O(n) <strong>Space Complexity:</strong> O(1)</p>
+<h3 id="key-properties">Key Properties:</h3>
+<ul>
+<li>a ⊕ a = 0</li>
+<li>a ⊕ 0 = a</li>
+<li>XOR is commutative and associative</li>
+</ul>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>Single number problems</li>
+<li>Missing number in array</li>
+<li>Two single numbers</li>
+</ul>
+<h3 id="template">Template:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">single_number</span><span class="hljs-params">(nums)</span>:</span>
+    result = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> nums:
+        result ^= num
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="example-single-number-ii">Example: Single Number II</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">single_number_ii</span><span class="hljs-params">(nums)</span>:</span>
+    ones = twos = <span class="hljs-number">0</span>
+    
+    <span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> nums:
+        <span class="hljs-comment"># Update twos with bits that appeared twice</span>
+        twos |= ones &amp; num
+        <span class="hljs-comment"># Update ones with current number</span>
+        ones ^= num
+        <span class="hljs-comment"># Remove bits that appeared three times</span>
+        threes = ones &amp; twos
+        ones &amp;= ~threes
+        twos &amp;= ~threes
+    
+    <span class="hljs-keyword">return</span> ones
+</div></code></pre>
+<h3 id="example-two-single-numbers">Example: Two Single Numbers</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">single_number_iii</span><span class="hljs-params">(nums)</span>:</span>
+    <span class="hljs-comment"># XOR all numbers</span>
+    xor_all = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> nums:
+        xor_all ^= num
+    
+    <span class="hljs-comment"># Find rightmost set bit</span>
+    rightmost_bit = xor_all &amp; (-xor_all)
+    
+    <span class="hljs-comment"># Divide numbers into two groups</span>
+    num1 = num2 = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> nums:
+        <span class="hljs-keyword">if</span> num &amp; rightmost_bit:
+            num1 ^= num
+        <span class="hljs-keyword">else</span>:
+            num2 ^= num
+    
+    <span class="hljs-keyword">return</span> [num1, num2]
+</div></code></pre>
+<h3 id="example-missing-number">Example: Missing Number</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">missing_number</span><span class="hljs-params">(nums)</span>:</span>
+    n = len(nums)
+    result = n  <span class="hljs-comment"># Start with n</span>
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(n):
+        result ^= i ^ nums[i]
+    
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="example-complement-of-base-10-integer">Example: Complement of Base 10 Integer</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find_complement</span><span class="hljs-params">(num)</span>:</span>
+    <span class="hljs-comment"># Find bit length</span>
+    bit_length = num.bit_length()
+    
+    <span class="hljs-comment"># Create mask with all 1s</span>
+    mask = (<span class="hljs-number">1</span> &lt;&lt; bit_length) - <span class="hljs-number">1</span>
+    
+    <span class="hljs-comment"># XOR with mask to flip bits</span>
+    <span class="hljs-keyword">return</span> num ^ mask
+</div></code></pre>
+<h3 id="example-flip-and-invert-image">Example: Flip and Invert Image</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">flip_and_invert_image</span><span class="hljs-params">(A)</span>:</span>
+    <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> A:
+        <span class="hljs-comment"># Flip (reverse) and invert (XOR with 1)</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range((len(row) + <span class="hljs-number">1</span>) // <span class="hljs-number">2</span>):
+            j = len(row) - <span class="hljs-number">1</span> - i
+            row[i], row[j] = row[j] ^ <span class="hljs-number">1</span>, row[i] ^ <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">return</span> A
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Single Number (LeetCode 136)</li>
+<li>Single Number II (LeetCode 137)</li>
+<li>Single Number III (LeetCode 260)</li>
+<li>Missing Number (LeetCode 268)</li>
+<li>Complement of Base 10 Integer (LeetCode 476)</li>
+</ol>
+<hr>
+<h2 id="13-top-k-elements">13. Top K Elements</h2>
+<p><strong>When to use:</strong> Finding K largest/smallest elements, K closest elements.</p>
+<p><strong>Time Complexity:</strong> O(n log k) with heap, O(n) with quickselect <strong>Space Complexity:</strong> O(k)</p>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>K largest/smallest elements</li>
+<li>K most frequent elements</li>
+<li>K closest points</li>
+</ul>
+<h3 id="template-with-min-heap-for-k-largest">Template with Min Heap (for K largest):</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> heapq
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find_k_largest</span><span class="hljs-params">(nums, k)</span>:</span>
+    heap = []
+    
+    <span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> nums:
+        heapq.heappush(heap, num)
+        <span class="hljs-keyword">if</span> len(heap) &gt; k:
+            heapq.heappop(heap)
+    
+    <span class="hljs-keyword">return</span> list(heap)
+</div></code></pre>
+<h3 id="template-with-max-heap-for-k-smallest">Template with Max Heap (for K smallest):</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find_k_smallest</span><span class="hljs-params">(nums, k)</span>:</span>
+    heap = []
+    
+    <span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> nums:
+        heapq.heappush(heap, -num)  <span class="hljs-comment"># Negate for max heap</span>
+        <span class="hljs-keyword">if</span> len(heap) &gt; k:
+            heapq.heappop(heap)
+    
+    <span class="hljs-keyword">return</span> [-x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> heap]
+</div></code></pre>
+<h3 id="example-k-most-frequent-elements">Example: K Most Frequent Elements</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">top_k_frequent</span><span class="hljs-params">(nums, k)</span>:</span>
+    <span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> Counter
+    <span class="hljs-keyword">import</span> heapq
+    
+    count = Counter(nums)
+    
+    <span class="hljs-comment"># Use min heap to keep top k frequent elements</span>
+    heap = []
+    <span class="hljs-keyword">for</span> num, freq <span class="hljs-keyword">in</span> count.items():
+        heapq.heappush(heap, (freq, num))
+        <span class="hljs-keyword">if</span> len(heap) &gt; k:
+            heapq.heappop(heap)
+    
+    <span class="hljs-keyword">return</span> [num <span class="hljs-keyword">for</span> freq, num <span class="hljs-keyword">in</span> heap]
+</div></code></pre>
+<h3 id="example-k-closest-points-to-origin">Example: K Closest Points to Origin</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">k_closest</span><span class="hljs-params">(points, k)</span>:</span>
+    <span class="hljs-keyword">import</span> heapq
+    
+    heap = []
+    
+    <span class="hljs-keyword">for</span> point <span class="hljs-keyword">in</span> points:
+        x, y = point
+        dist = x*x + y*y
+        
+        heapq.heappush(heap, (-dist, point))  <span class="hljs-comment"># Max heap</span>
+        <span class="hljs-keyword">if</span> len(heap) &gt; k:
+            heapq.heappop(heap)
+    
+    <span class="hljs-keyword">return</span> [point <span class="hljs-keyword">for</span> dist, point <span class="hljs-keyword">in</span> heap]
+</div></code></pre>
+<h3 id="example-kth-largest-element-in-array-quickselect">Example: Kth Largest Element in Array (QuickSelect)</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find_kth_largest</span><span class="hljs-params">(nums, k)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">quickselect</span><span class="hljs-params">(left, right, k_smallest)</span>:</span>
+        <span class="hljs-keyword">if</span> left == right:
+            <span class="hljs-keyword">return</span> nums[left]
+        
+        <span class="hljs-comment"># Partition around random pivot</span>
+        pivot_index = partition(left, right)
+        
+        <span class="hljs-keyword">if</span> k_smallest == pivot_index:
+            <span class="hljs-keyword">return</span> nums[k_smallest]
+        <span class="hljs-keyword">elif</span> k_smallest &lt; pivot_index:
+            <span class="hljs-keyword">return</span> quickselect(left, pivot_index - <span class="hljs-number">1</span>, k_smallest)
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">return</span> quickselect(pivot_index + <span class="hljs-number">1</span>, right, k_smallest)
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">partition</span><span class="hljs-params">(left, right)</span>:</span>
+        pivot = nums[right]
+        i = left
+        
+        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(left, right):
+            <span class="hljs-keyword">if</span> nums[j] &lt; pivot:
+                nums[i], nums[j] = nums[j], nums[i]
+                i += <span class="hljs-number">1</span>
+        
+        nums[i], nums[right] = nums[right], nums[i]
+        <span class="hljs-keyword">return</span> i
+    
+    <span class="hljs-comment"># Kth largest is (n-k)th smallest</span>
+    <span class="hljs-keyword">return</span> quickselect(<span class="hljs-number">0</span>, len(nums) - <span class="hljs-number">1</span>, len(nums) - k)
+</div></code></pre>
+<h3 id="example-find-k-pairs-with-smallest-sums">Example: Find K Pairs with Smallest Sums</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">k_smallest_pairs</span><span class="hljs-params">(nums1, nums2, k)</span>:</span>
+    <span class="hljs-keyword">import</span> heapq
+    
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> nums1 <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> nums2:
+        <span class="hljs-keyword">return</span> []
+    
+    heap = []
+    result = []
+    
+    <span class="hljs-comment"># Initialize heap with first row</span>
+    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(min(k, len(nums2))):
+        heapq.heappush(heap, (nums1[<span class="hljs-number">0</span>] + nums2[j], <span class="hljs-number">0</span>, j))
+    
+    <span class="hljs-keyword">while</span> heap <span class="hljs-keyword">and</span> len(result) &lt; k:
+        sum_val, i, j = heapq.heappop(heap)
+        result.append([nums1[i], nums2[j]])
+        
+        <span class="hljs-comment"># Add next element from same column</span>
+        <span class="hljs-keyword">if</span> i + <span class="hljs-number">1</span> &lt; len(nums1):
+            heapq.heappush(heap, (nums1[i + <span class="hljs-number">1</span>] + nums2[j], i + <span class="hljs-number">1</span>, j))
+    
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Kth Largest Element in an Array (LeetCode 215)</li>
+<li>Top K Frequent Elements (LeetCode 347)</li>
+<li>K Closest Points to Origin (LeetCode 973)</li>
+<li>Find K Pairs with Smallest Sums (LeetCode 373)</li>
+<li>Kth Smallest Element in a Sorted Matrix (LeetCode 378)</li>
+</ol>
+<hr>
+<h2 id="14-k-way-merge">14. K-way Merge</h2>
+<p><strong>When to use:</strong> Merging K sorted arrays/lists, finding smallest range.</p>
+<p><strong>Time Complexity:</strong> O(n log k) where n is total elements <strong>Space Complexity:</strong> O(k)</p>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>Merge K sorted lists</li>
+<li>Smallest range covering elements from K lists</li>
+<li>Kth smallest in sorted matrix</li>
+</ul>
+<h3 id="template">Template:</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> heapq
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">merge_k_sorted_arrays</span><span class="hljs-params">(arrays)</span>:</span>
+    heap = []
+    result = []
+    
+    <span class="hljs-comment"># Initialize heap with first element from each array</span>
+    <span class="hljs-keyword">for</span> i, array <span class="hljs-keyword">in</span> enumerate(arrays):
+        <span class="hljs-keyword">if</span> array:
+            heapq.heappush(heap, (array[<span class="hljs-number">0</span>], i, <span class="hljs-number">0</span>))
+    
+    <span class="hljs-keyword">while</span> heap:
+        val, array_idx, element_idx = heapq.heappop(heap)
+        result.append(val)
+        
+        <span class="hljs-comment"># Add next element from same array</span>
+        <span class="hljs-keyword">if</span> element_idx + <span class="hljs-number">1</span> &lt; len(arrays[array_idx]):
+            next_val = arrays[array_idx][element_idx + <span class="hljs-number">1</span>]
+            heapq.heappush(heap, (next_val, array_idx, element_idx + <span class="hljs-number">1</span>))
+    
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="example-merge-k-sorted-lists">Example: Merge K Sorted Lists</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">merge_k_lists</span><span class="hljs-params">(lists)</span>:</span>
+    <span class="hljs-keyword">import</span> heapq
+    
+    heap = []
+    
+    <span class="hljs-comment"># Initialize heap</span>
+    <span class="hljs-keyword">for</span> i, head <span class="hljs-keyword">in</span> enumerate(lists):
+        <span class="hljs-keyword">if</span> head:
+            heapq.heappush(heap, (head.val, i, head))
+    
+    dummy = ListNode(<span class="hljs-number">0</span>)
+    current = dummy
+    
+    <span class="hljs-keyword">while</span> heap:
+        val, i, node = heapq.heappop(heap)
+        
+        current.next = node
+        current = current.next
+        
+        <span class="hljs-keyword">if</span> node.next:
+            heapq.heappush(heap, (node.next.val, i, node.next))
+    
+    <span class="hljs-keyword">return</span> dummy.next
+</div></code></pre>
+<h3 id="example-smallest-range-covering-elements-from-k-lists">Example: Smallest Range Covering Elements from K Lists</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">smallest_range</span><span class="hljs-params">(nums)</span>:</span>
+    <span class="hljs-keyword">import</span> heapq
+    
+    heap = []
+    max_val = float(<span class="hljs-string">'-inf'</span>)
+    
+    <span class="hljs-comment"># Initialize heap with first element from each list</span>
+    <span class="hljs-keyword">for</span> i, lst <span class="hljs-keyword">in</span> enumerate(nums):
+        <span class="hljs-keyword">if</span> lst:
+            heapq.heappush(heap, (lst[<span class="hljs-number">0</span>], i, <span class="hljs-number">0</span>))
+            max_val = max(max_val, lst[<span class="hljs-number">0</span>])
+    
+    range_start, range_end = <span class="hljs-number">0</span>, float(<span class="hljs-string">'inf'</span>)
+    
+    <span class="hljs-keyword">while</span> len(heap) == len(nums):
+        min_val, list_idx, element_idx = heapq.heappop(heap)
+        
+        <span class="hljs-comment"># Update range if current is smaller</span>
+        <span class="hljs-keyword">if</span> max_val - min_val &lt; range_end - range_start:
+            range_start, range_end = min_val, max_val
+        
+        <span class="hljs-comment"># Add next element from same list</span>
+        <span class="hljs-keyword">if</span> element_idx + <span class="hljs-number">1</span> &lt; len(nums[list_idx]):
+            next_val = nums[list_idx][element_idx + <span class="hljs-number">1</span>]
+            heapq.heappush(heap, (next_val, list_idx, element_idx + <span class="hljs-number">1</span>))
+            max_val = max(max_val, next_val)
+    
+    <span class="hljs-keyword">return</span> [range_start, range_end]
+</div></code></pre>
+<h3 id="example-kth-smallest-element-in-sorted-matrix">Example: Kth Smallest Element in Sorted Matrix</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">kth_smallest</span><span class="hljs-params">(matrix, k)</span>:</span>
+    <span class="hljs-keyword">import</span> heapq
+    
+    n = len(matrix)
+    heap = []
+    
+    <span class="hljs-comment"># Initialize heap with first column</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(n):
+        heapq.heappush(heap, (matrix[i][<span class="hljs-number">0</span>], i, <span class="hljs-number">0</span>))
+    
+    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(k):
+        val, row, col = heapq.heappop(heap)
+        
+        <span class="hljs-keyword">if</span> col + <span class="hljs-number">1</span> &lt; n:
+            heapq.heappush(heap, (matrix[row][col + <span class="hljs-number">1</span>], row, col + <span class="hljs-number">1</span>))
+    
+    <span class="hljs-keyword">return</span> val
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Merge k Sorted Lists (LeetCode 23)</li>
+<li>Kth Smallest Element in a Sorted Matrix (LeetCode 378)</li>
+<li>Smallest Range Covering Elements from K Lists (LeetCode 632)</li>
+<li>Find K Pairs with Smallest Sums (LeetCode 373)</li>
+<li>Merge k Sorted Arrays (Custom)</li>
+</ol>
+<hr>
+<h2 id="15-01-knapsack">15. 0/1 Knapsack</h2>
+<p><strong>When to use:</strong> Optimization problems with binary choices (take or don't take).</p>
+<p><strong>Time Complexity:</strong> O(n × W) where W is knapsack capacity <strong>Space Complexity:</strong> O(n × W) or O(W) with optimization</p>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>Subset sum problems</li>
+<li>Partition problems</li>
+<li>Target sum problems</li>
+</ul>
+<h3 id="basic-template">Basic Template:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">knapsack_01</span><span class="hljs-params">(weights, values, capacity)</span>:</span>
+    n = len(weights)
+    dp = [[<span class="hljs-number">0</span>] * (capacity + <span class="hljs-number">1</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(n + <span class="hljs-number">1</span>)]
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):
+        <span class="hljs-keyword">for</span> w <span class="hljs-keyword">in</span> range(capacity + <span class="hljs-number">1</span>):
+            <span class="hljs-comment"># Don't take item i-1</span>
+            dp[i][w] = dp[i<span class="hljs-number">-1</span>][w]
+            
+            <span class="hljs-comment"># Take item i-1 if possible</span>
+            <span class="hljs-keyword">if</span> weights[i<span class="hljs-number">-1</span>] &lt;= w:
+                dp[i][w] = max(dp[i][w], 
+                              dp[i<span class="hljs-number">-1</span>][w - weights[i<span class="hljs-number">-1</span>]] + values[i<span class="hljs-number">-1</span>])
+    
+    <span class="hljs-keyword">return</span> dp[n][capacity]
+</div></code></pre>
+<h3 id="space-optimized">Space Optimized:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">knapsack_01_optimized</span><span class="hljs-params">(weights, values, capacity)</span>:</span>
+    dp = [<span class="hljs-number">0</span>] * (capacity + <span class="hljs-number">1</span>)
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(weights)):
+        <span class="hljs-comment"># Traverse backwards to avoid using updated values</span>
+        <span class="hljs-keyword">for</span> w <span class="hljs-keyword">in</span> range(capacity, weights[i] - <span class="hljs-number">1</span>, <span class="hljs-number">-1</span>):
+            dp[w] = max(dp[w], dp[w - weights[i]] + values[i])
+    
+    <span class="hljs-keyword">return</span> dp[capacity]
+</div></code></pre>
+<h3 id="example-subset-sum">Example: Subset Sum</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">can_partition</span><span class="hljs-params">(nums)</span>:</span>
+    total_sum = sum(nums)
+    
+    <span class="hljs-keyword">if</span> total_sum % <span class="hljs-number">2</span> != <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+    
+    target = total_sum // <span class="hljs-number">2</span>
+    dp = [<span class="hljs-literal">False</span>] * (target + <span class="hljs-number">1</span>)
+    dp[<span class="hljs-number">0</span>] = <span class="hljs-literal">True</span>
+    
+    <span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> nums:
+        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(target, num - <span class="hljs-number">1</span>, <span class="hljs-number">-1</span>):
+            dp[j] = dp[j] <span class="hljs-keyword">or</span> dp[j - num]
+    
+    <span class="hljs-keyword">return</span> dp[target]
+</div></code></pre>
+<h3 id="example-target-sum">Example: Target Sum</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find_target_sum_ways</span><span class="hljs-params">(nums, S)</span>:</span>
+    total = sum(nums)
+    
+    <span class="hljs-keyword">if</span> S &gt; total <span class="hljs-keyword">or</span> S &lt; -total <span class="hljs-keyword">or</span> (S + total) % <span class="hljs-number">2</span> == <span class="hljs-number">1</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+    
+    target = (S + total) // <span class="hljs-number">2</span>
+    dp = [<span class="hljs-number">0</span>] * (target + <span class="hljs-number">1</span>)
+    dp[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> nums:
+        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(target, num - <span class="hljs-number">1</span>, <span class="hljs-number">-1</span>):
+            dp[j] += dp[j - num]
+    
+    <span class="hljs-keyword">return</span> dp[target]
+</div></code></pre>
+<h3 id="example-ones-and-zeroes">Example: Ones and Zeroes</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find_max_form</span><span class="hljs-params">(strs, m, n)</span>:</span>
+    dp = [[<span class="hljs-number">0</span>] * (n + <span class="hljs-number">1</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(m + <span class="hljs-number">1</span>)]
+    
+    <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> strs:
+        zeros = s.count(<span class="hljs-string">'0'</span>)
+        ones = s.count(<span class="hljs-string">'1'</span>)
+        
+        <span class="hljs-comment"># Traverse backwards</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(m, zeros - <span class="hljs-number">1</span>, <span class="hljs-number">-1</span>):
+            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(n, ones - <span class="hljs-number">1</span>, <span class="hljs-number">-1</span>):
+                dp[i][j] = max(dp[i][j], dp[i - zeros][j - ones] + <span class="hljs-number">1</span>)
+    
+    <span class="hljs-keyword">return</span> dp[m][n]
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Partition Equal Subset Sum (LeetCode 416)</li>
+<li>Target Sum (LeetCode 494)</li>
+<li>Ones and Zeroes (LeetCode 474)</li>
+<li>Last Stone Weight II (LeetCode 1049)</li>
+<li>Partition to K Equal Sum Subsets (LeetCode 698)</li>
+</ol>
+<hr>
+<h2 id="16-unbounded-knapsack">16. Unbounded Knapsack</h2>
+<p><strong>When to use:</strong> Optimization problems where items can be used unlimited times.</p>
+<p><strong>Time Complexity:</strong> O(n × W) <strong>Space Complexity:</strong> O(W)</p>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>Coin change problems</li>
+<li>Rod cutting problems</li>
+<li>Perfect squares</li>
+</ul>
+<h3 id="template">Template:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">unbounded_knapsack</span><span class="hljs-params">(weights, values, capacity)</span>:</span>
+    dp = [<span class="hljs-number">0</span>] * (capacity + <span class="hljs-number">1</span>)
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, capacity + <span class="hljs-number">1</span>):
+        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(len(weights)):
+            <span class="hljs-keyword">if</span> weights[j] &lt;= i:
+                dp[i] = max(dp[i], dp[i - weights[j]] + values[j])
+    
+    <span class="hljs-keyword">return</span> dp[capacity]
+</div></code></pre>
+<h3 id="example-coin-change">Example: Coin Change</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">coin_change</span><span class="hljs-params">(coins, amount)</span>:</span>
+    dp = [float(<span class="hljs-string">'inf'</span>)] * (amount + <span class="hljs-number">1</span>)
+    dp[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>
+    
+    <span class="hljs-keyword">for</span> coin <span class="hljs-keyword">in</span> coins:
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(coin, amount + <span class="hljs-number">1</span>):
+            dp[i] = min(dp[i], dp[i - coin] + <span class="hljs-number">1</span>)
+    
+    <span class="hljs-keyword">return</span> dp[amount] <span class="hljs-keyword">if</span> dp[amount] != float(<span class="hljs-string">'inf'</span>) <span class="hljs-keyword">else</span> <span class="hljs-number">-1</span>
+</div></code></pre>
+<h3 id="example-coin-change-ii-number-of-ways">Example: Coin Change II (Number of Ways)</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">change</span><span class="hljs-params">(amount, coins)</span>:</span>
+    dp = [<span class="hljs-number">0</span>] * (amount + <span class="hljs-number">1</span>)
+    dp[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">for</span> coin <span class="hljs-keyword">in</span> coins:
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(coin, amount + <span class="hljs-number">1</span>):
+            dp[i] += dp[i - coin]
+    
+    <span class="hljs-keyword">return</span> dp[amount]
+</div></code></pre>
+<h3 id="example-perfect-squares">Example: Perfect Squares</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">num_squares</span><span class="hljs-params">(n)</span>:</span>
+    dp = [float(<span class="hljs-string">'inf'</span>)] * (n + <span class="hljs-number">1</span>)
+    dp[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):
+        j = <span class="hljs-number">1</span>
+        <span class="hljs-keyword">while</span> j * j &lt;= i:
+            dp[i] = min(dp[i], dp[i - j * j] + <span class="hljs-number">1</span>)
+            j += <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">return</span> dp[n]
+</div></code></pre>
+<h3 id="example-combination-sum-iv">Example: Combination Sum IV</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">combination_sum4</span><span class="hljs-params">(nums, target)</span>:</span>
+    dp = [<span class="hljs-number">0</span>] * (target + <span class="hljs-number">1</span>)
+    dp[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, target + <span class="hljs-number">1</span>):
+        <span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> nums:
+            <span class="hljs-keyword">if</span> num &lt;= i:
+                dp[i] += dp[i - num]
+    
+    <span class="hljs-keyword">return</span> dp[target]
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Coin Change (LeetCode 322)</li>
+<li>Coin Change 2 (LeetCode 518)</li>
+<li>Perfect Squares (LeetCode 279)</li>
+<li>Combination Sum IV (LeetCode 377)</li>
+<li>Minimum Cost For Tickets (LeetCode 983)</li>
+</ol>
+<hr>
+<h2 id="17-fibonacci-numbers">17. Fibonacci Numbers</h2>
+<p><strong>When to use:</strong> Problems with recurrence relations, optimization with overlapping subproblems. <strong>Time Complexity:</strong> O(n) <strong>Space Complexity:</strong> O(1) with optimization</p>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>Climbing stairs problems</li>
+<li>House robber problems</li>
+<li>Decode ways</li>
+<li>Min cost climbing stairs</li>
+</ul>
+<h3 id="template">Template:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fibonacci</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-keyword">if</span> n &lt;= <span class="hljs-number">1</span>:
+        <span class="hljs-keyword">return</span> n
+    
+    prev2, prev1 = <span class="hljs-number">0</span>, <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">2</span>, n + <span class="hljs-number">1</span>):
+        current = prev1 + prev2
+        prev2, prev1 = prev1, current
+    
+    <span class="hljs-keyword">return</span> prev1
+</div></code></pre>
+<h3 id="example-climbing-stairs">Example: Climbing Stairs</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">climb_stairs</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-keyword">if</span> n &lt;= <span class="hljs-number">2</span>:
+        <span class="hljs-keyword">return</span> n
+    
+    prev2, prev1 = <span class="hljs-number">1</span>, <span class="hljs-number">2</span>
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">3</span>, n + <span class="hljs-number">1</span>):
+        current = prev1 + prev2
+        prev2, prev1 = prev1, current
+    
+    <span class="hljs-keyword">return</span> prev1
+</div></code></pre>
+<h3 id="example-house-robber">Example: House Robber</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">rob</span><span class="hljs-params">(nums)</span>:</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> nums:
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+    <span class="hljs-keyword">if</span> len(nums) == <span class="hljs-number">1</span>:
+        <span class="hljs-keyword">return</span> nums[<span class="hljs-number">0</span>]
+    
+    prev2, prev1 = nums[<span class="hljs-number">0</span>], max(nums[<span class="hljs-number">0</span>], nums[<span class="hljs-number">1</span>])
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">2</span>, len(nums)):
+        current = max(prev1, prev2 + nums[i])
+        prev2, prev1 = prev1, current
+    
+    <span class="hljs-keyword">return</span> prev1
+</div></code></pre>
+<h3 id="example-house-robber-ii-circular">Example: House Robber II (Circular)</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">rob_circular</span><span class="hljs-params">(nums)</span>:</span>
+    <span class="hljs-keyword">if</span> len(nums) == <span class="hljs-number">1</span>:
+        <span class="hljs-keyword">return</span> nums[<span class="hljs-number">0</span>]
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">rob_linear</span><span class="hljs-params">(houses)</span>:</span>
+        prev2, prev1 = <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
+        <span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> houses:
+            temp = max(prev1, prev2 + num)
+            prev2, prev1 = prev1, temp
+        <span class="hljs-keyword">return</span> prev1
+    
+    <span class="hljs-keyword">return</span> max(rob_linear(nums[:<span class="hljs-number">-1</span>]), rob_linear(nums[<span class="hljs-number">1</span>:]))
+</div></code></pre>
+<h3 id="example-decode-ways">Example: Decode Ways</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">num_decodings</span><span class="hljs-params">(s)</span>:</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> s <span class="hljs-keyword">or</span> s[<span class="hljs-number">0</span>] == <span class="hljs-string">'0'</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+    
+    prev2, prev1 = <span class="hljs-number">1</span>, <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, len(s)):
+        current = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">if</span> s[i] != <span class="hljs-string">'0'</span>:
+            current += prev1
+        <span class="hljs-keyword">if</span> <span class="hljs-number">10</span> &lt;= int(s[i<span class="hljs-number">-1</span>:i+<span class="hljs-number">1</span>]) &lt;= <span class="hljs-number">26</span>:
+            current += prev2
+        prev2, prev1 = prev1, current
+    
+    <span class="hljs-keyword">return</span> prev1
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Climbing Stairs (LeetCode 70)</li>
+<li>House Robber (LeetCode 198)</li>
+<li>House Robber II (LeetCode 213)</li>
+<li>Decode Ways (LeetCode 91)</li>
+<li>Min Cost Climbing Stairs (LeetCode 746)</li>
+</ol>
+<h2 id="18-palindromic-subsequence">18. Palindromic Subsequence</h2>
+<p><strong>When to use:</strong> Problems involving palindromes and subsequences. <strong>Time Complexity:</strong> O(n²) <strong>Space Complexity:</strong> O(n²) or O(n) optimized</p>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>Longest palindromic subsequence</li>
+<li>Minimum deletions to make palindrome</li>
+<li>Count palindromic subsequences</li>
+</ul>
+<h3 id="template">Template:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">longest_palindromic_subsequence</span><span class="hljs-params">(s)</span>:</span>
+    n = len(s)
+    dp = [[<span class="hljs-number">0</span>] * n <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(n)]
+    
+    <span class="hljs-comment"># Every single character is a palindrome</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(n):
+        dp[i][i] = <span class="hljs-number">1</span>
+    
+    <span class="hljs-comment"># Fill for substrings of length 2 to n</span>
+    <span class="hljs-keyword">for</span> length <span class="hljs-keyword">in</span> range(<span class="hljs-number">2</span>, n + <span class="hljs-number">1</span>):
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(n - length + <span class="hljs-number">1</span>):
+            j = i + length - <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> s[i] == s[j]:
+                dp[i][j] = dp[i+<span class="hljs-number">1</span>][j<span class="hljs-number">-1</span>] + <span class="hljs-number">2</span>
+            <span class="hljs-keyword">else</span>:
+                dp[i][j] = max(dp[i+<span class="hljs-number">1</span>][j], dp[i][j<span class="hljs-number">-1</span>])
+    
+    <span class="hljs-keyword">return</span> dp[<span class="hljs-number">0</span>][n<span class="hljs-number">-1</span>]
+</div></code></pre>
+<h3 id="example-longest-palindromic-subsequence">Example: Longest Palindromic Subsequence</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">longest_palindromic_subsequence</span><span class="hljs-params">(s)</span>:</span>
+    n = len(s)
+    dp = [[<span class="hljs-number">0</span>] * n <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(n)]
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(n):
+        dp[i][i] = <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">for</span> length <span class="hljs-keyword">in</span> range(<span class="hljs-number">2</span>, n + <span class="hljs-number">1</span>):
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(n - length + <span class="hljs-number">1</span>):
+            j = i + length - <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> s[i] == s[j]:
+                dp[i][j] = dp[i+<span class="hljs-number">1</span>][j<span class="hljs-number">-1</span>] + <span class="hljs-number">2</span>
+            <span class="hljs-keyword">else</span>:
+                dp[i][j] = max(dp[i+<span class="hljs-number">1</span>][j], dp[i][j<span class="hljs-number">-1</span>])
+    
+    <span class="hljs-keyword">return</span> dp[<span class="hljs-number">0</span>][n<span class="hljs-number">-1</span>]
+</div></code></pre>
+<h3 id="example-minimum-deletions-to-make-palindrome">Example: Minimum Deletions to Make Palindrome</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">min_deletions_palindrome</span><span class="hljs-params">(s)</span>:</span>
+    n = len(s)
+    lps = longest_palindromic_subsequence(s)
+    <span class="hljs-keyword">return</span> n - lps
+</div></code></pre>
+<h3 id="example-count-palindromic-subsequences">Example: Count Palindromic Subsequences</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">count_palindromic_subsequences</span><span class="hljs-params">(s)</span>:</span>
+    n = len(s)
+    dp = [[<span class="hljs-number">0</span>] * n <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(n)]
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(n):
+        dp[i][i] = <span class="hljs-number">1</span>
+    
+    <span class="hljs-keyword">for</span> length <span class="hljs-keyword">in</span> range(<span class="hljs-number">2</span>, n + <span class="hljs-number">1</span>):
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(n - length + <span class="hljs-number">1</span>):
+            j = i + length - <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> s[i] == s[j]:
+                dp[i][j] = dp[i+<span class="hljs-number">1</span>][j] + dp[i][j<span class="hljs-number">-1</span>] + <span class="hljs-number">1</span>
+            <span class="hljs-keyword">else</span>:
+                dp[i][j] = dp[i+<span class="hljs-number">1</span>][j] + dp[i][j<span class="hljs-number">-1</span>] - dp[i+<span class="hljs-number">1</span>][j<span class="hljs-number">-1</span>]
+    
+    <span class="hljs-keyword">return</span> dp[<span class="hljs-number">0</span>][n<span class="hljs-number">-1</span>]
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Longest Palindromic Subsequence (LeetCode 516)</li>
+<li>Palindromic Substrings (LeetCode 647)</li>
+<li>Minimum Insertion Steps to Make String Palindrome (LeetCode 1312)</li>
+<li>Count Different Palindromic Subsequences (LeetCode 730)</li>
+</ol>
+<h2 id="19-longest-common-substring">19. Longest Common Substring</h2>
+<p><strong>When to use:</strong> String comparison problems, finding similarities. <strong>Time Complexity:</strong> O(m × n) <strong>Space Complexity:</strong> O(m × n) or O(n) optimized</p>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>Longest common subsequence</li>
+<li>Edit distance problems</li>
+<li>String similarity</li>
+</ul>
+<h3 id="template">Template:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">longest_common_subsequence</span><span class="hljs-params">(text1, text2)</span>:</span>
+    m, n = len(text1), len(text2)
+    dp = [[<span class="hljs-number">0</span>] * (n + <span class="hljs-number">1</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(m + <span class="hljs-number">1</span>)]
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, m + <span class="hljs-number">1</span>):
+        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):
+            <span class="hljs-keyword">if</span> text1[i<span class="hljs-number">-1</span>] == text2[j<span class="hljs-number">-1</span>]:
+                dp[i][j] = dp[i<span class="hljs-number">-1</span>][j<span class="hljs-number">-1</span>] + <span class="hljs-number">1</span>
+            <span class="hljs-keyword">else</span>:
+                dp[i][j] = max(dp[i<span class="hljs-number">-1</span>][j], dp[i][j<span class="hljs-number">-1</span>])
+    
+    <span class="hljs-keyword">return</span> dp[m][n]
+</div></code></pre>
+<h3 id="example-longest-common-subsequence">Example: Longest Common Subsequence</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">longest_common_subsequence</span><span class="hljs-params">(text1, text2)</span>:</span>
+    m, n = len(text1), len(text2)
+    dp = [[<span class="hljs-number">0</span>] * (n + <span class="hljs-number">1</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(m + <span class="hljs-number">1</span>)]
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, m + <span class="hljs-number">1</span>):
+        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):
+            <span class="hljs-keyword">if</span> text1[i<span class="hljs-number">-1</span>] == text2[j<span class="hljs-number">-1</span>]:
+                dp[i][j] = dp[i<span class="hljs-number">-1</span>][j<span class="hljs-number">-1</span>] + <span class="hljs-number">1</span>
+            <span class="hljs-keyword">else</span>:
+                dp[i][j] = max(dp[i<span class="hljs-number">-1</span>][j], dp[i][j<span class="hljs-number">-1</span>])
+    
+    <span class="hljs-keyword">return</span> dp[m][n]
+</div></code></pre>
+<h3 id="example-edit-distance">Example: Edit Distance</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">min_distance</span><span class="hljs-params">(word1, word2)</span>:</span>
+    m, n = len(word1), len(word2)
+    dp = [[<span class="hljs-number">0</span>] * (n + <span class="hljs-number">1</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(m + <span class="hljs-number">1</span>)]
+    
+    <span class="hljs-comment"># Initialize base cases</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(m + <span class="hljs-number">1</span>):
+        dp[i][<span class="hljs-number">0</span>] = i
+    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(n + <span class="hljs-number">1</span>):
+        dp[<span class="hljs-number">0</span>][j] = j
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, m + <span class="hljs-number">1</span>):
+        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):
+            <span class="hljs-keyword">if</span> word1[i<span class="hljs-number">-1</span>] == word2[j<span class="hljs-number">-1</span>]:
+                dp[i][j] = dp[i<span class="hljs-number">-1</span>][j<span class="hljs-number">-1</span>]
+            <span class="hljs-keyword">else</span>:
+                dp[i][j] = <span class="hljs-number">1</span> + min(dp[i<span class="hljs-number">-1</span>][j], dp[i][j<span class="hljs-number">-1</span>], dp[i<span class="hljs-number">-1</span>][j<span class="hljs-number">-1</span>])
+    
+    <span class="hljs-keyword">return</span> dp[m][n]
+</div></code></pre>
+<h3 id="example-longest-common-substring">Example: Longest Common Substring</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">longest_common_substring</span><span class="hljs-params">(str1, str2)</span>:</span>
+    m, n = len(str1), len(str2)
+    dp = [[<span class="hljs-number">0</span>] * (n + <span class="hljs-number">1</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(m + <span class="hljs-number">1</span>)]
+    max_length = <span class="hljs-number">0</span>
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, m + <span class="hljs-number">1</span>):
+        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):
+            <span class="hljs-keyword">if</span> str1[i<span class="hljs-number">-1</span>] == str2[j<span class="hljs-number">-1</span>]:
+                dp[i][j] = dp[i<span class="hljs-number">-1</span>][j<span class="hljs-number">-1</span>] + <span class="hljs-number">1</span>
+                max_length = max(max_length, dp[i][j])
+            <span class="hljs-keyword">else</span>:
+                dp[i][j] = <span class="hljs-number">0</span>
+    
+    <span class="hljs-keyword">return</span> max_length
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Longest Common Subsequence (LeetCode 1143)</li>
+<li>Edit Distance (LeetCode 72)</li>
+<li>Delete Operation for Two Strings (LeetCode 583)</li>
+<li>Minimum ASCII Delete Sum (LeetCode 712)</li>
+<li>Distinct Subsequences (LeetCode 115)</li>
+</ol>
+<h2 id="20-topological-sort">20. Topological Sort</h2>
+<p><strong>When to use:</strong> Dependency resolution, ordering problems with directed acyclic graphs. <strong>Time Complexity:</strong> O(V + E) <strong>Space Complexity:</strong> O(V)</p>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>Course scheduling</li>
+<li>Task ordering</li>
+<li>Build dependencies</li>
+</ul>
+<h3 id="template-kahns-algorithm">Template (Kahn's Algorithm):</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">topological_sort</span><span class="hljs-params">(graph)</span>:</span>
+    in_degree = {node: <span class="hljs-number">0</span> <span class="hljs-keyword">for</span> node <span class="hljs-keyword">in</span> graph}
+    <span class="hljs-keyword">for</span> node <span class="hljs-keyword">in</span> graph:
+        <span class="hljs-keyword">for</span> neighbor <span class="hljs-keyword">in</span> graph[node]:
+            in_degree[neighbor] += <span class="hljs-number">1</span>
+    
+    queue = deque([node <span class="hljs-keyword">for</span> node <span class="hljs-keyword">in</span> in_degree <span class="hljs-keyword">if</span> in_degree[node] == <span class="hljs-number">0</span>])
+    result = []
+    
+    <span class="hljs-keyword">while</span> queue:
+        node = queue.popleft()
+        result.append(node)
+        
+        <span class="hljs-keyword">for</span> neighbor <span class="hljs-keyword">in</span> graph[node]:
+            in_degree[neighbor] -= <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> in_degree[neighbor] == <span class="hljs-number">0</span>:
+                queue.append(neighbor)
+    
+    <span class="hljs-keyword">return</span> result <span class="hljs-keyword">if</span> len(result) == len(graph) <span class="hljs-keyword">else</span> []
+</div></code></pre>
+<h3 id="example-course-schedule">Example: Course Schedule</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">can_finish</span><span class="hljs-params">(num_courses, prerequisites)</span>:</span>
+    graph = [[] <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(num_courses)]
+    in_degree = [<span class="hljs-number">0</span>] * num_courses
+    
+    <span class="hljs-keyword">for</span> course, prereq <span class="hljs-keyword">in</span> prerequisites:
+        graph[prereq].append(course)
+        in_degree[course] += <span class="hljs-number">1</span>
+    
+    queue = deque([i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(num_courses) <span class="hljs-keyword">if</span> in_degree[i] == <span class="hljs-number">0</span>])
+    completed = <span class="hljs-number">0</span>
+    
+    <span class="hljs-keyword">while</span> queue:
+        course = queue.popleft()
+        completed += <span class="hljs-number">1</span>
+        
+        <span class="hljs-keyword">for</span> next_course <span class="hljs-keyword">in</span> graph[course]:
+            in_degree[next_course] -= <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> in_degree[next_course] == <span class="hljs-number">0</span>:
+                queue.append(next_course)
+    
+    <span class="hljs-keyword">return</span> completed == num_courses
+</div></code></pre>
+<h3 id="example-course-schedule-ii">Example: Course Schedule II</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find_order</span><span class="hljs-params">(num_courses, prerequisites)</span>:</span>
+    graph = [[] <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(num_courses)]
+    in_degree = [<span class="hljs-number">0</span>] * num_courses
+    
+    <span class="hljs-keyword">for</span> course, prereq <span class="hljs-keyword">in</span> prerequisites:
+        graph[prereq].append(course)
+        in_degree[course] += <span class="hljs-number">1</span>
+    
+    queue = deque([i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(num_courses) <span class="hljs-keyword">if</span> in_degree[i] == <span class="hljs-number">0</span>])
+    result = []
+    
+    <span class="hljs-keyword">while</span> queue:
+        course = queue.popleft()
+        result.append(course)
+        
+        <span class="hljs-keyword">for</span> next_course <span class="hljs-keyword">in</span> graph[course]:
+            in_degree[next_course] -= <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> in_degree[next_course] == <span class="hljs-number">0</span>:
+                queue.append(next_course)
+    
+    <span class="hljs-keyword">return</span> result <span class="hljs-keyword">if</span> len(result) == num_courses <span class="hljs-keyword">else</span> []
+</div></code></pre>
+<h3 id="example-alien-dictionary">Example: Alien Dictionary</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">alien_order</span><span class="hljs-params">(words)</span>:</span>
+    graph = {}
+    in_degree = {}
+    
+    <span class="hljs-comment"># Initialize graph</span>
+    <span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> words:
+        <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> word:
+            <span class="hljs-keyword">if</span> char <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> graph:
+                graph[char] = []
+                in_degree[char] = <span class="hljs-number">0</span>
+    
+    <span class="hljs-comment"># Build graph</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(words) - <span class="hljs-number">1</span>):
+        word1, word2 = words[i], words[i + <span class="hljs-number">1</span>]
+        min_len = min(len(word1), len(word2))
+        
+        <span class="hljs-keyword">if</span> len(word1) &gt; len(word2) <span class="hljs-keyword">and</span> word1[:min_len] == word2[:min_len]:
+            <span class="hljs-keyword">return</span> <span class="hljs-string">""</span>
+        
+        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(min_len):
+            <span class="hljs-keyword">if</span> word1[j] != word2[j]:
+                graph[word1[j]].append(word2[j])
+                in_degree[word2[j]] += <span class="hljs-number">1</span>
+                <span class="hljs-keyword">break</span>
+    
+    <span class="hljs-comment"># Topological sort</span>
+    queue = deque([char <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> in_degree <span class="hljs-keyword">if</span> in_degree[char] == <span class="hljs-number">0</span>])
+    result = []
+    
+    <span class="hljs-keyword">while</span> queue:
+        char = queue.popleft()
+        result.append(char)
+        
+        <span class="hljs-keyword">for</span> neighbor <span class="hljs-keyword">in</span> graph[char]:
+            in_degree[neighbor] -= <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> in_degree[neighbor] == <span class="hljs-number">0</span>:
+                queue.append(neighbor)
+    
+    <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>.join(result) <span class="hljs-keyword">if</span> len(result) == len(in_degree) <span class="hljs-keyword">else</span> <span class="hljs-string">""</span>
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Course Schedule (LeetCode 207)</li>
+<li>Course Schedule II (LeetCode 210)</li>
+<li>Alien Dictionary (LeetCode 269)</li>
+<li>Minimum Height Trees (LeetCode 310)</li>
+<li>Sequence Reconstruction (LeetCode 444)</li>
+</ol>
+<h2 id="21-trie">21. Trie</h2>
+<p><strong>When to use:</strong> Prefix-based operations, word searches, autocomplete. <strong>Time Complexity:</strong> O(m) for insert/search <strong>Space Complexity:</strong> O(ALPHABET_SIZE × N × M)</p>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>Word search problems</li>
+<li>Prefix matching</li>
+<li>Autocomplete systems</li>
+</ul>
+<h3 id="template">Template:</h3>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TrieNode</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span>
+        self.children = {}
+        self.is_end = <span class="hljs-literal">False</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Trie</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span>
+        self.root = TrieNode()
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">insert</span><span class="hljs-params">(self, word)</span>:</span>
+        node = self.root
+        <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> word:
+            <span class="hljs-keyword">if</span> char <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> node.children:
+                node.children[char] = TrieNode()
+            node = node.children[char]
+        node.is_end = <span class="hljs-literal">True</span>
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">search</span><span class="hljs-params">(self, word)</span>:</span>
+        node = self.root
+        <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> word:
+            <span class="hljs-keyword">if</span> char <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> node.children:
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+            node = node.children[char]
+        <span class="hljs-keyword">return</span> node.is_end
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">starts_with</span><span class="hljs-params">(self, prefix)</span>:</span>
+        node = self.root
+        <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> prefix:
+            <span class="hljs-keyword">if</span> char <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> node.children:
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+            node = node.children[char]
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+</div></code></pre>
+<h3 id="example-word-search-ii">Example: Word Search II</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find_words</span><span class="hljs-params">(board, words)</span>:</span>
+    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TrieNode</span>:</span>
+        <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span>
+            self.children = {}
+            self.word = <span class="hljs-literal">None</span>
+    
+    root = TrieNode()
+    
+    <span class="hljs-comment"># Build trie</span>
+    <span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> words:
+        node = root
+        <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> word:
+            <span class="hljs-keyword">if</span> char <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> node.children:
+                node.children[char] = TrieNode()
+            node = node.children[char]
+        node.word = word
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dfs</span><span class="hljs-params">(i, j, node)</span>:</span>
+        char = board[i][j]
+        <span class="hljs-keyword">if</span> char <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> node.children:
+            <span class="hljs-keyword">return</span>
+        
+        node = node.children[char]
+        <span class="hljs-keyword">if</span> node.word:
+            result.add(node.word)
+        
+        board[i][j] = <span class="hljs-string">'#'</span>  <span class="hljs-comment"># Mark as visited</span>
+        <span class="hljs-keyword">for</span> di, dj <span class="hljs-keyword">in</span> [(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>), (<span class="hljs-number">1</span>, <span class="hljs-number">0</span>), (<span class="hljs-number">0</span>, <span class="hljs-number">-1</span>), (<span class="hljs-number">-1</span>, <span class="hljs-number">0</span>)]:
+            ni, nj = i + di, j + dj
+            <span class="hljs-keyword">if</span> <span class="hljs-number">0</span> &lt;= ni &lt; len(board) <span class="hljs-keyword">and</span> <span class="hljs-number">0</span> &lt;= nj &lt; len(board[<span class="hljs-number">0</span>]) <span class="hljs-keyword">and</span> board[ni][nj] != <span class="hljs-string">'#'</span>:
+                dfs(ni, nj, node)
+        board[i][j] = char  <span class="hljs-comment"># Restore</span>
+    
+    result = set()
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(board)):
+        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(len(board[<span class="hljs-number">0</span>])):
+            dfs(i, j, root)
+    
+    <span class="hljs-keyword">return</span> list(result)
+</div></code></pre>
+<h3 id="example-design-add-and-search-words">Example: Design Add and Search Words</h3>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WordDictionary</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span>
+        self.root = TrieNode()
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add_word</span><span class="hljs-params">(self, word)</span>:</span>
+        node = self.root
+        <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> word:
+            <span class="hljs-keyword">if</span> char <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> node.children:
+                node.children[char] = TrieNode()
+            node = node.children[char]
+        node.is_end = <span class="hljs-literal">True</span>
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">search</span><span class="hljs-params">(self, word)</span>:</span>
+        <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dfs</span><span class="hljs-params">(node, i)</span>:</span>
+            <span class="hljs-keyword">if</span> i == len(word):
+                <span class="hljs-keyword">return</span> node.is_end
+            
+            char = word[i]
+            <span class="hljs-keyword">if</span> char == <span class="hljs-string">'.'</span>:
+                <span class="hljs-keyword">for</span> child <span class="hljs-keyword">in</span> node.children.values():
+                    <span class="hljs-keyword">if</span> dfs(child, i + <span class="hljs-number">1</span>):
+                        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+            <span class="hljs-keyword">else</span>:
+                <span class="hljs-keyword">if</span> char <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> node.children:
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+                <span class="hljs-keyword">return</span> dfs(node.children[char], i + <span class="hljs-number">1</span>)
+        
+        <span class="hljs-keyword">return</span> dfs(self.root, <span class="hljs-number">0</span>)
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Implement Trie (LeetCode 208)</li>
+<li>Word Search II (LeetCode 212)</li>
+<li>Design Add and Search Words Data Structure (LeetCode 211)</li>
+<li>Replace Words (LeetCode 648)</li>
+<li>Map Sum Pairs (LeetCode 677)</li>
+</ol>
+<h2 id="22-union-find">22. Union Find</h2>
+<p><strong>When to use:</strong> Connectivity problems, grouping elements, cycle detection. <strong>Time Complexity:</strong> O(α(n)) amortized <strong>Space Complexity:</strong> O(n)</p>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>Connected components</li>
+<li>Cycle detection in undirected graphs</li>
+<li>Minimum spanning tree</li>
+</ul>
+<h3 id="template">Template:</h3>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UnionFind</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, n)</span>:</span>
+        self.parent = list(range(n))
+        self.rank = [<span class="hljs-number">0</span>] * n
+        self.components = n
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find</span><span class="hljs-params">(self, x)</span>:</span>
+        <span class="hljs-keyword">if</span> self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])  <span class="hljs-comment"># Path compression</span>
+        <span class="hljs-keyword">return</span> self.parent[x]
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">union</span><span class="hljs-params">(self, x, y)</span>:</span>
+        px, py = self.find(x), self.find(y)
+        <span class="hljs-keyword">if</span> px == py:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        
+        <span class="hljs-comment"># Union by rank</span>
+        <span class="hljs-keyword">if</span> self.rank[px] &lt; self.rank[py]:
+            px, py = py, px
+        
+        self.parent[py] = px
+        <span class="hljs-keyword">if</span> self.rank[px] == self.rank[py]:
+            self.rank[px] += <span class="hljs-number">1</span>
+        
+        self.components -= <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">connected</span><span class="hljs-params">(self, x, y)</span>:</span>
+        <span class="hljs-keyword">return</span> self.find(x) == self.find(y)
+</div></code></pre>
+<h3 id="example-number-of-connected-components">Example: Number of Connected Components</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">count_components</span><span class="hljs-params">(n, edges)</span>:</span>
+    uf = UnionFind(n)
+    <span class="hljs-keyword">for</span> a, b <span class="hljs-keyword">in</span> edges:
+        uf.union(a, b)
+    <span class="hljs-keyword">return</span> uf.components
+</div></code></pre>
+<h3 id="example-redundant-connection">Example: Redundant Connection</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find_redundant_connection</span><span class="hljs-params">(edges)</span>:</span>
+    uf = UnionFind(len(edges) + <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">for</span> a, b <span class="hljs-keyword">in</span> edges:
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> uf.union(a, b):
+            <span class="hljs-keyword">return</span> [a, b]
+    <span class="hljs-keyword">return</span> []
+</div></code></pre>
+<h3 id="example-accounts-merge">Example: Accounts Merge</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">accounts_merge</span><span class="hljs-params">(accounts)</span>:</span>
+    uf = UnionFind(len(accounts))
+    email_to_id = {}
+    
+    <span class="hljs-keyword">for</span> i, account <span class="hljs-keyword">in</span> enumerate(accounts):
+        <span class="hljs-keyword">for</span> email <span class="hljs-keyword">in</span> account[<span class="hljs-number">1</span>:]:
+            <span class="hljs-keyword">if</span> email <span class="hljs-keyword">in</span> email_to_id:
+                uf.union(i, email_to_id[email])
+            <span class="hljs-keyword">else</span>:
+                email_to_id[email] = i
+    
+    groups = defaultdict(list)
+    <span class="hljs-keyword">for</span> email, id <span class="hljs-keyword">in</span> email_to_id.items():
+        groups[uf.find(id)].append(email)
+    
+    result = []
+    <span class="hljs-keyword">for</span> id, emails <span class="hljs-keyword">in</span> groups.items():
+        name = accounts[id][<span class="hljs-number">0</span>]
+        result.append([name] + sorted(emails))
+    
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Number of Connected Components in an Undirected Graph (LeetCode 323)</li>
+<li>Redundant Connection (LeetCode 684)</li>
+<li>Accounts Merge (LeetCode 721)</li>
+<li>Most Stones Removed with Same Row or Column (LeetCode 947)</li>
+<li>Satisfiability of Equality Equations (LeetCode 990)</li>
+</ol>
+<h2 id="23-monotonic-stack">23. Monotonic Stack</h2>
+<p><strong>When to use:</strong> Finding next/previous greater/smaller elements. <strong>Time Complexity:</strong> O(n) <strong>Space Complexity:</strong> O(n)</p>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>Next greater element</li>
+<li>Largest rectangle problems</li>
+<li>Temperature problems</li>
+</ul>
+<h3 id="template">Template:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">next_greater_element</span><span class="hljs-params">(nums)</span>:</span>
+    stack = []
+    result = [<span class="hljs-number">-1</span>] * len(nums)
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(nums)):
+        <span class="hljs-keyword">while</span> stack <span class="hljs-keyword">and</span> nums[stack[<span class="hljs-number">-1</span>]] &lt; nums[i]:
+            result[stack.pop()] = nums[i]
+        stack.append(i)
+    
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="example-daily-temperatures">Example: Daily Temperatures</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">daily_temperatures</span><span class="hljs-params">(temperatures)</span>:</span>
+    stack = []
+    result = [<span class="hljs-number">0</span>] * len(temperatures)
+    
+    <span class="hljs-keyword">for</span> i, temp <span class="hljs-keyword">in</span> enumerate(temperatures):
+        <span class="hljs-keyword">while</span> stack <span class="hljs-keyword">and</span> temperatures[stack[<span class="hljs-number">-1</span>]] &lt; temp:
+            prev_day = stack.pop()
+            result[prev_day] = i - prev_day
+        stack.append(i)
+    
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="example-largest-rectangle-in-histogram">Example: Largest Rectangle in Histogram</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">largest_rectangle_area</span><span class="hljs-params">(heights)</span>:</span>
+    stack = []
+    max_area = <span class="hljs-number">0</span>
+    
+    <span class="hljs-keyword">for</span> i, h <span class="hljs-keyword">in</span> enumerate(heights):
+        <span class="hljs-keyword">while</span> stack <span class="hljs-keyword">and</span> heights[stack[<span class="hljs-number">-1</span>]] &gt; h:
+            height = heights[stack.pop()]
+            width = i <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> stack <span class="hljs-keyword">else</span> i - stack[<span class="hljs-number">-1</span>] - <span class="hljs-number">1</span>
+            max_area = max(max_area, height * width)
+        stack.append(i)
+    
+    <span class="hljs-keyword">while</span> stack:
+        height = heights[stack.pop()]
+        width = len(heights) <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> stack <span class="hljs-keyword">else</span> len(heights) - stack[<span class="hljs-number">-1</span>] - <span class="hljs-number">1</span>
+        max_area = max(max_area, height * width)
+    
+    <span class="hljs-keyword">return</span> max_area
+</div></code></pre>
+<h3 id="example-next-greater-element-ii">Example: Next Greater Element II</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">next_greater_elements</span><span class="hljs-params">(nums)</span>:</span>
+    n = len(nums)
+    result = [<span class="hljs-number">-1</span>] * n
+    stack = []
+    
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">2</span> * n):
+        <span class="hljs-keyword">while</span> stack <span class="hljs-keyword">and</span> nums[stack[<span class="hljs-number">-1</span>]] &lt; nums[i % n]:
+            result[stack.pop()] = nums[i % n]
+        <span class="hljs-keyword">if</span> i &lt; n:
+            stack.append(i)
+    
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Daily Temperatures (LeetCode 739)</li>
+<li>Next Greater Element I (LeetCode 496)</li>
+<li>Next Greater Element II (LeetCode 503)</li>
+<li>Largest Rectangle in Histogram (LeetCode 84)</li>
+<li>Trapping Rain Water (LeetCode 42)</li>
+</ol>
+<h2 id="24-backtracking">24. Backtracking</h2>
+<p><strong>When to use:</strong> Exploring all possible solutions, constraint satisfaction. <strong>Time Complexity:</strong> O(b^d) where b is branching factor <strong>Space Complexity:</strong> O(d)</p>
+<h3 id="pattern-recognition">Pattern Recognition:</h3>
+<ul>
+<li>Generating all combinations/permutations</li>
+<li>Sudoku solving</li>
+<li>N-Queens problem</li>
+</ul>
+<h3 id="template">Template:</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">backtrack</span><span class="hljs-params">(result, current, remaining)</span>:</span>
+    <span class="hljs-comment"># Base case</span>
+    <span class="hljs-keyword">if</span> is_valid_solution(current):
+        result.append(current[:])  <span class="hljs-comment"># Make a copy</span>
+        <span class="hljs-keyword">return</span>
+    
+    <span class="hljs-comment"># Try all possible choices</span>
+    <span class="hljs-keyword">for</span> choice <span class="hljs-keyword">in</span> get_choices(remaining):
+        <span class="hljs-comment"># Make choice</span>
+        current.append(choice)
+        
+        <span class="hljs-comment"># Recurse</span>
+        backtrack(result, current, update_remaining(remaining, choice))
+        
+        <span class="hljs-comment"># Backtrack</span>
+        current.pop()
+</div></code></pre>
+<h3 id="example-generate-parentheses">Example: Generate Parentheses</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">generate_parenthesis</span><span class="hljs-params">(n)</span>:</span>
+    result = []
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">backtrack</span><span class="hljs-params">(current, open_count, close_count)</span>:</span>
+        <span class="hljs-keyword">if</span> len(current) == <span class="hljs-number">2</span> * n:
+            result.append(current)
+            <span class="hljs-keyword">return</span>
+        
+        <span class="hljs-keyword">if</span> open_count &lt; n:
+            backtrack(current + <span class="hljs-string">'('</span>, open_count + <span class="hljs-number">1</span>, close_count)
+        
+        <span class="hljs-keyword">if</span> close_count &lt; open_count:
+            backtrack(current + <span class="hljs-string">')'</span>, open_count, close_count + <span class="hljs-number">1</span>)
+    
+    backtrack(<span class="hljs-string">''</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="example-combination-sum">Example: Combination Sum</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">combination_sum</span><span class="hljs-params">(candidates, target)</span>:</span>
+    result = []
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">backtrack</span><span class="hljs-params">(start, current, remaining)</span>:</span>
+        <span class="hljs-keyword">if</span> remaining == <span class="hljs-number">0</span>:
+            result.append(current[:])
+            <span class="hljs-keyword">return</span>
+        
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(start, len(candidates)):
+            <span class="hljs-keyword">if</span> candidates[i] &lt;= remaining:
+                current.append(candidates[i])
+                backtrack(i, current, remaining - candidates[i])
+                current.pop()
+    
+    backtrack(<span class="hljs-number">0</span>, [], target)
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="example-n-queens">Example: N-Queens</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">solve_n_queens</span><span class="hljs-params">(n)</span>:</span>
+    result = []
+    board = [[<span class="hljs-string">'.'</span> <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(n)] <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(n)]
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">is_safe</span><span class="hljs-params">(row, col)</span>:</span>
+        <span class="hljs-comment"># Check column</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(row):
+            <span class="hljs-keyword">if</span> board[i][col] == <span class="hljs-string">'Q'</span>:
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        
+        <span class="hljs-comment"># Check diagonals</span>
+        <span class="hljs-keyword">for</span> i, j <span class="hljs-keyword">in</span> zip(range(row<span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>), range(col<span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>)):
+            <span class="hljs-keyword">if</span> board[i][j] == <span class="hljs-string">'Q'</span>:
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        
+        <span class="hljs-keyword">for</span> i, j <span class="hljs-keyword">in</span> zip(range(row<span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>), range(col+<span class="hljs-number">1</span>, n)):
+            <span class="hljs-keyword">if</span> board[i][j] == <span class="hljs-string">'Q'</span>:
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">backtrack</span><span class="hljs-params">(row)</span>:</span>
+        <span class="hljs-keyword">if</span> row == n:
+            result.append([<span class="hljs-string">''</span>.join(row) <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> board])
+            <span class="hljs-keyword">return</span>
+        
+        <span class="hljs-keyword">for</span> col <span class="hljs-keyword">in</span> range(n):
+            <span class="hljs-keyword">if</span> is_safe(row, col):
+                board[row][col] = <span class="hljs-string">'Q'</span>
+                backtrack(row + <span class="hljs-number">1</span>)
+                board[row][col] = <span class="hljs-string">'.'</span>
+    
+    backtrack(<span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span> result
+</div></code></pre>
+<h3 id="practice-problems">Practice Problems:</h3>
+<ol>
+<li>Generate Parentheses (LeetCode 22)</li>
+<li>Combination Sum (LeetCode 39)</li>
+<li>Permutations (LeetCode 46)</li>
+<li>N-Queens (LeetCode 51)</li>
+<li>Word Search (LeetCode 79)</li>
+</ol>
+<h2 id="25-best-practices--next-steps">25. Best Practices &amp; Next Steps</h2>
+<h3 id="problem-solving-strategy">Problem-Solving Strategy:</h3>
+<ol>
+<li><strong>Understand the Problem</strong>: Read carefully, identify constraints</li>
+<li><strong>Pattern Recognition</strong>: Match problem to known patterns</li>
+<li><strong>Start Simple</strong>: Begin with brute force, then optimize</li>
+<li><strong>Test Edge Cases</strong>: Empty inputs, single elements, duplicates</li>
+<li><strong>Optimize</strong>: Consider time/space trade-offs</li>
+</ol>
+<h3 id="time-complexity-quick-reference">Time Complexity Quick Reference:</h3>
+<ul>
+<li><strong>O(1)</strong>: Hash table operations, array access</li>
+<li><strong>O(log n)</strong>: Binary search, heap operations</li>
+<li><strong>O(n)</strong>: Single pass through array</li>
+<li><strong>O(n log n)</strong>: Efficient sorting, divide and conquer</li>
+<li><strong>O(n²)</strong>: Nested loops, some DP problems</li>
+<li><strong>O(2^n)</strong>: Exponential algorithms, some backtracking</li>
+</ul>
+<h3 id="space-complexity-optimization">Space Complexity Optimization:</h3>
+<ul>
+<li>Use in-place algorithms when possible</li>
+<li>Consider iterative vs recursive approaches</li>
+<li>Optimize DP space usage (rolling arrays)</li>
+<li>Use bit manipulation for compact storage</li>
+</ul>
+<h3 id="common-pitfalls">Common Pitfalls:</h3>
+<ul>
+<li><strong>Off-by-one errors</strong>: Carefully check array bounds</li>
+<li><strong>Integer overflow</strong>: Consider using long for large numbers</li>
+<li><strong>Edge cases</strong>: Empty inputs, single elements</li>
+<li><strong>Modular arithmetic</strong>: Remember to take mod when required</li>
+</ul>
+<h3 id="next-steps">Next Steps:</h3>
+<ol>
+<li><strong>Practice Regularly</strong>: Solve 2-3 problems daily</li>
+<li><strong>Time Yourself</strong>: Simulate interview conditions</li>
+<li><strong>Review Solutions</strong>: Study multiple approaches</li>
+<li><strong>Mock Interviews</strong>: Practice explaining your thought process</li>
+<li><strong>System Design</strong>: Learn large-scale system concepts</li>
+</ol>
+<h3 id="advanced-topics-to-explore">Advanced Topics to Explore:</h3>
+<ul>
+<li><strong>Segment Trees</strong>: Range queries and updates</li>
+<li><strong>Fenwick Trees</strong>: Efficient prefix sum operations</li>
+<li><strong>Heavy-Light Decomposition</strong>: Tree path queries</li>
+<li><strong>Suffix Arrays/Trees</strong>: Advanced string algorithms</li>
+<li><strong>Flow Networks</strong>: Max flow problems</li>
+<li><strong>Linear Programming</strong>: Optimization problems</li>
+</ul>
+<h3 id="resources-for-continued-learning">Resources for Continued Learning:</h3>
+<ul>
+<li><strong>Books</strong>: &quot;Cracking the Coding Interview&quot;, &quot;Algorithm Design Manual&quot;</li>
+<li><strong>Online Platforms</strong>: LeetCode, HackerRank, CodeForces</li>
+<li><strong>Courses</strong>: Algorithms Specialization (Coursera), CS algorithms courses</li>
+<li><strong>Communities</strong>: Reddit r/leetcode, Discord study groups</li>
+</ul>
+<p>Remember: <strong>Consistency beats intensity</strong>. Regular practice with these patterns will build your algorithmic thinking and problem-solving skills over time.</p>
+
+</body>
+</html>

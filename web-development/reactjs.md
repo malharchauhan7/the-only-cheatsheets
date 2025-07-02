@@ -1,6 +1,6 @@
 # Complete React.js Cheat Sheet - Beginner to Advanced
 
-[Download PDF](https://gdurl.com/Maqc)
+### [Download PDF](https://gdurl.com/Fudm)
 
 ## Table of Contents
 

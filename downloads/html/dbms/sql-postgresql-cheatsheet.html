@@ -1,0 +1,2140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>sql-postgresql-cheatsheet.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="complete-sql--postgresql-guide---beginner-to-advanced">Complete SQL &amp; PostgreSQL Guide - Beginner to Advanced</h1>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#introduction-to-postgresql">Introduction to PostgreSQL</a></li>
+<li><a href="#installation-and-setup">Installation and Setup</a></li>
+<li><a href="#basic-database-operations">Basic Database Operations</a></li>
+<li><a href="#data-types">Data Types</a></li>
+<li><a href="#creating-and-managing-tables">Creating and Managing Tables</a></li>
+<li><a href="#basic-sql-queries">Basic SQL Queries</a></li>
+<li><a href="#filtering-and-sorting-data">Filtering and Sorting Data</a></li>
+<li><a href="#working-with-multiple-tables">Working with Multiple Tables</a></li>
+<li><a href="#aggregate-functions">Aggregate Functions</a></li>
+<li><a href="#grouping-and-having">Grouping and Having</a></li>
+<li><a href="#subqueries">Subqueries</a></li>
+<li><a href="#advanced-joins">Advanced Joins</a></li>
+<li><a href="#views">Views</a></li>
+<li><a href="#indexes">Indexes</a></li>
+<li><a href="#stored-procedures-and-functions">Stored Procedures and Functions</a></li>
+<li><a href="#triggers">Triggers</a></li>
+<li><a href="#transactions">Transactions</a></li>
+<li><a href="#window-functions">Window Functions</a></li>
+<li><a href="#common-table-expressions-ctes">Common Table Expressions (CTEs)</a></li>
+<li><a href="#json-and-jsonb">JSON and JSONB</a></li>
+<li><a href="#full-text-search">Full-Text Search</a></li>
+<li><a href="#performance-optimization">Performance Optimization</a></li>
+<li><a href="#backup-and-restore">Backup and Restore</a></li>
+<li><a href="#user-management-and-security">User Management and Security</a></li>
+<li><a href="#postgresql-specific-features">PostgreSQL-Specific Features</a></li>
+</ol>
+<hr>
+<h2 id="introduction-to-postgresql">Introduction to PostgreSQL</h2>
+<p>PostgreSQL is a powerful, open-source relational database management system (RDBMS). It's known for its reliability, feature robustness, and performance. Unlike some databases, PostgreSQL is ACID-compliant (Atomicity, Consistency, Isolation, Durability) and supports both SQL and JSON querying.</p>
+<p><strong>Key Features:</strong></p>
+<ul>
+<li>ACID compliance</li>
+<li>Support for advanced data types</li>
+<li>Extensible with custom functions</li>
+<li>Strong community support</li>
+<li>Cross-platform compatibility</li>
+</ul>
+<hr>
+<h2 id="installation-and-setup">Installation and Setup</h2>
+<h3 id="installing-postgresql">Installing PostgreSQL</h3>
+<p><strong>On Ubuntu/Debian:</strong></p>
+<pre class="hljs"><code><div>sudo apt update
+sudo apt install postgresql postgresql-contrib
+</div></code></pre>
+<p><strong>On macOS (using Homebrew):</strong></p>
+<pre class="hljs"><code><div>brew install postgresql
+brew services start postgresql
+</div></code></pre>
+<p><strong>On Windows:</strong>
+Download from the official PostgreSQL website and run the installer.</p>
+<h3 id="first-time-setup">First-Time Setup</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Switch to postgres user (Linux/macOS)</span>
+sudo -u postgres psql
+
+<span class="hljs-comment"># Create a new database user</span>
+CREATE USER myuser WITH PASSWORD <span class="hljs-string">'mypassword'</span>;
+
+<span class="hljs-comment"># Create a new database</span>
+CREATE DATABASE mydatabase OWNER myuser;
+
+<span class="hljs-comment"># Grant privileges</span>
+GRANT ALL PRIVILEGES ON DATABASE mydatabase TO myuser;
+</div></code></pre>
+<h3 id="connecting-to-postgresql">Connecting to PostgreSQL</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Connect to default database</span>
+psql -U postgres
+
+<span class="hljs-comment"># Connect to specific database</span>
+psql -U myuser -d mydatabase -h localhost
+
+<span class="hljs-comment"># Connect with password prompt</span>
+psql -U myuser -d mydatabase -h localhost -W
+</div></code></pre>
+<hr>
+<h2 id="basic-database-operations">Basic Database Operations</h2>
+<h3 id="creating-a-database">Creating a Database</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Create a new database</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">DATABASE</span> company_db;
+
+<span class="hljs-comment">-- Create database with specific encoding</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">DATABASE</span> company_db 
+<span class="hljs-keyword">WITH</span> <span class="hljs-keyword">ENCODING</span> <span class="hljs-string">'UTF8'</span> 
+LC_COLLATE=<span class="hljs-string">'en_US.UTF-8'</span> 
+LC_CTYPE=<span class="hljs-string">'en_US.UTF-8'</span>;
+</div></code></pre>
+<h3 id="listing-databases">Listing Databases</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- List all databases</span>
+\l
+
+<span class="hljs-comment">-- Or using SQL</span>
+<span class="hljs-keyword">SELECT</span> datname <span class="hljs-keyword">FROM</span> pg_database;
+</div></code></pre>
+<h3 id="switching-databases">Switching Databases</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- In psql command line</span>
+\c database_name
+
+<span class="hljs-comment">-- Or reconnect</span>
+\q
+psql -U username -d database_name
+</div></code></pre>
+<h3 id="dropping-a-database">Dropping a Database</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Delete a database (be careful!)</span>
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">DATABASE</span> <span class="hljs-keyword">IF</span> <span class="hljs-keyword">EXISTS</span> old_database;
+</div></code></pre>
+<hr>
+<h2 id="data-types">Data Types</h2>
+<p>PostgreSQL supports a rich set of data types. Here are the most commonly used ones:</p>
+<h3 id="numeric-types">Numeric Types</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Integer types</span>
+SMALLINT        <span class="hljs-comment">-- 2 bytes, -32,768 to 32,767</span>
+INTEGER or INT  <span class="hljs-comment">-- 4 bytes, -2,147,483,648 to 2,147,483,647</span>
+BIGINT          <span class="hljs-comment">-- 8 bytes, very large numbers</span>
+
+<span class="hljs-comment">-- Decimal types</span>
+DECIMAL(precision, scale)  <span class="hljs-comment">-- Exact decimal</span>
+NUMERIC(precision, scale)  <span class="hljs-comment">-- Same as DECIMAL</span>
+REAL                       <span class="hljs-comment">-- 4-byte floating point</span>
+DOUBLE PRECISION          <span class="hljs-comment">-- 8-byte floating point</span>
+
+<span class="hljs-comment">-- Auto-incrementing</span>
+SERIAL      <span class="hljs-comment">-- Auto-incrementing 4-byte integer</span>
+BIGSERIAL   <span class="hljs-comment">-- Auto-incrementing 8-byte integer</span>
+</div></code></pre>
+<h3 id="character-types">Character Types</h3>
+<pre class="hljs"><code><div>CHAR(n)           <span class="hljs-comment">-- Fixed-length string</span>
+VARCHAR(n)        <span class="hljs-comment">-- Variable-length string with limit</span>
+TEXT              <span class="hljs-comment">-- Variable-length string (unlimited)</span>
+</div></code></pre>
+<h3 id="date-and-time-types">Date and Time Types</h3>
+<pre class="hljs"><code><div>DATE              <span class="hljs-comment">-- Date only (YYYY-MM-DD)</span>
+TIME              <span class="hljs-comment">-- Time only (HH:MM:SS)</span>
+TIMESTAMP         <span class="hljs-comment">-- Date and time</span>
+TIMESTAMPTZ       <span class="hljs-comment">-- Date and time with timezone</span>
+INTERVAL          <span class="hljs-comment">-- Time interval</span>
+</div></code></pre>
+<h3 id="boolean-type">Boolean Type</h3>
+<pre class="hljs"><code><div>BOOLEAN           <span class="hljs-comment">-- TRUE, FALSE, or NULL</span>
+</div></code></pre>
+<h3 id="other-important-types">Other Important Types</h3>
+<pre class="hljs"><code><div>UUID              <span class="hljs-comment">-- Universally unique identifier</span>
+JSON              <span class="hljs-comment">-- JSON data</span>
+JSONB             <span class="hljs-comment">-- Binary JSON (faster, indexable)</span>
+ARRAY             <span class="hljs-comment">-- Array of any data type</span>
+</div></code></pre>
+<hr>
+<h2 id="creating-and-managing-tables">Creating and Managing Tables</h2>
+<h3 id="creating-tables">Creating Tables</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Basic table creation</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> employees (
+    <span class="hljs-keyword">id</span> <span class="hljs-built_in">SERIAL</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    first_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    last_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    email <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">UNIQUE</span>,
+    hire_date <span class="hljs-built_in">DATE</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">CURRENT_DATE</span>,
+    salary <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">10</span>,<span class="hljs-number">2</span>),
+    is_active <span class="hljs-built_in">BOOLEAN</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-literal">TRUE</span>
+);
+
+<span class="hljs-comment">-- Table with foreign key</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> departments (
+    <span class="hljs-keyword">id</span> <span class="hljs-built_in">SERIAL</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    <span class="hljs-keyword">name</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    manager_id <span class="hljs-built_in">INTEGER</span> <span class="hljs-keyword">REFERENCES</span> employees(<span class="hljs-keyword">id</span>)
+);
+</div></code></pre>
+<h3 id="viewing-table-structure">Viewing Table Structure</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Describe table structure</span>
+\d table_name
+
+<span class="hljs-comment">-- List all tables</span>
+\dt
+
+<span class="hljs-comment">-- Show table with details</span>
+\d+ table_name
+</div></code></pre>
+<h3 id="modifying-tables">Modifying Tables</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Add a column</span>
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> employees <span class="hljs-keyword">ADD</span> <span class="hljs-keyword">COLUMN</span> phone <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">20</span>);
+
+<span class="hljs-comment">-- Modify column type</span>
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> employees <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">COLUMN</span> phone <span class="hljs-keyword">TYPE</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">15</span>);
+
+<span class="hljs-comment">-- Rename column</span>
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> employees <span class="hljs-keyword">RENAME</span> <span class="hljs-keyword">COLUMN</span> phone <span class="hljs-keyword">TO</span> phone_number;
+
+<span class="hljs-comment">-- Drop column</span>
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> employees <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">COLUMN</span> phone_number;
+
+<span class="hljs-comment">-- Add constraint</span>
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> employees <span class="hljs-keyword">ADD</span> <span class="hljs-keyword">CONSTRAINT</span> check_salary <span class="hljs-keyword">CHECK</span> (salary &gt; <span class="hljs-number">0</span>);
+</div></code></pre>
+<h3 id="dropping-tables">Dropping Tables</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Drop a table</span>
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-keyword">IF</span> <span class="hljs-keyword">EXISTS</span> old_table;
+
+<span class="hljs-comment">-- Drop with cascade (removes dependent objects)</span>
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> old_table <span class="hljs-keyword">CASCADE</span>;
+</div></code></pre>
+<hr>
+<h2 id="basic-sql-queries">Basic SQL Queries</h2>
+<h3 id="select-statement">SELECT Statement</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Select all columns</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees;
+
+<span class="hljs-comment">-- Select specific columns</span>
+<span class="hljs-keyword">SELECT</span> first_name, last_name, email <span class="hljs-keyword">FROM</span> employees;
+
+<span class="hljs-comment">-- Select with alias</span>
+<span class="hljs-keyword">SELECT</span> first_name <span class="hljs-keyword">AS</span> <span class="hljs-string">"First Name"</span>, 
+       last_name <span class="hljs-keyword">AS</span> <span class="hljs-string">"Last Name"</span> 
+<span class="hljs-keyword">FROM</span> employees;
+</div></code></pre>
+<h3 id="insert-statement">INSERT Statement</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Insert single row</span>
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> employees (first_name, last_name, email, salary)
+<span class="hljs-keyword">VALUES</span> (<span class="hljs-string">'John'</span>, <span class="hljs-string">'Doe'</span>, <span class="hljs-string">'john.doe@email.com'</span>, <span class="hljs-number">50000</span>);
+
+<span class="hljs-comment">-- Insert multiple rows</span>
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> employees (first_name, last_name, email, salary)
+<span class="hljs-keyword">VALUES</span> 
+    (<span class="hljs-string">'Jane'</span>, <span class="hljs-string">'Smith'</span>, <span class="hljs-string">'jane.smith@email.com'</span>, <span class="hljs-number">55000</span>),
+    (<span class="hljs-string">'Bob'</span>, <span class="hljs-string">'Johnson'</span>, <span class="hljs-string">'bob.johnson@email.com'</span>, <span class="hljs-number">48000</span>);
+
+<span class="hljs-comment">-- Insert with returning clause</span>
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> employees (first_name, last_name, email)
+<span class="hljs-keyword">VALUES</span> (<span class="hljs-string">'Alice'</span>, <span class="hljs-string">'Brown'</span>, <span class="hljs-string">'alice.brown@email.com'</span>)
+<span class="hljs-keyword">RETURNING</span> <span class="hljs-keyword">id</span>, first_name;
+</div></code></pre>
+<h3 id="update-statement">UPDATE Statement</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Update single row</span>
+<span class="hljs-keyword">UPDATE</span> employees 
+<span class="hljs-keyword">SET</span> salary = <span class="hljs-number">52000</span> 
+<span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">id</span> = <span class="hljs-number">1</span>;
+
+<span class="hljs-comment">-- Update multiple columns</span>
+<span class="hljs-keyword">UPDATE</span> employees 
+<span class="hljs-keyword">SET</span> salary = salary * <span class="hljs-number">1.1</span>, 
+    hire_date = <span class="hljs-keyword">CURRENT_DATE</span> 
+<span class="hljs-keyword">WHERE</span> department = <span class="hljs-string">'Engineering'</span>;
+
+<span class="hljs-comment">-- Update with JOIN</span>
+<span class="hljs-keyword">UPDATE</span> employees 
+<span class="hljs-keyword">SET</span> salary = salary * <span class="hljs-number">1.05</span> 
+<span class="hljs-keyword">FROM</span> departments 
+<span class="hljs-keyword">WHERE</span> employees.dept_id = departments.id 
+<span class="hljs-keyword">AND</span> departments.name = <span class="hljs-string">'Sales'</span>;
+</div></code></pre>
+<h3 id="delete-statement">DELETE Statement</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Delete specific rows</span>
+<span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> is_active = <span class="hljs-literal">FALSE</span>;
+
+<span class="hljs-comment">-- Delete with condition</span>
+<span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> employees 
+<span class="hljs-keyword">WHERE</span> hire_date &lt; <span class="hljs-string">'2020-01-01'</span> 
+<span class="hljs-keyword">AND</span> salary &lt; <span class="hljs-number">40000</span>;
+
+<span class="hljs-comment">-- Delete all rows (keep table structure)</span>
+<span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> employees;
+</div></code></pre>
+<hr>
+<h2 id="filtering-and-sorting-data">Filtering and Sorting Data</h2>
+<h3 id="where-clause">WHERE Clause</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Basic conditions</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> salary &gt; <span class="hljs-number">50000</span>;
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> department = <span class="hljs-string">'Engineering'</span>;
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> hire_date &gt;= <span class="hljs-string">'2023-01-01'</span>;
+
+<span class="hljs-comment">-- Multiple conditions</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees 
+<span class="hljs-keyword">WHERE</span> salary &gt; <span class="hljs-number">45000</span> <span class="hljs-keyword">AND</span> department = <span class="hljs-string">'Sales'</span>;
+
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees 
+<span class="hljs-keyword">WHERE</span> salary &gt; <span class="hljs-number">60000</span> <span class="hljs-keyword">OR</span> department = <span class="hljs-string">'Management'</span>;
+
+<span class="hljs-comment">-- NOT condition</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">NOT</span> department = <span class="hljs-string">'HR'</span>;
+</div></code></pre>
+<h3 id="pattern-matching">Pattern Matching</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- LIKE operator (case-sensitive)</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> first_name <span class="hljs-keyword">LIKE</span> <span class="hljs-string">'J%'</span>;    <span class="hljs-comment">-- Starts with J</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> email <span class="hljs-keyword">LIKE</span> <span class="hljs-string">'%@gmail.com'</span>; <span class="hljs-comment">-- Ends with @gmail.com</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> first_name <span class="hljs-keyword">LIKE</span> <span class="hljs-string">'_ohn'</span>;   <span class="hljs-comment">-- 4 letters ending in 'ohn'</span>
+
+<span class="hljs-comment">-- ILIKE operator (case-insensitive)</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> first_name <span class="hljs-keyword">ILIKE</span> <span class="hljs-string">'john%'</span>;
+
+<span class="hljs-comment">-- Regular expressions</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> first_name ~ <span class="hljs-string">'^[A-M]'</span>;   <span class="hljs-comment">-- Starts with A-M</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> email ~* <span class="hljs-string">'\.com$'</span>;       <span class="hljs-comment">-- Case-insensitive, ends with .com</span>
+</div></code></pre>
+<h3 id="range-and-list-conditions">Range and List Conditions</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- BETWEEN operator</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> salary <span class="hljs-keyword">BETWEEN</span> <span class="hljs-number">40000</span> <span class="hljs-keyword">AND</span> <span class="hljs-number">60000</span>;
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> hire_date <span class="hljs-keyword">BETWEEN</span> <span class="hljs-string">'2022-01-01'</span> <span class="hljs-keyword">AND</span> <span class="hljs-string">'2023-12-31'</span>;
+
+<span class="hljs-comment">-- IN operator</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> department <span class="hljs-keyword">IN</span> (<span class="hljs-string">'Sales'</span>, <span class="hljs-string">'Marketing'</span>, <span class="hljs-string">'HR'</span>);
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">id</span> <span class="hljs-keyword">IN</span> (<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">7</span>);
+
+<span class="hljs-comment">-- NULL checks</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> manager_id <span class="hljs-keyword">IS</span> <span class="hljs-literal">NULL</span>;
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> phone <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>;
+</div></code></pre>
+<h3 id="sorting-data">Sorting Data</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- ORDER BY single column</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> salary <span class="hljs-keyword">DESC</span>;
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> last_name <span class="hljs-keyword">ASC</span>;
+
+<span class="hljs-comment">-- ORDER BY multiple columns</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees 
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> department <span class="hljs-keyword">ASC</span>, salary <span class="hljs-keyword">DESC</span>;
+
+<span class="hljs-comment">-- ORDER BY with expressions</span>
+<span class="hljs-keyword">SELECT</span> first_name, last_name, salary 
+<span class="hljs-keyword">FROM</span> employees 
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> salary * <span class="hljs-number">12</span> <span class="hljs-keyword">DESC</span>;  <span class="hljs-comment">-- Annual salary</span>
+
+<span class="hljs-comment">-- LIMIT and OFFSET</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> salary <span class="hljs-keyword">DESC</span> <span class="hljs-keyword">LIMIT</span> <span class="hljs-number">10</span>;        <span class="hljs-comment">-- Top 10</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> hire_date <span class="hljs-keyword">LIMIT</span> <span class="hljs-number">5</span> <span class="hljs-keyword">OFFSET</span> <span class="hljs-number">10</span>; <span class="hljs-comment">-- Skip 10, take 5</span>
+</div></code></pre>
+<hr>
+<h2 id="working-with-multiple-tables">Working with Multiple Tables</h2>
+<h3 id="inner-join">INNER JOIN</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Basic INNER JOIN</span>
+<span class="hljs-keyword">SELECT</span> e.first_name, e.last_name, d.department_name
+<span class="hljs-keyword">FROM</span> employees e
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> departments d <span class="hljs-keyword">ON</span> e.dept_id = d.id;
+
+<span class="hljs-comment">-- Multiple JOINs</span>
+<span class="hljs-keyword">SELECT</span> e.first_name, e.last_name, d.department_name, p.project_name
+<span class="hljs-keyword">FROM</span> employees e
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> departments d <span class="hljs-keyword">ON</span> e.dept_id = d.id
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> projects p <span class="hljs-keyword">ON</span> e.id = p.employee_id;
+</div></code></pre>
+<h3 id="left-join-left-outer-join">LEFT JOIN (LEFT OUTER JOIN)</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- LEFT JOIN - includes all records from left table</span>
+<span class="hljs-keyword">SELECT</span> e.first_name, e.last_name, d.department_name
+<span class="hljs-keyword">FROM</span> employees e
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> departments d <span class="hljs-keyword">ON</span> e.dept_id = d.id;
+
+<span class="hljs-comment">-- Finding employees without departments</span>
+<span class="hljs-keyword">SELECT</span> e.first_name, e.last_name
+<span class="hljs-keyword">FROM</span> employees e
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> departments d <span class="hljs-keyword">ON</span> e.dept_id = d.id
+<span class="hljs-keyword">WHERE</span> d.id <span class="hljs-keyword">IS</span> <span class="hljs-literal">NULL</span>;
+</div></code></pre>
+<h3 id="right-join-right-outer-join">RIGHT JOIN (RIGHT OUTER JOIN)</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- RIGHT JOIN - includes all records from right table</span>
+<span class="hljs-keyword">SELECT</span> e.first_name, e.last_name, d.department_name
+<span class="hljs-keyword">FROM</span> employees e
+<span class="hljs-keyword">RIGHT</span> <span class="hljs-keyword">JOIN</span> departments d <span class="hljs-keyword">ON</span> e.dept_id = d.id;
+</div></code></pre>
+<h3 id="full-outer-join">FULL OUTER JOIN</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- FULL OUTER JOIN - includes all records from both tables</span>
+<span class="hljs-keyword">SELECT</span> e.first_name, e.last_name, d.department_name
+<span class="hljs-keyword">FROM</span> employees e
+<span class="hljs-keyword">FULL</span> <span class="hljs-keyword">OUTER</span> <span class="hljs-keyword">JOIN</span> departments d <span class="hljs-keyword">ON</span> e.dept_id = d.id;
+</div></code></pre>
+<h3 id="cross-join">CROSS JOIN</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- CROSS JOIN - Cartesian product of two tables</span>
+<span class="hljs-keyword">SELECT</span> e.first_name, d.department_name
+<span class="hljs-keyword">FROM</span> employees e
+<span class="hljs-keyword">CROSS</span> <span class="hljs-keyword">JOIN</span> departments d;
+</div></code></pre>
+<h3 id="self-join">Self JOIN</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Self JOIN - joining a table with itself</span>
+<span class="hljs-keyword">SELECT</span> 
+    e1.first_name <span class="hljs-keyword">AS</span> employee,
+    e2.first_name <span class="hljs-keyword">AS</span> manager
+<span class="hljs-keyword">FROM</span> employees e1
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> employees e2 <span class="hljs-keyword">ON</span> e1.manager_id = e2.id;
+</div></code></pre>
+<hr>
+<h2 id="aggregate-functions">Aggregate Functions</h2>
+<p>Aggregate functions perform calculations on multiple rows and return a single result.</p>
+<h3 id="basic-aggregate-functions">Basic Aggregate Functions</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- COUNT</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">COUNT</span>(*) <span class="hljs-keyword">FROM</span> employees;                    <span class="hljs-comment">-- Count all rows</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">COUNT</span>(manager_id) <span class="hljs-keyword">FROM</span> employees;           <span class="hljs-comment">-- Count non-NULL values</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> department) <span class="hljs-keyword">FROM</span> employees;  <span class="hljs-comment">-- Count unique values</span>
+
+<span class="hljs-comment">-- SUM</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">SUM</span>(salary) <span class="hljs-keyword">FROM</span> employees;                 <span class="hljs-comment">-- Total salary</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">SUM</span>(salary) <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> department = <span class="hljs-string">'Sales'</span>;
+
+<span class="hljs-comment">-- AVG</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">AVG</span>(salary) <span class="hljs-keyword">FROM</span> employees;                 <span class="hljs-comment">-- Average salary</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ROUND</span>(<span class="hljs-keyword">AVG</span>(salary), <span class="hljs-number">2</span>) <span class="hljs-keyword">FROM</span> employees;      <span class="hljs-comment">-- Rounded to 2 decimals</span>
+
+<span class="hljs-comment">-- MIN and MAX</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">MIN</span>(salary), <span class="hljs-keyword">MAX</span>(salary) <span class="hljs-keyword">FROM</span> employees;
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">MIN</span>(hire_date), <span class="hljs-keyword">MAX</span>(hire_date) <span class="hljs-keyword">FROM</span> employees;
+</div></code></pre>
+<h3 id="string-aggregate-functions">String Aggregate Functions</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- STRING_AGG - concatenate strings</span>
+<span class="hljs-keyword">SELECT</span> STRING_AGG(first_name, <span class="hljs-string">', '</span>) <span class="hljs-keyword">AS</span> all_names
+<span class="hljs-keyword">FROM</span> employees;
+
+<span class="hljs-keyword">SELECT</span> STRING_AGG(first_name, <span class="hljs-string">', '</span> <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> first_name) <span class="hljs-keyword">AS</span> sorted_names
+<span class="hljs-keyword">FROM</span> employees;
+</div></code></pre>
+<h3 id="array-aggregate-functions">Array Aggregate Functions</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- ARRAY_AGG - create array from values</span>
+<span class="hljs-keyword">SELECT</span> ARRAY_AGG(first_name) <span class="hljs-keyword">AS</span> name_array
+<span class="hljs-keyword">FROM</span> employees;
+
+<span class="hljs-keyword">SELECT</span> ARRAY_AGG(salary <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> salary <span class="hljs-keyword">DESC</span>) <span class="hljs-keyword">AS</span> salary_array
+<span class="hljs-keyword">FROM</span> employees;
+</div></code></pre>
+<hr>
+<h2 id="grouping-and-having">Grouping and Having</h2>
+<h3 id="group-by">GROUP BY</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Basic grouping</span>
+<span class="hljs-keyword">SELECT</span> department, <span class="hljs-keyword">COUNT</span>(*)
+<span class="hljs-keyword">FROM</span> employees
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> department;
+
+<span class="hljs-comment">-- Multiple columns</span>
+<span class="hljs-keyword">SELECT</span> department, hire_year, <span class="hljs-keyword">COUNT</span>(*)
+<span class="hljs-keyword">FROM</span> (
+    <span class="hljs-keyword">SELECT</span> department, <span class="hljs-keyword">EXTRACT</span>(<span class="hljs-keyword">YEAR</span> <span class="hljs-keyword">FROM</span> hire_date) <span class="hljs-keyword">AS</span> hire_year
+    <span class="hljs-keyword">FROM</span> employees
+) <span class="hljs-keyword">AS</span> emp_year
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> department, hire_year;
+
+<span class="hljs-comment">-- Grouping with aggregates</span>
+<span class="hljs-keyword">SELECT</span> 
+    department,
+    <span class="hljs-keyword">COUNT</span>(*) <span class="hljs-keyword">AS</span> employee_count,
+    <span class="hljs-keyword">AVG</span>(salary) <span class="hljs-keyword">AS</span> avg_salary,
+    <span class="hljs-keyword">SUM</span>(salary) <span class="hljs-keyword">AS</span> total_salary
+<span class="hljs-keyword">FROM</span> employees
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> department;
+</div></code></pre>
+<h3 id="having-clause">HAVING Clause</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- HAVING filters groups (used with GROUP BY)</span>
+<span class="hljs-keyword">SELECT</span> department, <span class="hljs-keyword">COUNT</span>(*)
+<span class="hljs-keyword">FROM</span> employees
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> department
+<span class="hljs-keyword">HAVING</span> <span class="hljs-keyword">COUNT</span>(*) &gt; <span class="hljs-number">5</span>;
+
+<span class="hljs-comment">-- HAVING with multiple conditions</span>
+<span class="hljs-keyword">SELECT</span> department, <span class="hljs-keyword">AVG</span>(salary) <span class="hljs-keyword">AS</span> avg_salary
+<span class="hljs-keyword">FROM</span> employees
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> department
+<span class="hljs-keyword">HAVING</span> <span class="hljs-keyword">AVG</span>(salary) &gt; <span class="hljs-number">50000</span> <span class="hljs-keyword">AND</span> <span class="hljs-keyword">COUNT</span>(*) &gt;= <span class="hljs-number">3</span>;
+</div></code></pre>
+<h3 id="group-by-with-rollup-and-cube">GROUP BY with ROLLUP and CUBE</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- ROLLUP - creates subtotals</span>
+<span class="hljs-keyword">SELECT</span> department, job_title, <span class="hljs-keyword">COUNT</span>(*)
+<span class="hljs-keyword">FROM</span> employees
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">ROLLUP</span>(department, job_title);
+
+<span class="hljs-comment">-- CUBE - creates all possible combinations</span>
+<span class="hljs-keyword">SELECT</span> department, job_title, <span class="hljs-keyword">COUNT</span>(*)
+<span class="hljs-keyword">FROM</span> employees
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">CUBE</span>(department, job_title);
+</div></code></pre>
+<hr>
+<h2 id="subqueries">Subqueries</h2>
+<p>Subqueries are queries nested inside other queries.</p>
+<h3 id="scalar-subqueries">Scalar Subqueries</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Subquery returning single value</span>
+<span class="hljs-keyword">SELECT</span> first_name, last_name, salary
+<span class="hljs-keyword">FROM</span> employees
+<span class="hljs-keyword">WHERE</span> salary &gt; (<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">AVG</span>(salary) <span class="hljs-keyword">FROM</span> employees);
+
+<span class="hljs-comment">-- Subquery in SELECT clause</span>
+<span class="hljs-keyword">SELECT</span> 
+    first_name,
+    last_name,
+    salary,
+    (<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">AVG</span>(salary) <span class="hljs-keyword">FROM</span> employees) <span class="hljs-keyword">AS</span> avg_company_salary
+<span class="hljs-keyword">FROM</span> employees;
+</div></code></pre>
+<h3 id="row-subqueries">Row Subqueries</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Subquery returning multiple values</span>
+<span class="hljs-keyword">SELECT</span> first_name, last_name
+<span class="hljs-keyword">FROM</span> employees
+<span class="hljs-keyword">WHERE</span> dept_id <span class="hljs-keyword">IN</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">id</span> <span class="hljs-keyword">FROM</span> departments 
+    <span class="hljs-keyword">WHERE</span> location = <span class="hljs-string">'New York'</span>
+);
+
+<span class="hljs-comment">-- EXISTS subquery</span>
+<span class="hljs-keyword">SELECT</span> first_name, last_name
+<span class="hljs-keyword">FROM</span> employees e
+<span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">EXISTS</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span> <span class="hljs-keyword">FROM</span> projects p 
+    <span class="hljs-keyword">WHERE</span> p.employee_id = e.id
+);
+
+<span class="hljs-comment">-- NOT EXISTS subquery</span>
+<span class="hljs-keyword">SELECT</span> first_name, last_name
+<span class="hljs-keyword">FROM</span> employees e
+<span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span> <span class="hljs-keyword">FROM</span> projects p 
+    <span class="hljs-keyword">WHERE</span> p.employee_id = e.id
+);
+</div></code></pre>
+<h3 id="correlated-subqueries">Correlated Subqueries</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Correlated subquery (references outer query)</span>
+<span class="hljs-keyword">SELECT</span> first_name, last_name, salary
+<span class="hljs-keyword">FROM</span> employees e1
+<span class="hljs-keyword">WHERE</span> salary &gt; (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">AVG</span>(salary)
+    <span class="hljs-keyword">FROM</span> employees e2
+    <span class="hljs-keyword">WHERE</span> e2.department = e1.department
+);
+</div></code></pre>
+<h3 id="table-subqueries">Table Subqueries</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Subquery in FROM clause</span>
+<span class="hljs-keyword">SELECT</span> dept_stats.department, dept_stats.avg_salary
+<span class="hljs-keyword">FROM</span> (
+    <span class="hljs-keyword">SELECT</span> department, <span class="hljs-keyword">AVG</span>(salary) <span class="hljs-keyword">AS</span> avg_salary
+    <span class="hljs-keyword">FROM</span> employees
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> department
+) <span class="hljs-keyword">AS</span> dept_stats
+<span class="hljs-keyword">WHERE</span> dept_stats.avg_salary &gt; <span class="hljs-number">50000</span>;
+</div></code></pre>
+<hr>
+<h2 id="advanced-joins">Advanced Joins</h2>
+<h3 id="lateral-join">LATERAL JOIN</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- LATERAL JOIN - allows subquery to reference columns from preceding table</span>
+<span class="hljs-keyword">SELECT</span> e.first_name, e.last_name, recent_projects.project_name
+<span class="hljs-keyword">FROM</span> employees e
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> <span class="hljs-keyword">LATERAL</span> (
+    <span class="hljs-keyword">SELECT</span> project_name
+    <span class="hljs-keyword">FROM</span> projects p
+    <span class="hljs-keyword">WHERE</span> p.employee_id = e.id
+    <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> p.start_date <span class="hljs-keyword">DESC</span>
+    <span class="hljs-keyword">LIMIT</span> <span class="hljs-number">3</span>
+) <span class="hljs-keyword">AS</span> recent_projects <span class="hljs-keyword">ON</span> <span class="hljs-literal">true</span>;
+</div></code></pre>
+<h3 id="join-with-using">JOIN with USING</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- USING clause when column names are the same</span>
+<span class="hljs-keyword">SELECT</span> e.first_name, d.department_name
+<span class="hljs-keyword">FROM</span> employees e
+<span class="hljs-keyword">JOIN</span> departments d <span class="hljs-keyword">USING</span> (dept_id);
+</div></code></pre>
+<h3 id="natural-join">Natural JOIN</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- NATURAL JOIN automatically joins on columns with same names</span>
+<span class="hljs-keyword">SELECT</span> e.first_name, d.department_name
+<span class="hljs-keyword">FROM</span> employees e
+<span class="hljs-keyword">NATURAL</span> <span class="hljs-keyword">JOIN</span> departments d;
+</div></code></pre>
+<hr>
+<h2 id="views">Views</h2>
+<p>Views are virtual tables based on queries.</p>
+<h3 id="creating-views">Creating Views</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Simple view</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> employee_summary <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span> 
+    first_name,
+    last_name,
+    department,
+    salary
+<span class="hljs-keyword">FROM</span> employees
+<span class="hljs-keyword">WHERE</span> is_active = <span class="hljs-literal">TRUE</span>;
+
+<span class="hljs-comment">-- Complex view with joins</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> department_stats <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span> 
+    d.department_name,
+    <span class="hljs-keyword">COUNT</span>(e.id) <span class="hljs-keyword">AS</span> employee_count,
+    <span class="hljs-keyword">AVG</span>(e.salary) <span class="hljs-keyword">AS</span> avg_salary,
+    <span class="hljs-keyword">SUM</span>(e.salary) <span class="hljs-keyword">AS</span> total_salary
+<span class="hljs-keyword">FROM</span> departments d
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> employees e <span class="hljs-keyword">ON</span> d.id = e.dept_id
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> d.id, d.department_name;
+</div></code></pre>
+<h3 id="using-views">Using Views</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Query a view like a table</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employee_summary;
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employee_summary <span class="hljs-keyword">WHERE</span> salary &gt; <span class="hljs-number">50000</span>;
+</div></code></pre>
+<h3 id="modifying-views">Modifying Views</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Replace view definition</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">VIEW</span> employee_summary <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span> 
+    first_name,
+    last_name,
+    department,
+    salary,
+    hire_date
+<span class="hljs-keyword">FROM</span> employees
+<span class="hljs-keyword">WHERE</span> is_active = <span class="hljs-literal">TRUE</span>;
+</div></code></pre>
+<h3 id="dropping-views">Dropping Views</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Drop a view</span>
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">VIEW</span> <span class="hljs-keyword">IF</span> <span class="hljs-keyword">EXISTS</span> employee_summary;
+</div></code></pre>
+<h3 id="materialized-views">Materialized Views</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Materialized view (stores actual data)</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">MATERIALIZED</span> <span class="hljs-keyword">VIEW</span> monthly_sales <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span> 
+    DATE_TRUNC(<span class="hljs-string">'month'</span>, sale_date) <span class="hljs-keyword">AS</span> <span class="hljs-keyword">month</span>,
+    <span class="hljs-keyword">SUM</span>(amount) <span class="hljs-keyword">AS</span> total_sales
+<span class="hljs-keyword">FROM</span> sales
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> DATE_TRUNC(<span class="hljs-string">'month'</span>, sale_date);
+
+<span class="hljs-comment">-- Refresh materialized view</span>
+REFRESH MATERIALIZED VIEW monthly_sales;
+
+<span class="hljs-comment">-- Refresh concurrently (without blocking reads)</span>
+REFRESH MATERIALIZED VIEW CONCURRENTLY monthly_sales;
+</div></code></pre>
+<hr>
+<h2 id="indexes">Indexes</h2>
+<p>Indexes improve query performance by creating fast access paths to data.</p>
+<h3 id="creating-indexes">Creating Indexes</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Simple index</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">INDEX</span> idx_employee_last_name <span class="hljs-keyword">ON</span> employees(last_name);
+
+<span class="hljs-comment">-- Composite index</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">INDEX</span> idx_employee_dept_salary <span class="hljs-keyword">ON</span> employees(dept_id, salary);
+
+<span class="hljs-comment">-- Unique index</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">UNIQUE</span> <span class="hljs-keyword">INDEX</span> idx_employee_email <span class="hljs-keyword">ON</span> employees(email);
+
+<span class="hljs-comment">-- Partial index (with WHERE clause)</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">INDEX</span> idx_active_employees <span class="hljs-keyword">ON</span> employees(dept_id) 
+<span class="hljs-keyword">WHERE</span> is_active = <span class="hljs-literal">TRUE</span>;
+
+<span class="hljs-comment">-- Expression index</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">INDEX</span> idx_employee_full_name <span class="hljs-keyword">ON</span> employees(<span class="hljs-keyword">lower</span>(first_name || <span class="hljs-string">' '</span> || last_name));
+</div></code></pre>
+<h3 id="index-types">Index Types</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- B-tree index (default)</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">INDEX</span> idx_salary_btree <span class="hljs-keyword">ON</span> employees <span class="hljs-keyword">USING</span> btree(salary);
+
+<span class="hljs-comment">-- Hash index (for equality comparisons)</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">INDEX</span> idx_dept_hash <span class="hljs-keyword">ON</span> employees <span class="hljs-keyword">USING</span> <span class="hljs-keyword">hash</span>(dept_id);
+
+<span class="hljs-comment">-- GIN index (for arrays, JSON, full-text search)</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">INDEX</span> idx_skills_gin <span class="hljs-keyword">ON</span> employees <span class="hljs-keyword">USING</span> gin(skills);
+
+<span class="hljs-comment">-- GiST index (for geometric data, full-text search)</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">INDEX</span> idx_location_gist <span class="hljs-keyword">ON</span> stores <span class="hljs-keyword">USING</span> gist(location);
+</div></code></pre>
+<h3 id="managing-indexes">Managing Indexes</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- List indexes</span>
+\di
+
+<span class="hljs-comment">-- Show indexes for a table</span>
+\d table_name
+
+<span class="hljs-comment">-- Drop index</span>
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">INDEX</span> <span class="hljs-keyword">IF</span> <span class="hljs-keyword">EXISTS</span> idx_employee_last_name;
+
+<span class="hljs-comment">-- Reindex</span>
+REINDEX INDEX idx_employee_last_name;
+REINDEX TABLE employees;
+</div></code></pre>
+<hr>
+<h2 id="stored-procedures-and-functions">Stored Procedures and Functions</h2>
+<h3 id="creating-functions">Creating Functions</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Simple function</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">FUNCTION</span> get_employee_count()
+<span class="hljs-keyword">RETURNS</span> <span class="hljs-built_in">INTEGER</span> <span class="hljs-keyword">AS</span> $$
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">RETURN</span> (<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">COUNT</span>(*) <span class="hljs-keyword">FROM</span> employees);
+<span class="hljs-keyword">END</span>;
+$$ LANGUAGE plpgsql;
+
+<span class="hljs-comment">-- Function with parameters</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">FUNCTION</span> get_salary_by_id(emp_id <span class="hljs-built_in">INTEGER</span>)
+<span class="hljs-keyword">RETURNS</span> <span class="hljs-built_in">DECIMAL</span> <span class="hljs-keyword">AS</span> $$
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">RETURN</span> (<span class="hljs-keyword">SELECT</span> salary <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">id</span> = emp_id);
+<span class="hljs-keyword">END</span>;
+$$ LANGUAGE plpgsql;
+
+<span class="hljs-comment">-- Function returning a table</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">FUNCTION</span> get_high_earners(min_salary <span class="hljs-built_in">DECIMAL</span>)
+<span class="hljs-keyword">RETURNS</span> <span class="hljs-keyword">TABLE</span>(
+    employee_id <span class="hljs-built_in">INTEGER</span>,
+    full_name <span class="hljs-built_in">TEXT</span>,
+    employee_salary <span class="hljs-built_in">DECIMAL</span>
+) <span class="hljs-keyword">AS</span> $
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">RETURN</span> <span class="hljs-keyword">QUERY</span>
+    <span class="hljs-keyword">SELECT</span> 
+        <span class="hljs-keyword">id</span>,
+        first_name || <span class="hljs-string">' '</span> || last_name,
+        salary
+    <span class="hljs-keyword">FROM</span> employees
+    <span class="hljs-keyword">WHERE</span> salary &gt;= min_salary;
+<span class="hljs-keyword">END</span>;
+$ LANGUAGE plpgsql;
+</div></code></pre>
+<h3 id="using-functions">Using Functions</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Call simple function</span>
+<span class="hljs-keyword">SELECT</span> get_employee_count();
+
+<span class="hljs-comment">-- Call function with parameters</span>
+<span class="hljs-keyword">SELECT</span> get_salary_by_id(<span class="hljs-number">1</span>);
+
+<span class="hljs-comment">-- Use table-returning function</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> get_high_earners(<span class="hljs-number">60000</span>);
+</div></code></pre>
+<h3 id="creating-procedures">Creating Procedures</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Stored procedure (PostgreSQL 11+)</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">PROCEDURE</span> update_employee_salary(
+    emp_id <span class="hljs-built_in">INTEGER</span>, 
+    new_salary <span class="hljs-built_in">DECIMAL</span>
+)
+<span class="hljs-keyword">LANGUAGE</span> plpgsql <span class="hljs-keyword">AS</span> $
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">UPDATE</span> employees 
+    <span class="hljs-keyword">SET</span> salary = new_salary 
+    <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">id</span> = emp_id;
+    
+    IF NOT FOUND THEN
+        RAISE NOTICE 'Employee <span class="hljs-keyword">with</span> <span class="hljs-keyword">ID</span> % <span class="hljs-keyword">not</span> <span class="hljs-keyword">found</span><span class="hljs-string">', emp_id;
+    END IF;
+    
+    COMMIT;
+END;
+$;
+
+-- Call procedure
+CALL update_employee_salary(1, 55000);
+</span></div></code></pre>
+<h3 id="function-control-structures">Function Control Structures</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Function with IF-ELSE</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">FUNCTION</span> get_bonus_percentage(emp_salary <span class="hljs-built_in">DECIMAL</span>)
+<span class="hljs-keyword">RETURNS</span> <span class="hljs-built_in">DECIMAL</span> <span class="hljs-keyword">AS</span> $
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">IF</span> emp_salary &gt; <span class="hljs-number">80000</span> <span class="hljs-keyword">THEN</span>
+        <span class="hljs-keyword">RETURN</span> <span class="hljs-number">0.15</span>;
+    ELSIF emp_salary &gt; 60000 THEN
+        RETURN 0.10;
+    ELSIF emp_salary &gt; 40000 THEN
+        RETURN 0.05;
+    ELSE
+        RETURN 0.02;
+    <span class="hljs-keyword">END</span> <span class="hljs-keyword">IF</span>;
+<span class="hljs-keyword">END</span>;
+$ LANGUAGE plpgsql;
+
+<span class="hljs-comment">-- Function with LOOP</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">FUNCTION</span> calculate_factorial(n <span class="hljs-built_in">INTEGER</span>)
+<span class="hljs-keyword">RETURNS</span> <span class="hljs-built_in">BIGINT</span> <span class="hljs-keyword">AS</span> $
+<span class="hljs-keyword">DECLARE</span>
+    <span class="hljs-keyword">result</span> <span class="hljs-built_in">BIGINT</span> := <span class="hljs-number">1</span>;
+    i INTEGER;
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">FOR</span> i <span class="hljs-keyword">IN</span> <span class="hljs-number">1.</span>.n <span class="hljs-keyword">LOOP</span>
+        <span class="hljs-keyword">result</span> := <span class="hljs-keyword">result</span> * i;
+    <span class="hljs-keyword">END</span> <span class="hljs-keyword">LOOP</span>;
+    RETURN result;
+<span class="hljs-keyword">END</span>;
+$ LANGUAGE plpgsql;
+
+<span class="hljs-comment">-- Function with exception handling</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">FUNCTION</span> safe_divide(a <span class="hljs-built_in">DECIMAL</span>, b <span class="hljs-built_in">DECIMAL</span>)
+<span class="hljs-keyword">RETURNS</span> <span class="hljs-built_in">DECIMAL</span> <span class="hljs-keyword">AS</span> $
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">IF</span> b = <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span>
+        <span class="hljs-keyword">RAISE</span> <span class="hljs-keyword">EXCEPTION</span> <span class="hljs-string">'Division by zero is not allowed'</span>;
+    <span class="hljs-keyword">END</span> <span class="hljs-keyword">IF</span>;
+    RETURN a / b;
+EXCEPTION
+    WHEN division_by_zero THEN
+        RAISE NOTICE 'Cannot divide by zero, returning NULL';
+        RETURN NULL;
+<span class="hljs-keyword">END</span>;
+$ LANGUAGE plpgsql;
+</div></code></pre>
+<hr>
+<h2 id="triggers">Triggers</h2>
+<p>Triggers are special functions that automatically execute in response to certain events.</p>
+<h3 id="creating-trigger-functions">Creating Trigger Functions</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Trigger function for updating timestamp</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">FUNCTION</span> update_modified_column()
+<span class="hljs-keyword">RETURNS</span> <span class="hljs-keyword">TRIGGER</span> <span class="hljs-keyword">AS</span> $
+<span class="hljs-keyword">BEGIN</span>
+    NEW.modified_at = <span class="hljs-keyword">CURRENT_TIMESTAMP</span>;
+    RETURN NEW;
+<span class="hljs-keyword">END</span>;
+$ LANGUAGE plpgsql;
+
+<span class="hljs-comment">-- Trigger function for logging changes</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">FUNCTION</span> log_employee_changes()
+<span class="hljs-keyword">RETURNS</span> <span class="hljs-keyword">TRIGGER</span> <span class="hljs-keyword">AS</span> $
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">IF</span> TG_OP = <span class="hljs-string">'INSERT'</span> <span class="hljs-keyword">THEN</span>
+        <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> employee_audit (<span class="hljs-keyword">action</span>, employee_id, old_data, new_data, changed_at)
+        <span class="hljs-keyword">VALUES</span> (<span class="hljs-string">'INSERT'</span>, NEW.id, <span class="hljs-literal">NULL</span>, row_to_json(<span class="hljs-keyword">NEW</span>), <span class="hljs-keyword">CURRENT_TIMESTAMP</span>);
+        RETURN NEW;
+    ELSIF TG_OP = '<span class="hljs-keyword">UPDATE</span><span class="hljs-string">' THEN
+        INSERT INTO employee_audit (action, employee_id, old_data, new_data, changed_at)
+        VALUES ('</span><span class="hljs-keyword">UPDATE</span><span class="hljs-string">', NEW.id, row_to_json(OLD), row_to_json(NEW), CURRENT_TIMESTAMP);
+        RETURN NEW;
+    ELSIF TG_OP = '</span><span class="hljs-keyword">DELETE</span><span class="hljs-string">' THEN
+        INSERT INTO employee_audit (action, employee_id, old_data, new_data, changed_at)
+        VALUES ('</span><span class="hljs-keyword">DELETE</span><span class="hljs-string">', OLD.id, row_to_json(OLD), NULL, CURRENT_TIMESTAMP);
+        RETURN OLD;
+    END IF;
+    RETURN NULL;
+END;
+$ LANGUAGE plpgsql;
+</span></div></code></pre>
+<h3 id="creating-triggers">Creating Triggers</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- BEFORE trigger</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> tr_employee_update_modified
+    <span class="hljs-keyword">BEFORE</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-keyword">ON</span> employees
+    <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">EACH</span> <span class="hljs-keyword">ROW</span>
+    <span class="hljs-keyword">EXECUTE</span> <span class="hljs-keyword">FUNCTION</span> update_modified_column();
+
+<span class="hljs-comment">-- AFTER trigger</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> tr_employee_audit
+    <span class="hljs-keyword">AFTER</span> <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">ON</span> employees
+    <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">EACH</span> <span class="hljs-keyword">ROW</span>
+    <span class="hljs-keyword">EXECUTE</span> <span class="hljs-keyword">FUNCTION</span> log_employee_changes();
+
+<span class="hljs-comment">-- INSTEAD OF trigger (for views)</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> tr_employee_view_insert
+    INSTEAD <span class="hljs-keyword">OF</span> <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">ON</span> employee_view
+    <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">EACH</span> <span class="hljs-keyword">ROW</span>
+    <span class="hljs-keyword">EXECUTE</span> <span class="hljs-keyword">FUNCTION</span> handle_employee_view_insert();
+</div></code></pre>
+<h3 id="managing-triggers">Managing Triggers</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- List triggers</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> information_schema.triggers 
+<span class="hljs-keyword">WHERE</span> event_object_table = <span class="hljs-string">'employees'</span>;
+
+<span class="hljs-comment">-- Disable trigger</span>
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> employees <span class="hljs-keyword">DISABLE</span> <span class="hljs-keyword">TRIGGER</span> tr_employee_audit;
+
+<span class="hljs-comment">-- Enable trigger</span>
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> employees <span class="hljs-keyword">ENABLE</span> <span class="hljs-keyword">TRIGGER</span> tr_employee_audit;
+
+<span class="hljs-comment">-- Drop trigger</span>
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TRIGGER</span> <span class="hljs-keyword">IF</span> <span class="hljs-keyword">EXISTS</span> tr_employee_audit <span class="hljs-keyword">ON</span> employees;
+</div></code></pre>
+<hr>
+<h2 id="transactions">Transactions</h2>
+<p>Transactions ensure data integrity by grouping multiple operations into a single unit.</p>
+<h3 id="basic-transaction-control">Basic Transaction Control</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Start transaction</span>
+<span class="hljs-keyword">BEGIN</span>;
+
+<span class="hljs-comment">-- Perform operations</span>
+<span class="hljs-keyword">UPDATE</span> employees <span class="hljs-keyword">SET</span> salary = salary * <span class="hljs-number">1.1</span> <span class="hljs-keyword">WHERE</span> department = <span class="hljs-string">'Sales'</span>;
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> salary_changes (employee_id, old_salary, new_salary, change_date)
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">id</span>, salary / <span class="hljs-number">1.1</span>, salary, <span class="hljs-keyword">CURRENT_DATE</span> <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> department = <span class="hljs-string">'Sales'</span>;
+
+<span class="hljs-comment">-- Commit transaction</span>
+<span class="hljs-keyword">COMMIT</span>;
+
+<span class="hljs-comment">-- Or rollback if something goes wrong</span>
+<span class="hljs-comment">-- ROLLBACK;</span>
+</div></code></pre>
+<h3 id="savepoints">Savepoints</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Transaction with savepoints</span>
+<span class="hljs-keyword">BEGIN</span>;
+
+<span class="hljs-keyword">UPDATE</span> employees <span class="hljs-keyword">SET</span> salary = salary * <span class="hljs-number">1.05</span>;
+
+<span class="hljs-keyword">SAVEPOINT</span> after_salary_update;
+
+<span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> performance_rating &lt; <span class="hljs-number">2</span>;
+
+<span class="hljs-comment">-- If we want to undo the delete but keep the salary update</span>
+<span class="hljs-keyword">ROLLBACK</span> <span class="hljs-keyword">TO</span> <span class="hljs-keyword">SAVEPOINT</span> after_salary_update;
+
+<span class="hljs-comment">-- Or release the savepoint</span>
+<span class="hljs-keyword">RELEASE</span> <span class="hljs-keyword">SAVEPOINT</span> after_salary_update;
+
+<span class="hljs-keyword">COMMIT</span>;
+</div></code></pre>
+<h3 id="transaction-isolation-levels">Transaction Isolation Levels</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Set transaction isolation level</span>
+<span class="hljs-keyword">BEGIN</span> <span class="hljs-keyword">TRANSACTION</span> <span class="hljs-keyword">ISOLATION</span> <span class="hljs-keyword">LEVEL</span> <span class="hljs-keyword">READ</span> COMMITTED;
+<span class="hljs-keyword">BEGIN</span> <span class="hljs-keyword">TRANSACTION</span> <span class="hljs-keyword">ISOLATION</span> <span class="hljs-keyword">LEVEL</span> REPEATABLE <span class="hljs-keyword">READ</span>;
+<span class="hljs-keyword">BEGIN</span> <span class="hljs-keyword">TRANSACTION</span> <span class="hljs-keyword">ISOLATION</span> <span class="hljs-keyword">LEVEL</span> <span class="hljs-keyword">SERIALIZABLE</span>;
+
+<span class="hljs-comment">-- Set for session</span>
+<span class="hljs-keyword">SET</span> <span class="hljs-keyword">TRANSACTION</span> <span class="hljs-keyword">ISOLATION</span> <span class="hljs-keyword">LEVEL</span> <span class="hljs-keyword">SERIALIZABLE</span>;
+</div></code></pre>
+<h3 id="handling-deadlocks">Handling Deadlocks</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Example of deadlock handling in a function</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">FUNCTION</span> transfer_budget(
+    from_dept <span class="hljs-built_in">INTEGER</span>,
+    to_dept <span class="hljs-built_in">INTEGER</span>,
+    amount <span class="hljs-built_in">DECIMAL</span>
+) <span class="hljs-keyword">RETURNS</span> <span class="hljs-built_in">BOOLEAN</span> <span class="hljs-keyword">AS</span> $
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">BEGIN</span>
+        <span class="hljs-comment">-- Lock departments in consistent order to prevent deadlocks</span>
+        PERFORM * <span class="hljs-keyword">FROM</span> departments 
+        <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">id</span> <span class="hljs-keyword">IN</span> (from_dept, to_dept) 
+        <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">id</span> 
+        <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">UPDATE</span>;
+        
+        <span class="hljs-keyword">UPDATE</span> departments <span class="hljs-keyword">SET</span> budget = budget - amount <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">id</span> = from_dept;
+        <span class="hljs-keyword">UPDATE</span> departments <span class="hljs-keyword">SET</span> budget = budget + amount <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">id</span> = to_dept;
+        
+        RETURN TRUE;
+    EXCEPTION
+        WHEN deadlock_detected THEN
+            RAISE NOTICE 'Deadlock detected, transaction rolled back';
+            RETURN FALSE;
+    <span class="hljs-keyword">END</span>;
+<span class="hljs-keyword">END</span>;
+$ LANGUAGE plpgsql;
+</div></code></pre>
+<hr>
+<h2 id="window-functions">Window Functions</h2>
+<p>Window functions perform calculations across related rows without grouping.</p>
+<h3 id="basic-window-functions">Basic Window Functions</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- ROW_NUMBER</span>
+<span class="hljs-keyword">SELECT</span> 
+    first_name,
+    last_name,
+    salary,
+    ROW_NUMBER() <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> salary <span class="hljs-keyword">DESC</span>) <span class="hljs-keyword">as</span> salary_rank
+<span class="hljs-keyword">FROM</span> employees;
+
+<span class="hljs-comment">-- RANK and DENSE_RANK</span>
+<span class="hljs-keyword">SELECT</span> 
+    first_name,
+    last_name,
+    salary,
+    <span class="hljs-keyword">RANK</span>() <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> salary <span class="hljs-keyword">DESC</span>) <span class="hljs-keyword">as</span> <span class="hljs-keyword">rank</span>,
+    <span class="hljs-keyword">DENSE_RANK</span>() <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> salary <span class="hljs-keyword">DESC</span>) <span class="hljs-keyword">as</span> <span class="hljs-keyword">dense_rank</span>
+<span class="hljs-keyword">FROM</span> employees;
+
+<span class="hljs-comment">-- NTILE (divide into n groups)</span>
+<span class="hljs-keyword">SELECT</span> 
+    first_name,
+    last_name,
+    salary,
+    NTILE(<span class="hljs-number">4</span>) <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> salary <span class="hljs-keyword">DESC</span>) <span class="hljs-keyword">as</span> salary_quartile
+<span class="hljs-keyword">FROM</span> employees;
+</div></code></pre>
+<h3 id="window-functions-with-partition-by">Window Functions with PARTITION BY</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Partition by department</span>
+<span class="hljs-keyword">SELECT</span> 
+    first_name,
+    last_name,
+    department,
+    salary,
+    ROW_NUMBER() <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> department <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> salary <span class="hljs-keyword">DESC</span>) <span class="hljs-keyword">as</span> dept_rank,
+    <span class="hljs-keyword">AVG</span>(salary) <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> department) <span class="hljs-keyword">as</span> dept_avg_salary
+<span class="hljs-keyword">FROM</span> employees;
+
+<span class="hljs-comment">-- Running totals</span>
+<span class="hljs-keyword">SELECT</span> 
+    first_name,
+    last_name,
+    salary,
+    <span class="hljs-keyword">SUM</span>(salary) <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> hire_date <span class="hljs-keyword">ROWS</span> <span class="hljs-keyword">UNBOUNDED</span> <span class="hljs-keyword">PRECEDING</span>) <span class="hljs-keyword">as</span> running_total
+<span class="hljs-keyword">FROM</span> employees;
+</div></code></pre>
+<h3 id="frame-specifications">Frame Specifications</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Moving average (3-row window)</span>
+<span class="hljs-keyword">SELECT</span> 
+    first_name,
+    salary,
+    <span class="hljs-keyword">AVG</span>(salary) <span class="hljs-keyword">OVER</span> (
+        <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> hire_date 
+        <span class="hljs-keyword">ROWS</span> <span class="hljs-keyword">BETWEEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">PRECEDING</span> <span class="hljs-keyword">AND</span> <span class="hljs-number">1</span> <span class="hljs-keyword">FOLLOWING</span>
+    ) <span class="hljs-keyword">as</span> moving_avg
+<span class="hljs-keyword">FROM</span> employees;
+
+<span class="hljs-comment">-- Cumulative sum</span>
+<span class="hljs-keyword">SELECT</span> 
+    first_name,
+    salary,
+    <span class="hljs-keyword">SUM</span>(salary) <span class="hljs-keyword">OVER</span> (
+        <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> hire_date 
+        <span class="hljs-keyword">ROWS</span> <span class="hljs-keyword">BETWEEN</span> <span class="hljs-keyword">UNBOUNDED</span> <span class="hljs-keyword">PRECEDING</span> <span class="hljs-keyword">AND</span> <span class="hljs-keyword">CURRENT</span> <span class="hljs-keyword">ROW</span>
+    ) <span class="hljs-keyword">as</span> cumulative_sum
+<span class="hljs-keyword">FROM</span> employees;
+</div></code></pre>
+<h3 id="lag-and-lead-functions">LAG and LEAD Functions</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Compare with previous/next row</span>
+<span class="hljs-keyword">SELECT</span> 
+    first_name,
+    salary,
+    LAG(salary, <span class="hljs-number">1</span>) <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> hire_date) <span class="hljs-keyword">as</span> previous_salary,
+    <span class="hljs-keyword">LEAD</span>(salary, <span class="hljs-number">1</span>) <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> hire_date) <span class="hljs-keyword">as</span> next_salary,
+    salary - LAG(salary, <span class="hljs-number">1</span>) <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> hire_date) <span class="hljs-keyword">as</span> salary_increase
+<span class="hljs-keyword">FROM</span> employees;
+
+<span class="hljs-comment">-- FIRST_VALUE and LAST_VALUE</span>
+<span class="hljs-keyword">SELECT</span> 
+    first_name,
+    department,
+    salary,
+    <span class="hljs-keyword">FIRST_VALUE</span>(salary) <span class="hljs-keyword">OVER</span> (
+        <span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> department 
+        <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> salary <span class="hljs-keyword">DESC</span>
+        <span class="hljs-keyword">ROWS</span> <span class="hljs-keyword">UNBOUNDED</span> <span class="hljs-keyword">PRECEDING</span>
+    ) <span class="hljs-keyword">as</span> highest_dept_salary,
+    <span class="hljs-keyword">LAST_VALUE</span>(salary) <span class="hljs-keyword">OVER</span> (
+        <span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> department 
+        <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> salary <span class="hljs-keyword">DESC</span>
+        <span class="hljs-keyword">ROWS</span> <span class="hljs-keyword">BETWEEN</span> <span class="hljs-keyword">UNBOUNDED</span> <span class="hljs-keyword">PRECEDING</span> <span class="hljs-keyword">AND</span> <span class="hljs-keyword">UNBOUNDED</span> <span class="hljs-keyword">FOLLOWING</span>
+    ) <span class="hljs-keyword">as</span> lowest_dept_salary
+<span class="hljs-keyword">FROM</span> employees;
+</div></code></pre>
+<hr>
+<h2 id="common-table-expressions-ctes">Common Table Expressions (CTEs)</h2>
+<p>CTEs provide a way to write more readable and maintainable complex queries.</p>
+<h3 id="basic-cte">Basic CTE</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Simple CTE</span>
+<span class="hljs-keyword">WITH</span> high_earners <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span> first_name, last_name, salary, department
+    <span class="hljs-keyword">FROM</span> employees
+    <span class="hljs-keyword">WHERE</span> salary &gt; <span class="hljs-number">60000</span>
+)
+<span class="hljs-keyword">SELECT</span> department, <span class="hljs-keyword">COUNT</span>(*) <span class="hljs-keyword">as</span> high_earner_count
+<span class="hljs-keyword">FROM</span> high_earners
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> department;
+</div></code></pre>
+<h3 id="multiple-ctes">Multiple CTEs</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Multiple CTEs</span>
+<span class="hljs-keyword">WITH</span> 
+department_stats <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span> 
+        department,
+        <span class="hljs-keyword">COUNT</span>(*) <span class="hljs-keyword">as</span> emp_count,
+        <span class="hljs-keyword">AVG</span>(salary) <span class="hljs-keyword">as</span> avg_salary
+    <span class="hljs-keyword">FROM</span> employees
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> department
+),
+high_performing_depts <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span> department
+    <span class="hljs-keyword">FROM</span> department_stats
+    <span class="hljs-keyword">WHERE</span> avg_salary &gt; <span class="hljs-number">55000</span>
+)
+<span class="hljs-keyword">SELECT</span> e.first_name, e.last_name, e.salary
+<span class="hljs-keyword">FROM</span> employees e
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> high_performing_depts hpd <span class="hljs-keyword">ON</span> e.department = hpd.department;
+</div></code></pre>
+<h3 id="recursive-ctes">Recursive CTEs</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Recursive CTE for hierarchical data</span>
+<span class="hljs-keyword">WITH</span> <span class="hljs-keyword">RECURSIVE</span> employee_hierarchy <span class="hljs-keyword">AS</span> (
+    <span class="hljs-comment">-- Base case: top-level managers</span>
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">id</span>, first_name, last_name, manager_id, <span class="hljs-number">0</span> <span class="hljs-keyword">as</span> <span class="hljs-keyword">level</span>
+    <span class="hljs-keyword">FROM</span> employees
+    <span class="hljs-keyword">WHERE</span> manager_id <span class="hljs-keyword">IS</span> <span class="hljs-literal">NULL</span>
+    
+    <span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+    
+    <span class="hljs-comment">-- Recursive case: employees with managers</span>
+    <span class="hljs-keyword">SELECT</span> e.id, e.first_name, e.last_name, e.manager_id, eh.level + <span class="hljs-number">1</span>
+    <span class="hljs-keyword">FROM</span> employees e
+    <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> employee_hierarchy eh <span class="hljs-keyword">ON</span> e.manager_id = eh.id
+)
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employee_hierarchy <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">level</span>, last_name;
+
+<span class="hljs-comment">-- Recursive CTE for generating series</span>
+<span class="hljs-keyword">WITH</span> <span class="hljs-keyword">RECURSIVE</span> date_series <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">DATE</span> <span class="hljs-string">'2023-01-01'</span> <span class="hljs-keyword">as</span> date_value
+    <span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+    <span class="hljs-keyword">SELECT</span> date_value + <span class="hljs-built_in">INTERVAL</span> <span class="hljs-string">'1 day'</span>
+    <span class="hljs-keyword">FROM</span> date_series
+    <span class="hljs-keyword">WHERE</span> date_value &lt; <span class="hljs-built_in">DATE</span> <span class="hljs-string">'2023-12-31'</span>
+)
+<span class="hljs-keyword">SELECT</span> date_value <span class="hljs-keyword">FROM</span> date_series;
+</div></code></pre>
+<hr>
+<h2 id="json-and-jsonb">JSON and JSONB</h2>
+<p>PostgreSQL has excellent support for JSON data types.</p>
+<h3 id="json-vs-jsonb">JSON vs JSONB</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- JSON column (stores exact text)</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> products (
+    <span class="hljs-keyword">id</span> <span class="hljs-built_in">SERIAL</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    <span class="hljs-keyword">name</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    <span class="hljs-keyword">attributes</span> <span class="hljs-keyword">JSON</span>
+);
+
+<span class="hljs-comment">-- JSONB column (binary, faster, indexable)</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> products_jsonb (
+    <span class="hljs-keyword">id</span> <span class="hljs-built_in">SERIAL</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    <span class="hljs-keyword">name</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    <span class="hljs-keyword">attributes</span> JSONB
+);
+</div></code></pre>
+<h3 id="inserting-json-data">Inserting JSON Data</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Insert JSON data</span>
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> products (<span class="hljs-keyword">name</span>, <span class="hljs-keyword">attributes</span>) <span class="hljs-keyword">VALUES</span>
+(<span class="hljs-string">'Laptop'</span>, <span class="hljs-string">'{"brand": "Dell", "cpu": "Intel i7", "ram": "16GB", "price": 1200}'</span>),
+(<span class="hljs-string">'Phone'</span>, <span class="hljs-string">'{"brand": "Apple", "model": "iPhone 13", "storage": "128GB", "price": 800}'</span>);
+
+<span class="hljs-comment">-- Insert JSONB data</span>
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> products_jsonb (<span class="hljs-keyword">name</span>, <span class="hljs-keyword">attributes</span>) <span class="hljs-keyword">VALUES</span>
+(<span class="hljs-string">'Laptop'</span>, <span class="hljs-string">'{"brand": "Dell", "cpu": "Intel i7", "ram": "16GB", "price": 1200}'</span>),
+(<span class="hljs-string">'Phone'</span>, <span class="hljs-string">'{"brand": "Apple", "model": "iPhone 13", "storage": "128GB", "price": 800}'</span>);
+</div></code></pre>
+<h3 id="querying-json-data">Querying JSON Data</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Extract JSON field with -&gt;</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">name</span>, <span class="hljs-keyword">attributes</span>-&gt;<span class="hljs-string">'brand'</span> <span class="hljs-keyword">as</span> brand
+<span class="hljs-keyword">FROM</span> products;
+
+<span class="hljs-comment">-- Extract JSON field as text with -&gt;&gt;</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">name</span>, <span class="hljs-keyword">attributes</span>-&gt;&gt;<span class="hljs-string">'brand'</span> <span class="hljs-keyword">as</span> brand
+<span class="hljs-keyword">FROM</span> products;
+
+<span class="hljs-comment">-- Extract nested JSON</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">name</span>, <span class="hljs-keyword">attributes</span>-&gt;<span class="hljs-string">'specs'</span>-&gt;&gt;<span class="hljs-string">'cpu'</span> <span class="hljs-keyword">as</span> cpu
+<span class="hljs-keyword">FROM</span> products;
+
+<span class="hljs-comment">-- JSON path queries</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">name</span>, <span class="hljs-keyword">attributes</span> <span class="hljs-comment">#&gt; '{specs,cpu}' as cpu</span>
+<span class="hljs-keyword">FROM</span> products;
+
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">name</span>, <span class="hljs-keyword">attributes</span> <span class="hljs-comment">#&gt;&gt; '{specs,cpu}' as cpu_text</span>
+<span class="hljs-keyword">FROM</span> products;
+</div></code></pre>
+<h3 id="json-operators-and-functions">JSON Operators and Functions</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Check if JSON contains key</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> products <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">attributes</span> ? <span class="hljs-string">'brand'</span>;
+
+<span class="hljs-comment">-- Check if JSON contains any of the keys</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> products <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">attributes</span> ?| <span class="hljs-built_in">array</span>[<span class="hljs-string">'brand'</span>, <span class="hljs-string">'model'</span>];
+
+<span class="hljs-comment">-- Check if JSON contains all keys</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> products <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">attributes</span> ?&amp; <span class="hljs-built_in">array</span>[<span class="hljs-string">'brand'</span>, <span class="hljs-string">'price'</span>];
+
+<span class="hljs-comment">-- JSON containment (@&gt; and &lt;@)</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> products_jsonb 
+<span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">attributes</span> @&gt; <span class="hljs-string">'{"brand": "Apple"}'</span>;
+
+<span class="hljs-comment">-- JSON functions</span>
+<span class="hljs-keyword">SELECT</span> 
+    <span class="hljs-keyword">name</span>,
+    json_extract_path_text(<span class="hljs-keyword">attributes</span>, <span class="hljs-string">'brand'</span>) <span class="hljs-keyword">as</span> brand,
+    json_extract_path_text(<span class="hljs-keyword">attributes</span>, <span class="hljs-string">'price'</span>)::<span class="hljs-built_in">numeric</span> <span class="hljs-keyword">as</span> price
+<span class="hljs-keyword">FROM</span> products;
+
+<span class="hljs-comment">-- JSONB functions</span>
+<span class="hljs-keyword">SELECT</span> 
+    <span class="hljs-keyword">name</span>,
+    jsonb_extract_path_text(<span class="hljs-keyword">attributes</span>, <span class="hljs-string">'brand'</span>) <span class="hljs-keyword">as</span> brand,
+    (<span class="hljs-keyword">attributes</span>-&gt;&gt;<span class="hljs-string">'price'</span>)::<span class="hljs-built_in">numeric</span> <span class="hljs-keyword">as</span> price
+<span class="hljs-keyword">FROM</span> products_jsonb;
+</div></code></pre>
+<h3 id="json-aggregation">JSON Aggregation</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Aggregate to JSON</span>
+<span class="hljs-keyword">SELECT</span> 
+    jsonb_object_agg(<span class="hljs-keyword">name</span>, <span class="hljs-keyword">attributes</span>) <span class="hljs-keyword">as</span> all_products
+<span class="hljs-keyword">FROM</span> products_jsonb;
+
+<span class="hljs-comment">-- Array of JSON objects</span>
+<span class="hljs-keyword">SELECT</span> 
+    jsonb_agg(jsonb_build_object(<span class="hljs-string">'name'</span>, <span class="hljs-keyword">name</span>, <span class="hljs-string">'brand'</span>, <span class="hljs-keyword">attributes</span>-&gt;&gt;<span class="hljs-string">'brand'</span>)) <span class="hljs-keyword">as</span> product_list
+<span class="hljs-keyword">FROM</span> products_jsonb;
+</div></code></pre>
+<h3 id="json-indexing">JSON Indexing</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- GIN index on JSONB</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">INDEX</span> idx_products_attributes <span class="hljs-keyword">ON</span> products_jsonb <span class="hljs-keyword">USING</span> gin(<span class="hljs-keyword">attributes</span>);
+
+<span class="hljs-comment">-- Index on specific JSON path</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">INDEX</span> idx_products_brand <span class="hljs-keyword">ON</span> products_jsonb <span class="hljs-keyword">USING</span> btree((<span class="hljs-keyword">attributes</span>-&gt;&gt;<span class="hljs-string">'brand'</span>));
+
+<span class="hljs-comment">-- Partial index with JSON condition</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">INDEX</span> idx_expensive_products <span class="hljs-keyword">ON</span> products_jsonb 
+<span class="hljs-keyword">WHERE</span> (<span class="hljs-keyword">attributes</span>-&gt;&gt;<span class="hljs-string">'price'</span>)::<span class="hljs-built_in">numeric</span> &gt; <span class="hljs-number">1000</span>;
+</div></code></pre>
+<hr>
+<h2 id="full-text-search">Full-Text Search</h2>
+<p>PostgreSQL provides powerful full-text search capabilities.</p>
+<h3 id="basic-text-search">Basic Text Search</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Create table with text search</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> articles (
+    <span class="hljs-keyword">id</span> <span class="hljs-built_in">SERIAL</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    title <span class="hljs-built_in">TEXT</span>,
+    <span class="hljs-keyword">content</span> <span class="hljs-built_in">TEXT</span>,
+    search_vector tsvector
+);
+
+<span class="hljs-comment">-- Insert sample data</span>
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> articles (title, <span class="hljs-keyword">content</span>) <span class="hljs-keyword">VALUES</span>
+(<span class="hljs-string">'PostgreSQL Tutorial'</span>, <span class="hljs-string">'Learn PostgreSQL database management system'</span>),
+(<span class="hljs-string">'Advanced SQL Queries'</span>, <span class="hljs-string">'Master complex SQL queries and optimization'</span>),
+(<span class="hljs-string">'Database Design Principles'</span>, <span class="hljs-string">'Best practices for database schema design'</span>);
+</div></code></pre>
+<h3 id="creating-text-search-vectors">Creating Text Search Vectors</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Update search vector</span>
+<span class="hljs-keyword">UPDATE</span> articles <span class="hljs-keyword">SET</span> search_vector = 
+    to_tsvector(<span class="hljs-string">'english'</span>, <span class="hljs-keyword">coalesce</span>(title, <span class="hljs-string">''</span>) || <span class="hljs-string">' '</span> || <span class="hljs-keyword">coalesce</span>(<span class="hljs-keyword">content</span>, <span class="hljs-string">''</span>));
+
+<span class="hljs-comment">-- Using trigger to maintain search vector</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">FUNCTION</span> update_search_vector()
+<span class="hljs-keyword">RETURNS</span> <span class="hljs-keyword">TRIGGER</span> <span class="hljs-keyword">AS</span> $
+<span class="hljs-keyword">BEGIN</span>
+    NEW.search_vector := to_tsvector(<span class="hljs-string">'english'</span>, 
+        <span class="hljs-keyword">coalesce</span>(NEW.title, <span class="hljs-string">''</span>) || <span class="hljs-string">' '</span> || <span class="hljs-keyword">coalesce</span>(NEW.content, <span class="hljs-string">''</span>));
+    RETURN NEW;
+<span class="hljs-keyword">END</span>;
+$ LANGUAGE plpgsql;
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> tr_articles_search_vector
+    <span class="hljs-keyword">BEFORE</span> <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-keyword">ON</span> articles
+    <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">EACH</span> <span class="hljs-keyword">ROW</span>
+    <span class="hljs-keyword">EXECUTE</span> <span class="hljs-keyword">FUNCTION</span> update_search_vector();
+</div></code></pre>
+<h3 id="text-search-queries">Text Search Queries</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Basic text search</span>
+<span class="hljs-keyword">SELECT</span> title, <span class="hljs-keyword">content</span>
+<span class="hljs-keyword">FROM</span> articles
+<span class="hljs-keyword">WHERE</span> search_vector @@ to_tsquery(<span class="hljs-string">'english'</span>, <span class="hljs-string">'PostgreSQL'</span>);
+
+<span class="hljs-comment">-- Search with multiple terms</span>
+<span class="hljs-keyword">SELECT</span> title, <span class="hljs-keyword">content</span>
+<span class="hljs-keyword">FROM</span> articles
+<span class="hljs-keyword">WHERE</span> search_vector @@ to_tsquery(<span class="hljs-string">'english'</span>, <span class="hljs-string">'PostgreSQL &amp; database'</span>);
+
+<span class="hljs-comment">-- Search with OR</span>
+<span class="hljs-keyword">SELECT</span> title, <span class="hljs-keyword">content</span>
+<span class="hljs-keyword">FROM</span> articles
+<span class="hljs-keyword">WHERE</span> search_vector @@ to_tsquery(<span class="hljs-string">'english'</span>, <span class="hljs-string">'PostgreSQL | MySQL'</span>);
+
+<span class="hljs-comment">-- Phrase search</span>
+<span class="hljs-keyword">SELECT</span> title, <span class="hljs-keyword">content</span>
+<span class="hljs-keyword">FROM</span> articles
+<span class="hljs-keyword">WHERE</span> search_vector @@ phraseto_tsquery(<span class="hljs-string">'english'</span>, <span class="hljs-string">'database management'</span>);
+
+<span class="hljs-comment">-- Plain text search (simpler)</span>
+<span class="hljs-keyword">SELECT</span> title, <span class="hljs-keyword">content</span>
+<span class="hljs-keyword">FROM</span> articles
+<span class="hljs-keyword">WHERE</span> search_vector @@ plainto_tsquery(<span class="hljs-string">'english'</span>, <span class="hljs-string">'PostgreSQL database'</span>);
+</div></code></pre>
+<h3 id="search-ranking">Search Ranking</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Rank search results</span>
+<span class="hljs-keyword">SELECT</span> 
+    title,
+    <span class="hljs-keyword">content</span>,
+    ts_rank(search_vector, to_tsquery(<span class="hljs-string">'english'</span>, <span class="hljs-string">'PostgreSQL'</span>)) <span class="hljs-keyword">as</span> <span class="hljs-keyword">rank</span>
+<span class="hljs-keyword">FROM</span> articles
+<span class="hljs-keyword">WHERE</span> search_vector @@ to_tsquery(<span class="hljs-string">'english'</span>, <span class="hljs-string">'PostgreSQL'</span>)
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">rank</span> <span class="hljs-keyword">DESC</span>;
+
+<span class="hljs-comment">-- Weighted ranking</span>
+<span class="hljs-keyword">SELECT</span> 
+    title,
+    <span class="hljs-keyword">content</span>,
+    ts_rank_cd(
+        setweight(to_tsvector(<span class="hljs-string">'english'</span>, title), <span class="hljs-string">'A'</span>) ||
+        setweight(to_tsvector(<span class="hljs-string">'english'</span>, <span class="hljs-keyword">content</span>), <span class="hljs-string">'B'</span>),
+        to_tsquery(<span class="hljs-string">'english'</span>, <span class="hljs-string">'PostgreSQL'</span>)
+    ) <span class="hljs-keyword">as</span> <span class="hljs-keyword">rank</span>
+<span class="hljs-keyword">FROM</span> articles
+<span class="hljs-keyword">WHERE</span> search_vector @@ to_tsquery(<span class="hljs-string">'english'</span>, <span class="hljs-string">'PostgreSQL'</span>)
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">rank</span> <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<h3 id="full-text-search-index">Full-Text Search Index</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- GIN index for full-text search</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">INDEX</span> idx_articles_search <span class="hljs-keyword">ON</span> articles <span class="hljs-keyword">USING</span> gin(search_vector);
+
+<span class="hljs-comment">-- GiST index (smaller, slower updates)</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">INDEX</span> idx_articles_search_gist <span class="hljs-keyword">ON</span> articles <span class="hljs-keyword">USING</span> gist(search_vector);
+</div></code></pre>
+<hr>
+<h2 id="performance-optimization">Performance Optimization</h2>
+<h3 id="query-analysis">Query Analysis</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- EXPLAIN shows query execution plan</span>
+<span class="hljs-keyword">EXPLAIN</span> <span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> salary &gt; <span class="hljs-number">50000</span>;
+
+<span class="hljs-comment">-- EXPLAIN ANALYZE shows actual execution statistics</span>
+<span class="hljs-keyword">EXPLAIN</span> <span class="hljs-keyword">ANALYZE</span> <span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> salary &gt; <span class="hljs-number">50000</span>;
+
+<span class="hljs-comment">-- More detailed analysis</span>
+<span class="hljs-keyword">EXPLAIN</span> (<span class="hljs-keyword">ANALYZE</span>, BUFFERS, VERBOSE) 
+<span class="hljs-keyword">SELECT</span> e.first_name, d.department_name
+<span class="hljs-keyword">FROM</span> employees e
+<span class="hljs-keyword">JOIN</span> departments d <span class="hljs-keyword">ON</span> e.dept_id = d.id
+<span class="hljs-keyword">WHERE</span> e.salary &gt; <span class="hljs-number">50000</span>;
+</div></code></pre>
+<h3 id="query-optimization-techniques">Query Optimization Techniques</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Use appropriate indexes</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">INDEX</span> idx_employees_salary <span class="hljs-keyword">ON</span> employees(salary);
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">INDEX</span> idx_employees_dept_salary <span class="hljs-keyword">ON</span> employees(dept_id, salary);
+
+<span class="hljs-comment">-- Avoid SELECT * in production</span>
+<span class="hljs-comment">-- Instead of: SELECT * FROM employees;</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">id</span>, first_name, last_name, salary <span class="hljs-keyword">FROM</span> employees;
+
+<span class="hljs-comment">-- Use LIMIT for large result sets</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> salary <span class="hljs-keyword">DESC</span> <span class="hljs-keyword">LIMIT</span> <span class="hljs-number">10</span>;
+
+<span class="hljs-comment">-- Use EXISTS instead of IN for large datasets</span>
+<span class="hljs-comment">-- Less efficient:</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> dept_id <span class="hljs-keyword">IN</span> (<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">id</span> <span class="hljs-keyword">FROM</span> departments <span class="hljs-keyword">WHERE</span> location = <span class="hljs-string">'NY'</span>);
+
+<span class="hljs-comment">-- More efficient:</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees e <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">EXISTS</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span> <span class="hljs-keyword">FROM</span> departments d <span class="hljs-keyword">WHERE</span> d.id = e.dept_id <span class="hljs-keyword">AND</span> d.location = <span class="hljs-string">'NY'</span>
+);
+</div></code></pre>
+<h3 id="table-partitioning">Table Partitioning</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Range partitioning by date</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> sales (
+    <span class="hljs-keyword">id</span> <span class="hljs-built_in">SERIAL</span>,
+    sale_date <span class="hljs-built_in">DATE</span>,
+    amount <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">10</span>,<span class="hljs-number">2</span>),
+    customer_id <span class="hljs-built_in">INTEGER</span>
+) <span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">RANGE</span> (sale_date);
+
+<span class="hljs-comment">-- Create partitions</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> sales_2023 <span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">OF</span> sales
+    <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">VALUES</span> <span class="hljs-keyword">FROM</span> (<span class="hljs-string">'2023-01-01'</span>) <span class="hljs-keyword">TO</span> (<span class="hljs-string">'2024-01-01'</span>);
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> sales_2024 <span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">OF</span> sales
+    <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">VALUES</span> <span class="hljs-keyword">FROM</span> (<span class="hljs-string">'2024-01-01'</span>) <span class="hljs-keyword">TO</span> (<span class="hljs-string">'2025-01-01'</span>);
+
+<span class="hljs-comment">-- Hash partitioning</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> customers (
+    <span class="hljs-keyword">id</span> <span class="hljs-built_in">SERIAL</span>,
+    <span class="hljs-keyword">name</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    email <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>)
+) <span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">HASH</span> (<span class="hljs-keyword">id</span>);
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> customers_p1 <span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">OF</span> customers
+    <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">VALUES</span> <span class="hljs-keyword">WITH</span> (modulus <span class="hljs-number">4</span>, <span class="hljs-keyword">remainder</span> <span class="hljs-number">0</span>);
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> customers_p2 <span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">OF</span> customers
+    <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">VALUES</span> <span class="hljs-keyword">WITH</span> (modulus <span class="hljs-number">4</span>, <span class="hljs-keyword">remainder</span> <span class="hljs-number">1</span>);
+</div></code></pre>
+<h3 id="maintenance-commands">Maintenance Commands</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Update table statistics</span>
+<span class="hljs-keyword">ANALYZE</span> employees;
+<span class="hljs-keyword">ANALYZE</span>; <span class="hljs-comment">-- All tables</span>
+
+<span class="hljs-comment">-- Vacuum to reclaim space</span>
+VACUUM employees;
+VACUUM FULL employees; <span class="hljs-comment">-- More thorough but locks table</span>
+
+<span class="hljs-comment">-- Vacuum and analyze together</span>
+VACUUM <span class="hljs-keyword">ANALYZE</span> employees;
+
+<span class="hljs-comment">-- Reindex</span>
+REINDEX TABLE employees;
+REINDEX DATABASE mydatabase;
+</div></code></pre>
+<hr>
+<h2 id="backup-and-restore">Backup and Restore</h2>
+<h3 id="using-pgdump">Using pg_dump</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Backup single database</span>
+pg_dump -U username -h localhost -d database_name &gt; backup.sql
+
+<span class="hljs-comment"># Backup with compression</span>
+pg_dump -U username -h localhost -d database_name | gzip &gt; backup.sql.gz
+
+<span class="hljs-comment"># Backup in custom format</span>
+pg_dump -U username -h localhost -d database_name -Fc &gt; backup.dump
+
+<span class="hljs-comment"># Backup specific tables</span>
+pg_dump -U username -h localhost -d database_name -t employees -t departments &gt; tables_backup.sql
+
+<span class="hljs-comment"># Backup schema only</span>
+pg_dump -U username -h localhost -d database_name --schema-only &gt; schema_backup.sql
+
+<span class="hljs-comment"># Backup data only</span>
+pg_dump -U username -h localhost -d database_name --data-only &gt; data_backup.sql
+</div></code></pre>
+<h3 id="using-pgrestore">Using pg_restore</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Restore from SQL file</span>
+psql -U username -h localhost -d database_name &lt; backup.sql
+
+<span class="hljs-comment"># Restore from custom format</span>
+pg_restore -U username -h localhost -d database_name backup.dump
+
+<span class="hljs-comment"># Restore with options</span>
+pg_restore -U username -h localhost -d database_name --clean --<span class="hljs-keyword">if</span>-exists backup.dump
+
+<span class="hljs-comment"># Restore specific tables</span>
+pg_restore -U username -h localhost -d database_name -t employees backup.dump
+</div></code></pre>
+<h3 id="using-pgdumpall">Using pg_dumpall</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Backup all databases</span>
+pg_dumpall -U postgres &gt; all_databases.sql
+
+<span class="hljs-comment"># Backup only global objects (users, roles, etc.)</span>
+pg_dumpall -U postgres --globals-only &gt; globals.sql
+
+<span class="hljs-comment"># Restore all databases</span>
+psql -U postgres &lt; all_databases.sql
+</div></code></pre>
+<h3 id="point-in-time-recovery-pitr">Point-in-Time Recovery (PITR)</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Enable WAL archiving in postgresql.conf</span>
+<span class="hljs-comment">-- wal_level = replica</span>
+<span class="hljs-comment">-- archive_mode = on</span>
+<span class="hljs-comment">-- archive_command = 'cp %p /path/to/archive/%f'</span>
+
+<span class="hljs-comment">-- Create base backup</span>
+<span class="hljs-keyword">SELECT</span> pg_start_backup(<span class="hljs-string">'backup_label'</span>);
+<span class="hljs-comment">-- Copy data directory</span>
+<span class="hljs-keyword">SELECT</span> pg_stop_backup();
+
+<span class="hljs-comment">-- Restore to specific time</span>
+<span class="hljs-comment">-- Create recovery.conf with:</span>
+<span class="hljs-comment">-- restore_command = 'cp /path/to/archive/%f %p'</span>
+<span class="hljs-comment">-- recovery_target_time = '2023-12-01 12:00:00'</span>
+</div></code></pre>
+<hr>
+<h2 id="user-management-and-security">User Management and Security</h2>
+<h3 id="creating-users-and-roles">Creating Users and Roles</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Create user</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">USER</span> john_doe <span class="hljs-keyword">WITH</span> <span class="hljs-keyword">PASSWORD</span> <span class="hljs-string">'secure_password'</span>;
+
+<span class="hljs-comment">-- Create role</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">ROLE</span> developer;
+
+<span class="hljs-comment">-- Create user with specific attributes</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">USER</span> admin_user <span class="hljs-keyword">WITH</span> 
+    <span class="hljs-keyword">PASSWORD</span> <span class="hljs-string">'admin_password'</span>
+    CREATEDB
+    CREATEROLE
+    LOGIN;
+
+<span class="hljs-comment">-- Create role with inheritance</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">ROLE</span> manager INHERIT;
+</div></code></pre>
+<h3 id="granting-permissions">Granting Permissions</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Grant database permissions</span>
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">CONNECT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DATABASE</span> company_db <span class="hljs-keyword">TO</span> john_doe;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">USAGE</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">SCHEMA</span> <span class="hljs-keyword">public</span> <span class="hljs-keyword">TO</span> john_doe;
+
+<span class="hljs-comment">-- Grant table permissions</span>
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> employees <span class="hljs-keyword">TO</span> john_doe;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">INSERT</span>, <span class="hljs-keyword">UPDATE</span> <span class="hljs-keyword">ON</span> employees <span class="hljs-keyword">TO</span> john_doe;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">PRIVILEGES</span> <span class="hljs-keyword">ON</span> employees <span class="hljs-keyword">TO</span> admin_user;
+
+<span class="hljs-comment">-- Grant permissions on all tables in schema</span>
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">TABLES</span> <span class="hljs-keyword">IN</span> <span class="hljs-keyword">SCHEMA</span> <span class="hljs-keyword">public</span> <span class="hljs-keyword">TO</span> developer;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">PRIVILEGES</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">TABLES</span> <span class="hljs-keyword">IN</span> <span class="hljs-keyword">SCHEMA</span> <span class="hljs-keyword">public</span> <span class="hljs-keyword">TO</span> admin_user;
+
+<span class="hljs-comment">-- Grant permissions on future tables</span>
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">PRIVILEGES</span> <span class="hljs-keyword">IN</span> <span class="hljs-keyword">SCHEMA</span> <span class="hljs-keyword">public</span> 
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">TABLES</span> <span class="hljs-keyword">TO</span> developer;
+
+<span class="hljs-comment">-- Grant sequence permissions (for SERIAL columns)</span>
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">USAGE</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">ALL</span> SEQUENCES <span class="hljs-keyword">IN</span> <span class="hljs-keyword">SCHEMA</span> <span class="hljs-keyword">public</span> <span class="hljs-keyword">TO</span> john_doe;
+</div></code></pre>
+<h3 id="role-management">Role Management</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Assign role to user</span>
+<span class="hljs-keyword">GRANT</span> developer <span class="hljs-keyword">TO</span> john_doe;
+
+<span class="hljs-comment">-- Remove role from user</span>
+<span class="hljs-keyword">REVOKE</span> developer <span class="hljs-keyword">FROM</span> john_doe;
+
+<span class="hljs-comment">-- Create role hierarchy</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">ROLE</span> employee;
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">ROLE</span> manager;
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">ROLE</span> <span class="hljs-keyword">admin</span>;
+
+<span class="hljs-keyword">GRANT</span> employee <span class="hljs-keyword">TO</span> manager;
+<span class="hljs-keyword">GRANT</span> manager <span class="hljs-keyword">TO</span> <span class="hljs-keyword">admin</span>;
+</div></code></pre>
+<h3 id="row-level-security-rls">Row Level Security (RLS)</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Enable RLS on table</span>
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> employees <span class="hljs-keyword">ENABLE</span> <span class="hljs-keyword">ROW</span> <span class="hljs-keyword">LEVEL</span> <span class="hljs-keyword">SECURITY</span>;
+
+<span class="hljs-comment">-- Create policy</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">POLICY</span> employee_policy <span class="hljs-keyword">ON</span> employees
+    <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">SELECT</span>
+    <span class="hljs-keyword">USING</span> (user_id = current_user_id());
+
+<span class="hljs-comment">-- Create policy for specific role</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">POLICY</span> manager_policy <span class="hljs-keyword">ON</span> employees
+    <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">ALL</span>
+    <span class="hljs-keyword">TO</span> manager_role
+    <span class="hljs-keyword">USING</span> (department_id <span class="hljs-keyword">IN</span> (
+        <span class="hljs-keyword">SELECT</span> department_id <span class="hljs-keyword">FROM</span> managers <span class="hljs-keyword">WHERE</span> user_id = current_user_id()
+    ));
+
+<span class="hljs-comment">-- Disable RLS for specific user</span>
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> employees <span class="hljs-keyword">FORCE</span> <span class="hljs-keyword">ROW</span> <span class="hljs-keyword">LEVEL</span> <span class="hljs-keyword">SECURITY</span>;
+</div></code></pre>
+<h3 id="security-best-practices">Security Best Practices</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Change default passwords</span>
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">USER</span> postgres <span class="hljs-keyword">PASSWORD</span> <span class="hljs-string">'new_secure_password'</span>;
+
+<span class="hljs-comment">-- Revoke public permissions</span>
+<span class="hljs-keyword">REVOKE</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DATABASE</span> company_db <span class="hljs-keyword">FROM</span> <span class="hljs-keyword">public</span>;
+<span class="hljs-keyword">REVOKE</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">SCHEMA</span> <span class="hljs-keyword">public</span> <span class="hljs-keyword">FROM</span> <span class="hljs-keyword">public</span>;
+
+<span class="hljs-comment">-- Create application-specific roles</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">ROLE</span> app_read;
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">ROLE</span> app_write;
+
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">CONNECT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DATABASE</span> company_db <span class="hljs-keyword">TO</span> app_read;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">USAGE</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">SCHEMA</span> <span class="hljs-keyword">public</span> <span class="hljs-keyword">TO</span> app_read;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">TABLES</span> <span class="hljs-keyword">IN</span> <span class="hljs-keyword">SCHEMA</span> <span class="hljs-keyword">public</span> <span class="hljs-keyword">TO</span> app_read;
+
+<span class="hljs-comment">-- Use connection limits</span>
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">USER</span> john_doe <span class="hljs-keyword">CONNECTION</span> <span class="hljs-keyword">LIMIT</span> <span class="hljs-number">5</span>;
+
+<span class="hljs-comment">-- Set password expiration</span>
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">USER</span> john_doe VALID <span class="hljs-keyword">UNTIL</span> <span class="hljs-string">'2024-12-31'</span>;
+</div></code></pre>
+<hr>
+<h2 id="postgresql-specific-features">PostgreSQL-Specific Features</h2>
+<h3 id="arrays">Arrays</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Create table with array column</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> students (
+    <span class="hljs-keyword">id</span> <span class="hljs-built_in">SERIAL</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    <span class="hljs-keyword">name</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    grades <span class="hljs-built_in">INTEGER</span>[],
+    subjects <span class="hljs-built_in">TEXT</span>[]
+);
+
+<span class="hljs-comment">-- Insert array data</span>
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> students (<span class="hljs-keyword">name</span>, grades, subjects) <span class="hljs-keyword">VALUES</span>
+(<span class="hljs-string">'John Doe'</span>, <span class="hljs-built_in">ARRAY</span>[<span class="hljs-number">85</span>, <span class="hljs-number">90</span>, <span class="hljs-number">78</span>], <span class="hljs-built_in">ARRAY</span>[<span class="hljs-string">'Math'</span>, <span class="hljs-string">'Science'</span>, <span class="hljs-string">'English'</span>]),
+(<span class="hljs-string">'Jane Smith'</span>, <span class="hljs-string">'{92, 88, 95}'</span>, <span class="hljs-string">'{"History", "Art", "Music"}'</span>);
+
+<span class="hljs-comment">-- Query array data</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">name</span>, grades[<span class="hljs-number">1</span>] <span class="hljs-keyword">as</span> first_grade <span class="hljs-keyword">FROM</span> students;
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">name</span> <span class="hljs-keyword">FROM</span> students <span class="hljs-keyword">WHERE</span> <span class="hljs-number">85</span> = <span class="hljs-keyword">ANY</span>(grades);
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">name</span> <span class="hljs-keyword">FROM</span> students <span class="hljs-keyword">WHERE</span> grades @&gt; <span class="hljs-built_in">ARRAY</span>[<span class="hljs-number">90</span>];
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">name</span> <span class="hljs-keyword">FROM</span> students <span class="hljs-keyword">WHERE</span> <span class="hljs-string">'Math'</span> = <span class="hljs-keyword">ANY</span>(subjects);
+
+<span class="hljs-comment">-- Array functions</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">name</span>, array_length(grades, <span class="hljs-number">1</span>) <span class="hljs-keyword">as</span> num_grades <span class="hljs-keyword">FROM</span> students;
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">name</span>, <span class="hljs-keyword">unnest</span>(subjects) <span class="hljs-keyword">as</span> subject <span class="hljs-keyword">FROM</span> students;
+<span class="hljs-keyword">SELECT</span> array_agg(<span class="hljs-keyword">name</span>) <span class="hljs-keyword">as</span> all_students <span class="hljs-keyword">FROM</span> students;
+</div></code></pre>
+<h3 id="custom-data-types">Custom Data Types</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Create enum type</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TYPE</span> mood <span class="hljs-keyword">AS</span> ENUM (<span class="hljs-string">'sad'</span>, <span class="hljs-string">'ok'</span>, <span class="hljs-string">'happy'</span>);
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> person (
+    <span class="hljs-keyword">name</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    current_mood mood
+);
+
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> person <span class="hljs-keyword">VALUES</span> (<span class="hljs-string">'Alice'</span>, <span class="hljs-string">'happy'</span>), (<span class="hljs-string">'Bob'</span>, <span class="hljs-string">'sad'</span>);
+
+<span class="hljs-comment">-- Create composite type</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TYPE</span> address <span class="hljs-keyword">AS</span> (
+    street <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    city <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    state <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">2</span>),
+    zip <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">10</span>)
+);
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> companies (
+    <span class="hljs-keyword">name</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    headquarters address
+);
+
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> companies <span class="hljs-keyword">VALUES</span> 
+(<span class="hljs-string">'Tech Corp'</span>, <span class="hljs-keyword">ROW</span>(<span class="hljs-string">'123 Main St'</span>, <span class="hljs-string">'San Francisco'</span>, <span class="hljs-string">'CA'</span>, <span class="hljs-string">'94105'</span>));
+</div></code></pre>
+<h3 id="extensions">Extensions</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- List available extensions</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> pg_available_extensions;
+
+<span class="hljs-comment">-- Install extension</span>
+<span class="hljs-keyword">CREATE</span> EXTENSION <span class="hljs-keyword">IF</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> <span class="hljs-string">"uuid-ossp"</span>;
+<span class="hljs-keyword">CREATE</span> EXTENSION <span class="hljs-keyword">IF</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> <span class="hljs-string">"hstore"</span>;
+<span class="hljs-keyword">CREATE</span> EXTENSION <span class="hljs-keyword">IF</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> <span class="hljs-string">"pg_trgm"</span>;
+
+<span class="hljs-comment">-- Use UUID extension</span>
+<span class="hljs-keyword">SELECT</span> uuid_generate_v4();
+
+<span class="hljs-comment">-- Use hstore (key-value store)</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> products (
+    <span class="hljs-keyword">id</span> <span class="hljs-built_in">SERIAL</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    <span class="hljs-keyword">name</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    <span class="hljs-keyword">attributes</span> hstore
+);
+
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> products (<span class="hljs-keyword">name</span>, <span class="hljs-keyword">attributes</span>) <span class="hljs-keyword">VALUES</span>
+(<span class="hljs-string">'Laptop'</span>, <span class="hljs-string">'brand =&gt; "Dell", cpu =&gt; "i7", ram =&gt; "16GB"'</span>);
+
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">name</span>, <span class="hljs-keyword">attributes</span>-&gt;<span class="hljs-string">'brand'</span> <span class="hljs-keyword">as</span> brand <span class="hljs-keyword">FROM</span> products;
+</div></code></pre>
+<h3 id="advanced-data-types">Advanced Data Types</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Range types</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> reservations (
+    <span class="hljs-keyword">id</span> <span class="hljs-built_in">SERIAL</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    room_id <span class="hljs-built_in">INTEGER</span>,
+    during tsrange
+);
+
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> reservations (room_id, during) <span class="hljs-keyword">VALUES</span>
+(<span class="hljs-number">1</span>, <span class="hljs-string">'[2023-12-01 10:00, 2023-12-01 12:00)'</span>),
+(<span class="hljs-number">2</span>, <span class="hljs-string">'[2023-12-01 14:00, 2023-12-01 16:00)'</span>);
+
+<span class="hljs-comment">-- Check for overlapping reservations</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> reservations 
+<span class="hljs-keyword">WHERE</span> during &amp;&amp; <span class="hljs-string">'[2023-12-01 11:00, 2023-12-01 13:00)'</span>;
+
+<span class="hljs-comment">-- Network address types</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> servers (
+    <span class="hljs-keyword">id</span> <span class="hljs-built_in">SERIAL</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    <span class="hljs-keyword">name</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    ip_address inet,
+    network cidr
+);
+
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> servers (<span class="hljs-keyword">name</span>, ip_address, network) <span class="hljs-keyword">VALUES</span>
+(<span class="hljs-string">'Web Server'</span>, <span class="hljs-string">'192.168.1.100'</span>, <span class="hljs-string">'192.168.1.0/24'</span>);
+
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> servers <span class="hljs-keyword">WHERE</span> ip_address &lt;&lt; <span class="hljs-string">'192.168.1.0/24'</span>;
+</div></code></pre>
+<h3 id="regular-expressions">Regular Expressions</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Pattern matching with regex</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> first_name ~ <span class="hljs-string">'^[A-M]'</span>; <span class="hljs-comment">-- Starts with A-M</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees <span class="hljs-keyword">WHERE</span> email ~* <span class="hljs-string">'\.com;     -- Ends with .com (case-insensitive)
+
+-- Extract with regex
+SELECT 
+    email,
+    substring(email from '</span>([^@]+)@<span class="hljs-string">') as username,
+    substring(email from '</span>@(.+)<span class="hljs-string">') as domain
+FROM employees;
+
+-- Replace with regex
+SELECT regexp_replace(phone, '</span>[^<span class="hljs-number">0</span><span class="hljs-number">-9</span>]<span class="hljs-string">', '', '</span>g<span class="hljs-string">') as clean_phone
+FROM employees;
+</span></div></code></pre>
+<hr>
+<h2 id="common-use-cases-and-examples">Common Use Cases and Examples</h2>
+<h3 id="data-migration">Data Migration</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Migrate data between tables</span>
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> new_employees (first_name, last_name, email, salary)
+<span class="hljs-keyword">SELECT</span> first_name, last_name, email, salary
+<span class="hljs-keyword">FROM</span> old_employees
+<span class="hljs-keyword">WHERE</span> is_active = <span class="hljs-literal">true</span>;
+
+<span class="hljs-comment">-- Bulk update with JOIN</span>
+<span class="hljs-keyword">UPDATE</span> employees 
+<span class="hljs-keyword">SET</span> department_id = d.id
+<span class="hljs-keyword">FROM</span> departments d
+<span class="hljs-keyword">WHERE</span> employees.department_name = d.name;
+
+<span class="hljs-comment">-- Copy table structure</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> employees_backup (<span class="hljs-keyword">LIKE</span> employees <span class="hljs-keyword">INCLUDING</span> <span class="hljs-keyword">ALL</span>);
+
+<span class="hljs-comment">-- Copy table with data</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> employees_backup <span class="hljs-keyword">AS</span> <span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> employees;
+</div></code></pre>
+<h3 id="reporting-queries">Reporting Queries</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Monthly sales report</span>
+<span class="hljs-keyword">SELECT</span> 
+    DATE_TRUNC(<span class="hljs-string">'month'</span>, order_date) <span class="hljs-keyword">as</span> <span class="hljs-keyword">month</span>,
+    <span class="hljs-keyword">COUNT</span>(*) <span class="hljs-keyword">as</span> total_orders,
+    <span class="hljs-keyword">SUM</span>(amount) <span class="hljs-keyword">as</span> total_revenue,
+    <span class="hljs-keyword">AVG</span>(amount) <span class="hljs-keyword">as</span> avg_order_value
+<span class="hljs-keyword">FROM</span> orders
+<span class="hljs-keyword">WHERE</span> order_date &gt;= <span class="hljs-keyword">CURRENT_DATE</span> - <span class="hljs-built_in">INTERVAL</span> <span class="hljs-string">'12 months'</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> DATE_TRUNC(<span class="hljs-string">'month'</span>, order_date)
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">month</span>;
+
+<span class="hljs-comment">-- Top performers by department</span>
+<span class="hljs-keyword">WITH</span> dept_rankings <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span> 
+        department,
+        first_name,
+        last_name,
+        salary,
+        ROW_NUMBER() <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> department <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> salary <span class="hljs-keyword">DESC</span>) <span class="hljs-keyword">as</span> <span class="hljs-keyword">rank</span>
+    <span class="hljs-keyword">FROM</span> employees
+)
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> dept_rankings <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">rank</span> &lt;= <span class="hljs-number">3</span>;
+
+<span class="hljs-comment">-- Year-over-year comparison</span>
+<span class="hljs-keyword">SELECT</span> 
+    product_id,
+    <span class="hljs-keyword">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> <span class="hljs-keyword">EXTRACT</span>(<span class="hljs-keyword">YEAR</span> <span class="hljs-keyword">FROM</span> sale_date) = <span class="hljs-number">2023</span> <span class="hljs-keyword">THEN</span> amount <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0</span> <span class="hljs-keyword">END</span>) <span class="hljs-keyword">as</span> sales_2023,
+    <span class="hljs-keyword">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> <span class="hljs-keyword">EXTRACT</span>(<span class="hljs-keyword">YEAR</span> <span class="hljs-keyword">FROM</span> sale_date) = <span class="hljs-number">2024</span> <span class="hljs-keyword">THEN</span> amount <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0</span> <span class="hljs-keyword">END</span>) <span class="hljs-keyword">as</span> sales_2024,
+    <span class="hljs-keyword">ROUND</span>(
+        (<span class="hljs-keyword">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> <span class="hljs-keyword">EXTRACT</span>(<span class="hljs-keyword">YEAR</span> <span class="hljs-keyword">FROM</span> sale_date) = <span class="hljs-number">2024</span> <span class="hljs-keyword">THEN</span> amount <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0</span> <span class="hljs-keyword">END</span>) - 
+         <span class="hljs-keyword">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> <span class="hljs-keyword">EXTRACT</span>(<span class="hljs-keyword">YEAR</span> <span class="hljs-keyword">FROM</span> sale_date) = <span class="hljs-number">2023</span> <span class="hljs-keyword">THEN</span> amount <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0</span> <span class="hljs-keyword">END</span>)) * <span class="hljs-number">100.0</span> /
+        <span class="hljs-keyword">NULLIF</span>(<span class="hljs-keyword">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> <span class="hljs-keyword">EXTRACT</span>(<span class="hljs-keyword">YEAR</span> <span class="hljs-keyword">FROM</span> sale_date) = <span class="hljs-number">2023</span> <span class="hljs-keyword">THEN</span> amount <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0</span> <span class="hljs-keyword">END</span>), <span class="hljs-number">0</span>), <span class="hljs-number">2</span>
+    ) <span class="hljs-keyword">as</span> growth_percentage
+<span class="hljs-keyword">FROM</span> sales
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> product_id;
+</div></code></pre>
+<h3 id="data-validation">Data Validation</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Find duplicate records</span>
+<span class="hljs-keyword">SELECT</span> email, <span class="hljs-keyword">COUNT</span>(*)
+<span class="hljs-keyword">FROM</span> employees
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> email
+<span class="hljs-keyword">HAVING</span> <span class="hljs-keyword">COUNT</span>(*) &gt; <span class="hljs-number">1</span>;
+
+<span class="hljs-comment">-- Find orphaned records</span>
+<span class="hljs-keyword">SELECT</span> e.* 
+<span class="hljs-keyword">FROM</span> employees e
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> departments d <span class="hljs-keyword">ON</span> e.dept_id = d.id
+<span class="hljs-keyword">WHERE</span> d.id <span class="hljs-keyword">IS</span> <span class="hljs-literal">NULL</span>;
+
+<span class="hljs-comment">-- Data quality checks</span>
+<span class="hljs-keyword">SELECT</span> 
+    <span class="hljs-string">'employees'</span> <span class="hljs-keyword">as</span> table_name,
+    <span class="hljs-keyword">COUNT</span>(*) <span class="hljs-keyword">as</span> total_records,
+    <span class="hljs-keyword">COUNT</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> email <span class="hljs-keyword">IS</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">OR</span> email = <span class="hljs-string">''</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">END</span>) <span class="hljs-keyword">as</span> missing_email,
+    <span class="hljs-keyword">COUNT</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> salary &lt;= <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">END</span>) <span class="hljs-keyword">as</span> invalid_salary,
+    <span class="hljs-keyword">COUNT</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> hire_date &gt; <span class="hljs-keyword">CURRENT_DATE</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">END</span>) <span class="hljs-keyword">as</span> future_hire_date
+<span class="hljs-keyword">FROM</span> employees;
+</div></code></pre>
+<hr>
+<h2 id="quick-reference-commands">Quick Reference Commands</h2>
+<h3 id="psql-commands">psql Commands</h3>
+<pre class="hljs"><code><div>\l                  <span class="hljs-comment"># List databases</span>
+\c dbname           <span class="hljs-comment"># Connect to database</span>
+\dt                 <span class="hljs-comment"># List tables</span>
+\d table_name       <span class="hljs-comment"># Describe table</span>
+\du                 <span class="hljs-comment"># List users</span>
+\dp                 <span class="hljs-comment"># List table permissions</span>
+\df                 <span class="hljs-comment"># List functions</span>
+\dv                 <span class="hljs-comment"># List views</span>
+\di                 <span class="hljs-comment"># List indexes</span>
+\q                  <span class="hljs-comment"># Quit psql</span>
+\h                  <span class="hljs-comment"># Help with SQL commands</span>
+\?                  <span class="hljs-comment"># Help with psql commands</span>
+\timing on          <span class="hljs-comment"># Show query execution time</span>
+\x                  <span class="hljs-comment"># Toggle expanded output</span>
+</div></code></pre>
+<h3 id="useful-system-tables">Useful System Tables</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Database information</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> pg_database;
+
+<span class="hljs-comment">-- Table information</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> information_schema.tables <span class="hljs-keyword">WHERE</span> table_schema = <span class="hljs-string">'public'</span>;
+
+<span class="hljs-comment">-- Column information</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> information_schema.columns <span class="hljs-keyword">WHERE</span> table_name = <span class="hljs-string">'employees'</span>;
+
+<span class="hljs-comment">-- Index information</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> pg_indexes <span class="hljs-keyword">WHERE</span> tablename = <span class="hljs-string">'employees'</span>;
+
+<span class="hljs-comment">-- Current connections</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> pg_stat_activity;
+
+<span class="hljs-comment">-- Database sizes</span>
+<span class="hljs-keyword">SELECT</span> 
+    datname,
+    pg_size_pretty(pg_database_size(datname)) <span class="hljs-keyword">as</span> <span class="hljs-keyword">size</span>
+<span class="hljs-keyword">FROM</span> pg_database;
+
+<span class="hljs-comment">-- Table sizes</span>
+<span class="hljs-keyword">SELECT</span> 
+    schemaname,
+    tablename,
+    pg_size_pretty(pg_total_relation_size(schemaname||<span class="hljs-string">'.'</span>||tablename)) <span class="hljs-keyword">as</span> <span class="hljs-keyword">size</span>
+<span class="hljs-keyword">FROM</span> pg_tables
+<span class="hljs-keyword">WHERE</span> schemaname = <span class="hljs-string">'public'</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> pg_total_relation_size(schemaname||<span class="hljs-string">'.'</span>||tablename) <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<hr>
+<h2 id="performance-tips-summary">Performance Tips Summary</h2>
+<ol>
+<li><strong>Use appropriate indexes</strong> - Create indexes on frequently queried columns</li>
+<li>**Avoid SELECT *** - Only select columns you need</li>
+<li><strong>Use LIMIT</strong> - Limit result sets when possible</li>
+<li><strong>Use EXPLAIN</strong> - Analyze query execution plans</li>
+<li><strong>Keep statistics updated</strong> - Run ANALYZE regularly</li>
+<li><strong>Use connection pooling</strong> - For high-traffic applications</li>
+<li><strong>Partition large tables</strong> - Split large tables into smaller ones</li>
+<li><strong>Use appropriate data types</strong> - Choose the most efficient data types</li>
+<li><strong>Avoid unnecessary JOINs</strong> - Only join tables when needed</li>
+<li><strong>Monitor slow queries</strong> - Use pg_stat_statements extension</li>
+</ol>
+<hr>
+<p>This guide covers PostgreSQL from basic concepts to advanced features. Practice with real data and gradually work through the examples to build your expertise. Remember that PostgreSQL is a powerful database system with many more features than covered here - this guide provides a solid foundation for further exploration.</p>
+
+</body>
+</html>

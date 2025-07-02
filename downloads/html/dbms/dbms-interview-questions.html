@@ -1,0 +1,1933 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>dbms-interview-questions.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="dbms-interview-questions-for-beginners---complete-guide">DBMS Interview Questions for Beginners - Complete Guide</h1>
+<h2 id="1-what-is-dbms-what-are-its-advantages"><strong>1. What is DBMS? What are its advantages?</strong></h2>
+<p><strong>Answer:</strong> DBMS (Database Management System) is software that manages databases and provides an interface between the database and users/applications.</p>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>Data redundancy control</li>
+<li>Data consistency</li>
+<li>Data security</li>
+<li>Data integrity</li>
+<li>Concurrent access</li>
+<li>Backup and recovery</li>
+</ul>
+<hr>
+<h2 id="2-what-is-the-difference-between-dbms-and-rdbms"><strong>2. What is the difference between DBMS and RDBMS?</strong></h2>
+<table>
+<thead>
+<tr>
+<th>DBMS</th>
+<th>RDBMS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stores data in files</td>
+<td>Stores data in tables</td>
+</tr>
+<tr>
+<td>No relationships between data</td>
+<td>Relationships exist between tables</td>
+</tr>
+<tr>
+<td>No ACID properties</td>
+<td>Follows ACID properties</td>
+</tr>
+<tr>
+<td>Example: File systems</td>
+<td>Example: MySQL, Oracle</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="3-what-are-the-different-types-of-databases"><strong>3. What are the different types of databases?</strong></h2>
+<p><strong>Answer:</strong></p>
+<ul>
+<li><strong>Hierarchical Database:</strong> Tree-like structure</li>
+<li><strong>Network Database:</strong> Graph structure with multiple parent-child relationships</li>
+<li><strong>Relational Database:</strong> Data stored in tables with relationships</li>
+<li><strong>Object-Oriented Database:</strong> Data stored as objects</li>
+<li><strong>NoSQL Database:</strong> Non-relational databases (MongoDB, Cassandra)</li>
+</ul>
+<hr>
+<h2 id="4-what-is-a-primary-key-write-sql-to-create-one"><strong>4. What is a Primary Key? Write SQL to create one.</strong></h2>
+<p><strong>Answer:</strong> Primary Key uniquely identifies each record in a table. It cannot be NULL and must be unique.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Creating table with primary key</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Students (
+    student_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    <span class="hljs-keyword">name</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    email <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>)
+);
+
+<span class="hljs-comment">-- Adding primary key to existing table</span>
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> Students <span class="hljs-keyword">ADD</span> PRIMARY <span class="hljs-keyword">KEY</span> (student_id);
+</div></code></pre>
+<hr>
+<h2 id="5-what-is-a-foreign-key-provide-an-example"><strong>5. What is a Foreign Key? Provide an example.</strong></h2>
+<p><strong>Answer:</strong> Foreign Key is a field that refers to the Primary Key of another table, establishing relationships between tables.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Parent table</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Departments (
+    dept_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    dept_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>)
+);
+
+<span class="hljs-comment">-- Child table with foreign key</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Employees (
+    emp_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    emp_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    dept_id <span class="hljs-built_in">INT</span>,
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (dept_id) <span class="hljs-keyword">REFERENCES</span> Departments(dept_id)
+);
+</div></code></pre>
+<hr>
+<h2 id="6-what-are-the-different-types-of-keys-in-dbms"><strong>6. What are the different types of keys in DBMS?</strong></h2>
+<p><strong>Answer:</strong></p>
+<ul>
+<li><strong>Primary Key:</strong> Uniquely identifies records</li>
+<li><strong>Foreign Key:</strong> References primary key of another table</li>
+<li><strong>Candidate Key:</strong> Attributes that can become primary key</li>
+<li><strong>Super Key:</strong> Set of attributes that uniquely identifies records</li>
+<li><strong>Composite Key:</strong> Primary key made of multiple columns</li>
+<li><strong>Unique Key:</strong> Ensures uniqueness but allows one NULL value</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Example of composite key</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> OrderDetails (
+    order_id <span class="hljs-built_in">INT</span>,
+    product_id <span class="hljs-built_in">INT</span>,
+    quantity <span class="hljs-built_in">INT</span>,
+    PRIMARY <span class="hljs-keyword">KEY</span> (order_id, product_id)
+);
+</div></code></pre>
+<hr>
+<h2 id="7-what-is-normalization-explain-1nf-2nf-and-3nf"><strong>7. What is Normalization? Explain 1NF, 2NF, and 3NF.</strong></h2>
+<p><strong>Answer:</strong> Normalization is the process of organizing data in a database to reduce redundancy.</p>
+<p><strong>1NF (First Normal Form):</strong></p>
+<ul>
+<li>Each column contains atomic values</li>
+<li>No repeating groups</li>
+</ul>
+<p><strong>2NF (Second Normal Form):</strong></p>
+<ul>
+<li>Must be in 1NF</li>
+<li>No partial dependencies on primary key</li>
+</ul>
+<p><strong>3NF (Third Normal Form):</strong></p>
+<ul>
+<li>Must be in 2NF</li>
+<li>No transitive dependencies</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Unnormalized table</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> StudentCourses (
+    student_id <span class="hljs-built_in">INT</span>,
+    student_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    course1 <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    course2 <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>)
+);
+
+<span class="hljs-comment">-- Normalized tables (1NF, 2NF, 3NF)</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Students (
+    student_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    student_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>)
+);
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Courses (
+    course_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    course_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>)
+);
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Enrollments (
+    student_id <span class="hljs-built_in">INT</span>,
+    course_id <span class="hljs-built_in">INT</span>,
+    PRIMARY <span class="hljs-keyword">KEY</span> (student_id, course_id),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (student_id) <span class="hljs-keyword">REFERENCES</span> Students(student_id),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (course_id) <span class="hljs-keyword">REFERENCES</span> Courses(course_id)
+);
+</div></code></pre>
+<hr>
+<h2 id="8-what-are-acid-properties"><strong>8. What are ACID properties?</strong></h2>
+<p><strong>Answer:</strong></p>
+<ul>
+<li><strong>Atomicity:</strong> Transaction is all-or-nothing</li>
+<li><strong>Consistency:</strong> Database remains in valid state</li>
+<li><strong>Isolation:</strong> Concurrent transactions don't interfere</li>
+<li><strong>Durability:</strong> Committed changes are permanent</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Example of transaction demonstrating ACID</span>
+<span class="hljs-keyword">BEGIN</span> <span class="hljs-keyword">TRANSACTION</span>;
+<span class="hljs-keyword">UPDATE</span> Accounts <span class="hljs-keyword">SET</span> balance = balance - <span class="hljs-number">100</span> <span class="hljs-keyword">WHERE</span> account_id = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">UPDATE</span> Accounts <span class="hljs-keyword">SET</span> balance = balance + <span class="hljs-number">100</span> <span class="hljs-keyword">WHERE</span> account_id = <span class="hljs-number">2</span>;
+<span class="hljs-keyword">COMMIT</span>;
+</div></code></pre>
+<hr>
+<h2 id="9-what-is-the-difference-between-delete-drop-and-truncate"><strong>9. What is the difference between DELETE, DROP, and TRUNCATE?</strong></h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Purpose</th>
+<th>Rollback</th>
+<th>Speed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DELETE</td>
+<td>Remove specific rows</td>
+<td>Yes</td>
+<td>Slow</td>
+</tr>
+<tr>
+<td>DROP</td>
+<td>Remove entire table</td>
+<td>No</td>
+<td>Fast</td>
+</tr>
+<tr>
+<td>TRUNCATE</td>
+<td>Remove all rows</td>
+<td>No</td>
+<td>Fast</td>
+</tr>
+</tbody>
+</table>
+<pre class="hljs"><code><div><span class="hljs-comment">-- DELETE - removes specific rows</span>
+<span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> Employees <span class="hljs-keyword">WHERE</span> dept_id = <span class="hljs-number">10</span>;
+
+<span class="hljs-comment">-- TRUNCATE - removes all rows</span>
+<span class="hljs-keyword">TRUNCATE</span> <span class="hljs-keyword">TABLE</span> Employees;
+
+<span class="hljs-comment">-- DROP - removes entire table</span>
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> Employees;
+</div></code></pre>
+<hr>
+<h2 id="10-what-are-joins-explain-different-types"><strong>10. What are Joins? Explain different types.</strong></h2>
+<p><strong>Answer:</strong> Joins combine rows from multiple tables based on related columns.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Sample tables</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Employees (
+    emp_id <span class="hljs-built_in">INT</span>,
+    emp_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    dept_id <span class="hljs-built_in">INT</span>
+);
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Departments (
+    dept_id <span class="hljs-built_in">INT</span>,
+    dept_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>)
+);
+
+<span class="hljs-comment">-- INNER JOIN - matching records from both tables</span>
+<span class="hljs-keyword">SELECT</span> e.emp_name, d.dept_name
+<span class="hljs-keyword">FROM</span> Employees e
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> Departments d <span class="hljs-keyword">ON</span> e.dept_id = d.dept_id;
+
+<span class="hljs-comment">-- LEFT JOIN - all records from left table</span>
+<span class="hljs-keyword">SELECT</span> e.emp_name, d.dept_name
+<span class="hljs-keyword">FROM</span> Employees e
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> Departments d <span class="hljs-keyword">ON</span> e.dept_id = d.dept_id;
+
+<span class="hljs-comment">-- RIGHT JOIN - all records from right table</span>
+<span class="hljs-keyword">SELECT</span> e.emp_name, d.dept_name
+<span class="hljs-keyword">FROM</span> Employees e
+<span class="hljs-keyword">RIGHT</span> <span class="hljs-keyword">JOIN</span> Departments d <span class="hljs-keyword">ON</span> e.dept_id = d.dept_id;
+
+<span class="hljs-comment">-- FULL OUTER JOIN - all records from both tables</span>
+<span class="hljs-keyword">SELECT</span> e.emp_name, d.dept_name
+<span class="hljs-keyword">FROM</span> Employees e
+<span class="hljs-keyword">FULL</span> <span class="hljs-keyword">OUTER</span> <span class="hljs-keyword">JOIN</span> Departments d <span class="hljs-keyword">ON</span> e.dept_id = d.dept_id;
+</div></code></pre>
+<hr>
+<h2 id="11-what-is-a-view-how-to-create-one"><strong>11. What is a View? How to create one?</strong></h2>
+<p><strong>Answer:</strong> A View is a virtual table based on the result of an SQL statement.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Creating a view</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> EmployeeView <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span> emp_id, emp_name, dept_name
+<span class="hljs-keyword">FROM</span> Employees e
+<span class="hljs-keyword">JOIN</span> Departments d <span class="hljs-keyword">ON</span> e.dept_id = d.dept_id;
+
+<span class="hljs-comment">-- Using the view</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> EmployeeView;
+
+<span class="hljs-comment">-- Dropping a view</span>
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">VIEW</span> EmployeeView;
+</div></code></pre>
+<hr>
+<h2 id="12-what-is-an-index-types-of-indexes"><strong>12. What is an Index? Types of indexes?</strong></h2>
+<p><strong>Answer:</strong> Index is a database object that improves query performance.</p>
+<p><strong>Types:</strong></p>
+<ul>
+<li><strong>Clustered Index:</strong> Physically reorders data</li>
+<li><strong>Non-Clustered Index:</strong> Logical ordering with pointers</li>
+<li><strong>Unique Index:</strong> Ensures uniqueness</li>
+<li><strong>Composite Index:</strong> Multiple columns</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Creating indexes</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">INDEX</span> idx_emp_name <span class="hljs-keyword">ON</span> Employees(emp_name);
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">UNIQUE</span> <span class="hljs-keyword">INDEX</span> idx_emp_email <span class="hljs-keyword">ON</span> Employees(email);
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">INDEX</span> idx_emp_dept <span class="hljs-keyword">ON</span> Employees(emp_id, dept_id);
+
+<span class="hljs-comment">-- Dropping index</span>
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">INDEX</span> idx_emp_name;
+</div></code></pre>
+<hr>
+<h2 id="13-what-are-aggregate-functions"><strong>13. What are Aggregate Functions?</strong></h2>
+<p><strong>Answer:</strong> Functions that perform calculations on multiple rows and return single value.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Common aggregate functions</span>
+<span class="hljs-keyword">SELECT</span> 
+    <span class="hljs-keyword">COUNT</span>(*) <span class="hljs-keyword">as</span> total_employees,
+    <span class="hljs-keyword">SUM</span>(salary) <span class="hljs-keyword">as</span> total_salary,
+    <span class="hljs-keyword">AVG</span>(salary) <span class="hljs-keyword">as</span> average_salary,
+    <span class="hljs-keyword">MAX</span>(salary) <span class="hljs-keyword">as</span> highest_salary,
+    <span class="hljs-keyword">MIN</span>(salary) <span class="hljs-keyword">as</span> lowest_salary
+<span class="hljs-keyword">FROM</span> Employees;
+
+<span class="hljs-comment">-- GROUP BY with aggregate functions</span>
+<span class="hljs-keyword">SELECT</span> dept_id, <span class="hljs-keyword">COUNT</span>(*) <span class="hljs-keyword">as</span> emp_count, <span class="hljs-keyword">AVG</span>(salary) <span class="hljs-keyword">as</span> avg_salary
+<span class="hljs-keyword">FROM</span> Employees
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> dept_id
+<span class="hljs-keyword">HAVING</span> <span class="hljs-keyword">COUNT</span>(*) &gt; <span class="hljs-number">5</span>;
+</div></code></pre>
+<hr>
+<h2 id="14-what-is-the-difference-between-where-and-having"><strong>14. What is the difference between WHERE and HAVING?</strong></h2>
+<table>
+<thead>
+<tr>
+<th>WHERE</th>
+<th>HAVING</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Filters rows before grouping</td>
+<td>Filters groups after grouping</td>
+</tr>
+<tr>
+<td>Cannot use aggregate functions</td>
+<td>Can use aggregate functions</td>
+</tr>
+<tr>
+<td>Used with SELECT, UPDATE, DELETE</td>
+<td>Used with GROUP BY</td>
+</tr>
+</tbody>
+</table>
+<pre class="hljs"><code><div><span class="hljs-comment">-- WHERE clause example</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> Employees <span class="hljs-keyword">WHERE</span> salary &gt; <span class="hljs-number">50000</span>;
+
+<span class="hljs-comment">-- HAVING clause example</span>
+<span class="hljs-keyword">SELECT</span> dept_id, <span class="hljs-keyword">AVG</span>(salary)
+<span class="hljs-keyword">FROM</span> Employees
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> dept_id
+<span class="hljs-keyword">HAVING</span> <span class="hljs-keyword">AVG</span>(salary) &gt; <span class="hljs-number">60000</span>;
+</div></code></pre>
+<hr>
+<h2 id="15-what-are-subqueries-types-of-subqueries"><strong>15. What are Subqueries? Types of subqueries?</strong></h2>
+<p><strong>Answer:</strong> Query within another query.</p>
+<p><strong>Types:</strong></p>
+<ul>
+<li><strong>Single Row Subquery:</strong> Returns one row</li>
+<li><strong>Multiple Row Subquery:</strong> Returns multiple rows</li>
+<li><strong>Correlated Subquery:</strong> References outer query</li>
+<li><strong>Non-Correlated Subquery:</strong> Independent of outer query</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Single row subquery</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> Employees 
+<span class="hljs-keyword">WHERE</span> salary &gt; (<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">AVG</span>(salary) <span class="hljs-keyword">FROM</span> Employees);
+
+<span class="hljs-comment">-- Multiple row subquery</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> Employees 
+<span class="hljs-keyword">WHERE</span> dept_id <span class="hljs-keyword">IN</span> (<span class="hljs-keyword">SELECT</span> dept_id <span class="hljs-keyword">FROM</span> Departments <span class="hljs-keyword">WHERE</span> dept_name <span class="hljs-keyword">LIKE</span> <span class="hljs-string">'IT%'</span>);
+
+<span class="hljs-comment">-- Correlated subquery</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> Employees e1
+<span class="hljs-keyword">WHERE</span> salary &gt; (<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">AVG</span>(salary) <span class="hljs-keyword">FROM</span> Employees e2 <span class="hljs-keyword">WHERE</span> e1.dept_id = e2.dept_id);
+</div></code></pre>
+<hr>
+<h2 id="16-what-is-a-transaction-transaction-states"><strong>16. What is a Transaction? Transaction states?</strong></h2>
+<p><strong>Answer:</strong> Transaction is a unit of work performed against a database.</p>
+<p><strong>Transaction States:</strong></p>
+<ul>
+<li><strong>Active:</strong> Transaction is being executed</li>
+<li><strong>Partially Committed:</strong> After final statement executed</li>
+<li><strong>Committed:</strong> Transaction completed successfully</li>
+<li><strong>Failed:</strong> Transaction cannot proceed</li>
+<li><strong>Aborted:</strong> Transaction cancelled and rolled back</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Transaction example</span>
+<span class="hljs-keyword">BEGIN</span> <span class="hljs-keyword">TRANSACTION</span>;
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> Employees <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">101</span>, <span class="hljs-string">'John'</span>, <span class="hljs-number">1</span>, <span class="hljs-number">50000</span>);
+<span class="hljs-keyword">UPDATE</span> Departments <span class="hljs-keyword">SET</span> emp_count = emp_count + <span class="hljs-number">1</span> <span class="hljs-keyword">WHERE</span> dept_id = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">COMMIT</span>;
+
+<span class="hljs-comment">-- Transaction with error handling</span>
+<span class="hljs-keyword">BEGIN</span> <span class="hljs-keyword">TRANSACTION</span>;
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> Employees <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">102</span>, <span class="hljs-string">'Jane'</span>, <span class="hljs-number">2</span>, <span class="hljs-number">55000</span>);
+IF @@ERROR &lt;&gt; 0
+    <span class="hljs-keyword">ROLLBACK</span>;
+ELSE
+    <span class="hljs-keyword">COMMIT</span>;
+</div></code></pre>
+<hr>
+<h2 id="17-what-are-stored-procedures-how-to-create-them"><strong>17. What are Stored Procedures? How to create them?</strong></h2>
+<p><strong>Answer:</strong> Pre-compiled SQL code stored in database for reuse.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Creating a stored procedure</span>
+DELIMITER //
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> GetEmployeesByDept(<span class="hljs-keyword">IN</span> dept_id <span class="hljs-built_in">INT</span>)
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> Employees <span class="hljs-keyword">WHERE</span> dept_id = dept_id;
+<span class="hljs-keyword">END</span> //
+DELIMITER ;
+
+<span class="hljs-comment">-- Calling stored procedure</span>
+<span class="hljs-keyword">CALL</span> GetEmployeesByDept(<span class="hljs-number">1</span>);
+
+<span class="hljs-comment">-- Stored procedure with parameters</span>
+DELIMITER //
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> UpdateEmployeeSalary(
+    <span class="hljs-keyword">IN</span> emp_id <span class="hljs-built_in">INT</span>,
+    <span class="hljs-keyword">IN</span> new_salary <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">10</span>,<span class="hljs-number">2</span>),
+    <span class="hljs-keyword">OUT</span> <span class="hljs-keyword">result</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>)
+)
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">DECLARE</span> emp_count <span class="hljs-built_in">INT</span>;
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">COUNT</span>(*) <span class="hljs-keyword">INTO</span> emp_count <span class="hljs-keyword">FROM</span> Employees <span class="hljs-keyword">WHERE</span> emp_id = emp_id;
+    
+    IF emp_count &gt; 0 THEN
+        <span class="hljs-keyword">UPDATE</span> Employees <span class="hljs-keyword">SET</span> salary = new_salary <span class="hljs-keyword">WHERE</span> emp_id = emp_id;
+        <span class="hljs-keyword">SET</span> <span class="hljs-keyword">result</span> = <span class="hljs-string">'Success'</span>;
+    ELSE
+        <span class="hljs-keyword">SET</span> <span class="hljs-keyword">result</span> = <span class="hljs-string">'Employee not found'</span>;
+    <span class="hljs-keyword">END</span> <span class="hljs-keyword">IF</span>;
+<span class="hljs-keyword">END</span> //
+DELIMITER ;
+</div></code></pre>
+<hr>
+<h2 id="18-what-are-triggers-types-of-triggers"><strong>18. What are Triggers? Types of triggers?</strong></h2>
+<p><strong>Answer:</strong> Special stored procedures that automatically execute in response to database events.</p>
+<p><strong>Types:</strong></p>
+<ul>
+<li><strong>BEFORE Triggers:</strong> Execute before the triggering event</li>
+<li><strong>AFTER Triggers:</strong> Execute after the triggering event</li>
+<li><strong>INSTEAD OF Triggers:</strong> Replace the triggering event</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">-- BEFORE INSERT trigger</span>
+DELIMITER //
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> before_employee_insert
+<span class="hljs-keyword">BEFORE</span> <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">ON</span> Employees
+<span class="hljs-keyword">FOR</span> <span class="hljs-keyword">EACH</span> <span class="hljs-keyword">ROW</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">SET</span> NEW.created_date = <span class="hljs-keyword">NOW</span>();
+    <span class="hljs-keyword">SET</span> NEW.emp_code = <span class="hljs-keyword">CONCAT</span>(<span class="hljs-string">'EMP'</span>, NEW.emp_id);
+<span class="hljs-keyword">END</span> //
+DELIMITER ;
+
+<span class="hljs-comment">-- AFTER UPDATE trigger</span>
+DELIMITER //
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> after_salary_update
+<span class="hljs-keyword">AFTER</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-keyword">ON</span> Employees
+<span class="hljs-keyword">FOR</span> <span class="hljs-keyword">EACH</span> <span class="hljs-keyword">ROW</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> SalaryAudit (emp_id, old_salary, new_salary, change_date)
+    <span class="hljs-keyword">VALUES</span> (NEW.emp_id, OLD.salary, NEW.salary, <span class="hljs-keyword">NOW</span>());
+<span class="hljs-keyword">END</span> //
+DELIMITER ;
+</div></code></pre>
+<hr>
+<h2 id="19-what-is-deadlock-how-to-prevent-it"><strong>19. What is Deadlock? How to prevent it?</strong></h2>
+<p><strong>Answer:</strong> Deadlock occurs when two or more transactions wait for each other to release locks.</p>
+<p><strong>Prevention methods:</strong></p>
+<ul>
+<li>Lock timeout</li>
+<li>Deadlock detection and resolution</li>
+<li>Proper lock ordering</li>
+<li>Minimize transaction time</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Example that can cause deadlock</span>
+<span class="hljs-comment">-- Transaction 1</span>
+<span class="hljs-keyword">BEGIN</span> <span class="hljs-keyword">TRANSACTION</span>;
+<span class="hljs-keyword">UPDATE</span> Employees <span class="hljs-keyword">SET</span> salary = <span class="hljs-number">60000</span> <span class="hljs-keyword">WHERE</span> emp_id = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">UPDATE</span> Departments <span class="hljs-keyword">SET</span> budget = <span class="hljs-number">100000</span> <span class="hljs-keyword">WHERE</span> dept_id = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">COMMIT</span>;
+
+<span class="hljs-comment">-- Transaction 2 (running simultaneously)</span>
+<span class="hljs-keyword">BEGIN</span> <span class="hljs-keyword">TRANSACTION</span>;
+<span class="hljs-keyword">UPDATE</span> Departments <span class="hljs-keyword">SET</span> budget = <span class="hljs-number">200000</span> <span class="hljs-keyword">WHERE</span> dept_id = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">UPDATE</span> Employees <span class="hljs-keyword">SET</span> salary = <span class="hljs-number">65000</span> <span class="hljs-keyword">WHERE</span> emp_id = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">COMMIT</span>;
+
+<span class="hljs-comment">-- Solution: Use consistent lock ordering</span>
+<span class="hljs-comment">-- Both transactions should lock tables in same order</span>
+</div></code></pre>
+<hr>
+<h2 id="20-what-is-concurrency-control"><strong>20. What is Concurrency Control?</strong></h2>
+<p><strong>Answer:</strong> Mechanism to ensure correct execution of concurrent transactions.</p>
+<p><strong>Techniques:</strong></p>
+<ul>
+<li><strong>Locking:</strong> Prevent conflicts using locks</li>
+<li><strong>Timestamping:</strong> Use timestamps to order transactions</li>
+<li><strong>Optimistic Concurrency Control:</strong> Allow conflicts, resolve later</li>
+<li><strong>Multiversion Concurrency Control:</strong> Multiple versions of data</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Locking example</span>
+<span class="hljs-keyword">BEGIN</span> <span class="hljs-keyword">TRANSACTION</span>;
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> Employees <span class="hljs-keyword">WHERE</span> emp_id = <span class="hljs-number">1</span> <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">UPDATE</span>; <span class="hljs-comment">-- Exclusive lock</span>
+<span class="hljs-keyword">UPDATE</span> Employees <span class="hljs-keyword">SET</span> salary = <span class="hljs-number">55000</span> <span class="hljs-keyword">WHERE</span> emp_id = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">COMMIT</span>;
+</div></code></pre>
+<hr>
+<h2 id="21-what-are-constraints-types-of-constraints"><strong>21. What are Constraints? Types of constraints?</strong></h2>
+<p><strong>Answer:</strong> Rules enforced on data columns to maintain data integrity.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Different types of constraints</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Products (
+    product_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,                    <span class="hljs-comment">-- Primary Key</span>
+    product_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,            <span class="hljs-comment">-- Not Null</span>
+    price <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">10</span>,<span class="hljs-number">2</span>) <span class="hljs-keyword">CHECK</span> (price &gt; <span class="hljs-number">0</span>),        <span class="hljs-comment">-- Check</span>
+    category_id <span class="hljs-built_in">INT</span>,
+    email <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">UNIQUE</span>,                     <span class="hljs-comment">-- Unique</span>
+    created_date <span class="hljs-built_in">DATE</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">CURRENT_DATE</span>,       <span class="hljs-comment">-- Default</span>
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (category_id) <span class="hljs-keyword">REFERENCES</span> Categories(category_id)  <span class="hljs-comment">-- Foreign Key</span>
+);
+
+<span class="hljs-comment">-- Adding constraints to existing table</span>
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> Products <span class="hljs-keyword">ADD</span> <span class="hljs-keyword">CONSTRAINT</span> chk_price <span class="hljs-keyword">CHECK</span> (price <span class="hljs-keyword">BETWEEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">AND</span> <span class="hljs-number">10000</span>);
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> Products <span class="hljs-keyword">ADD</span> <span class="hljs-keyword">CONSTRAINT</span> uk_product_name <span class="hljs-keyword">UNIQUE</span> (product_name);
+</div></code></pre>
+<hr>
+<h2 id="22-what-is-the-difference-between-clustered-and-non-clustered-index"><strong>22. What is the difference between Clustered and Non-Clustered Index?</strong></h2>
+<table>
+<thead>
+<tr>
+<th>Clustered Index</th>
+<th>Non-Clustered Index</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Physically reorders data</td>
+<td>Logical ordering with pointers</td>
+</tr>
+<tr>
+<td>One per table</td>
+<td>Multiple per table</td>
+</tr>
+<tr>
+<td>Faster for range queries</td>
+<td>Faster for exact matches</td>
+</tr>
+<tr>
+<td>Larger storage overhead</td>
+<td>Smaller storage overhead</td>
+</tr>
+</tbody>
+</table>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Clustered index (usually on primary key)</span>
+<span class="hljs-keyword">CREATE</span> CLUSTERED <span class="hljs-keyword">INDEX</span> idx_emp_id <span class="hljs-keyword">ON</span> Employees(emp_id);
+
+<span class="hljs-comment">-- Non-clustered index</span>
+<span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_emp_name <span class="hljs-keyword">ON</span> Employees(emp_name);
+<span class="hljs-keyword">CREATE</span> NONCLUSTERED <span class="hljs-keyword">INDEX</span> idx_emp_dept_salary <span class="hljs-keyword">ON</span> Employees(dept_id, salary);
+</div></code></pre>
+<hr>
+<h2 id="23-what-is-database-schema"><strong>23. What is Database Schema?</strong></h2>
+<p><strong>Answer:</strong> Logical structure that defines how data is organized in a database.</p>
+<p><strong>Types:</strong></p>
+<ul>
+<li><strong>Physical Schema:</strong> How data is stored physically</li>
+<li><strong>Logical Schema:</strong> Logical structure of database</li>
+<li><strong>View Schema:</strong> How data appears to users</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Creating schema</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">SCHEMA</span> company_schema;
+
+<span class="hljs-comment">-- Creating table in schema</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> company_schema.employees (
+    emp_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    emp_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>)
+);
+
+<span class="hljs-comment">-- Using schema</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> company_schema.employees;
+</div></code></pre>
+<hr>
+<h2 id="24-what-are-window-functions"><strong>24. What are Window Functions?</strong></h2>
+<p><strong>Answer:</strong> Functions that perform calculations across a set of rows related to the current row.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Common window functions</span>
+<span class="hljs-keyword">SELECT</span> 
+    emp_id,
+    emp_name,
+    salary,
+    dept_id,
+    <span class="hljs-comment">-- Ranking functions</span>
+    ROW_NUMBER() <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> dept_id <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> salary <span class="hljs-keyword">DESC</span>) <span class="hljs-keyword">as</span> row_num,
+    <span class="hljs-keyword">RANK</span>() <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> dept_id <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> salary <span class="hljs-keyword">DESC</span>) <span class="hljs-keyword">as</span> rank_num,
+    <span class="hljs-keyword">DENSE_RANK</span>() <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> dept_id <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> salary <span class="hljs-keyword">DESC</span>) <span class="hljs-keyword">as</span> <span class="hljs-keyword">dense_rank</span>,
+    
+    <span class="hljs-comment">-- Aggregate functions</span>
+    <span class="hljs-keyword">SUM</span>(salary) <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> dept_id) <span class="hljs-keyword">as</span> dept_total_salary,
+    <span class="hljs-keyword">AVG</span>(salary) <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> dept_id) <span class="hljs-keyword">as</span> dept_avg_salary,
+    <span class="hljs-keyword">COUNT</span>(*) <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> dept_id) <span class="hljs-keyword">as</span> dept_emp_count,
+    
+    <span class="hljs-comment">-- Value functions</span>
+    LAG(salary, <span class="hljs-number">1</span>) <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> emp_id) <span class="hljs-keyword">as</span> prev_salary,
+    <span class="hljs-keyword">LEAD</span>(salary, <span class="hljs-number">1</span>) <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> emp_id) <span class="hljs-keyword">as</span> next_salary
+<span class="hljs-keyword">FROM</span> Employees;
+</div></code></pre>
+<hr>
+<h2 id="25-what-is-the-difference-between-union-and-union-all"><strong>25. What is the difference between UNION and UNION ALL?</strong></h2>
+<table>
+<thead>
+<tr>
+<th>UNION</th>
+<th>UNION ALL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Removes duplicates</td>
+<td>Keeps duplicates</td>
+</tr>
+<tr>
+<td>Slower performance</td>
+<td>Faster performance</td>
+</tr>
+<tr>
+<td>Implicit DISTINCT</td>
+<td>No DISTINCT</td>
+</tr>
+</tbody>
+</table>
+<pre class="hljs"><code><div><span class="hljs-comment">-- UNION - removes duplicates</span>
+<span class="hljs-keyword">SELECT</span> emp_id, emp_name <span class="hljs-keyword">FROM</span> Employees <span class="hljs-keyword">WHERE</span> dept_id = <span class="hljs-number">1</span>
+<span class="hljs-keyword">UNION</span>
+<span class="hljs-keyword">SELECT</span> emp_id, emp_name <span class="hljs-keyword">FROM</span> Employees <span class="hljs-keyword">WHERE</span> salary &gt; <span class="hljs-number">50000</span>;
+
+<span class="hljs-comment">-- UNION ALL - keeps duplicates</span>
+<span class="hljs-keyword">SELECT</span> emp_id, emp_name <span class="hljs-keyword">FROM</span> Employees <span class="hljs-keyword">WHERE</span> dept_id = <span class="hljs-number">1</span>
+<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+<span class="hljs-keyword">SELECT</span> emp_id, emp_name <span class="hljs-keyword">FROM</span> Employees <span class="hljs-keyword">WHERE</span> salary &gt; <span class="hljs-number">50000</span>;
+</div></code></pre>
+<hr>
+<h2 id="26-what-is-cursor-how-to-use-it"><strong>26. What is Cursor? How to use it?</strong></h2>
+<p><strong>Answer:</strong> Database object used to retrieve and manipulate data row by row.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Declaring and using cursor</span>
+DELIMITER //
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> ProcessEmployees()
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">DECLARE</span> done <span class="hljs-built_in">INT</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-literal">FALSE</span>;
+    <span class="hljs-keyword">DECLARE</span> emp_id <span class="hljs-built_in">INT</span>;
+    <span class="hljs-keyword">DECLARE</span> emp_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>);
+    <span class="hljs-keyword">DECLARE</span> emp_salary <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">10</span>,<span class="hljs-number">2</span>);
+    
+    <span class="hljs-comment">-- Declare cursor</span>
+    <span class="hljs-keyword">DECLARE</span> emp_cursor <span class="hljs-keyword">CURSOR</span> <span class="hljs-keyword">FOR</span>
+        <span class="hljs-keyword">SELECT</span> emp_id, emp_name, salary <span class="hljs-keyword">FROM</span> Employees;
+    
+    <span class="hljs-comment">-- Declare continue handler</span>
+    <span class="hljs-keyword">DECLARE</span> CONTINUE <span class="hljs-keyword">HANDLER</span> <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">FOUND</span> <span class="hljs-keyword">SET</span> done = <span class="hljs-literal">TRUE</span>;
+    
+    <span class="hljs-comment">-- Open cursor</span>
+    OPEN emp_cursor;
+    
+    <span class="hljs-comment">-- Loop through cursor</span>
+    read_loop: LOOP
+        FETCH emp_cursor INTO emp_id, emp_name, emp_salary;
+        IF done THEN
+            LEAVE read_loop;
+        <span class="hljs-keyword">END</span> <span class="hljs-keyword">IF</span>;
+        
+        <span class="hljs-comment">-- Process each row</span>
+        IF emp_salary &lt; 50000 THEN
+            <span class="hljs-keyword">UPDATE</span> Employees <span class="hljs-keyword">SET</span> salary = salary * <span class="hljs-number">1.1</span> <span class="hljs-keyword">WHERE</span> emp_id = emp_id;
+        <span class="hljs-keyword">END</span> <span class="hljs-keyword">IF</span>;
+    <span class="hljs-keyword">END</span> <span class="hljs-keyword">LOOP</span>;
+    
+    <span class="hljs-comment">-- Close cursor</span>
+    CLOSE emp_cursor;
+<span class="hljs-keyword">END</span> //
+DELIMITER ;
+</div></code></pre>
+<hr>
+<h2 id="27-what-are-cte-common-table-expressions"><strong>27. What are CTE (Common Table Expressions)?</strong></h2>
+<p><strong>Answer:</strong> Temporary named result sets that exist within the scope of a single SQL statement.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Simple CTE</span>
+<span class="hljs-keyword">WITH</span> DepartmentSalaries <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span> dept_id, <span class="hljs-keyword">AVG</span>(salary) <span class="hljs-keyword">as</span> avg_salary
+    <span class="hljs-keyword">FROM</span> Employees
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> dept_id
+)
+<span class="hljs-keyword">SELECT</span> e.emp_name, e.salary, ds.avg_salary
+<span class="hljs-keyword">FROM</span> Employees e
+<span class="hljs-keyword">JOIN</span> DepartmentSalaries ds <span class="hljs-keyword">ON</span> e.dept_id = ds.dept_id
+<span class="hljs-keyword">WHERE</span> e.salary &gt; ds.avg_salary;
+
+<span class="hljs-comment">-- Recursive CTE - Employee hierarchy</span>
+<span class="hljs-keyword">WITH</span> <span class="hljs-keyword">RECURSIVE</span> EmployeeHierarchy <span class="hljs-keyword">AS</span> (
+    <span class="hljs-comment">-- Anchor member (managers)</span>
+    <span class="hljs-keyword">SELECT</span> emp_id, emp_name, manager_id, <span class="hljs-number">1</span> <span class="hljs-keyword">as</span> <span class="hljs-keyword">level</span>
+    <span class="hljs-keyword">FROM</span> Employees
+    <span class="hljs-keyword">WHERE</span> manager_id <span class="hljs-keyword">IS</span> <span class="hljs-literal">NULL</span>
+    
+    <span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+    
+    <span class="hljs-comment">-- Recursive member</span>
+    <span class="hljs-keyword">SELECT</span> e.emp_id, e.emp_name, e.manager_id, eh.level + <span class="hljs-number">1</span>
+    <span class="hljs-keyword">FROM</span> Employees e
+    <span class="hljs-keyword">JOIN</span> EmployeeHierarchy eh <span class="hljs-keyword">ON</span> e.manager_id = eh.emp_id
+)
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> EmployeeHierarchy <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">level</span>, emp_name;
+</div></code></pre>
+<hr>
+<h2 id="28-what-is-the-difference-between-char-and-varchar"><strong>28. What is the difference between CHAR and VARCHAR?</strong></h2>
+<table>
+<thead>
+<tr>
+<th>CHAR</th>
+<th>VARCHAR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fixed length</td>
+<td>Variable length</td>
+</tr>
+<tr>
+<td>Padded with spaces</td>
+<td>No padding</td>
+</tr>
+<tr>
+<td>Faster access</td>
+<td>More storage efficient</td>
+</tr>
+<tr>
+<td>Up to 255 characters</td>
+<td>Up to 65,535 characters</td>
+</tr>
+</tbody>
+</table>
+<pre class="hljs"><code><div><span class="hljs-comment">-- CHAR vs VARCHAR example</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> DataTypes (
+    <span class="hljs-keyword">id</span> <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    fixed_code <span class="hljs-built_in">CHAR</span>(<span class="hljs-number">5</span>),        <span class="hljs-comment">-- Always uses 5 bytes</span>
+    variable_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>)   <span class="hljs-comment">-- Uses only needed bytes + 1-2 bytes overhead</span>
+);
+
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> DataTypes <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">1</span>, <span class="hljs-string">'ABC'</span>, <span class="hljs-string">'John'</span>);
+<span class="hljs-comment">-- fixed_code stores 'ABC  ' (with 2 trailing spaces)</span>
+<span class="hljs-comment">-- variable_name stores 'John' (4 bytes + overhead)</span>
+</div></code></pre>
+<hr>
+<h2 id="29-what-are-date-and-time-functions"><strong>29. What are Date and Time functions?</strong></h2>
+<p><strong>Answer:</strong> Functions to manipulate date and time values.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Common date/time functions</span>
+<span class="hljs-keyword">SELECT</span> 
+    <span class="hljs-keyword">NOW</span>() <span class="hljs-keyword">as</span> current_datetime,
+    <span class="hljs-keyword">CURDATE</span>() <span class="hljs-keyword">as</span> <span class="hljs-keyword">current_date</span>,
+    <span class="hljs-keyword">CURTIME</span>() <span class="hljs-keyword">as</span> <span class="hljs-keyword">current_time</span>,
+    
+    <span class="hljs-comment">-- Date formatting</span>
+    <span class="hljs-keyword">DATE_FORMAT</span>(<span class="hljs-keyword">NOW</span>(), <span class="hljs-string">'%Y-%m-%d %H:%i:%s'</span>) <span class="hljs-keyword">as</span> formatted_date,
+    
+    <span class="hljs-comment">-- Date arithmetic</span>
+    <span class="hljs-keyword">DATE_ADD</span>(<span class="hljs-keyword">CURDATE</span>(), <span class="hljs-built_in">INTERVAL</span> <span class="hljs-number">30</span> <span class="hljs-keyword">DAY</span>) <span class="hljs-keyword">as</span> thirty_days_later,
+    <span class="hljs-keyword">DATE_SUB</span>(<span class="hljs-keyword">CURDATE</span>(), <span class="hljs-built_in">INTERVAL</span> <span class="hljs-number">1</span> <span class="hljs-keyword">MONTH</span>) <span class="hljs-keyword">as</span> one_month_ago,
+    <span class="hljs-keyword">DATEDIFF</span>(<span class="hljs-string">'2024-12-31'</span>, <span class="hljs-keyword">CURDATE</span>()) <span class="hljs-keyword">as</span> days_until_new_year,
+    
+    <span class="hljs-comment">-- Date parts</span>
+    <span class="hljs-keyword">YEAR</span>(<span class="hljs-keyword">NOW</span>()) <span class="hljs-keyword">as</span> current_year,
+    <span class="hljs-keyword">MONTH</span>(<span class="hljs-keyword">NOW</span>()) <span class="hljs-keyword">as</span> current_month,
+    <span class="hljs-keyword">DAY</span>(<span class="hljs-keyword">NOW</span>()) <span class="hljs-keyword">as</span> current_day,
+    <span class="hljs-keyword">HOUR</span>(<span class="hljs-keyword">NOW</span>()) <span class="hljs-keyword">as</span> current_hour,
+    
+    <span class="hljs-comment">-- Day of week/year</span>
+    <span class="hljs-keyword">DAYOFWEEK</span>(<span class="hljs-keyword">CURDATE</span>()) <span class="hljs-keyword">as</span> day_of_week,
+    <span class="hljs-keyword">DAYOFYEAR</span>(<span class="hljs-keyword">CURDATE</span>()) <span class="hljs-keyword">as</span> day_of_year,
+    <span class="hljs-keyword">WEEKOFYEAR</span>(<span class="hljs-keyword">CURDATE</span>()) <span class="hljs-keyword">as</span> week_of_year;
+
+<span class="hljs-comment">-- Using date functions in queries</span>
+<span class="hljs-keyword">SELECT</span> emp_name, hire_date,
+    <span class="hljs-keyword">DATEDIFF</span>(<span class="hljs-keyword">CURDATE</span>(), hire_date) <span class="hljs-keyword">as</span> days_employed,
+    <span class="hljs-keyword">YEAR</span>(<span class="hljs-keyword">CURDATE</span>()) - <span class="hljs-keyword">YEAR</span>(hire_date) <span class="hljs-keyword">as</span> years_employed
+<span class="hljs-keyword">FROM</span> Employees
+<span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">MONTH</span>(hire_date) = <span class="hljs-keyword">MONTH</span>(<span class="hljs-keyword">CURDATE</span>());
+</div></code></pre>
+<hr>
+<h2 id="30-what-is-the-difference-between-inner-join-and-outer-join"><strong>30. What is the difference between INNER JOIN and OUTER JOIN?</strong></h2>
+<p><strong>Answer:</strong> INNER JOIN returns only matching records, while OUTER JOIN returns all records from one or both tables.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Sample data for demonstration</span>
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> Employees <span class="hljs-keyword">VALUES</span> 
+(<span class="hljs-number">1</span>, <span class="hljs-string">'John'</span>, <span class="hljs-number">10</span>), (<span class="hljs-number">2</span>, <span class="hljs-string">'Jane'</span>, <span class="hljs-number">20</span>), (<span class="hljs-number">3</span>, <span class="hljs-string">'Bob'</span>, <span class="hljs-literal">NULL</span>);
+
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> Departments <span class="hljs-keyword">VALUES</span> 
+(<span class="hljs-number">10</span>, <span class="hljs-string">'IT'</span>), (<span class="hljs-number">20</span>, <span class="hljs-string">'HR'</span>), (<span class="hljs-number">30</span>, <span class="hljs-string">'Finance'</span>);
+
+<span class="hljs-comment">-- INNER JOIN - only matching records (2 results)</span>
+<span class="hljs-keyword">SELECT</span> e.emp_name, d.dept_name
+<span class="hljs-keyword">FROM</span> Employees e
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> Departments d <span class="hljs-keyword">ON</span> e.dept_id = d.dept_id;
+
+<span class="hljs-comment">-- LEFT OUTER JOIN - all employees (3 results)</span>
+<span class="hljs-keyword">SELECT</span> e.emp_name, d.dept_name
+<span class="hljs-keyword">FROM</span> Employees e
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> Departments d <span class="hljs-keyword">ON</span> e.dept_id = d.dept_id;
+
+<span class="hljs-comment">-- RIGHT OUTER JOIN - all departments (4 results)</span>
+<span class="hljs-keyword">SELECT</span> e.emp_name, d.dept_name
+<span class="hljs-keyword">FROM</span> Employees e
+<span class="hljs-keyword">RIGHT</span> <span class="hljs-keyword">JOIN</span> Departments d <span class="hljs-keyword">ON</span> e.dept_id = d.dept_id;
+
+<span class="hljs-comment">-- FULL OUTER JOIN - all records (5 results)</span>
+<span class="hljs-keyword">SELECT</span> e.emp_name, d.dept_name
+<span class="hljs-keyword">FROM</span> Employees e
+<span class="hljs-keyword">FULL</span> <span class="hljs-keyword">OUTER</span> <span class="hljs-keyword">JOIN</span> Departments d <span class="hljs-keyword">ON</span> e.dept_id = d.dept_id;
+</div></code></pre>
+<hr>
+<h2 id="31-what-are-string-functions-in-sql"><strong>31. What are String Functions in SQL?</strong></h2>
+<p><strong>Answer:</strong> Functions to manipulate string/text data.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Common string functions</span>
+<span class="hljs-keyword">SELECT</span> 
+    <span class="hljs-comment">-- Length and case functions</span>
+    <span class="hljs-keyword">LENGTH</span>(<span class="hljs-string">'Hello World'</span>) <span class="hljs-keyword">as</span> str_length,
+    <span class="hljs-keyword">UPPER</span>(<span class="hljs-string">'hello world'</span>) <span class="hljs-keyword">as</span> uppercase,
+    <span class="hljs-keyword">LOWER</span>(<span class="hljs-string">'HELLO WORLD'</span>) <span class="hljs-keyword">as</span> lowercase,
+    
+    <span class="hljs-comment">-- Substring functions</span>
+    <span class="hljs-keyword">SUBSTRING</span>(<span class="hljs-string">'Hello World'</span>, <span class="hljs-number">1</span>, <span class="hljs-number">5</span>) <span class="hljs-keyword">as</span> substring_result,
+    <span class="hljs-keyword">LEFT</span>(<span class="hljs-string">'Hello World'</span>, <span class="hljs-number">5</span>) <span class="hljs-keyword">as</span> left_chars,
+    <span class="hljs-keyword">RIGHT</span>(<span class="hljs-string">'Hello World'</span>, <span class="hljs-number">5</span>) <span class="hljs-keyword">as</span> right_chars,
+    
+    <span class="hljs-comment">-- Search and replace</span>
+    <span class="hljs-keyword">LOCATE</span>(<span class="hljs-string">'World'</span>, <span class="hljs-string">'Hello World'</span>) <span class="hljs-keyword">as</span> <span class="hljs-keyword">position</span>,
+    <span class="hljs-keyword">REPLACE</span>(<span class="hljs-string">'Hello World'</span>, <span class="hljs-string">'World'</span>, <span class="hljs-string">'SQL'</span>) <span class="hljs-keyword">as</span> replaced,
+    
+    <span class="hljs-comment">-- Trimming</span>
+    <span class="hljs-keyword">LTRIM</span>(<span class="hljs-string">'  Hello World'</span>) <span class="hljs-keyword">as</span> left_trim,
+    <span class="hljs-keyword">RTRIM</span>(<span class="hljs-string">'Hello World  '</span>) <span class="hljs-keyword">as</span> right_trim,
+    <span class="hljs-keyword">TRIM</span>(<span class="hljs-string">'  Hello World  '</span>) <span class="hljs-keyword">as</span> both_trim,
+    
+    <span class="hljs-comment">-- Concatenation</span>
+    <span class="hljs-keyword">CONCAT</span>(<span class="hljs-string">'Hello'</span>, <span class="hljs-string">' '</span>, <span class="hljs-string">'World'</span>) <span class="hljs-keyword">as</span> concatenated,
+    <span class="hljs-keyword">CONCAT_WS</span>(<span class="hljs-string">'-'</span>, <span class="hljs-string">'Hello'</span>, <span class="hljs-string">'World'</span>, <span class="hljs-string">'SQL'</span>) <span class="hljs-keyword">as</span> concat_with_separator;
+
+<span class="hljs-comment">-- Using string functions in queries</span>
+<span class="hljs-keyword">SELECT</span> emp_name,
+    <span class="hljs-keyword">UPPER</span>(emp_name) <span class="hljs-keyword">as</span> name_upper,
+    <span class="hljs-keyword">CONCAT</span>(emp_name, <span class="hljs-string">' (ID: '</span>, emp_id, <span class="hljs-string">')'</span>) <span class="hljs-keyword">as</span> formatted_name,
+    <span class="hljs-keyword">LENGTH</span>(emp_name) <span class="hljs-keyword">as</span> name_length
+<span class="hljs-keyword">FROM</span> Employees
+<span class="hljs-keyword">WHERE</span> emp_name <span class="hljs-keyword">LIKE</span> <span class="hljs-string">'%John%'</span>;
+</div></code></pre>
+<hr>
+<h2 id="32-what-is-a-composite-key-provide-an-example"><strong>32. What is a Composite Key? Provide an example.</strong></h2>
+<p><strong>Answer:</strong> A composite key is a primary key composed of two or more columns.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Example: Order details where combination of order_id and product_id is unique</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> OrderDetails (
+    order_id <span class="hljs-built_in">INT</span>,
+    product_id <span class="hljs-built_in">INT</span>,
+    quantity <span class="hljs-built_in">INT</span>,
+    unit_price <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">10</span>,<span class="hljs-number">2</span>),
+    discount <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>),
+    
+    <span class="hljs-comment">-- Composite primary key</span>
+    PRIMARY <span class="hljs-keyword">KEY</span> (order_id, product_id),
+    
+    <span class="hljs-comment">-- Foreign keys</span>
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (order_id) <span class="hljs-keyword">REFERENCES</span> Orders(order_id),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (product_id) <span class="hljs-keyword">REFERENCES</span> Products(product_id)
+);
+
+<span class="hljs-comment">-- Another example: Student course enrollment</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> StudentCourses (
+    student_id <span class="hljs-built_in">INT</span>,
+    course_id <span class="hljs-built_in">INT</span>,
+    semester <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">10</span>),
+    grade <span class="hljs-built_in">CHAR</span>(<span class="hljs-number">2</span>),
+    
+    <span class="hljs-comment">-- Composite primary key</span>
+    PRIMARY <span class="hljs-keyword">KEY</span> (student_id, course_id, semester)
+);
+
+<span class="hljs-comment">-- Inserting data</span>
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> OrderDetails <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">1</span>, <span class="hljs-number">101</span>, <span class="hljs-number">5</span>, <span class="hljs-number">25.00</span>, <span class="hljs-number">0.10</span>);
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> OrderDetails <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">1</span>, <span class="hljs-number">102</span>, <span class="hljs-number">3</span>, <span class="hljs-number">15.00</span>, <span class="hljs-number">0.05</span>);
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> OrderDetails <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">2</span>, <span class="hljs-number">101</span>, <span class="hljs-number">2</span>, <span class="hljs-number">25.00</span>, <span class="hljs-number">0.00</span>);
+</div></code></pre>
+<hr>
+<h2 id="33-what-is-database-backup-and-recovery"><strong>33. What is Database Backup and Recovery?</strong></h2>
+<p><strong>Answer:</strong> Process of creating copies of database and restoring them when needed.</p>
+<p><strong>Types of Backup:</strong></p>
+<ul>
+<li><strong>Full Backup:</strong> Complete database backup</li>
+<li><strong>Incremental Backup:</strong> Only changes since last backup</li>
+<li><strong>Differential Backup:</strong> Changes since last full backup</li>
+<li><strong>Transaction Log Backup:</strong> Log of all transactions</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Creating backup (SQL Server syntax)</span>
+<span class="hljs-keyword">BACKUP</span> <span class="hljs-keyword">DATABASE</span> CompanyDB 
+<span class="hljs-keyword">TO</span> DISK = <span class="hljs-string">'C:\Backups\CompanyDB_Full.bak'</span>
+<span class="hljs-keyword">WITH</span> <span class="hljs-keyword">FORMAT</span>, COMPRESSION;
+
+<span class="hljs-comment">-- Creating transaction log backup</span>
+<span class="hljs-keyword">BACKUP</span> <span class="hljs-keyword">LOG</span> CompanyDB 
+<span class="hljs-keyword">TO</span> DISK = <span class="hljs-string">'C:\Backups\CompanyDB_Log.trn'</span>;
+
+<span class="hljs-comment">-- Restoring database</span>
+<span class="hljs-keyword">RESTORE</span> <span class="hljs-keyword">DATABASE</span> CompanyDB 
+<span class="hljs-keyword">FROM</span> DISK = <span class="hljs-string">'C:\Backups\CompanyDB_Full.bak'</span>
+<span class="hljs-keyword">WITH</span> <span class="hljs-keyword">REPLACE</span>;
+
+<span class="hljs-comment">-- Point-in-time recovery</span>
+<span class="hljs-keyword">RESTORE</span> <span class="hljs-keyword">DATABASE</span> CompanyDB 
+<span class="hljs-keyword">FROM</span> DISK = <span class="hljs-string">'C:\Backups\CompanyDB_Full.bak'</span>
+<span class="hljs-keyword">WITH</span> NORECOVERY;
+
+<span class="hljs-keyword">RESTORE</span> <span class="hljs-keyword">LOG</span> CompanyDB 
+<span class="hljs-keyword">FROM</span> DISK = <span class="hljs-string">'C:\Backups\CompanyDB_Log.trn'</span>
+<span class="hljs-keyword">WITH</span> STOPAT = <span class="hljs-string">'2024-06-27 14:30:00'</span>;
+</div></code></pre>
+<hr>
+<h2 id="34-what-are-numeric-functions-in-sql"><strong>34. What are Numeric Functions in SQL?</strong></h2>
+<p><strong>Answer:</strong> Functions to perform mathematical operations on numeric data.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Common numeric functions</span>
+<span class="hljs-keyword">SELECT</span> 
+    <span class="hljs-comment">-- Basic math functions</span>
+    <span class="hljs-keyword">ABS</span>(<span class="hljs-number">-15</span>) <span class="hljs-keyword">as</span> absolute_value,
+    <span class="hljs-keyword">CEILING</span>(<span class="hljs-number">15.3</span>) <span class="hljs-keyword">as</span> ceiling_value,
+    <span class="hljs-keyword">FLOOR</span>(<span class="hljs-number">15.8</span>) <span class="hljs-keyword">as</span> floor_value,
+    <span class="hljs-keyword">ROUND</span>(<span class="hljs-number">15.567</span>, <span class="hljs-number">2</span>) <span class="hljs-keyword">as</span> rounded_value,
+    
+    <span class="hljs-comment">-- Power and root functions</span>
+    <span class="hljs-keyword">POWER</span>(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>) <span class="hljs-keyword">as</span> power_result,
+    <span class="hljs-keyword">SQRT</span>(<span class="hljs-number">16</span>) <span class="hljs-keyword">as</span> square_root,
+    
+    <span class="hljs-comment">-- Trigonometric functions</span>
+    <span class="hljs-keyword">SIN</span>(<span class="hljs-keyword">PI</span>()/<span class="hljs-number">2</span>) <span class="hljs-keyword">as</span> sine_90_degrees,
+    <span class="hljs-keyword">COS</span>(<span class="hljs-number">0</span>) <span class="hljs-keyword">as</span> cosine_0_degrees,
+    <span class="hljs-keyword">TAN</span>(<span class="hljs-keyword">PI</span>()/<span class="hljs-number">4</span>) <span class="hljs-keyword">as</span> tangent_45_degrees,
+    
+    <span class="hljs-comment">-- Random and sign functions</span>
+    <span class="hljs-keyword">RAND</span>() <span class="hljs-keyword">as</span> random_number,
+    <span class="hljs-keyword">SIGN</span>(<span class="hljs-number">-5</span>) <span class="hljs-keyword">as</span> sign_negative,
+    <span class="hljs-keyword">SIGN</span>(<span class="hljs-number">5</span>) <span class="hljs-keyword">as</span> sign_positive,
+    
+    <span class="hljs-comment">-- Modulo operation</span>
+    <span class="hljs-keyword">MOD</span>(<span class="hljs-number">10</span>, <span class="hljs-number">3</span>) <span class="hljs-keyword">as</span> modulo_result;
+
+<span class="hljs-comment">-- Using numeric functions with employee data</span>
+<span class="hljs-keyword">SELECT</span> emp_name, salary,
+    <span class="hljs-keyword">ROUND</span>(salary * <span class="hljs-number">1.1</span>, <span class="hljs-number">2</span>) <span class="hljs-keyword">as</span> salary_with_raise,
+    <span class="hljs-keyword">CEILING</span>(salary / <span class="hljs-number">12</span>) <span class="hljs-keyword">as</span> monthly_salary_ceiling,
+    <span class="hljs-keyword">FLOOR</span>(salary * <span class="hljs-number">0.12</span>) <span class="hljs-keyword">as</span> annual_tax_floor
+<span class="hljs-keyword">FROM</span> Employees
+<span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">ABS</span>(salary - <span class="hljs-number">50000</span>) &lt; <span class="hljs-number">10000</span>;
+</div></code></pre>
+<hr>
+<h2 id="35-what-is-the-difference-between-sql-and-nosql-databases"><strong>35. What is the difference between SQL and NoSQL databases?</strong></h2>
+<table>
+<thead>
+<tr>
+<th>SQL Databases</th>
+<th>NoSQL Databases</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Structured data (tables)</td>
+<td>Unstructured/semi-structured</td>
+</tr>
+<tr>
+<td>ACID properties</td>
+<td>Eventually consistent</td>
+</tr>
+<tr>
+<td>Vertical scaling</td>
+<td>Horizontal scaling</td>
+</tr>
+<tr>
+<td>Complex queries</td>
+<td>Simple queries</td>
+</tr>
+<tr>
+<td>Schema-based</td>
+<td>Schema-less</td>
+</tr>
+<tr>
+<td>Examples: MySQL, Oracle</td>
+<td>Examples: MongoDB, Cassandra</td>
+</tr>
+</tbody>
+</table>
+<pre class="hljs"><code><div><span class="hljs-comment">-- SQL Database example</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-keyword">Users</span> (
+    user_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    username <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    email <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    profile <span class="hljs-keyword">JSON</span>  <span class="hljs-comment">-- Even SQL databases now support JSON</span>
+);
+
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> <span class="hljs-keyword">Users</span> <span class="hljs-keyword">VALUES</span> 
+(<span class="hljs-number">1</span>, <span class="hljs-string">'john_doe'</span>, <span class="hljs-string">'john@email.com'</span>, <span class="hljs-string">'{"age": 30, "city": "New York"}'</span>);
+
+<span class="hljs-comment">-- Querying JSON data in SQL</span>
+<span class="hljs-keyword">SELECT</span> username, 
+    JSON_EXTRACT(profile, <span class="hljs-string">'$.age'</span>) <span class="hljs-keyword">as</span> age,
+    JSON_EXTRACT(profile, <span class="hljs-string">'$.city'</span>) <span class="hljs-keyword">as</span> city
+<span class="hljs-keyword">FROM</span> <span class="hljs-keyword">Users</span>
+<span class="hljs-keyword">WHERE</span> JSON_EXTRACT(profile, <span class="hljs-string">'$.age'</span>) &gt; <span class="hljs-number">25</span>;
+</div></code></pre>
+<hr>
+<h2 id="36-what-are-the-different-types-of-sql-statements"><strong>36. What are the different types of SQL statements?</strong></h2>
+<p><strong>Answer:</strong> SQL statements are categorized into different types:</p>
+<p><strong>DDL (Data Definition Language):</strong></p>
+<ul>
+<li>CREATE, ALTER, DROP, TRUNCATE</li>
+</ul>
+<p><strong>DML (Data Manipulation Language):</strong></p>
+<ul>
+<li>SELECT, INSERT, UPDATE, DELETE</li>
+</ul>
+<p><strong>DCL (Data Control Language):</strong></p>
+<ul>
+<li>GRANT, REVOKE</li>
+</ul>
+<p><strong>TCL (Transaction Control Language):</strong></p>
+<ul>
+<li>COMMIT, ROLLBACK, SAVEPOINT</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">-- DDL Examples</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Products (product_id <span class="hljs-built_in">INT</span>, product_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>));
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> Products <span class="hljs-keyword">ADD</span> price <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">10</span>,<span class="hljs-number">2</span>);
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> Products;
+
+<span class="hljs-comment">-- DML Examples</span>
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> Products <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">1</span>, <span class="hljs-string">'Laptop'</span>, <span class="hljs-number">999.99</span>);
+<span class="hljs-keyword">UPDATE</span> Products <span class="hljs-keyword">SET</span> price = <span class="hljs-number">899.99</span> <span class="hljs-keyword">WHERE</span> product_id = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> Products <span class="hljs-keyword">WHERE</span> product_id = <span class="hljs-number">1</span>;
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> Products;
+
+<span class="hljs-comment">-- DCL Examples</span>
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span>, <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">ON</span> Products <span class="hljs-keyword">TO</span> user1;
+<span class="hljs-keyword">REVOKE</span> <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">ON</span> Products <span class="hljs-keyword">FROM</span> user1;
+
+<span class="hljs-comment">-- TCL Examples</span>
+<span class="hljs-keyword">BEGIN</span> <span class="hljs-keyword">TRANSACTION</span>;
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> Products <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">2</span>, <span class="hljs-string">'Mouse'</span>, <span class="hljs-number">29.99</span>);
+<span class="hljs-keyword">SAVEPOINT</span> sp1;
+<span class="hljs-keyword">UPDATE</span> Products <span class="hljs-keyword">SET</span> price = <span class="hljs-number">25.99</span> <span class="hljs-keyword">WHERE</span> product_id = <span class="hljs-number">2</span>;
+<span class="hljs-keyword">ROLLBACK</span> <span class="hljs-keyword">TO</span> sp1;  <span class="hljs-comment">-- Rollback to savepoint</span>
+<span class="hljs-keyword">COMMIT</span>;  <span class="hljs-comment">-- Commit the transaction</span>
+</div></code></pre>
+<hr>
+<h2 id="37-what-is-the-case-statement-provide-examples"><strong>37. What is the CASE statement? Provide examples.</strong></h2>
+<p><strong>Answer:</strong> CASE statement provides conditional logic in SQL queries.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Simple CASE statement</span>
+<span class="hljs-keyword">SELECT</span> emp_name, salary,
+    <span class="hljs-keyword">CASE</span> 
+        <span class="hljs-keyword">WHEN</span> salary &lt; <span class="hljs-number">30000</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">'Low'</span>
+        <span class="hljs-keyword">WHEN</span> salary <span class="hljs-keyword">BETWEEN</span> <span class="hljs-number">30000</span> <span class="hljs-keyword">AND</span> <span class="hljs-number">60000</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">'Medium'</span>
+        <span class="hljs-keyword">WHEN</span> salary &gt; <span class="hljs-number">60000</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">'High'</span>
+        <span class="hljs-keyword">ELSE</span> <span class="hljs-string">'Unknown'</span>
+    <span class="hljs-keyword">END</span> <span class="hljs-keyword">as</span> salary_category
+<span class="hljs-keyword">FROM</span> Employees;
+
+<span class="hljs-comment">-- CASE with aggregate functions</span>
+<span class="hljs-keyword">SELECT</span> dept_id,
+    <span class="hljs-keyword">COUNT</span>(*) <span class="hljs-keyword">as</span> total_employees,
+    <span class="hljs-keyword">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> salary &gt; <span class="hljs-number">50000</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0</span> <span class="hljs-keyword">END</span>) <span class="hljs-keyword">as</span> high_salary_count,
+    <span class="hljs-keyword">AVG</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> gender = <span class="hljs-string">'M'</span> <span class="hljs-keyword">THEN</span> salary <span class="hljs-keyword">END</span>) <span class="hljs-keyword">as</span> avg_male_salary,
+    <span class="hljs-keyword">AVG</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> gender = <span class="hljs-string">'F'</span> <span class="hljs-keyword">THEN</span> salary <span class="hljs-keyword">END</span>) <span class="hljs-keyword">as</span> avg_female_salary
+<span class="hljs-keyword">FROM</span> Employees
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> dept_id;
+
+<span class="hljs-comment">-- CASE in UPDATE statement</span>
+<span class="hljs-keyword">UPDATE</span> Employees 
+<span class="hljs-keyword">SET</span> salary = <span class="hljs-keyword">CASE</span> 
+    <span class="hljs-keyword">WHEN</span> performance_rating = <span class="hljs-string">'Excellent'</span> <span class="hljs-keyword">THEN</span> salary * <span class="hljs-number">1.15</span>
+    <span class="hljs-keyword">WHEN</span> performance_rating = <span class="hljs-string">'Good'</span> <span class="hljs-keyword">THEN</span> salary * <span class="hljs-number">1.10</span>
+    <span class="hljs-keyword">WHEN</span> performance_rating = <span class="hljs-string">'Average'</span> <span class="hljs-keyword">THEN</span> salary * <span class="hljs-number">1.05</span>
+    <span class="hljs-keyword">ELSE</span> salary
+<span class="hljs-keyword">END</span>;
+
+<span class="hljs-comment">-- Searched CASE vs Simple CASE</span>
+<span class="hljs-comment">-- Simple CASE</span>
+<span class="hljs-keyword">SELECT</span> emp_name,
+    <span class="hljs-keyword">CASE</span> dept_id
+        <span class="hljs-keyword">WHEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">'IT Department'</span>
+        <span class="hljs-keyword">WHEN</span> <span class="hljs-number">2</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">'HR Department'</span>
+        <span class="hljs-keyword">WHEN</span> <span class="hljs-number">3</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">'Finance Department'</span>
+        <span class="hljs-keyword">ELSE</span> <span class="hljs-string">'Other Department'</span>
+    <span class="hljs-keyword">END</span> <span class="hljs-keyword">as</span> department_name
+<span class="hljs-keyword">FROM</span> Employees;
+</div></code></pre>
+<hr>
+<h2 id="38-what-is-data-integrity-types-of-data-integrity"><strong>38. What is Data Integrity? Types of Data Integrity?</strong></h2>
+<p><strong>Answer:</strong> Data Integrity ensures accuracy, consistency, and reliability of data.</p>
+<p><strong>Types:</strong></p>
+<ul>
+<li><strong>Entity Integrity:</strong> Primary key constraints</li>
+<li><strong>Referential Integrity:</strong> Foreign key constraints</li>
+<li><strong>Domain Integrity:</strong> Data type and check constraints</li>
+<li><strong>User-Defined Integrity:</strong> Business rules and triggers</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Entity Integrity - Primary Key</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Customers (
+    customer_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,  <span class="hljs-comment">-- Cannot be NULL or duplicate</span>
+    customer_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>
+);
+
+<span class="hljs-comment">-- Referential Integrity - Foreign Key</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Orders (
+    order_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    customer_id <span class="hljs-built_in">INT</span>,
+    order_date <span class="hljs-built_in">DATE</span>,
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (customer_id) <span class="hljs-keyword">REFERENCES</span> Customers(customer_id)
+        <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">CASCADE</span>
+        <span class="hljs-keyword">ON</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-keyword">CASCADE</span>
+);
+
+<span class="hljs-comment">-- Domain Integrity - Check Constraints</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Products (
+    product_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    product_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    price <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">10</span>,<span class="hljs-number">2</span>) <span class="hljs-keyword">CHECK</span> (price &gt; <span class="hljs-number">0</span>),
+    <span class="hljs-keyword">category</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">CHECK</span> (<span class="hljs-keyword">category</span> <span class="hljs-keyword">IN</span> (<span class="hljs-string">'Electronics'</span>, <span class="hljs-string">'Clothing'</span>, <span class="hljs-string">'Books'</span>)),
+    stock_quantity <span class="hljs-built_in">INT</span> <span class="hljs-keyword">CHECK</span> (stock_quantity &gt;= <span class="hljs-number">0</span>)
+);
+
+<span class="hljs-comment">-- User-Defined Integrity - Trigger</span>
+DELIMITER //
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> check_order_total
+<span class="hljs-keyword">BEFORE</span> <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">ON</span> OrderDetails
+<span class="hljs-keyword">FOR</span> <span class="hljs-keyword">EACH</span> <span class="hljs-keyword">ROW</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">DECLARE</span> total_amount <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">10</span>,<span class="hljs-number">2</span>);
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">SUM</span>(quantity * unit_price) <span class="hljs-keyword">INTO</span> total_amount
+    <span class="hljs-keyword">FROM</span> OrderDetails <span class="hljs-keyword">WHERE</span> order_id = NEW.order_id;
+    
+    IF (total_amount + (NEW.quantity * NEW.unit_price)) &gt; 10000 THEN
+        SIGNAL SQLSTATE '45000' <span class="hljs-keyword">SET</span> MESSAGE_TEXT = <span class="hljs-string">'Order total cannot exceed $10,000'</span>;
+    <span class="hljs-keyword">END</span> <span class="hljs-keyword">IF</span>;
+<span class="hljs-keyword">END</span> //
+DELIMITER ;
+</div></code></pre>
+<hr>
+<h2 id="39-what-is-the-difference-between-rank-denserank-and-rownumber"><strong>39. What is the difference between RANK(), DENSE_RANK(), and ROW_NUMBER()?</strong></h2>
+<p><strong>Answer:</strong> All are window functions for ranking, but handle ties differently.</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Ties Handling</th>
+<th>Next Rank</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROW_NUMBER()</td>
+<td>Assigns unique numbers</td>
+<td>Sequential</td>
+</tr>
+<tr>
+<td>RANK()</td>
+<td>Same rank for ties</td>
+<td>Skips numbers</td>
+</tr>
+<tr>
+<td>DENSE_RANK()</td>
+<td>Same rank for ties</td>
+<td>No gaps</td>
+</tr>
+</tbody>
+</table>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Sample data with salary ties</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> SalaryExample (
+    emp_id <span class="hljs-built_in">INT</span>,
+    emp_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    salary <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">10</span>,<span class="hljs-number">2</span>)
+);
+
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> SalaryExample <span class="hljs-keyword">VALUES</span>
+(<span class="hljs-number">1</span>, <span class="hljs-string">'Alice'</span>, <span class="hljs-number">70000</span>),
+(<span class="hljs-number">2</span>, <span class="hljs-string">'Bob'</span>, <span class="hljs-number">65000</span>),
+(<span class="hljs-number">3</span>, <span class="hljs-string">'Charlie'</span>, <span class="hljs-number">70000</span>),  <span class="hljs-comment">-- Tie with Alice</span>
+(<span class="hljs-number">4</span>, <span class="hljs-string">'David'</span>, <span class="hljs-number">60000</span>),
+(<span class="hljs-number">5</span>, <span class="hljs-string">'Eve'</span>, <span class="hljs-number">65000</span>);      <span class="hljs-comment">-- Tie with Bob</span>
+
+<span class="hljs-comment">-- Comparing ranking functions</span>
+<span class="hljs-keyword">SELECT</span> emp_name, salary,
+    ROW_NUMBER() <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> salary <span class="hljs-keyword">DESC</span>) <span class="hljs-keyword">as</span> row_num,
+    <span class="hljs-keyword">RANK</span>() <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> salary <span class="hljs-keyword">DESC</span>) <span class="hljs-keyword">as</span> rank_num,
+    <span class="hljs-keyword">DENSE_RANK</span>() <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> salary <span class="hljs-keyword">DESC</span>) <span class="hljs-keyword">as</span> dense_rank_num
+<span class="hljs-keyword">FROM</span> SalaryExample
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> salary <span class="hljs-keyword">DESC</span>;
+
+<span class="hljs-comment">-- Results:</span>
+<span class="hljs-comment">-- Alice    70000  1  1  1</span>
+<span class="hljs-comment">-- Charlie  70000  2  1  1  (same dense_rank, different row_number)</span>
+<span class="hljs-comment">-- Bob      65000  3  3  2  (rank skips 2, dense_rank doesn't)</span>
+<span class="hljs-comment">-- Eve      65000  4  3  2</span>
+<span class="hljs-comment">-- David    60000  5  5  3</span>
+
+<span class="hljs-comment">-- Practical example: Top 3 highest paid employees per department</span>
+<span class="hljs-keyword">SELECT</span> dept_id, emp_name, salary, dense_rank_num
+<span class="hljs-keyword">FROM</span> (
+    <span class="hljs-keyword">SELECT</span> dept_id, emp_name, salary,
+        <span class="hljs-keyword">DENSE_RANK</span>() <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> dept_id <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> salary <span class="hljs-keyword">DESC</span>) <span class="hljs-keyword">as</span> dense_rank_num
+    <span class="hljs-keyword">FROM</span> Employees
+) ranked
+<span class="hljs-keyword">WHERE</span> dense_rank_num &lt;= <span class="hljs-number">3</span>;
+</div></code></pre>
+<hr>
+<h2 id="40-what-are-set-operations-in-sql"><strong>40. What are Set Operations in SQL?</strong></h2>
+<p><strong>Answer:</strong> Set operations combine results from multiple SELECT statements.</p>
+<p><strong>Operations:</strong></p>
+<ul>
+<li><strong>UNION:</strong> Combines results, removes duplicates</li>
+<li><strong>UNION ALL:</strong> Combines results, keeps duplicates</li>
+<li><strong>INTERSECT:</strong> Returns common records</li>
+<li><strong>EXCEPT/MINUS:</strong> Returns records from first query not in second</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Sample tables for demonstration</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> CurrentEmployees (emp_id <span class="hljs-built_in">INT</span>, emp_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>));
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> FormerEmployees (emp_id <span class="hljs-built_in">INT</span>, emp_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>));
+
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> CurrentEmployees <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">1</span>, <span class="hljs-string">'John'</span>), (<span class="hljs-number">2</span>, <span class="hljs-string">'Jane'</span>), (<span class="hljs-number">3</span>, <span class="hljs-string">'Bob'</span>);
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> FormerEmployees <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">2</span>, <span class="hljs-string">'Jane'</span>), (<span class="hljs-number">4</span>, <span class="hljs-string">'Alice'</span>), (<span class="hljs-number">5</span>, <span class="hljs-string">'Charlie'</span>);
+
+<span class="hljs-comment">-- UNION - All unique employees (current and former)</span>
+<span class="hljs-keyword">SELECT</span> emp_id, emp_name, <span class="hljs-string">'Current'</span> <span class="hljs-keyword">as</span> <span class="hljs-keyword">status</span> <span class="hljs-keyword">FROM</span> CurrentEmployees
+<span class="hljs-keyword">UNION</span>
+<span class="hljs-keyword">SELECT</span> emp_id, emp_name, <span class="hljs-string">'Former'</span> <span class="hljs-keyword">as</span> <span class="hljs-keyword">status</span> <span class="hljs-keyword">FROM</span> FormerEmployees;
+
+<span class="hljs-comment">-- UNION ALL - All employees including duplicates</span>
+<span class="hljs-keyword">SELECT</span> emp_id, emp_name <span class="hljs-keyword">FROM</span> CurrentEmployees
+<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+<span class="hljs-keyword">SELECT</span> emp_id, emp_name <span class="hljs-keyword">FROM</span> FormerEmployees;
+
+<span class="hljs-comment">-- INTERSECT - Employees who are both current and former (rehired)</span>
+<span class="hljs-keyword">SELECT</span> emp_id, emp_name <span class="hljs-keyword">FROM</span> CurrentEmployees
+<span class="hljs-keyword">INTERSECT</span>
+<span class="hljs-keyword">SELECT</span> emp_id, emp_name <span class="hljs-keyword">FROM</span> FormerEmployees;
+
+<span class="hljs-comment">-- EXCEPT/MINUS - Current employees who were never former employees</span>
+<span class="hljs-keyword">SELECT</span> emp_id, emp_name <span class="hljs-keyword">FROM</span> CurrentEmployees
+<span class="hljs-keyword">EXCEPT</span>
+<span class="hljs-keyword">SELECT</span> emp_id, emp_name <span class="hljs-keyword">FROM</span> FormerEmployees;
+
+<span class="hljs-comment">-- Complex example: Department-wise employee analysis</span>
+<span class="hljs-keyword">SELECT</span> dept_id, <span class="hljs-string">'High Performer'</span> <span class="hljs-keyword">as</span> <span class="hljs-keyword">category</span>, <span class="hljs-keyword">COUNT</span>(*) <span class="hljs-keyword">as</span> <span class="hljs-keyword">count</span>
+<span class="hljs-keyword">FROM</span> Employees 
+<span class="hljs-keyword">WHERE</span> performance_rating &gt;= <span class="hljs-number">4</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> dept_id
+
+<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+
+<span class="hljs-keyword">SELECT</span> dept_id, <span class="hljs-string">'Average Performer'</span> <span class="hljs-keyword">as</span> <span class="hljs-keyword">category</span>, <span class="hljs-keyword">COUNT</span>(*) <span class="hljs-keyword">as</span> <span class="hljs-keyword">count</span>
+<span class="hljs-keyword">FROM</span> Employees 
+<span class="hljs-keyword">WHERE</span> performance_rating = <span class="hljs-number">3</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> dept_id
+
+<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+
+<span class="hljs-keyword">SELECT</span> dept_id, <span class="hljs-string">'Low Performer'</span> <span class="hljs-keyword">as</span> <span class="hljs-keyword">category</span>, <span class="hljs-keyword">COUNT</span>(*) <span class="hljs-keyword">as</span> <span class="hljs-keyword">count</span>
+<span class="hljs-keyword">FROM</span> Employees 
+<span class="hljs-keyword">WHERE</span> performance_rating &lt; <span class="hljs-number">3</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> dept_id
+
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> dept_id, <span class="hljs-keyword">category</span>;
+</div></code></pre>
+<hr>
+<h2 id="bonus-questions-41-45"><strong>Bonus Questions (41-45)</strong></h2>
+<h2 id="41-what-is-database-partitioning"><strong>41. What is Database Partitioning?</strong></h2>
+<p><strong>Answer:</strong> Dividing large tables into smaller, manageable pieces while maintaining logical unity.</p>
+<p><strong>Types:</strong></p>
+<ul>
+<li><strong>Horizontal Partitioning:</strong> Split rows (Range, Hash, List)</li>
+<li><strong>Vertical Partitioning:</strong> Split columns</li>
+<li><strong>Functional Partitioning:</strong> Split by feature/module</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Range Partitioning Example (MySQL)</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Sales (
+    sale_id <span class="hljs-built_in">INT</span>,
+    sale_date <span class="hljs-built_in">DATE</span>,
+    amount <span class="hljs-built_in">DECIMAL</span>(<span class="hljs-number">10</span>,<span class="hljs-number">2</span>),
+    customer_id <span class="hljs-built_in">INT</span>
+)
+<span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">RANGE</span> (<span class="hljs-keyword">YEAR</span>(sale_date)) (
+    <span class="hljs-keyword">PARTITION</span> p2022 <span class="hljs-keyword">VALUES</span> <span class="hljs-keyword">LESS</span> <span class="hljs-keyword">THAN</span> (<span class="hljs-number">2023</span>),
+    <span class="hljs-keyword">PARTITION</span> p2023 <span class="hljs-keyword">VALUES</span> <span class="hljs-keyword">LESS</span> <span class="hljs-keyword">THAN</span> (<span class="hljs-number">2024</span>),
+    <span class="hljs-keyword">PARTITION</span> p2024 <span class="hljs-keyword">VALUES</span> <span class="hljs-keyword">LESS</span> <span class="hljs-keyword">THAN</span> (<span class="hljs-number">2025</span>),
+    <span class="hljs-keyword">PARTITION</span> p_future <span class="hljs-keyword">VALUES</span> <span class="hljs-keyword">LESS</span> <span class="hljs-keyword">THAN</span> MAXVALUE
+);
+
+<span class="hljs-comment">-- Hash Partitioning</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Customers (
+    customer_id <span class="hljs-built_in">INT</span>,
+    customer_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    email <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>)
+)
+<span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">HASH</span>(customer_id)
+<span class="hljs-keyword">PARTITIONS</span> <span class="hljs-number">4</span>;
+
+<span class="hljs-comment">-- List Partitioning</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Employees (
+    emp_id <span class="hljs-built_in">INT</span>,
+    emp_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    department <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>)
+)
+<span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">LIST</span> <span class="hljs-keyword">COLUMNS</span>(department) (
+    <span class="hljs-keyword">PARTITION</span> p_tech <span class="hljs-keyword">VALUES</span> <span class="hljs-keyword">IN</span> (<span class="hljs-string">'IT'</span>, <span class="hljs-string">'Engineering'</span>, <span class="hljs-string">'QA'</span>),
+    <span class="hljs-keyword">PARTITION</span> p_business <span class="hljs-keyword">VALUES</span> <span class="hljs-keyword">IN</span> (<span class="hljs-string">'Sales'</span>, <span class="hljs-string">'Marketing'</span>, <span class="hljs-string">'HR'</span>),
+    <span class="hljs-keyword">PARTITION</span> p_ops <span class="hljs-keyword">VALUES</span> <span class="hljs-keyword">IN</span> (<span class="hljs-string">'Operations'</span>, <span class="hljs-string">'Finance'</span>, <span class="hljs-string">'Admin'</span>)
+);
+</div></code></pre>
+<hr>
+<h2 id="42-what-are-materialized-views"><strong>42. What are Materialized Views?</strong></h2>
+<p><strong>Answer:</strong> Physical copies of query results stored as tables, updated periodically.</p>
+<p><strong>Differences from Regular Views:</strong></p>
+<ul>
+<li>Materialized views store data physically</li>
+<li>Better performance for complex queries</li>
+<li>Need to be refreshed to update data</li>
+<li>Consume storage space</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Creating Materialized View (Oracle syntax)</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">MATERIALIZED</span> <span class="hljs-keyword">VIEW</span> mv_department_summary
+<span class="hljs-keyword">BUILD</span> <span class="hljs-keyword">IMMEDIATE</span>
+<span class="hljs-keyword">REFRESH</span> <span class="hljs-keyword">COMPLETE</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DEMAND</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span> 
+    d.dept_id,
+    d.dept_name,
+    <span class="hljs-keyword">COUNT</span>(e.emp_id) <span class="hljs-keyword">as</span> employee_count,
+    <span class="hljs-keyword">AVG</span>(e.salary) <span class="hljs-keyword">as</span> avg_salary,
+    <span class="hljs-keyword">SUM</span>(e.salary) <span class="hljs-keyword">as</span> total_salary,
+    <span class="hljs-keyword">MAX</span>(e.hire_date) <span class="hljs-keyword">as</span> latest_hire_date
+<span class="hljs-keyword">FROM</span> Departments d
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> Employees e <span class="hljs-keyword">ON</span> d.dept_id = e.dept_id
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> d.dept_id, d.dept_name;
+
+<span class="hljs-comment">-- Refreshing Materialized View</span>
+EXEC DBMS_MVIEW.REFRESH('mv_department_summary', 'C');
+
+<span class="hljs-comment">-- Using Materialized View</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> mv_department_summary <span class="hljs-keyword">WHERE</span> employee_count &gt; <span class="hljs-number">10</span>;
+
+<span class="hljs-comment">-- PostgreSQL Materialized View</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">MATERIALIZED</span> <span class="hljs-keyword">VIEW</span> mv_monthly_sales <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span> 
+    DATE_TRUNC(<span class="hljs-string">'month'</span>, order_date) <span class="hljs-keyword">as</span> <span class="hljs-keyword">month</span>,
+    <span class="hljs-keyword">COUNT</span>(*) <span class="hljs-keyword">as</span> order_count,
+    <span class="hljs-keyword">SUM</span>(total_amount) <span class="hljs-keyword">as</span> total_sales
+<span class="hljs-keyword">FROM</span> Orders
+<span class="hljs-keyword">WHERE</span> order_date &gt;= <span class="hljs-string">'2024-01-01'</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> DATE_TRUNC(<span class="hljs-string">'month'</span>, order_date);
+
+<span class="hljs-comment">-- Refresh PostgreSQL Materialized View</span>
+REFRESH MATERIALIZED VIEW mv_monthly_sales;
+</div></code></pre>
+<hr>
+<h2 id="43-what-is-database-sharding"><strong>43. What is Database Sharding?</strong></h2>
+<p><strong>Answer:</strong> Horizontal partitioning across multiple database servers/instances.</p>
+<p><strong>Types:</strong></p>
+<ul>
+<li><strong>Range-based Sharding:</strong> Based on value ranges</li>
+<li><strong>Hash-based Sharding:</strong> Based on hash function</li>
+<li><strong>Directory-based Sharding:</strong> Lookup service determines shard</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Example: User data sharding by user_id</span>
+<span class="hljs-comment">-- Shard 1: user_id 1-1000000</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> users_shard1 (
+    user_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">CHECK</span> (user_id <span class="hljs-keyword">BETWEEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">AND</span> <span class="hljs-number">1000000</span>),
+    username <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    email <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    created_date <span class="hljs-built_in">DATE</span>
+);
+
+<span class="hljs-comment">-- Shard 2: user_id 1000001-2000000  </span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> users_shard2 (
+    user_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span> <span class="hljs-keyword">CHECK</span> (user_id <span class="hljs-keyword">BETWEEN</span> <span class="hljs-number">1000001</span> <span class="hljs-keyword">AND</span> <span class="hljs-number">2000000</span>),
+    username <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    email <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    created_date <span class="hljs-built_in">DATE</span>
+);
+
+<span class="hljs-comment">-- Application logic for sharding</span>
+<span class="hljs-comment">-- Function to determine shard based on user_id</span>
+<span class="hljs-comment">/*
+function getShardForUser(user_id) {
+    if (user_id &lt;= 1000000) return 'shard1';
+    else if (user_id &lt;= 2000000) return 'shard2';
+    // ... more shards
+}
+*/</span>
+
+<span class="hljs-comment">-- Geographic sharding example</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> orders_us (
+    order_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    customer_id <span class="hljs-built_in">INT</span>,
+    order_date <span class="hljs-built_in">DATE</span>,
+    region <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">10</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-string">'US'</span>
+);
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> orders_eu (
+    order_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    customer_id <span class="hljs-built_in">INT</span>,
+    order_date <span class="hljs-built_in">DATE</span>,
+    region <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">10</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-string">'EU'</span>
+);
+</div></code></pre>
+<hr>
+<h2 id="44-what-are-database-design-patterns"><strong>44. What are Database Design Patterns?</strong></h2>
+<p><strong>Answer:</strong> Common solutions to recurring database design problems.</p>
+<p><strong>Common Patterns:</strong></p>
+<ul>
+<li><strong>One-to-One:</strong> User and Profile</li>
+<li><strong>One-to-Many:</strong> Department and Employees</li>
+<li><strong>Many-to-Many:</strong> Students and Courses</li>
+<li><strong>Self-Referencing:</strong> Employee and Manager</li>
+<li><strong>Inheritance:</strong> Table per hierarchy, Table per type</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">-- One-to-One Pattern</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-keyword">Users</span> (
+    user_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    username <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    email <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>)
+);
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> UserProfiles (
+    user_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    first_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    last_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    bio <span class="hljs-built_in">TEXT</span>,
+    avatar_url <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">255</span>),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (user_id) <span class="hljs-keyword">REFERENCES</span> <span class="hljs-keyword">Users</span>(user_id)
+);
+
+<span class="hljs-comment">-- One-to-Many Pattern</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Categories (
+    category_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    category_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>)
+);
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Products (
+    product_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    product_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    category_id <span class="hljs-built_in">INT</span>,
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (category_id) <span class="hljs-keyword">REFERENCES</span> Categories(category_id)
+);
+
+<span class="hljs-comment">-- Many-to-Many Pattern</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Students (
+    student_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    student_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>)
+);
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Courses (
+    course_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    course_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>)
+);
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> StudentCourses (
+    student_id <span class="hljs-built_in">INT</span>,
+    course_id <span class="hljs-built_in">INT</span>,
+    enrollment_date <span class="hljs-built_in">DATE</span>,
+    grade <span class="hljs-built_in">CHAR</span>(<span class="hljs-number">2</span>),
+    PRIMARY <span class="hljs-keyword">KEY</span> (student_id, course_id),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (student_id) <span class="hljs-keyword">REFERENCES</span> Students(student_id),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (course_id) <span class="hljs-keyword">REFERENCES</span> Courses(course_id)
+);
+
+<span class="hljs-comment">-- Self-Referencing Pattern (Employee-Manager)</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Employees (
+    emp_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    emp_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    manager_id <span class="hljs-built_in">INT</span>,
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (manager_id) <span class="hljs-keyword">REFERENCES</span> Employees(emp_id)
+);
+
+<span class="hljs-comment">-- Inheritance Pattern - Table Per Type</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Vehicles (
+    vehicle_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    make <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    <span class="hljs-keyword">model</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>),
+    <span class="hljs-keyword">year</span> <span class="hljs-built_in">INT</span>
+);
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Cars (
+    vehicle_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    doors <span class="hljs-built_in">INT</span>,
+    fuel_type <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">20</span>),
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (vehicle_id) <span class="hljs-keyword">REFERENCES</span> Vehicles(vehicle_id)
+);
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> Motorcycles (
+    vehicle_id <span class="hljs-built_in">INT</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    engine_size <span class="hljs-built_in">INT</span>,
+    has_sidecar <span class="hljs-built_in">BOOLEAN</span>,
+    <span class="hljs-keyword">FOREIGN</span> <span class="hljs-keyword">KEY</span> (vehicle_id) <span class="hljs-keyword">REFERENCES</span> Vehicles(vehicle_id)
+);
+</div></code></pre>
+<hr>
+<h2 id="45-what-are-performance-optimization-techniques"><strong>45. What are Performance Optimization Techniques?</strong></h2>
+<p><strong>Answer:</strong> Methods to improve database query performance and overall system efficiency.</p>
+<p><strong>Techniques:</strong></p>
+<ul>
+<li><strong>Indexing:</strong> Create appropriate indexes</li>
+<li><strong>Query Optimization:</strong> Write efficient queries</li>
+<li><strong>Partitioning:</strong> Split large tables</li>
+<li><strong>Caching:</strong> Store frequently accessed data</li>
+<li><strong>Database Design:</strong> Proper normalization/denormalization</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Index Optimization</span>
+<span class="hljs-comment">-- Create composite index for common query patterns</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">INDEX</span> idx_emp_dept_salary <span class="hljs-keyword">ON</span> Employees(dept_id, salary);
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">INDEX</span> idx_order_date_customer <span class="hljs-keyword">ON</span> Orders(order_date, customer_id);
+
+<span class="hljs-comment">-- Query Optimization Examples</span>
+
+<span class="hljs-comment">-- INEFFICIENT: Using functions in WHERE clause</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> Employees <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">YEAR</span>(hire_date) = <span class="hljs-number">2023</span>;
+
+<span class="hljs-comment">-- EFFICIENT: Using date ranges</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> Employees 
+<span class="hljs-keyword">WHERE</span> hire_date &gt;= <span class="hljs-string">'2023-01-01'</span> <span class="hljs-keyword">AND</span> hire_date &lt; <span class="hljs-string">'2024-01-01'</span>;
+
+<span class="hljs-comment">-- INEFFICIENT: SELECT *</span>
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> Employees <span class="hljs-keyword">WHERE</span> dept_id = <span class="hljs-number">10</span>;
+
+<span class="hljs-comment">-- EFFICIENT: Select only needed columns</span>
+<span class="hljs-keyword">SELECT</span> emp_id, emp_name, salary <span class="hljs-keyword">FROM</span> Employees <span class="hljs-keyword">WHERE</span> dept_id = <span class="hljs-number">10</span>;
+
+<span class="hljs-comment">-- INEFFICIENT: Correlated subquery</span>
+<span class="hljs-keyword">SELECT</span> emp_name <span class="hljs-keyword">FROM</span> Employees e1
+<span class="hljs-keyword">WHERE</span> salary &gt; (<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">AVG</span>(salary) <span class="hljs-keyword">FROM</span> Employees e2 <span class="hljs-keyword">WHERE</span> e1.dept_id = e2.dept_id);
+
+<span class="hljs-comment">-- EFFICIENT: Window function</span>
+<span class="hljs-keyword">SELECT</span> emp_name <span class="hljs-keyword">FROM</span> (
+    <span class="hljs-keyword">SELECT</span> emp_name, salary,
+           <span class="hljs-keyword">AVG</span>(salary) <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> dept_id) <span class="hljs-keyword">as</span> avg_dept_salary
+    <span class="hljs-keyword">FROM</span> Employees
+) t <span class="hljs-keyword">WHERE</span> salary &gt; avg_dept_salary;
+
+<span class="hljs-comment">-- Query Execution Plan Analysis</span>
+<span class="hljs-keyword">EXPLAIN</span> <span class="hljs-keyword">SELECT</span> e.emp_name, d.dept_name
+<span class="hljs-keyword">FROM</span> Employees e
+<span class="hljs-keyword">JOIN</span> Departments d <span class="hljs-keyword">ON</span> e.dept_id = d.dept_id
+<span class="hljs-keyword">WHERE</span> e.salary &gt; <span class="hljs-number">50000</span>;
+
+<span class="hljs-comment">-- Optimization with proper indexing</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">INDEX</span> idx_emp_salary <span class="hljs-keyword">ON</span> Employees(salary);
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">INDEX</span> idx_emp_dept_join <span class="hljs-keyword">ON</span> Employees(dept_id);
+
+<span class="hljs-comment">-- Partitioning for large tables</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> LogEntries (
+    log_id <span class="hljs-built_in">BIGINT</span> AUTO_INCREMENT,
+    log_date <span class="hljs-built_in">DATE</span>,
+    log_level <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">10</span>),
+    message <span class="hljs-built_in">TEXT</span>,
+    PRIMARY <span class="hljs-keyword">KEY</span> (log_id, log_date)
+)
+<span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">RANGE</span> (<span class="hljs-keyword">TO_DAYS</span>(log_date)) (
+    <span class="hljs-keyword">PARTITION</span> p_2024_01 <span class="hljs-keyword">VALUES</span> <span class="hljs-keyword">LESS</span> <span class="hljs-keyword">THAN</span> (<span class="hljs-keyword">TO_DAYS</span>(<span class="hljs-string">'2024-02-01'</span>)),
+    <span class="hljs-keyword">PARTITION</span> p_2024_02 <span class="hljs-keyword">VALUES</span> <span class="hljs-keyword">LESS</span> <span class="hljs-keyword">THAN</span> (<span class="hljs-keyword">TO_DAYS</span>(<span class="hljs-string">'2024-03-01'</span>)),
+    <span class="hljs-keyword">PARTITION</span> p_2024_03 <span class="hljs-keyword">VALUES</span> <span class="hljs-keyword">LESS</span> <span class="hljs-keyword">THAN</span> (<span class="hljs-keyword">TO_DAYS</span>(<span class="hljs-string">'2024-04-01'</span>))
+);
+
+<span class="hljs-comment">-- Query optimization with LIMIT</span>
+<span class="hljs-comment">-- Use LIMIT for pagination instead of loading all data</span>
+<span class="hljs-keyword">SELECT</span> emp_id, emp_name, salary
+<span class="hljs-keyword">FROM</span> Employees
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> salary <span class="hljs-keyword">DESC</span>
+<span class="hljs-keyword">LIMIT</span> <span class="hljs-number">10</span> <span class="hljs-keyword">OFFSET</span> <span class="hljs-number">20</span>;  <span class="hljs-comment">-- Page 3, 10 records per page</span>
+</div></code></pre>
+<hr>
+<h2 id="summary-of-key-interview-topics"><strong>Summary of Key Interview Topics:</strong></h2>
+<ol>
+<li><strong>Database Fundamentals:</strong> DBMS vs RDBMS, Types of databases</li>
+<li><strong>Keys and Constraints:</strong> Primary, Foreign, Unique keys, Check constraints</li>
+<li><strong>Normalization:</strong> 1NF, 2NF, 3NF and their importance</li>
+<li><strong>ACID Properties:</strong> Atomicity, Consistency, Isolation, Durability</li>
+<li><strong>SQL Operations:</strong> DDL, DML, DCL, TCL commands</li>
+<li><strong>Joins:</strong> Inner, Outer, Left, Right, Full joins</li>
+<li><strong>Advanced SQL:</strong> Subqueries, Window functions, CTEs</li>
+<li><strong>Indexing:</strong> Types of indexes and their performance impact</li>
+<li><strong>Transactions:</strong> Transaction states, Concurrency control</li>
+<li><strong>Database Objects:</strong> Views, Stored procedures, Triggers</li>
+<li><strong>Performance:</strong> Query optimization, Partitioning, Sharding</li>
+<li><strong>Functions:</strong> String, Numeric, Date/Time functions</li>
+</ol>
+<p><strong>Tips for Interview Success:</strong></p>
+<ul>
+<li>Practice writing SQL queries by hand</li>
+<li>Understand the theoretical concepts behind each topic</li>
+<li>Be able to explain trade-offs (e.g., normalization vs performance)</li>
+<li>Know when to use different types of joins and indexes</li>
+<li>Understand real-world scenarios where these concepts apply</li>
+</ul>
+
+</body>
+</html>

@@ -1,6 +1,6 @@
 # Complete JavaScript Cheatsheet - Beginner to Advanced
 
-[Download PDF](https://gdurl.com/JrsP)
+### [Download PDF](https://gdurl.com/fejTe)
 
 ## Table of Contents
 

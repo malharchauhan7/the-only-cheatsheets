@@ -1,0 +1,1952 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>basic-dsa-questions.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="basic-dsa-questions-for-beginners">Basic DSA Questions for beginners</h1>
+<h2 id="1-arrays">1. ARRAYS</h2>
+<h3 id="question-1-find-maximum-element-in-array">Question 1: Find Maximum Element in Array</h3>
+<p><strong>Problem:</strong> Given an array of integers, find the maximum element.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION findMax(array):
+    IF array is empty:
+        RETURN null
+    
+    max = array[0]
+    FOR i = 1 to array.length - 1:
+        IF array[i] &gt; max:
+            max = array[i]
+    RETURN max
+</div></code></pre>
+<p><strong>Explanation:</strong> We initialize max with the first element and traverse the array once, updating max whenever we find a larger element. Time complexity: O(n), Space complexity: O(1).</p>
+<h3 id="question-2-reverse-an-array">Question 2: Reverse an Array</h3>
+<p><strong>Problem:</strong> Reverse the elements of an array in-place.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION reverseArray(array):
+    left = 0
+    right = array.length - 1
+    
+    WHILE left &lt; right:
+        SWAP array[left] and array[right]
+        left = left + 1
+        right = right - 1
+</div></code></pre>
+<p><strong>Explanation:</strong> Use two pointers approach - one from start, one from end. Swap elements and move pointers towards center until they meet. Time complexity: O(n), Space complexity: O(1).</p>
+<h3 id="question-3-find-second-largest-element">Question 3: Find Second Largest Element</h3>
+<p><strong>Problem:</strong> Find the second largest element in an array.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION findSecondLargest(array):
+    IF array.length &lt; 2:
+        RETURN null
+    
+    largest = -infinity
+    secondLargest = -infinity
+    
+    FOR each element in array:
+        IF element &gt; largest:
+            secondLargest = largest
+            largest = element
+        ELSE IF element &gt; secondLargest AND element != largest:
+            secondLargest = element
+    
+    RETURN secondLargest if secondLargest != -infinity else null
+</div></code></pre>
+<p><strong>Explanation:</strong> Single pass algorithm that maintains two variables for largest and second largest. We update them appropriately as we traverse. Time complexity: O(n), Space complexity: O(1).</p>
+<h3 id="question-4-remove-duplicates-from-sorted-array">Question 4: Remove Duplicates from Sorted Array</h3>
+<p><strong>Problem:</strong> Remove duplicates from a sorted array in-place.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION removeDuplicates(sortedArray):
+    IF array is empty:
+        RETURN 0
+    
+    writeIndex = 1
+    
+    FOR readIndex = 1 to array.length - 1:
+        IF array[readIndex] != array[readIndex - 1]:
+            array[writeIndex] = array[readIndex]
+            writeIndex = writeIndex + 1
+    
+    RETURN writeIndex
+</div></code></pre>
+<p><strong>Explanation:</strong> Two pointer technique where readIndex scans the array and writeIndex marks position for next unique element. Since array is sorted, duplicates are adjacent. Time complexity: O(n), Space complexity: O(1).</p>
+<h3 id="question-5-move-zeros-to-end">Question 5: Move Zeros to End</h3>
+<p><strong>Problem:</strong> Move all zeros in an array to the end while maintaining relative order of non-zero elements.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION moveZerosToEnd(array):
+    writeIndex = 0
+    
+    FOR readIndex = 0 to array.length - 1:
+        IF array[readIndex] != 0:
+            array[writeIndex] = array[readIndex]
+            writeIndex = writeIndex + 1
+    
+    WHILE writeIndex &lt; array.length:
+        array[writeIndex] = 0
+        writeIndex = writeIndex + 1
+</div></code></pre>
+<p><strong>Explanation:</strong> First pass moves all non-zero elements to the front, second pass fills remaining positions with zeros. Maintains relative order of non-zero elements. Time complexity: O(n), Space complexity: O(1).</p>
+<h3 id="question-6-find-missing-number">Question 6: Find Missing Number</h3>
+<p><strong>Problem:</strong> Given an array containing n distinct numbers from 0 to n, find the missing number.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION findMissingNumber(array, n):
+    expectedSum = n * (n + 1) / 2
+    actualSum = 0
+    
+    FOR each element in array:
+        actualSum = actualSum + element
+    
+    RETURN expectedSum - actualSum
+</div></code></pre>
+<p><strong>Explanation:</strong> Uses mathematical approach - sum of first n natural numbers minus actual sum gives missing number. Alternative: XOR all numbers from 0 to n with all array elements. Time complexity: O(n), Space complexity: O(1).</p>
+<h3 id="question-7-rotate-array-by-k-positions">Question 7: Rotate Array by K Positions</h3>
+<p><strong>Problem:</strong> Rotate array to the right by k steps.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION rotateArray(array, k):
+    n = array.length
+    k = k % n  // Handle k &gt; n
+    
+    // Reverse entire array
+    REVERSE(array, 0, n - 1)
+    
+    // Reverse first k elements
+    REVERSE(array, 0, k - 1)
+    
+    // Reverse remaining elements
+    REVERSE(array, k, n - 1)
+
+FUNCTION reverse(array, start, end):
+    WHILE start &lt; end:
+        SWAP array[start] and array[end]
+        start = start + 1
+        end = end - 1
+</div></code></pre>
+<p><strong>Explanation:</strong> Three-step reversal algorithm. Reverse entire array, then reverse first k elements, then reverse rest. Time complexity: O(n), Space complexity: O(1).</p>
+<h3 id="question-8-check-if-array-is-sorted">Question 8: Check if Array is Sorted</h3>
+<p><strong>Problem:</strong> Check if an array is sorted in non-decreasing order.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION isSorted(array):
+    FOR i = 1 to array.length - 1:
+        IF array[i] &lt; array[i - 1]:
+            RETURN false
+    RETURN true
+</div></code></pre>
+<p><strong>Explanation:</strong> Single pass through array checking if each element is greater than or equal to previous element. Time complexity: O(n), Space complexity: O(1).</p>
+<h3 id="question-9-find-intersection-of-two-arrays">Question 9: Find Intersection of Two Arrays</h3>
+<p><strong>Problem:</strong> Find common elements between two arrays.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION findIntersection(array1, array2):
+    result = []
+    
+    FOR each element1 in array1:
+        FOR each element2 in array2:
+            IF element1 == element2:
+                IF element1 not in result:
+                    ADD element1 to result
+                BREAK
+    
+    RETURN result
+</div></code></pre>
+<p><strong>Explanation:</strong> Nested loop approach for basic solution. For each element in first array, check if it exists in second array. Can be optimized using hash sets. Time complexity: O(n*m), Space complexity: O(min(n,m)).</p>
+<h3 id="question-10-leaders-in-array">Question 10: Leaders in Array</h3>
+<p><strong>Problem:</strong> Find all leaders in array (element is leader if all elements to its right are smaller).</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION findLeaders(array):
+    n = array.length
+    leaders = []
+    maxFromRight = array[n - 1]
+    
+    ADD array[n - 1] to leaders  // Rightmost is always leader
+    
+    FOR i = n - 2 down to 0:
+        IF array[i] &gt; maxFromRight:
+            ADD array[i] to leaders
+            maxFromRight = array[i]
+    
+    REVERSE leaders array
+    RETURN leaders
+</div></code></pre>
+<p><strong>Explanation:</strong> Traverse from right to left, maintaining maximum element seen so far from right. If current element is greater than this maximum, it's a leader. Time complexity: O(n), Space complexity: O(1) extra.</p>
+<hr>
+<h2 id="2-strings">2. STRINGS</h2>
+<h3 id="question-1-check-if-string-is-palindrome">Question 1: Check if String is Palindrome</h3>
+<p><strong>Problem:</strong> Check if a given string reads the same forwards and backwards.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION isPalindrome(string):
+    left = 0
+    right = string.length - 1
+    
+    WHILE left &lt; right:
+        IF string[left] != string[right]:
+            RETURN false
+        left = left + 1
+        right = right - 1
+    
+    RETURN true
+</div></code></pre>
+<p><strong>Explanation:</strong> Two pointer approach comparing characters from both ends moving towards center. If any pair doesn't match, it's not a palindrome. Time complexity: O(n), Space complexity: O(1).</p>
+<h3 id="question-2-reverse-a-string">Question 2: Reverse a String</h3>
+<p><strong>Problem:</strong> Reverse the characters in a string.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION reverseString(string):
+    charArray = CONVERT string to character array
+    left = 0
+    right = charArray.length - 1
+    
+    WHILE left &lt; right:
+        SWAP charArray[left] and charArray[right]
+        left = left + 1
+        right = right - 1
+    
+    RETURN CONVERT charArray to string
+</div></code></pre>
+<p><strong>Explanation:</strong> Convert string to character array for in-place manipulation, then use two pointers to swap characters from ends towards center. Time complexity: O(n), Space complexity: O(n) for character array.</p>
+<h3 id="question-3-check-anagrams">Question 3: Check Anagrams</h3>
+<p><strong>Problem:</strong> Check if two strings are anagrams of each other.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION areAnagrams(string1, string2):
+    IF string1.length != string2.length:
+        RETURN false
+    
+    charCount = ARRAY of size 256 initialized to 0
+    
+    FOR i = 0 to string1.length - 1:
+        charCount[ASCII(string1[i])] = charCount[ASCII(string1[i])] + 1
+        charCount[ASCII(string2[i])] = charCount[ASCII(string2[i])] - 1
+    
+    FOR i = 0 to 255:
+        IF charCount[i] != 0:
+            RETURN false
+    
+    RETURN true
+</div></code></pre>
+<p><strong>Explanation:</strong> Count frequency of each character in first string (increment) and second string (decrement). If strings are anagrams, all counts should be zero. Time complexity: O(n), Space complexity: O(1) - fixed size array.</p>
+<h3 id="question-4-find-first-non-repeating-character">Question 4: Find First Non-Repeating Character</h3>
+<p><strong>Problem:</strong> Find the first character that appears exactly once in a string.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION firstNonRepeating(string):
+    charCount = ARRAY of size 256 initialized to 0
+    
+    // Count frequency of each character
+    FOR each character in string:
+        charCount[ASCII(character)] = charCount[ASCII(character)] + 1
+    
+    // Find first character with count 1
+    FOR each character in string:
+        IF charCount[ASCII(character)] == 1:
+            RETURN character
+    
+    RETURN null
+</div></code></pre>
+<p><strong>Explanation:</strong> Two pass algorithm - first pass counts frequencies, second pass finds first character with count 1. Time complexity: O(n), Space complexity: O(1) - fixed size array.</p>
+<h3 id="question-5-remove-duplicates-from-string">Question 5: Remove Duplicates from String</h3>
+<p><strong>Problem:</strong> Remove duplicate characters from string keeping first occurrence.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION removeDuplicates(string):
+    seen = BOOLEAN ARRAY of size 256 initialized to false
+    result = &quot;&quot;
+    
+    FOR each character in string:
+        IF seen[ASCII(character)] == false:
+            result = result + character
+            seen[ASCII(character)] = true
+    
+    RETURN result
+</div></code></pre>
+<p><strong>Explanation:</strong> Use boolean array to track seen characters. Add character to result only if not seen before. Time complexity: O(n), Space complexity: O(1) for tracking + O(n) for result.</p>
+<h3 id="question-6-check-if-strings-are-rotation-of-each-other">Question 6: Check if Strings are Rotation of Each Other</h3>
+<p><strong>Problem:</strong> Check if one string is rotation of another (e.g., &quot;abcde&quot; and &quot;cdeab&quot;).</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION areRotations(string1, string2):
+    IF string1.length != string2.length:
+        RETURN false
+    
+    concatenated = string1 + string1
+    RETURN concatenated.contains(string2)
+</div></code></pre>
+<p><strong>Explanation:</strong> If string2 is rotation of string1, then string2 will be substring of string1+string1. This works because concatenating string1 with itself contains all possible rotations as substrings. Time complexity: O(n), Space complexity: O(n).</p>
+<h3 id="question-7-longest-common-prefix">Question 7: Longest Common Prefix</h3>
+<p><strong>Problem:</strong> Find longest common prefix among array of strings.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION longestCommonPrefix(strings):
+    IF strings is empty:
+        RETURN &quot;&quot;
+    
+    prefix = strings[0]
+    
+    FOR i = 1 to strings.length - 1:
+        WHILE strings[i] does not start with prefix:
+            prefix = prefix.substring(0, prefix.length - 1)
+            IF prefix is empty:
+                RETURN &quot;&quot;
+    
+    RETURN prefix
+</div></code></pre>
+<p><strong>Explanation:</strong> Start with first string as prefix, then for each subsequent string, reduce prefix until it matches the beginning of current string. Time complexity: O(S) where S is sum of all string lengths, Space complexity: O(1).</p>
+<h3 id="question-8-count-vowels-and-consonants">Question 8: Count Vowels and Consonants</h3>
+<p><strong>Problem:</strong> Count number of vowels and consonants in a string.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION countVowelsConsonants(string):
+    vowels = 0
+    consonants = 0
+    vowelSet = {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'}
+    
+    FOR each character in string:
+        IF character is alphabetic:
+            IF character in vowelSet:
+                vowels = vowels + 1
+            ELSE:
+                consonants = consonants + 1
+    
+    RETURN (vowels, consonants)
+</div></code></pre>
+<p><strong>Explanation:</strong> Single pass through string, categorizing each alphabetic character as vowel or consonant using a set for quick lookup. Time complexity: O(n), Space complexity: O(1).</p>
+<h3 id="question-9-reverse-words-in-string">Question 9: Reverse Words in String</h3>
+<p><strong>Problem:</strong> Reverse the order of words in a string.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION reverseWords(string):
+    words = SPLIT string by spaces
+    reversedWords = []
+    
+    FOR i = words.length - 1 down to 0:
+        IF words[i] is not empty:
+            ADD words[i] to reversedWords
+    
+    RETURN JOIN reversedWords with single space
+</div></code></pre>
+<p><strong>Explanation:</strong> Split string into words, then traverse word array in reverse order to build result. Handle multiple spaces by checking for empty strings. Time complexity: O(n), Space complexity: O(n).</p>
+<h3 id="question-10-check-balanced-parentheses">Question 10: Check Balanced Parentheses</h3>
+<p><strong>Problem:</strong> Check if parentheses in string are balanced.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION isBalanced(string):
+    count = 0
+    
+    FOR each character in string:
+        IF character == '(':
+            count = count + 1
+        ELSE IF character == ')':
+            count = count - 1
+            IF count &lt; 0:
+                RETURN false
+    
+    RETURN count == 0
+</div></code></pre>
+<p><strong>Explanation:</strong> Use counter for parentheses - increment for opening, decrement for closing. If counter goes negative or isn't zero at end, parentheses are unbalanced. Time complexity: O(n), Space complexity: O(1).</p>
+<hr>
+<h2 id="3-linked-lists">3. LINKED LISTS</h2>
+<h3 id="question-1-reverse-a-linked-list">Question 1: Reverse a Linked List</h3>
+<p><strong>Problem:</strong> Reverse a singly linked list.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION reverseLinkedList(head):
+    previous = null
+    current = head
+    
+    WHILE current != null:
+        nextNode = current.next
+        current.next = previous
+        previous = current
+        current = nextNode
+    
+    RETURN previous
+</div></code></pre>
+<p><strong>Explanation:</strong> Use three pointers to iteratively reverse links. Previous starts as null, current at head. For each node, save next, reverse current's link to previous, then advance pointers. Time complexity: O(n), Space complexity: O(1).</p>
+<h3 id="question-2-find-middle-of-linked-list">Question 2: Find Middle of Linked List</h3>
+<p><strong>Problem:</strong> Find the middle node of a linked list.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION findMiddle(head):
+    IF head == null:
+        RETURN null
+    
+    slow = head
+    fast = head
+    
+    WHILE fast != null AND fast.next != null:
+        slow = slow.next
+        fast = fast.next.next
+    
+    RETURN slow
+</div></code></pre>
+<p><strong>Explanation:</strong> Floyd's tortoise and hare algorithm. Slow pointer moves one step, fast pointer moves two steps. When fast reaches end, slow is at middle. For even length, returns first of two middle nodes. Time complexity: O(n), Space complexity: O(1).</p>
+<h3 id="question-3-detect-cycle-in-linked-list">Question 3: Detect Cycle in Linked List</h3>
+<p><strong>Problem:</strong> Detect if there's a cycle in linked list.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION hasCycle(head):
+    IF head == null OR head.next == null:
+        RETURN false
+    
+    slow = head
+    fast = head
+    
+    WHILE fast != null AND fast.next != null:
+        slow = slow.next
+        fast = fast.next.next
+        
+        IF slow == fast:
+            RETURN true
+    
+    RETURN false
+</div></code></pre>
+<p><strong>Explanation:</strong> Floyd's cycle detection algorithm. If there's a cycle, fast and slow pointers will eventually meet. If no cycle, fast pointer reaches null. Time complexity: O(n), Space complexity: O(1).</p>
+<h3 id="question-4-remove-nth-node-from-end">Question 4: Remove Nth Node from End</h3>
+<p><strong>Problem:</strong> Remove the nth node from the end of linked list.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION removeNthFromEnd(head, n):
+    dummy = CREATE new node with next pointing to head
+    first = dummy
+    second = dummy
+    
+    // Move first pointer n+1 steps ahead
+    FOR i = 0 to n:
+        first = first.next
+    
+    // Move both pointers until first reaches end
+    WHILE first != null:
+        first = first.next
+        second = second.next
+    
+    // Remove the nth node
+    second.next = second.next.next
+    
+    RETURN dummy.next
+</div></code></pre>
+<p><strong>Explanation:</strong> Two pointer technique with dummy node. First pointer gets n+1 head start, then both move together. When first reaches end, second is at node before the one to delete. Time complexity: O(n), Space complexity: O(1).</p>
+<h3 id="question-5-merge-two-sorted-lists">Question 5: Merge Two Sorted Lists</h3>
+<p><strong>Problem:</strong> Merge two sorted linked lists into one sorted list.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION mergeSortedLists(list1, list2):
+    dummy = CREATE new node
+    current = dummy
+    
+    WHILE list1 != null AND list2 != null:
+        IF list1.data &lt;= list2.data:
+            current.next = list1
+            list1 = list1.next
+        ELSE:
+            current.next = list2
+            list2 = list2.next
+        current = current.next
+    
+    // Attach remaining nodes
+    IF list1 != null:
+        current.next = list1
+    ELSE:
+        current.next = list2
+    
+    RETURN dummy.next
+</div></code></pre>
+<p><strong>Explanation:</strong> Use dummy node to simplify edge cases. Compare heads of both lists, attach smaller one to result, advance that pointer. Continue until one list is exhausted, then attach remaining nodes. Time complexity: O(n+m), Space complexity: O(1).</p>
+<h3 id="question-6-find-intersection-of-two-lists">Question 6: Find Intersection of Two Lists</h3>
+<p><strong>Problem:</strong> Find the node where two linked lists intersect.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION findIntersection(headA, headB):
+    IF headA == null OR headB == null:
+        RETURN null
+    
+    pointerA = headA
+    pointerB = headB
+    
+    WHILE pointerA != pointerB:
+        pointerA = (pointerA == null) ? headB : pointerA.next
+        pointerB = (pointerB == null) ? headA : pointerB.next
+    
+    RETURN pointerA
+</div></code></pre>
+<p><strong>Explanation:</strong> Two pointers traverse both lists. When a pointer reaches end, it starts from other list's head. They will meet at intersection point or both become null if no intersection. This eliminates length difference. Time complexity: O(n+m), Space complexity: O(1).</p>
+<h3 id="question-7-remove-duplicates-from-sorted-list">Question 7: Remove Duplicates from Sorted List</h3>
+<p><strong>Problem:</strong> Remove duplicates from a sorted linked list.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION removeDuplicates(head):
+    current = head
+    
+    WHILE current != null AND current.next != null:
+        IF current.data == current.next.data:
+            current.next = current.next.next
+        ELSE:
+            current = current.next
+    
+    RETURN head
+</div></code></pre>
+<p><strong>Explanation:</strong> Since list is sorted, duplicates are adjacent. Compare current node with next node, if equal skip next node, otherwise advance current pointer. Time complexity: O(n), Space complexity: O(1).</p>
+<h3 id="question-8-check-if-linked-list-is-palindrome">Question 8: Check if Linked List is Palindrome</h3>
+<p><strong>Problem:</strong> Check if values in linked list form a palindrome.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION isPalindrome(head):
+    IF head == null OR head.next == null:
+        RETURN true
+    
+    // Find middle using slow-fast pointers
+    slow = head
+    fast = head
+    WHILE fast.next != null AND fast.next.next != null:
+        slow = slow.next
+        fast = fast.next.next
+    
+    // Reverse second half
+    secondHalf = reverseList(slow.next)
+    
+    // Compare first half with reversed second half
+    firstHalf = head
+    WHILE secondHalf != null:
+        IF firstHalf.data != secondHalf.data:
+            RETURN false
+        firstHalf = firstHalf.next
+        secondHalf = secondHalf.next
+    
+    RETURN true
+</div></code></pre>
+<p><strong>Explanation:</strong> Find middle, reverse second half, compare both halves. This modifies the list but uses O(1) space. Alternative: use stack to store first half. Time complexity: O(n), Space complexity: O(1).</p>
+<h3 id="question-9-add-two-numbers-represented-as-lists">Question 9: Add Two Numbers Represented as Lists</h3>
+<p><strong>Problem:</strong> Add two numbers where digits are stored in reverse order in linked lists.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION addTwoNumbers(list1, list2):
+    dummy = CREATE new node
+    current = dummy
+    carry = 0
+    
+    WHILE list1 != null OR list2 != null OR carry != 0:
+        sum = carry
+        
+        IF list1 != null:
+            sum = sum + list1.data
+            list1 = list1.next
+        
+        IF list2 != null:
+            sum = sum + list2.data
+            list2 = list2.next
+        
+        carry = sum / 10
+        current.next = CREATE new node with data (sum % 10)
+        current = current.next
+    
+    RETURN dummy.next
+</div></code></pre>
+<p><strong>Explanation:</strong> Simulate addition digit by digit, handling carry. Continue until both lists are exhausted and no carry remains. Each digit is sum of corresponding digits plus carry from previous position. Time complexity: O(max(n,m)), Space complexity: O(max(n,m)).</p>
+<h3 id="question-10-rotate-linked-list">Question 10: Rotate Linked List</h3>
+<p><strong>Problem:</strong> Rotate linked list to the right by k places.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION rotateRight(head, k):
+    IF head == null OR head.next == null OR k == 0:
+        RETURN head
+    
+    // Find length and make it circular
+    length = 1
+    tail = head
+    WHILE tail.next != null:
+        tail = tail.next
+        length = length + 1
+    
+    tail.next = head  // Make circular
+    
+    // Find new tail (length - k % length - 1 steps from head)
+    k = k % length
+    stepsToNewTail = length - k
+    newTail = head
+    
+    FOR i = 1 to stepsToNewTail - 1:
+        newTail = newTail.next
+    
+    newHead = newTail.next
+    newTail.next = null
+    
+    RETURN newHead
+</div></code></pre>
+<p><strong>Explanation:</strong> Make list circular, find new head and tail positions based on rotation amount, then break the circle. Handle k &gt; length by using modulo. Time complexity: O(n), Space complexity: O(1).</p>
+<hr>
+<h2 id="4-stacks">4. STACKS</h2>
+<h3 id="question-1-implement-stack-using-array">Question 1: Implement Stack using Array</h3>
+<p><strong>Problem:</strong> Implement basic stack operations using array.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>CLASS Stack:
+    INITIALIZE:
+        array = ARRAY of fixed size
+        top = -1
+        maxSize = array.length
+    
+    FUNCTION push(element):
+        IF top == maxSize - 1:
+            PRINT &quot;Stack Overflow&quot;
+            RETURN
+        top = top + 1
+        array[top] = element
+    
+    FUNCTION pop():
+        IF top == -1:
+            PRINT &quot;Stack Underflow&quot;
+            RETURN null
+        element = array[top]
+        top = top - 1
+        RETURN element
+    
+    FUNCTION peek():
+        IF top == -1:
+            RETURN null
+        RETURN array[top]
+    
+    FUNCTION isEmpty():
+        RETURN top == -1
+</div></code></pre>
+<p><strong>Explanation:</strong> Array-based stack with top pointer. Push increments top and adds element, pop returns top element and decrements top. Check bounds to avoid overflow/underflow. Time complexity: O(1) for all operations, Space complexity: O(n).</p>
+<h3 id="question-2-valid-parentheses">Question 2: Valid Parentheses</h3>
+<p><strong>Problem:</strong> Check if string has valid parentheses (including [], {}, ()).</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION isValidParentheses(string):
+    stack = CREATE empty stack
+    
+    FOR each character in string:
+        IF character is opening bracket ['(', '[', '{']:
+            PUSH character to stack
+        ELSE IF character is closing bracket [')', ']', '}']:
+            IF stack is empty:
+                RETURN false
+            
+            top = POP from stack
+            IF NOT isMatchingPair(top, character):
+                RETURN false
+    
+    RETURN stack is empty
+
+FUNCTION isMatchingPair(opening, closing):
+    RETURN (opening == '(' AND closing == ')') OR
+           (opening == '[' AND closing == ']') OR
+           (opening == '{' AND closing == '}')
+</div></code></pre>
+<p><strong>Explanation:</strong> Push opening brackets onto stack, for closing brackets check if they match most recent opening bracket. Stack should be empty at end for valid parentheses. Time complexity: O(n), Space complexity: O(n).</p>
+<h3 id="question-3-next-greater-element">Question 3: Next Greater Element</h3>
+<p><strong>Problem:</strong> For each element in array, find the next greater element to its right.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION nextGreaterElement(array):
+    n = array.length
+    result = ARRAY of size n filled with -1
+    stack = CREATE empty stack
+    
+    FOR i = 0 to n - 1:
+        WHILE stack is not empty AND array[i] &gt; array[stack.top()]:
+            index = POP from stack
+            result[index] = array[i]
+        
+        PUSH i to stack
+    
+    RETURN result
+</div></code></pre>
+<p><strong>Explanation:</strong> Use stack to store indices of elements for which we haven't found next greater element. When we find a larger element, it's the answer for all smaller elements in stack. Time complexity: O(n), Space complexity: O(n).</p>
+<h3 id="question-4-evaluate-postfix-expression">Question 4: Evaluate Postfix Expression</h3>
+<p><strong>Problem:</strong> Evaluate arithmetic expression in postfix notation.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION evaluatePostfix(expression):
+    stack = CREATE empty stack
+    
+    FOR each token in expression:
+        IF token is number:
+            PUSH token to stack
+        ELSE IF token is operator ['+', '-', '*', '/']:
+            IF stack has less than 2 elements:
+                RETURN error
+            
+            operand2 = POP from stack
+            operand1 = POP from stack
+            result = PERFORM operation(operand1, token, operand2)
+            PUSH result to stack
+    
+    IF stack has exactly 1 element:
+        RETURN POP from stack
+    ELSE:
+        RETURN error
+</div></code></pre>
+<p><strong>Explanation:</strong> Push operands onto stack, when operator is encountered pop two operands, perform operation, push result back. Final stack should have one element (the result). Time complexity: O(n), Space complexity: O(n).</p>
+<h3 id="question-5-minimum-stack">Question 5: Minimum Stack</h3>
+<p><strong>Problem:</strong> Design stack that supports push, pop, top, and retrieving minimum element in constant time.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>CLASS MinStack:
+    INITIALIZE:
+        mainStack = CREATE empty stack
+        minStack = CREATE empty stack
+    
+    FUNCTION push(element):
+        PUSH element to mainStack
+        
+        IF minStack is empty OR element &lt;= minStack.top():
+            PUSH element to minStack
+    
+    FUNCTION pop():
+        IF mainStack is empty:
+            RETURN error
+        
+        element = POP from mainStack
+        IF element == minStack.top():
+            POP from minStack
+        
+        RETURN element
+    
+    FUNCTION top():
+        RETURN mainStack.top()
+    
+    FUNCTION getMin():
+        RETURN minStack.top()
+</div></code></pre>
+<p><strong>Explanation:</strong> Use auxiliary stack to track minimum elements. Push to min stack only when new element is less than or equal to current minimum. Pop from min stack only when popped element equals current minimum. Time complexity: O(1) for all operations, Space complexity: O(n).</p>
+<h3 id="question-6-largest-rectangle-in-histogram">Question 6: Largest Rectangle in Histogram</h3>
+<p><strong>Problem:</strong> Find area of largest rectangle that can be formed in histogram.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION largestRectangle(heights):
+    stack = CREATE empty stack
+    maxArea = 0
+    
+    FOR i = 0 to heights.length - 1:
+        WHILE stack is not empty AND heights[i] &lt; heights[stack.top()]:
+            height = heights[POP from stack]
+            width = (stack is empty) ? i : (i - stack.top() - 1)
+            area = height * width
+            maxArea = MAX(maxArea, area)
+        
+        PUSH i to stack
+    
+    WHILE stack is not empty:
+        height = heights[POP from stack]
+        width = (stack is empty) ? heights.length : (heights.length - stack.top() - 1)
+        area = height * width
+        maxArea = MAX(maxArea, area)
+    
+    RETURN maxArea
+</div></code></pre>
+<p><strong>Explanation:</strong> Use stack to store indices of bars in increasing order of heights. When we find smaller bar, calculate area with each popped bar as smallest bar. Width is determined by current position and previous bar in stack. Time complexity: O(n), Space complexity: O(n).</p>
+<h3 id="question-7-sort-stack-using-another-stack">Question 7: Sort Stack using Another Stack</h3>
+<p><strong>Problem:</strong> Sort a stack using only one additional stack.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION sortStack(inputStack):
+    tempStack = CREATE empty stack
+    
+    WHILE inputStack is not empty:
+        temp = POP from inputStack
+        
+        WHILE tempStack is not empty AND tempStack.top() &gt; temp:
+            PUSH POP(tempStack) to inputStack
+        
+        PUSH temp to tempStack
+    
+    // Move all elements back to input stack
+    WHILE tempStack is not empty:
+        PUSH POP(tempStack) to inputStack
+    
+    RETURN inputStack
+</div></code></pre>
+<p><strong>Explanation:</strong> Use temporary stack to sort elements. For each element from input stack, find its correct position in temp stack by moving larger elements back to input stack. Time complexity: O(n²), Space complexity: O(n).</p>
+<h3 id="question-8-balanced-brackets-with-stack">Question 8: Balanced Brackets with Stack</h3>
+<p><strong>Problem:</strong> Check if brackets are balanced considering multiple types and nested structures.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION isBalanced(expression):
+    stack = CREATE empty stack
+    brackets = {
+        ')': '(',
+        ']': '[',
+        '}': '{'
+    }
+    
+    FOR each character in expression:
+        IF character in ['(', '[', '{']:
+            PUSH character to stack
+        ELSE IF character in [')', ']', '}']:
+            IF stack is empty:
+                RETURN false
+            
+            IF POP from stack != brackets[character]:
+                RETURN false
+    
+    RETURN stack is empty
+</div></code></pre>
+<p><strong>Explanation:</strong> Enhanced version of parentheses checking supporting multiple bracket types. Use mapping from closing to opening brackets for easy validation. Time complexity: O(n), Space complexity: O(n).</p>
+<h3 id="question-9-reverse-stack-using-recursion">Question 9: Reverse Stack using Recursion</h3>
+<p><strong>Problem:</strong> Reverse stack using recursion without using extra space.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION reverseStack(stack):
+    IF stack is not empty:
+        temp = POP from stack
+        reverseStack(stack)
+        insertAtBottom(stack, temp)
+
+FUNCTION insertAtBottom(stack, element):
+    IF stack is empty:
+        PUSH element to stack
+    ELSE:
+        temp = POP from stack
+        insertAtBottom(stack, element)
+        PUSH temp to stack
+</div></code></pre>
+<p><strong>Explanation:</strong> Recursive solution that removes all elements, reverses remaining stack, then inserts element at bottom. Uses call stack instead of auxiliary data structure. Time complexity: O(n²), Space complexity: O(n) for recursion.</p>
+<h3 id="question-10-stock-span-problem">Question 10: Stock Span Problem</h3>
+<p><strong>Problem:</strong> Calculate span of stock prices (number of consecutive days before current day with price less than or equal to current day).</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION calculateSpan(prices):
+    n = prices.length
+    span = ARRAY of size n
+    stack = CREATE empty stack
+    
+    FOR i = 0 to n - 1:
+        WHILE stack is not empty AND prices[stack.top()] &lt;= prices[i]:
+            POP from stack
+        
+        span[i] = (stack is empty) ? (i + 1) : (i - stack.top())
+        PUSH i to stack
+    
+    RETURN span
+</div></code></pre>
+<p><strong>Explanation:</strong> Use stack to store indices of days in decreasing order of prices. For each day, pop all days with lower or equal prices, then span is distance to previous higher price day (or beginning if stack empty). Time complexity: O(n), Space complexity: O(n).</p>
+<hr>
+<h2 id="5-queues">5. QUEUES</h2>
+<h3 id="question-1-implement-queue-using-array">Question 1: Implement Queue using Array</h3>
+<p><strong>Problem:</strong> Implement basic queue operations using circular array.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>CLASS Queue:
+    INITIALIZE:
+        array = ARRAY of fixed size
+        front = 0
+        rear = -1
+        size = 0
+        maxSize = array.length
+    
+    FUNCTION enqueue(element):
+        IF size == maxSize:
+            PRINT &quot;Queue Overflow&quot;
+            RETURN
+        rear = (rear + 1) % maxSize
+        array[rear] = element
+        size = size + 1
+    
+    FUNCTION dequeue():
+        IF size == 0:
+            PRINT &quot;Queue Underflow&quot;
+            RETURN null
+        element = array[front]
+        front = (front + 1) % maxSize
+        size = size - 1
+        RETURN element
+    
+    FUNCTION peek():
+        IF size == 0:
+            RETURN null
+        RETURN array[front]
+    
+    FUNCTION isEmpty():
+        RETURN size == 0
+</div></code></pre>
+<p><strong>Explanation:</strong> Circular array implementation to efficiently use space. Use modulo arithmetic for wrap-around. Track front, rear, and size to handle all edge cases. Time complexity: O(1) for all operations, Space complexity: O(n).</p>
+<h3 id="question-2-implement-queue-using-stacks">Question 2: Implement Queue using Stacks</h3>
+<p><strong>Problem:</strong> Implement queue using two stacks.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>CLASS QueueUsingStacks:
+    INITIALIZE:
+        stack1 = CREATE empty stack  // For enqueue
+        stack2 = CREATE empty stack  // For dequeue
+    
+    FUNCTION enqueue(element):
+        PUSH element to stack1
+    
+    FUNCTION dequeue():
+        IF both stacks are empty:
+            PRINT &quot;Queue is empty&quot;
+            RETURN null
+        
+        IF stack2 is empty:
+            WHILE stack1 is not empty:
+                PUSH POP(stack1) to stack2
+        
+        RETURN POP from stack2
+    
+    FUNCTION peek():
+        IF both stacks are empty:
+            RETURN null
+        
+        IF stack2 is empty:
+            WHILE stack1 is not empty:
+                PUSH POP(stack1) to stack2
+        
+        RETURN stack2.top()
+</div></code></pre>
+<p><strong>Explanation:</strong> Use two stacks - one for enqueue (stack1), one for dequeue (stack2). Transfer elements from stack1 to stack2 only when stack2 is empty and dequeue is needed. Amortized time complexity: O(1), Space complexity: O(n).</p>
+<h3 id="question-3-generate-binary-numbers-using-queue">Question 3: Generate Binary Numbers using Queue</h3>
+<p><strong>Problem:</strong> Generate binary representations of numbers from 1 to n.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION generateBinaryNumbers(n):
+    result = []
+    queue = CREATE empty queue
+    
+    ENQUEUE &quot;1&quot; to queue
+    
+    FOR i = 1 to n:
+        binary = DEQUEUE from queue
+        ADD binary to result
+        
+        ENQUEUE binary + &quot;0&quot; to queue
+        ENQUEUE binary + &quot;1&quot; to queue
+    
+    RETURN result
+</div></code></pre>
+<p><strong>Explanation:</strong> Start with &quot;1&quot; in queue. For each number, dequeue current binary string, add to result, then enqueue its children by appending &quot;0&quot; and &quot;1&quot;. This generates binary numbers in sequence. Time complexity: O(n), Space complexity: O(n).</p>
+<h3 id="question-4-first-non-repeating-character-in-stream">Question 4: First Non-Repeating Character in Stream</h3>
+<p><strong>Problem:</strong> Find first non-repeating character in a stream of characters.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>CLASS FirstNonRepeating:
+    INITIALIZE:
+        queue = CREATE empty queue
+        charCount = ARRAY of size 256 initialized to 0
+    
+    FUNCTION processCharacter(character):
+        charCount[ASCII(character)] = charCount[ASCII(character)] + 1
+        ENQUEUE character to queue
+        
+        WHILE queue is not empty AND charCount[ASCII(queue.front())] &gt; 1:
+            DEQUEUE from queue
+        
+        IF queue is empty:
+            RETURN null
+        ELSE:
+            RETURN queue.front()
+</div></code></pre>
+<p><strong>Explanation:</strong> Use queue to maintain order of characters and frequency array to track counts. Remove characters from front of queue if their count becomes greater than 1. Time complexity: O(1) per character, Space complexity: O(n).</p>
+<h3 id="question-5-sliding-window-maximum">Question 5: Sliding Window Maximum</h3>
+<p><strong>Problem:</strong> Find maximum element in every sliding window of size k.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION slidingWindowMaximum(array, k):
+    result = []
+    deque = CREATE empty deque  // Stores indices
+    
+    FOR i = 0 to array.length - 1:
+        // Remove indices outside current window
+        WHILE deque is not empty AND deque.front() &lt;= i - k:
+            REMOVE front from deque
+        
+        // Remove indices of elements smaller than current
+        WHILE deque is not empty AND array[deque.back()] &lt;= array[i]:
+            REMOVE back from deque
+        
+        ADD i to back of deque
+        
+        // Add maximum to result if window is complete
+        IF i &gt;= k - 1:
+            ADD array[deque.front()] to result
+    
+    RETURN result
+</div></code></pre>
+<p><strong>Explanation:</strong> Use deque to store indices in decreasing order of their values. Front always contains index of maximum element in current window. Remove outdated indices and smaller elements. Time complexity: O(n), Space complexity: O(k).</p>
+<h3 id="question-6-reverse-first-k-elements-of-queue">Question 6: Reverse First K Elements of Queue</h3>
+<p><strong>Problem:</strong> Reverse the first k elements of a queue.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION reverseFirstK(queue, k):
+    IF k &lt;= 0 OR k &gt; queue.size():
+        RETURN queue
+    
+    stack = CREATE empty stack
+    
+    // Dequeue first k elements and push to stack
+    FOR i = 1 to k:
+        PUSH DEQUEUE(queue) to stack
+    
+    // Pop from stack and enqueue back to queue
+    WHILE stack is not empty:
+        ENQUEUE POP(stack) to queue
+    
+    // Move remaining (n-k) elements to back
+    FOR i = 1 to (queue.size() - k):
+        ENQUEUE DEQUEUE(queue) to queue
+    
+    RETURN queue
+</div></code></pre>
+<p><strong>Explanation:</strong> Use stack to reverse first k elements, then rotate remaining elements to maintain their relative order. Time complexity: O(n), Space complexity: O(k).</p>
+<h3 id="question-7-interleave-first-and-second-half-of-queue">Question 7: Interleave First and Second Half of Queue</h3>
+<p><strong>Problem:</strong> Interleave elements from first and second half of queue.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION interleaveQueue(queue):
+    n = queue.size()
+    IF n % 2 != 0:
+        RETURN error  // Queue size must be even
+    
+    stack = CREATE empty stack
+    halfSize = n / 2
+    
+    // Push first half to stack
+    FOR i = 1 to halfSize:
+        PUSH DEQUEUE(queue) to stack
+    
+    // Pop from stack and enqueue (reverses first half)
+    WHILE stack is not empty:
+        ENQUEUE POP(stack) to queue
+    
+    // Move first half to back
+    FOR i = 1 to halfSize:
+        ENQUEUE DEQUEUE(queue) to queue
+    
+    // Push first half to stack again
+    FOR i = 1 to halfSize:
+        PUSH DEQUEUE(queue) to stack
+    
+    // Interleave: pop from stack and dequeue, then enqueue both
+    WHILE stack is not empty:
+        ENQUEUE POP(stack) to queue
+        ENQUEUE DEQUEUE(queue) to queue
+    
+    RETURN queue
+</div></code></pre>
+<p><strong>Explanation:</strong> Complex manipulation using stack and queue operations to achieve interleaving. Multiple steps to reverse and rearrange elements properly. Time complexity: O(n), Space complexity: O(n/2).</p>
+<h3 id="question-8-queue-using-linked-list">Question 8: Queue using Linked List</h3>
+<p><strong>Problem:</strong> Implement queue using linked list.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>CLASS Node:
+    data = null
+    next = null
+
+CLASS QueueLinkedList:
+    INITIALIZE:
+        front = null
+        rear = null
+    
+    FUNCTION enqueue(element):
+        newNode = CREATE new Node with data = element
+        
+        IF rear == null:
+            front = rear = newNode
+        ELSE:
+            rear.next = newNode
+            rear = newNode
+    
+    FUNCTION dequeue():
+        IF front == null:
+            PRINT &quot;Queue is empty&quot;
+            RETURN null
+        
+        element = front.data
+        front = front.next
+        
+        IF front == null:
+            rear = null
+        
+        RETURN element
+    
+    FUNCTION peek():
+        IF front == null:
+            RETURN null
+        RETURN front.data
+    
+    FUNCTION isEmpty():
+        RETURN front == null
+</div></code></pre>
+<p><strong>Explanation:</strong> Linked list implementation allows dynamic size. Enqueue at rear, dequeue from front. Handle edge case when queue becomes empty (both front and rear become null). Time complexity: O(1) for all operations, Space complexity: O(n).</p>
+<h3 id="question-9-circular-queue-implementation">Question 9: Circular Queue Implementation</h3>
+<p><strong>Problem:</strong> Implement circular queue with fixed size.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>CLASS CircularQueue:
+    INITIALIZE:
+        array = ARRAY of size k
+        front = 0
+        rear = -1
+        size = 0
+        capacity = k
+    
+    FUNCTION enqueue(element):
+        IF isFull():
+            RETURN false
+        rear = (rear + 1) % capacity
+        array[rear] = element
+        size = size + 1
+        RETURN true
+    
+    FUNCTION dequeue():
+        IF isEmpty():
+            RETURN false
+        front = (front + 1) % capacity
+        size = size - 1
+        RETURN true
+    
+    FUNCTION getFront():
+        IF isEmpty():
+            RETURN -1
+        RETURN array[front]
+    
+    FUNCTION getRear():
+        IF isEmpty():
+            RETURN -1
+        RETURN array[rear]
+    
+    FUNCTION isEmpty():
+        RETURN size == 0
+    
+    FUNCTION isFull():
+        RETURN size == capacity
+</div></code></pre>
+<p><strong>Explanation:</strong> Fixed-size circular queue using array with wrap-around using modulo. Track size separately to distinguish between empty and full states. Time complexity: O(1) for all operations, Space complexity: O(k).</p>
+<h3 id="question-10-level-order-traversal-using-queue">Question 10: Level Order Traversal using Queue</h3>
+<p><strong>Problem:</strong> Print binary tree nodes level by level using queue.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION levelOrderTraversal(root):
+    IF root == null:
+        RETURN
+    
+    queue = CREATE empty queue
+    ENQUEUE root to queue
+    
+    WHILE queue is not empty:
+        levelSize = queue.size()
+        
+        FOR i = 1 to levelSize:
+            node = DEQUEUE from queue
+            PRINT node.data
+            
+            IF node.left != null:
+                ENQUEUE node.left to queue
+            
+            IF node.right != null:
+                ENQUEUE node.right to queue
+        
+        PRINT newline  // Separate levels
+</div></code></pre>
+<p><strong>Explanation:</strong> BFS traversal using queue. Process all nodes at current level before moving to next level by tracking level size. Enqueue children of current level nodes for next iteration. Time complexity: O(n), Space complexity: O(w) where w is maximum width.</p>
+<hr>
+<h2 id="6-trees">6. TREES</h2>
+<h3 id="question-1-binary-tree-traversals">Question 1: Binary Tree Traversals</h3>
+<p><strong>Problem:</strong> Implement inorder, preorder, and postorder traversals.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>// Inorder: Left -&gt; Root -&gt; Right
+FUNCTION inorderTraversal(root):
+    IF root != null:
+        inorderTraversal(root.left)
+        PRINT root.data
+        inorderTraversal(root.right)
+
+// Preorder: Root -&gt; Left -&gt; Right
+FUNCTION preorderTraversal(root):
+    IF root != null:
+        PRINT root.data
+        preorderTraversal(root.left)
+        preorderTraversal(root.right)
+
+// Postorder: Left -&gt; Right -&gt; Root
+FUNCTION postorderTraversal(root):
+    IF root != null:
+        postorderTraversal(root.left)
+        postorderTraversal(root.right)
+        PRINT root.data
+</div></code></pre>
+<p><strong>Explanation:</strong> Three fundamental tree traversal methods. Inorder gives sorted sequence for BST, preorder useful for copying tree, postorder for deletion/cleanup. Time complexity: O(n), Space complexity: O(h) where h is height.</p>
+<h3 id="question-2-height-of-binary-tree">Question 2: Height of Binary Tree</h3>
+<p><strong>Problem:</strong> Find the height/depth of a binary tree.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION treeHeight(root):
+    IF root == null:
+        RETURN 0
+    
+    leftHeight = treeHeight(root.left)
+    rightHeight = treeHeight(root.right)
+    
+    RETURN 1 + MAX(leftHeight, rightHeight)
+</div></code></pre>
+<p><strong>Explanation:</strong> Recursive approach calculating height as 1 plus maximum of left and right subtree heights. Base case returns 0 for null node. Time complexity: O(n), Space complexity: O(h) for recursion stack.</p>
+<h3 id="question-3-check-if-binary-tree-is-balanced">Question 3: Check if Binary Tree is Balanced</h3>
+<p><strong>Problem:</strong> Check if binary tree is height-balanced (height difference between subtrees ≤ 1).</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION isBalanced(root):
+    RETURN checkBalance(root) != -1
+
+FUNCTION checkBalance(root):
+    IF root == null:
+        RETURN 0
+    
+    leftHeight = checkBalance(root.left)
+    IF leftHeight == -1:
+        RETURN -1
+    
+    rightHeight = checkBalance(root.right)
+    IF rightHeight == -1:
+        RETURN -1
+    
+    IF ABS(leftHeight - rightHeight) &gt; 1:
+        RETURN -1
+    
+    RETURN 1 + MAX(leftHeight, rightHeight)
+</div></code></pre>
+<p><strong>Explanation:</strong> Optimized approach that checks balance and calculates height simultaneously. Returns -1 if subtree is unbalanced, otherwise returns height. Early termination on imbalance. Time complexity: O(n), Space complexity: O(h).</p>
+<h3 id="question-4-diameter-of-binary-tree">Question 4: Diameter of Binary Tree</h3>
+<p><strong>Problem:</strong> Find the longest path between any two nodes in binary tree.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION treeDiameter(root):
+    maxDiameter = 0
+    
+    FUNCTION calculateHeight(node):
+        IF node == null:
+            RETURN 0
+        
+        leftHeight = calculateHeight(node.left)
+        rightHeight = calculateHeight(node.right)
+        
+        currentDiameter = leftHeight + rightHeight
+        maxDiameter = MAX(maxDiameter, currentDiameter)
+        
+        RETURN 1 + MAX(leftHeight, rightHeight)
+    
+    calculateHeight(root)
+    RETURN maxDiameter
+</div></code></pre>
+<p><strong>Explanation:</strong> For each node, diameter passing through it is sum of left and right subtree heights. Global maximum tracks the answer. Uses nested function to maintain state. Time complexity: O(n), Space complexity: O(h).</p>
+<h3 id="question-5-lowest-common-ancestor-in-binary-tree">Question 5: Lowest Common Ancestor in Binary Tree</h3>
+<p><strong>Problem:</strong> Find the lowest common ancestor of two nodes in binary tree.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION findLCA(root, node1, node2):
+    IF root == null:
+        RETURN null
+    
+    IF root == node1 OR root == node2:
+        RETURN root
+    
+    leftLCA = findLCA(root.left, node1, node2)
+    rightLCA = findLCA(root.right, node1, node2)
+    
+    IF leftLCA != null AND rightLCA != null:
+        RETURN root
+    
+    RETURN (leftLCA != null) ? leftLCA : rightLCA
+</div></code></pre>
+<p><strong>Explanation:</strong> If current node is one of target nodes, return it. If both subtrees return non-null, current node is LCA. Otherwise, return whichever subtree found a target node. Time complexity: O(n), Space complexity: O(h).</p>
+<h3 id="question-6-convert-binary-tree-to-mirror">Question 6: Convert Binary Tree to Mirror</h3>
+<p><strong>Problem:</strong> Convert binary tree to its mirror image.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION mirrorTree(root):
+    IF root == null:
+        RETURN null
+    
+    // Recursively mirror subtrees
+    mirrorTree(root.left)
+    mirrorTree(root.right)
+    
+    // Swap left and right children
+    temp = root.left
+    root.left = root.right
+    root.right = temp
+    
+    RETURN root
+</div></code></pre>
+<p><strong>Explanation:</strong> Post-order approach - first mirror subtrees, then swap children of current node. Could also use pre-order (swap first, then recurse). Time complexity: O(n), Space complexity: O(h).</p>
+<h3 id="question-7-binary-search-tree-operations">Question 7: Binary Search Tree Operations</h3>
+<p><strong>Problem:</strong> Implement search, insert, and delete operations in BST.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION searchBST(root, key):
+    IF root == null OR root.data == key:
+        RETURN root
+    
+    IF key &lt; root.data:
+        RETURN searchBST(root.left, key)
+    ELSE:
+        RETURN searchBST(root.right, key)
+
+FUNCTION insertBST(root, key):
+    IF root == null:
+        RETURN CREATE new node with data = key
+    
+    IF key &lt; root.data:
+        root.left = insertBST(root.left, key)
+    ELSE IF key &gt; root.data:
+        root.right = insertBST(root.right, key)
+    
+    RETURN root
+
+FUNCTION deleteBST(root, key):
+    IF root == null:
+        RETURN root
+    
+    IF key &lt; root.data:
+        root.left = deleteBST(root.left, key)
+    ELSE IF key &gt; root.data:
+        root.right = deleteBST(root.right, key)
+    ELSE:
+        // Node to delete found
+        IF root.left == null:
+            RETURN root.right
+        ELSE IF root.right == null:
+            RETURN root.left
+        
+        // Node has two children
+        successor = findMin(root.right)
+        root.data = successor.data
+        root.right = deleteBST(root.right, successor.data)
+    
+    RETURN root
+
+FUNCTION findMin(root):
+    WHILE root.left != null:
+        root = root.left
+    RETURN root
+</div></code></pre>
+<p><strong>Explanation:</strong> BST property: left subtree &lt; root &lt; right subtree. Search/insert follow this property. Delete handles three cases: no children, one child, two children (replace with inorder successor). Time complexity: O(h), Space complexity: O(h).</p>
+<h3 id="question-8-validate-binary-search-tree">Question 8: Validate Binary Search Tree</h3>
+<p><strong>Problem:</strong> Check if binary tree is valid BST.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION isValidBST(root):
+    RETURN validateBST(root, -infinity, +infinity)
+
+FUNCTION validateBST(node, minVal, maxVal):
+    IF node == null:
+        RETURN true
+    
+    IF node.data &lt;= minVal OR node.data &gt;= maxVal:
+        RETURN false
+    
+    RETURN validateBST(node.left, minVal, node.data) AND
+           validateBST(node.right, node.data, maxVal)
+</div></code></pre>
+<p><strong>Explanation:</strong> Use bounds checking approach. Each node must be within valid range determined by ancestors. Left subtree nodes must be less than current node, right subtree nodes must be greater. Time complexity: O(n), Space complexity: O(h).</p>
+<h3 id="question-9-path-sum-in-binary-tree">Question 9: Path Sum in Binary Tree</h3>
+<p><strong>Problem:</strong> Check if there exists a path from root to leaf with given sum.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION hasPathSum(root, targetSum):
+    IF root == null:
+        RETURN false
+    
+    // Leaf node case
+    IF root.left == null AND root.right == null:
+        RETURN root.data == targetSum
+    
+    remainingSum = targetSum - root.data
+    
+    RETURN hasPathSum(root.left, remainingSum) OR
+           hasPathSum(root.right, remainingSum)
+</div></code></pre>
+<p><strong>Explanation:</strong> Recursive approach reducing target sum by current node value. Base case checks if leaf node value equals remaining sum. Time complexity: O(n), Space complexity: O(h).</p>
+<h3 id="question-10-serialize-and-deserialize-binary-tree">Question 10: Serialize and Deserialize Binary Tree</h3>
+<p><strong>Problem:</strong> Convert binary tree to string representation and reconstruct from string.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION serialize(root):
+    result = []
+    
+    FUNCTION serializeHelper(node):
+        IF node == null:
+            ADD &quot;null&quot; to result
+            RETURN
+        
+        ADD node.data to result
+        serializeHelper(node.left)
+        serializeHelper(node.right)
+    
+    serializeHelper(root)
+    RETURN JOIN result with &quot;,&quot;
+
+FUNCTION deserialize(data):
+    values = SPLIT data by &quot;,&quot;
+    index = 0
+    
+    FUNCTION deserializeHelper():
+        IF values[index] == &quot;null&quot;:
+            index = index + 1
+            RETURN null
+        
+        node = CREATE new node with data = values[index]
+        index = index + 1
+        
+        node.left = deserializeHelper()
+        node.right = deserializeHelper()
+        
+        RETURN node
+    
+    RETURN deserializeHelper()
+</div></code></pre>
+<p><strong>Explanation:</strong> Preorder traversal for serialization with null markers. Deserialization reconstructs tree using same order. Index tracks current position in value array. Time complexity: O(n), Space complexity: O(n).</p>
+<hr>
+<h2 id="7-binary-search">7. BINARY SEARCH</h2>
+<h3 id="question-1-basic-binary-search">Question 1: Basic Binary Search</h3>
+<p><strong>Problem:</strong> Find target element in sorted array.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION binarySearch(array, target):
+    left = 0
+    right = array.length - 1
+    
+    WHILE left &lt;= right:
+        mid = left + (right - left) / 2
+        
+        IF array[mid] == target:
+            RETURN mid
+        ELSE IF array[mid] &lt; target:
+            left = mid + 1
+        ELSE:
+            right = mid - 1
+    
+    RETURN -1
+</div></code></pre>
+<p><strong>Explanation:</strong> Divide and conquer approach. Compare middle element with target, eliminate half of search space based on comparison. Use <code>left + (right - left) / 2</code> to avoid overflow. Time complexity: O(log n), Space complexity: O(1).</p>
+<h3 id="question-2-find-first-and-last-position">Question 2: Find First and Last Position</h3>
+<p><strong>Problem:</strong> Find first and last occurrence of target in sorted array with duplicates.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION findFirstAndLast(array, target):
+    first = findFirst(array, target)
+    last = findLast(array, target)
+    RETURN [first, last]
+
+FUNCTION findFirst(array, target):
+    left = 0
+    right = array.length - 1
+    result = -1
+    
+    WHILE left &lt;= right:
+        mid = left + (right - left) / 2
+        
+        IF array[mid] == target:
+            result = mid
+            right = mid - 1  // Continue searching in left half
+        ELSE IF array[mid] &lt; target:
+            left = mid + 1
+        ELSE:
+            right = mid - 1
+    
+    RETURN result
+
+FUNCTION findLast(array, target):
+    left = 0
+    right = array.length - 1
+    result = -1
+    
+    WHILE left &lt;= right:
+        mid = left + (right - left) / 2
+        
+        IF array[mid] == target:
+            result = mid
+            left = mid + 1  // Continue searching in right half
+        ELSE IF array[mid] &lt; target:
+            left = mid + 1
+        ELSE:
+            right = mid - 1
+    
+    RETURN result
+</div></code></pre>
+<p><strong>Explanation:</strong> Modified binary search that continues searching even after finding target. For first occurrence, search left half after finding match. For last occurrence, search right half. Time complexity: O(log n), Space complexity: O(1).</p>
+<h3 id="question-3-search-in-rotated-sorted-array">Question 3: Search in Rotated Sorted Array</h3>
+<p><strong>Problem:</strong> Search target in rotated sorted array.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION searchRotated(array, target):
+    left = 0
+    right = array.length - 1
+    
+    WHILE left &lt;= right:
+        mid = left + (right - left) / 2
+        
+        IF array[mid] == target:
+            RETURN mid
+        
+        // Check which half is sorted
+        IF array[left] &lt;= array[mid]:  // Left half is sorted
+            IF target &gt;= array[left] AND target &lt; array[mid]:
+                right = mid - 1
+            ELSE:
+                left = mid + 1
+        ELSE:  // Right half is sorted
+            IF target &gt; array[mid] AND target &lt;= array[right]:
+                left = mid + 1
+            ELSE:
+                right = mid - 1
+    
+    RETURN -1
+</div></code></pre>
+<p><strong>Explanation:</strong> One half is always sorted in rotated array. Identify sorted half, check if target lies in it, then search accordingly. Handle edge cases with duplicate elements carefully. Time complexity: O(log n), Space complexity: O(1).</p>
+<h3 id="question-4-find-peak-element">Question 4: Find Peak Element</h3>
+<p><strong>Problem:</strong> Find any peak element in array (element greater than its neighbors).</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION findPeakElement(array):
+    left = 0
+    right = array.length - 1
+    
+    WHILE left &lt; right:
+        mid = left + (right - left) / 2
+        
+        IF array[mid] &gt; array[mid + 1]:
+            right = mid  // Peak is in left half (including mid)
+        ELSE:
+            left = mid + 1  // Peak is in right half
+    
+    RETURN left
+</div></code></pre>
+<p><strong>Explanation:</strong> If middle element is greater than next element, peak exists in left half (including middle). Otherwise, peak exists in right half. Always converges to a peak. Time complexity: O(log n), Space complexity: O(1).</p>
+<h3 id="question-5-square-root-using-binary-search">Question 5: Square Root using Binary Search</h3>
+<p><strong>Problem:</strong> Find integer square root of a number.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION sqrt(x):
+    IF x &lt; 2:
+        RETURN x
+    
+    left = 2
+    right = x / 2
+    
+    WHILE left &lt;= right:
+        mid = left + (right - left) / 2
+        square = mid * mid
+        
+        IF square == x:
+            RETURN mid
+        ELSE IF square &lt; x:
+            left = mid + 1
+        ELSE:
+            right = mid - 1
+    
+    RETURN right  // Return floor value
+</div></code></pre>
+<p><strong>Explanation:</strong> Binary search on answer space [2, x/2]. For x ≥ 2, square root is at most x/2. Compare square of middle with x to determine search direction. Time complexity: O(log x), Space complexity: O(1).</p>
+<h3 id="question-6-search-insert-position">Question 6: Search Insert Position</h3>
+<p><strong>Problem:</strong> Find index where target should be inserted in sorted array.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION searchInsert(array, target):
+    left = 0
+    right = array.length - 1
+    
+    WHILE left &lt;= right:
+        mid = left + (right - left) / 2
+        
+        IF array[mid] == target:
+            RETURN mid
+        ELSE IF array[mid] &lt; target:
+            left = mid + 1
+        ELSE:
+            right = mid - 1
+    
+    RETURN left
+</div></code></pre>
+<p><strong>Explanation:</strong> Standard binary search with modification - when target not found, left pointer gives insertion position. This maintains sorted order after insertion. Time complexity: O(log n), Space complexity: O(1).</p>
+<h3 id="question-7-find-minimum-in-rotated-sorted-array">Question 7: Find Minimum in Rotated Sorted Array</h3>
+<p><strong>Problem:</strong> Find minimum element in rotated sorted array.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION findMin(array):
+    left = 0
+    right = array.length - 1
+    
+    WHILE left &lt; right:
+        mid = left + (right - left) / 2
+        
+        IF array[mid] &gt; array[right]:
+            left = mid + 1  // Minimum is in right half
+        ELSE:
+            right = mid  // Minimum is in left half (including mid)
+    
+    RETURN array[left]
+</div></code></pre>
+<p><strong>Explanation:</strong> Compare middle with rightmost element. If middle &gt; right, minimum is in right half. Otherwise, minimum is in left half including middle. Converges to minimum element. Time complexity: O(log n), Space complexity: O(1).</p>
+<h3 id="question-8-count-occurrences-in-sorted-array">Question 8: Count Occurrences in Sorted Array</h3>
+<p><strong>Problem:</strong> Count number of occurrences of target in sorted array.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION countOccurrences(array, target):
+    first = findFirst(array, target)
+    IF first == -1:
+        RETURN 0
+    
+    last = findLast(array, target)
+    RETURN last - first + 1
+
+// Use findFirst and findLast functions from Question 2
+</div></code></pre>
+<p><strong>Explanation:</strong> Find first and last positions of target using binary search, then calculate count as difference plus one. If target not found, return 0. Time complexity: O(log n), Space complexity: O(1).</p>
+<h3 id="question-9-search-in-2d-matrix">Question 9: Search in 2D Matrix</h3>
+<p><strong>Problem:</strong> Search target in matrix where each row and column is sorted.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION searchMatrix(matrix, target):
+    IF matrix is empty:
+        RETURN false
+    
+    row = 0
+    col = matrix[0].length - 1
+    
+    WHILE row &lt; matrix.length AND col &gt;= 0:
+        IF matrix[row][col] == target:
+            RETURN true
+        ELSE IF matrix[row][col] &gt; target:
+            col = col - 1  // Move left
+        ELSE:
+            row = row + 1  // Move down
+    
+    RETURN false
+</div></code></pre>
+<p><strong>Explanation:</strong> Start from top-right corner. If current element is greater than target, move left. If smaller, move down. This eliminates one row or column in each step. Time complexity: O(m + n), Space complexity: O(1).</p>
+<h3 id="question-10-capacity-to-ship-packages">Question 10: Capacity to Ship Packages</h3>
+<p><strong>Problem:</strong> Find minimum capacity needed to ship all packages within given days.</p>
+<p><strong>Pseudocode:</strong></p>
+<pre class="hljs"><code><div>FUNCTION shipWithinDays(weights, days):
+    left = MAX(weights)  // Minimum capacity needed
+    right = SUM(weights)  // Maximum capacity needed
+    
+    WHILE left &lt; right:
+        mid = left + (right - left) / 2
+        
+        IF canShip(weights, days, mid):
+            right = mid
+        ELSE:
+            left = mid + 1
+    
+    RETURN left
+
+FUNCTION canShip(weights, days, capacity):
+    currentWeight = 0
+    daysNeeded = 1
+    
+    FOR each weight in weights:
+        IF currentWeight + weight &gt; capacity:
+            daysNeeded = daysNeeded + 1
+            currentWeight = weight
+        ELSE:
+            currentWeight = currentWeight + weight
+    
+    RETURN daysNeeded &lt;= days
+</div></code></pre>
+<p><strong>Explanation:</strong> Binary search on capacity range. Minimum capacity is maximum single package weight, maximum is sum of all weights. Check if given capacity allows shipping within required days. Time complexity: O(n * log(sum)), Space complexity: O(1).</p>
+
+</body>
+</html>

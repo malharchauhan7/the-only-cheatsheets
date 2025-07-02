@@ -1,6 +1,6 @@
 # Complete TailwindCSS Cheatsheet - Beginner to Advanced
 
-[Download PDF](https://gdurl.com/mJQ8)
+### [Download PDF](https://gdurl.com/3oNh)
 
 ## Table of Contents
 

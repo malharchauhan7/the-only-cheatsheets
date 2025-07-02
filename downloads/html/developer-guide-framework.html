@@ -1,0 +1,3076 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>developer-guide-framework.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="the-complete-developers-guide-to-clean-production-ready-code">The Complete Developer's Guide to Clean, Production-Ready Code</h1>
+<p><em>A comprehensive, opinionated guide for writing maintainable, secure, and scalable software across all domains</em></p>
+<hr>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#-1-project-architecture--folder-structure">Project Architecture &amp; Folder Structure</a></li>
+<li><a href="#-2-code-style--naming-conventions">Code Style &amp; Naming Conventions</a></li>
+<li><a href="#%EF%B8%8F-3-technology-specific-patterns--best-practices">Technology-Specific Patterns &amp; Best Practices</a></li>
+<li><a href="#-4-testing-standards">Testing Standards</a></li>
+<li><a href="#-5-security-guidelines">Security Guidelines</a></li>
+<li><a href="#-6-documentation--developer-experience">Documentation &amp; Developer Experience</a></li>
+<li><a href="#-7-version-control--git-workflow">Version Control &amp; Git Workflow</a></li>
+<li><a href="#%EF%B8%8F-8-tooling--automation">Tooling &amp; Automation</a></li>
+<li><a href="#-9-dependency--package-management">Dependency &amp; Package Management</a></li>
+<li><a href="#-10-monitoring-observability--logs">Monitoring, Observability &amp; Logs</a></li>
+<li><a href="#-11-production-readiness-checklist">Production Readiness Checklist</a></li>
+<li><a href="#-12-collaboration-review-and-mentorship">Collaboration, Review, and Mentorship</a></li>
+<li><a href="#-13-career-agnostic-add-ons">Career-Agnostic Add-Ons</a></li>
+</ol>
+<hr>
+<h2 id="%F0%9F%93%A6-1-project-architecture--folder-structure">📦 1. Project Architecture &amp; Folder Structure</h2>
+<h3 id="universal-principles">Universal Principles</h3>
+<ul>
+<li><strong>Consistency</strong>: Follow the same patterns across your entire codebase</li>
+<li><strong>Clarity</strong>: Structure should be self-documenting</li>
+<li><strong>Scalability</strong>: Organization should work for both small and large projects</li>
+<li><strong>Separation of Concerns</strong>: Group related functionality together</li>
+</ul>
+<h3 id="language--framework-specific-structures">Language &amp; Framework-Specific Structures</h3>
+<h4 id="web-frontend-reactnextjs">Web Frontend (React/Next.js)</h4>
+<pre class="hljs"><code><div>src/
+├── components/          # Reusable UI components
+│   ├── ui/             # Basic UI primitives (Button, Input, etc.)
+│   ├── forms/          # Form-specific components
+│   └── layout/         # Layout components (Header, Sidebar)
+├── pages/              # Route components (Next.js) or views
+├── hooks/              # Custom React hooks
+├── contexts/           # React context providers
+├── services/           # API calls and business logic
+├── utils/              # Pure utility functions
+├── types/              # TypeScript type definitions
+├── constants/          # App-wide constants
+├── assets/             # Static assets (images, fonts)
+└── styles/             # CSS/SCSS files
+</div></code></pre>
+<h4 id="backend-nodejsexpress">Backend (Node.js/Express)</h4>
+<pre class="hljs"><code><div>src/
+├── controllers/        # Route handlers
+├── services/           # Business logic layer
+├── repositories/       # Data access layer
+├── models/            # Data models/schemas
+├── middleware/        # Express middleware
+├── routes/            # Route definitions
+├── config/            # Configuration files
+├── utils/             # Utility functions
+├── types/             # TypeScript types
+├── validations/       # Input validation schemas
+└── __tests__/         # Test files
+</div></code></pre>
+<h4 id="python-backend-djangoflask">Python Backend (Django/Flask)</h4>
+<pre class="hljs"><code><div>project/
+├── apps/              # Django apps or Flask blueprints
+│   ├── users/
+│   ├── products/
+│   └── orders/
+├── core/              # Shared functionality
+├── config/            # Settings and configuration
+├── utils/             # Utility functions
+├── tests/             # Test files
+├── requirements/      # Dependency files
+└── docs/              # Documentation
+</div></code></pre>
+<h4 id="mobile-flutter">Mobile (Flutter)</h4>
+<pre class="hljs"><code><div>lib/
+├── features/          # Feature-based organization
+│   ├── auth/
+│   ├── home/
+│   └── profile/
+├── shared/            # Shared across features
+│   ├── widgets/       # Reusable widgets
+│   ├── services/      # API services
+│   ├── models/        # Data models
+│   └── utils/         # Utility functions
+├── core/              # App core (themes, constants)
+└── main.dart          # App entry point
+</div></code></pre>
+<h4 id="data-scienceml">Data Science/ML</h4>
+<pre class="hljs"><code><div>project/
+├── data/              # Raw and processed data
+│   ├── raw/
+│   ├── processed/
+│   └── external/
+├── notebooks/         # Jupyter notebooks
+├── src/               # Source code
+│   ├── data/          # Data processing
+│   ├── features/      # Feature engineering
+│   ├── models/        # ML models
+│   └── visualization/ # Plotting functions
+├── models/            # Trained model artifacts
+├── reports/           # Generated reports
+└── requirements.txt   # Dependencies
+</div></code></pre>
+<h3 id="monorepo-vs-polyrepo-decision-matrix">Monorepo vs Polyrepo Decision Matrix</h3>
+<p><strong>Choose Monorepo when:</strong></p>
+<ul>
+<li>Shared code between projects</li>
+<li>Coordinated releases</li>
+<li>Small to medium team</li>
+<li>Consistent tooling needed</li>
+</ul>
+<p><strong>Choose Polyrepo when:</strong></p>
+<ul>
+<li>Independent release cycles</li>
+<li>Different tech stacks</li>
+<li>Large, distributed teams</li>
+<li>Clear service boundaries</li>
+</ul>
+<h3 id="naming-best-practices">Naming Best Practices</h3>
+<h4 id="files--folders">Files &amp; Folders</h4>
+<ul>
+<li>Use kebab-case for files: <code>user-profile.component.ts</code></li>
+<li>Use camelCase for folders containing code: <code>userProfile/</code></li>
+<li>Use lowercase for config folders: <code>config/</code>, <code>docs/</code></li>
+<li>Be descriptive but concise: <code>AuthenticationService</code> not <code>AS</code></li>
+</ul>
+<hr>
+<h2 id="%E2%9C%A8-2-code-style--naming-conventions">✨ 2. Code Style &amp; Naming Conventions</h2>
+<h3 id="universal-rules">Universal Rules</h3>
+<ol>
+<li><strong>Consistency over personal preference</strong></li>
+<li><strong>Clarity over cleverness</strong></li>
+<li><strong>Use English throughout</strong></li>
+<li><strong>Avoid abbreviations unless universally understood</strong></li>
+</ol>
+<h3 id="variable--function-naming">Variable &amp; Function Naming</h3>
+<h4 id="javascripttypescript">JavaScript/TypeScript</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">// Variables &amp; functions: camelCase</span>
+<span class="hljs-keyword">const</span> userCount = <span class="hljs-number">42</span>;
+<span class="hljs-keyword">const</span> isAuthenticated = <span class="hljs-literal">true</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">calculateTotalPrice</span>(<span class="hljs-params">items: Item[]</span>): <span class="hljs-title">number</span> </span>{ }
+
+<span class="hljs-comment">// Constants: SCREAMING_SNAKE_CASE</span>
+<span class="hljs-keyword">const</span> MAX_RETRY_ATTEMPTS = <span class="hljs-number">3</span>;
+<span class="hljs-keyword">const</span> API_BASE_URL = <span class="hljs-string">'https://api.example.com'</span>;
+
+<span class="hljs-comment">// Classes &amp; Interfaces: PascalCase</span>
+<span class="hljs-keyword">class</span> UserService { }
+<span class="hljs-keyword">interface</span> ApiResponse { }
+
+<span class="hljs-comment">// Private members: prefix with underscore</span>
+<span class="hljs-keyword">class</span> MyClass {
+  <span class="hljs-keyword">private</span> _internalState = <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<h4 id="python">Python</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Variables &amp; functions: snake_case</span>
+user_count = <span class="hljs-number">42</span>
+is_authenticated = <span class="hljs-literal">True</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">calculate_total_price</span><span class="hljs-params">(items: List[Item])</span> -&gt; float:</span>
+    <span class="hljs-keyword">pass</span>
+
+<span class="hljs-comment"># Constants: SCREAMING_SNAKE_CASE</span>
+MAX_RETRY_ATTEMPTS = <span class="hljs-number">3</span>
+API_BASE_URL = <span class="hljs-string">"https://api.example.com"</span>
+
+<span class="hljs-comment"># Classes: PascalCase</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span>:</span>
+    <span class="hljs-keyword">pass</span>
+
+<span class="hljs-comment"># Private/protected: prefix with underscore</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span>
+        self._internal_state = <span class="hljs-number">0</span>
+        self.__private_var = <span class="hljs-string">"secret"</span>
+</div></code></pre>
+<h3 id="api-naming-conventions">API Naming Conventions</h3>
+<h4 id="rest-apis">REST APIs</h4>
+<pre class="hljs"><code><div>GET    /api/v1/users              # List users
+GET    /api/v1/users/{id}         # Get specific user
+POST   /api/v1/users              # Create user
+PUT    /api/v1/users/{id}         # Update user (full)
+PATCH  /api/v1/users/{id}         # Update user (partial)
+DELETE /api/v1/users/{id}         # Delete user
+
+# Nested resources
+GET    /api/v1/users/{id}/posts   # Get user's posts
+POST   /api/v1/users/{id}/posts   # Create post for user
+</div></code></pre>
+<h4 id="graphql">GraphQL</h4>
+<pre class="hljs"><code><div>type Query {
+  user(id: ID!): User
+  users(first: Int, after: String): UserConnection
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): CreateUserPayload
+  updateUser(id: ID!, input: UpdateUserInput!): UpdateUserPayload
+}
+</div></code></pre>
+<h3 id="event--handler-naming">Event &amp; Handler Naming</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Event handlers: on + PascalCase + Action</span>
+onButtonClick()
+onUserLogin()
+onDataFetch()
+
+<span class="hljs-comment">// Events: past tense</span>
+userLoggedIn
+dataFetched
+orderCreated
+
+<span class="hljs-comment">// Boolean variables: is/has/can/should + descriptive</span>
+isLoading
+hasPermission
+canEdit
+shouldRetry
+</div></code></pre>
+<hr>
+<h2 id="%F0%9F%9B%A0%EF%B8%8F-3-technology-specific-patterns--best-practices">🛠️ 3. Technology-Specific Patterns &amp; Best Practices</h2>
+<h3 id="react-patterns">React Patterns</h3>
+<h4 id="component-organization">Component Organization</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">// Smart/Container Component</span>
+<span class="hljs-keyword">const</span> UserListContainer: React.FC = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-keyword">const</span> [users, setUsers] = useState&lt;User[]&gt;([]);
+  <span class="hljs-keyword">const</span> [loading, setLoading] = useState(<span class="hljs-literal">false</span>);
+
+  useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    fetchUsers().then(setUsers);
+  }, []);
+
+  <span class="hljs-keyword">return</span> &lt;UserList users={users} loading={loading} /&gt;;
+};
+
+<span class="hljs-comment">// Dumb/Presentational Component</span>
+<span class="hljs-keyword">interface</span> UserListProps {
+  users: User[];
+  loading: <span class="hljs-built_in">boolean</span>;
+}
+
+<span class="hljs-keyword">const</span> UserList: React.FC&lt;UserListProps&gt; = <span class="hljs-function">(<span class="hljs-params">{ users, loading }</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (loading) <span class="hljs-keyword">return</span> &lt;LoadingSpinner /&gt;;
+  
+  <span class="hljs-keyword">return</span> (
+    &lt;ul&gt;
+      {users.map(<span class="hljs-function"><span class="hljs-params">user</span> =&gt;</span> (
+        &lt;UserListItem key={user.id} user={user} /&gt;
+      ))}
+    &lt;<span class="hljs-regexp">/ul&gt;
+  );
+};
+</span></div></code></pre>
+<h4 id="custom-hooks-pattern">Custom Hooks Pattern</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">// Custom hook for data fetching</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">useUsers</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> [data, setData] = useState&lt;User[]&gt;([]);
+  <span class="hljs-keyword">const</span> [loading, setLoading] = useState(<span class="hljs-literal">false</span>);
+  <span class="hljs-keyword">const</span> [error, setError] = useState&lt;<span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span>&gt;(<span class="hljs-literal">null</span>);
+
+  <span class="hljs-keyword">const</span> fetchUsers = useCallback(<span class="hljs-keyword">async</span> () =&gt; {
+    setLoading(<span class="hljs-literal">true</span>);
+    setError(<span class="hljs-literal">null</span>);
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">const</span> users = <span class="hljs-keyword">await</span> api.getUsers();
+      setData(users);
+    } <span class="hljs-keyword">catch</span> (err) {
+      setError(err <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Error</span> ? err.message : <span class="hljs-string">'Unknown error'</span>);
+    } <span class="hljs-keyword">finally</span> {
+      setLoading(<span class="hljs-literal">false</span>);
+    }
+  }, []);
+
+  useEffect(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    fetchUsers();
+  }, [fetchUsers]);
+
+  <span class="hljs-keyword">return</span> { data, loading, error, refetch: fetchUsers };
+}
+</div></code></pre>
+<h3 id="backend-architecture-patterns">Backend Architecture Patterns</h3>
+<h4 id="controller-service-repository-pattern">Controller-Service-Repository Pattern</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">// Controller Layer (HTTP handling)</span>
+<span class="hljs-meta">@Controller</span>(<span class="hljs-string">'/users'</span>)
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserController {
+  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> userService: UserService</span>) {}
+
+  <span class="hljs-meta">@Get</span>()
+  <span class="hljs-keyword">async</span> getUsers(<span class="hljs-meta">@Query</span>() query: GetUsersQuery): <span class="hljs-built_in">Promise</span>&lt;User[]&gt; {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.userService.findUsers(query);
+  }
+
+  <span class="hljs-meta">@Post</span>()
+  <span class="hljs-keyword">async</span> createUser(<span class="hljs-meta">@Body</span>() userData: CreateUserDto): <span class="hljs-built_in">Promise</span>&lt;User&gt; {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.userService.createUser(userData);
+  }
+}
+
+<span class="hljs-comment">// Service Layer (Business Logic)</span>
+<span class="hljs-meta">@Injectable</span>()
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserService {
+  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> userRepository: UserRepository</span>) {}
+
+  <span class="hljs-keyword">async</span> findUsers(query: GetUsersQuery): <span class="hljs-built_in">Promise</span>&lt;User[]&gt; {
+    <span class="hljs-comment">// Business logic here</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.userRepository.findMany(query);
+  }
+
+  <span class="hljs-keyword">async</span> createUser(userData: CreateUserDto): <span class="hljs-built_in">Promise</span>&lt;User&gt; {
+    <span class="hljs-comment">// Validation, business rules</span>
+    <span class="hljs-keyword">const</span> hashedPassword = <span class="hljs-keyword">await</span> bcrypt.hash(userData.password, <span class="hljs-number">10</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.userRepository.create({
+      ...userData,
+      password: hashedPassword
+    });
+  }
+}
+
+<span class="hljs-comment">// Repository Layer (Data Access)</span>
+<span class="hljs-meta">@Injectable</span>()
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserRepository {
+  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> db: Database</span>) {}
+
+  <span class="hljs-keyword">async</span> findMany(query: GetUsersQuery): <span class="hljs-built_in">Promise</span>&lt;User[]&gt; {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.db.user.findMany({
+      where: query.filters,
+      skip: query.offset,
+      take: query.limit
+    });
+  }
+
+  <span class="hljs-keyword">async</span> create(userData: CreateUserData): <span class="hljs-built_in">Promise</span>&lt;User&gt; {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.db.user.create({ data: userData });
+  }
+}
+</div></code></pre>
+<h3 id="clean-architecture-principles">Clean Architecture Principles</h3>
+<h4 id="dependency-inversion">Dependency Inversion</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">// Bad: High-level module depends on low-level module</span>
+<span class="hljs-keyword">class</span> OrderService {
+  <span class="hljs-keyword">private</span> emailService = <span class="hljs-keyword">new</span> EmailService(); <span class="hljs-comment">// Direct dependency</span>
+  
+  <span class="hljs-keyword">async</span> processOrder(order: Order) {
+    <span class="hljs-comment">// Process order...</span>
+    <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.emailService.sendConfirmation(order.email);
+  }
+}
+
+<span class="hljs-comment">// Good: Depend on abstractions</span>
+<span class="hljs-keyword">interface</span> INotificationService {
+  sendOrderConfirmation(email: <span class="hljs-built_in">string</span>, order: Order): <span class="hljs-built_in">Promise</span>&lt;<span class="hljs-built_in">void</span>&gt;;
+}
+
+<span class="hljs-keyword">class</span> OrderService {
+  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> notificationService: INotificationService</span>) {}
+  
+  <span class="hljs-keyword">async</span> processOrder(order: Order) {
+    <span class="hljs-comment">// Process order...</span>
+    <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.notificationService.sendOrderConfirmation(order.email, order);
+  }
+}
+</div></code></pre>
+<h3 id="state-management-patterns">State Management Patterns</h3>
+<h4 id="redux-toolkit-recommended">Redux Toolkit (Recommended)</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">// Slice definition</span>
+<span class="hljs-keyword">const</span> userSlice = createSlice({
+  name: <span class="hljs-string">'users'</span>,
+  initialState: {
+    entities: {} <span class="hljs-keyword">as</span> Record&lt;<span class="hljs-built_in">string</span>, User&gt;,
+    ids: [] <span class="hljs-keyword">as</span> <span class="hljs-built_in">string</span>[],
+    loading: <span class="hljs-literal">false</span>,
+    error: <span class="hljs-literal">null</span> <span class="hljs-keyword">as</span> <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span>
+  },
+  reducers: {
+    setLoading: <span class="hljs-function">(<span class="hljs-params">state, action</span>) =&gt;</span> {
+      state.loading = action.payload;
+    }
+  },
+  extraReducers: <span class="hljs-function">(<span class="hljs-params">builder</span>) =&gt;</span> {
+    builder
+      .addCase(fetchUsers.pending, <span class="hljs-function">(<span class="hljs-params">state</span>) =&gt;</span> {
+        state.loading = <span class="hljs-literal">true</span>;
+        state.error = <span class="hljs-literal">null</span>;
+      })
+      .addCase(fetchUsers.fulfilled, <span class="hljs-function">(<span class="hljs-params">state, action</span>) =&gt;</span> {
+        state.loading = <span class="hljs-literal">false</span>;
+        userAdapter.setAll(state, action.payload);
+      })
+      .addCase(fetchUsers.rejected, <span class="hljs-function">(<span class="hljs-params">state, action</span>) =&gt;</span> {
+        state.loading = <span class="hljs-literal">false</span>;
+        state.error = action.error.message || <span class="hljs-string">'Failed to fetch users'</span>;
+      });
+  }
+});
+</div></code></pre>
+<h3 id="async-patterns">Async Patterns</h3>
+<h4 id="promise-best-practices">Promise Best Practices</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">// Bad: Mixing async/await with .then()</span>
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">badAsyncFunction</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">await</span> fetchData().then(<span class="hljs-function"><span class="hljs-params">result</span> =&gt;</span> result.data);
+  <span class="hljs-keyword">return</span> data;
+}
+
+<span class="hljs-comment">// Good: Consistent async/await</span>
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">goodAsyncFunction</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> fetchData();
+    <span class="hljs-keyword">return</span> result.data;
+  } <span class="hljs-keyword">catch</span> (error) {
+    <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Failed to fetch data:'</span>, error);
+    <span class="hljs-keyword">throw</span> error;
+  }
+}
+
+<span class="hljs-comment">// Good: Error handling with custom errors</span>
+<span class="hljs-keyword">class</span> ApiError <span class="hljs-keyword">extends</span> <span class="hljs-built_in">Error</span> {
+  <span class="hljs-keyword">constructor</span>(<span class="hljs-params">message: <span class="hljs-built_in">string</span>, <span class="hljs-keyword">public</span> statusCode: <span class="hljs-built_in">number</span></span>) {
+    <span class="hljs-keyword">super</span>(message);
+    <span class="hljs-keyword">this</span>.name = <span class="hljs-string">'ApiError'</span>;
+  }
+}
+
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fetchUserData</span>(<span class="hljs-params">id: <span class="hljs-built_in">string</span></span>): <span class="hljs-title">Promise</span>&lt;<span class="hljs-title">User</span>&gt; </span>{
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> fetch(<span class="hljs-string">`/api/users/<span class="hljs-subst">${id}</span>`</span>);
+    
+    <span class="hljs-keyword">if</span> (!response.ok) {
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> ApiError(
+        <span class="hljs-string">`Failed to fetch user: <span class="hljs-subst">${response.statusText}</span>`</span>,
+        response.status
+      );
+    }
+    
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> response.json();
+  } <span class="hljs-keyword">catch</span> (error) {
+    <span class="hljs-keyword">if</span> (error <span class="hljs-keyword">instanceof</span> ApiError) {
+      <span class="hljs-keyword">throw</span> error;
+    }
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> ApiError(<span class="hljs-string">'Network error occurred'</span>, <span class="hljs-number">0</span>);
+  }
+}
+</div></code></pre>
+<hr>
+<h2 id="%F0%9F%A7%AA-4-testing-standards">🧪 4. Testing Standards</h2>
+<h3 id="testing-pyramid">Testing Pyramid</h3>
+<ol>
+<li><strong>Unit Tests</strong> (70%): Test individual functions/components</li>
+<li><strong>Integration Tests</strong> (20%): Test component interactions</li>
+<li><strong>E2E Tests</strong> (10%): Test complete user workflows</li>
+</ol>
+<h3 id="unit-testing-best-practices">Unit Testing Best Practices</h3>
+<h4 id="test-structure-aaa-pattern">Test Structure (AAA Pattern)</h4>
+<pre class="hljs"><code><div>describe(<span class="hljs-string">'UserService'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  describe(<span class="hljs-string">'createUser'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    it(<span class="hljs-string">'should create user with hashed password'</span>, <span class="hljs-keyword">async</span> () =&gt; {
+      <span class="hljs-comment">// Arrange</span>
+      <span class="hljs-keyword">const</span> userData = { email: <span class="hljs-string">'test@example.com'</span>, password: <span class="hljs-string">'password123'</span> };
+      <span class="hljs-keyword">const</span> mockRepository = {
+        create: jest.fn().mockResolvedValue({ id: <span class="hljs-string">'1'</span>, ...userData })
+      };
+      <span class="hljs-keyword">const</span> userService = <span class="hljs-keyword">new</span> UserService(mockRepository);
+
+      <span class="hljs-comment">// Act</span>
+      <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> userService.createUser(userData);
+
+      <span class="hljs-comment">// Assert</span>
+      expect(result).toBeDefined();
+      expect(result.email).toBe(userData.email);
+      expect(mockRepository.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          email: userData.email,
+          password: expect.not.stringMatching(<span class="hljs-string">'password123'</span>) <span class="hljs-comment">// Should be hashed</span>
+        })
+      );
+    });
+
+    it(<span class="hljs-string">'should throw error when email already exists'</span>, <span class="hljs-keyword">async</span> () =&gt; {
+      <span class="hljs-comment">// Arrange</span>
+      <span class="hljs-keyword">const</span> userData = { email: <span class="hljs-string">'existing@example.com'</span>, password: <span class="hljs-string">'password'</span> };
+      <span class="hljs-keyword">const</span> mockRepository = {
+        create: jest.fn().mockRejectedValue(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Email already exists'</span>))
+      };
+      <span class="hljs-keyword">const</span> userService = <span class="hljs-keyword">new</span> UserService(mockRepository);
+
+      <span class="hljs-comment">// Act &amp; Assert</span>
+      <span class="hljs-keyword">await</span> expect(userService.createUser(userData))
+        .rejects
+        .toThrow(<span class="hljs-string">'Email already exists'</span>);
+    });
+  });
+});
+</div></code></pre>
+<h4 id="react-component-testing">React Component Testing</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> { render, screen, fireEvent, waitFor } <span class="hljs-keyword">from</span> <span class="hljs-string">'@testing-library/react'</span>;
+<span class="hljs-keyword">import</span> userEvent <span class="hljs-keyword">from</span> <span class="hljs-string">'@testing-library/user-event'</span>;
+
+describe(<span class="hljs-string">'LoginForm'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  it(<span class="hljs-string">'should submit form with valid credentials'</span>, <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-comment">// Arrange</span>
+    <span class="hljs-keyword">const</span> mockOnSubmit = jest.fn();
+    <span class="hljs-keyword">const</span> user = userEvent.setup();
+    
+    render(&lt;LoginForm onSubmit={mockOnSubmit} /&gt;);
+
+    <span class="hljs-comment">// Act</span>
+    <span class="hljs-keyword">await</span> user.type(screen.getByLabelText(<span class="hljs-regexp">/email/i</span>), <span class="hljs-string">'test@example.com'</span>);
+    <span class="hljs-keyword">await</span> user.type(screen.getByLabelText(<span class="hljs-regexp">/password/i</span>), <span class="hljs-string">'password123'</span>);
+    <span class="hljs-keyword">await</span> user.click(screen.getByRole(<span class="hljs-string">'button'</span>, { name: <span class="hljs-regexp">/login/i</span> }));
+
+    <span class="hljs-comment">// Assert</span>
+    <span class="hljs-keyword">await</span> waitFor(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      expect(mockOnSubmit).toHaveBeenCalledWith({
+        email: <span class="hljs-string">'test@example.com'</span>,
+        password: <span class="hljs-string">'password123'</span>
+      });
+    });
+  });
+
+  it(<span class="hljs-string">'should show validation errors for empty fields'</span>, <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-comment">// Arrange</span>
+    <span class="hljs-keyword">const</span> user = userEvent.setup();
+    render(&lt;LoginForm onSubmit={jest.fn()} /&gt;);
+
+    <span class="hljs-comment">// Act</span>
+    <span class="hljs-keyword">await</span> user.click(screen.getByRole(<span class="hljs-string">'button'</span>, { name: <span class="hljs-regexp">/login/i</span> }));
+
+    <span class="hljs-comment">// Assert</span>
+    expect(screen.getByText(<span class="hljs-regexp">/email is required/i</span>)).toBeInTheDocument();
+    expect(screen.getByText(<span class="hljs-regexp">/password is required/i</span>)).toBeInTheDocument();
+  });
+});
+</div></code></pre>
+<h3 id="integration-testing">Integration Testing</h3>
+<pre class="hljs"><code><div>describe(<span class="hljs-string">'User API Integration'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-keyword">let</span> app: Application;
+  <span class="hljs-keyword">let</span> db: Database;
+
+  beforeAll(<span class="hljs-keyword">async</span> () =&gt; {
+    app = <span class="hljs-keyword">await</span> createTestApp();
+    db = <span class="hljs-keyword">await</span> setupTestDatabase();
+  });
+
+  afterAll(<span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">await</span> db.close();
+  });
+
+  beforeEach(<span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-keyword">await</span> db.clean();
+  });
+
+  it(<span class="hljs-string">'should create and retrieve user'</span>, <span class="hljs-keyword">async</span> () =&gt; {
+    <span class="hljs-comment">// Create user</span>
+    <span class="hljs-keyword">const</span> createResponse = <span class="hljs-keyword">await</span> request(app)
+      .post(<span class="hljs-string">'/api/users'</span>)
+      .send({ email: <span class="hljs-string">'test@example.com'</span>, password: <span class="hljs-string">'password123'</span> })
+      .expect(<span class="hljs-number">201</span>);
+
+    <span class="hljs-keyword">const</span> userId = createResponse.body.id;
+
+    <span class="hljs-comment">// Retrieve user</span>
+    <span class="hljs-keyword">const</span> getResponse = <span class="hljs-keyword">await</span> request(app)
+      .get(<span class="hljs-string">`/api/users/<span class="hljs-subst">${userId}</span>`</span>)
+      .expect(<span class="hljs-number">200</span>);
+
+    expect(getResponse.body).toMatchObject({
+      id: userId,
+      email: <span class="hljs-string">'test@example.com'</span>
+    });
+    expect(getResponse.body.password).toBeUndefined(); <span class="hljs-comment">// Should not return password</span>
+  });
+});
+</div></code></pre>
+<h3 id="e2e-testing-with-playwright">E2E Testing with Playwright</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> { test, expect } <span class="hljs-keyword">from</span> <span class="hljs-string">'@playwright/test'</span>;
+
+test.describe(<span class="hljs-string">'User Authentication Flow'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  test(<span class="hljs-string">'should allow user to login and access dashboard'</span>, <span class="hljs-keyword">async</span> ({ page }) =&gt; {
+    <span class="hljs-comment">// Navigate to login page</span>
+    <span class="hljs-keyword">await</span> page.goto(<span class="hljs-string">'/login'</span>);
+
+    <span class="hljs-comment">// Fill login form</span>
+    <span class="hljs-keyword">await</span> page.fill(<span class="hljs-string">'[data-testid="email-input"]'</span>, <span class="hljs-string">'test@example.com'</span>);
+    <span class="hljs-keyword">await</span> page.fill(<span class="hljs-string">'[data-testid="password-input"]'</span>, <span class="hljs-string">'password123'</span>);
+    
+    <span class="hljs-comment">// Submit form</span>
+    <span class="hljs-keyword">await</span> page.click(<span class="hljs-string">'[data-testid="login-button"]'</span>);
+
+    <span class="hljs-comment">// Wait for navigation and verify dashboard</span>
+    <span class="hljs-keyword">await</span> expect(page).toHaveURL(<span class="hljs-string">'/dashboard'</span>);
+    <span class="hljs-keyword">await</span> expect(page.locator(<span class="hljs-string">'[data-testid="welcome-message"]'</span>))
+      .toContainText(<span class="hljs-string">'Welcome, test@example.com'</span>);
+  });
+
+  test(<span class="hljs-string">'should show error for invalid credentials'</span>, <span class="hljs-keyword">async</span> ({ page }) =&gt; {
+    <span class="hljs-keyword">await</span> page.goto(<span class="hljs-string">'/login'</span>);
+    
+    <span class="hljs-keyword">await</span> page.fill(<span class="hljs-string">'[data-testid="email-input"]'</span>, <span class="hljs-string">'invalid@example.com'</span>);
+    <span class="hljs-keyword">await</span> page.fill(<span class="hljs-string">'[data-testid="password-input"]'</span>, <span class="hljs-string">'wrongpassword'</span>);
+    <span class="hljs-keyword">await</span> page.click(<span class="hljs-string">'[data-testid="login-button"]'</span>);
+
+    <span class="hljs-keyword">await</span> expect(page.locator(<span class="hljs-string">'[data-testid="error-message"]'</span>))
+      .toContainText(<span class="hljs-string">'Invalid email or password'</span>);
+  });
+});
+</div></code></pre>
+<h3 id="test-naming-conventions">Test Naming Conventions</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Good test names that describe behavior</span>
+it(<span class="hljs-string">'should return user data when valid ID is provided'</span>)
+it(<span class="hljs-string">'should throw NotFoundError when user does not exist'</span>)
+it(<span class="hljs-string">'should hash password before saving to database'</span>)
+it(<span class="hljs-string">'should send welcome email after successful registration'</span>)
+
+<span class="hljs-comment">// Bad test names</span>
+it(<span class="hljs-string">'test user creation'</span>)
+it(<span class="hljs-string">'should work'</span>)
+it(<span class="hljs-string">'valid input'</span>)
+</div></code></pre>
+<hr>
+<h2 id="%F0%9F%94%90-5-security-guidelines">🔐 5. Security Guidelines</h2>
+<h3 id="owasp-top-10-prevention">OWASP Top 10 Prevention</h3>
+<h4 id="1-injection-prevention">1. Injection Prevention</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">// Bad: SQL Injection vulnerable</span>
+<span class="hljs-keyword">const</span> query = <span class="hljs-string">`SELECT * FROM users WHERE email = '<span class="hljs-subst">${email}</span>'`</span>;
+
+<span class="hljs-comment">// Good: Parameterized queries</span>
+<span class="hljs-keyword">const</span> query = <span class="hljs-string">'SELECT * FROM users WHERE email = ?'</span>;
+<span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> db.query(query, [email]);
+
+<span class="hljs-comment">// Good: ORM with built-in protection</span>
+<span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> User.findOne({ where: { email } });
+</div></code></pre>
+<h4 id="2-authentication--session-management">2. Authentication &amp; Session Management</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">// Good: Secure session configuration</span>
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: <span class="hljs-literal">false</span>,
+  saveUninitialized: <span class="hljs-literal">false</span>,
+  cookie: {
+    secure: process.env.NODE_ENV === <span class="hljs-string">'production'</span>, <span class="hljs-comment">// HTTPS only in production</span>
+    httpOnly: <span class="hljs-literal">true</span>, <span class="hljs-comment">// Prevent XSS</span>
+    maxAge: <span class="hljs-number">24</span> * <span class="hljs-number">60</span> * <span class="hljs-number">60</span> * <span class="hljs-number">1000</span>, <span class="hljs-comment">// 24 hours</span>
+    sameSite: <span class="hljs-string">'strict'</span> <span class="hljs-comment">// CSRF protection</span>
+  },
+  store: <span class="hljs-keyword">new</span> RedisStore({ client: redisClient }) <span class="hljs-comment">// Use external store</span>
+}));
+
+<span class="hljs-comment">// Good: JWT with proper expiration</span>
+<span class="hljs-keyword">const</span> token = jwt.sign(
+  { userId: user.id, email: user.email },
+  process.env.JWT_SECRET,
+  { 
+    expiresIn: <span class="hljs-string">'1h'</span>,
+    issuer: <span class="hljs-string">'your-app-name'</span>,
+    audience: <span class="hljs-string">'your-app-users'</span>
+  }
+);
+</div></code></pre>
+<h4 id="3-input-validation">3. Input Validation</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> Joi <span class="hljs-keyword">from</span> <span class="hljs-string">'joi'</span>;
+
+<span class="hljs-comment">// Define validation schemas</span>
+<span class="hljs-keyword">const</span> createUserSchema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().min(<span class="hljs-number">8</span>).pattern(<span class="hljs-regexp">/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/</span>).required(),
+  firstName: Joi.string().min(<span class="hljs-number">1</span>).max(<span class="hljs-number">50</span>).required(),
+  lastName: Joi.string().min(<span class="hljs-number">1</span>).max(<span class="hljs-number">50</span>).required()
+});
+
+<span class="hljs-comment">// Validate input</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">validateCreateUser</span>(<span class="hljs-params">data: unknown</span>) </span>{
+  <span class="hljs-keyword">const</span> { error, value } = createUserSchema.validate(data);
+  <span class="hljs-keyword">if</span> (error) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> ValidationError(error.details[<span class="hljs-number">0</span>].message);
+  }
+  <span class="hljs-keyword">return</span> value;
+}
+
+<span class="hljs-comment">// Sanitize HTML input</span>
+<span class="hljs-keyword">import</span> DOMPurify <span class="hljs-keyword">from</span> <span class="hljs-string">'dompurify'</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sanitizeHtml</span>(<span class="hljs-params">input: <span class="hljs-built_in">string</span></span>): <span class="hljs-title">string</span> </span>{
+  <span class="hljs-keyword">return</span> DOMPurify.sanitize(input);
+}
+</div></code></pre>
+<h4 id="4-xss-prevention">4. XSS Prevention</h4>
+<pre class="hljs"><code><div>// Bad: Dangerous innerHTML
+&lt;div dangerouslySetInnerHTML={{ __html: userContent }} /&gt;
+
+// Good: Escape content by default
+&lt;div&gt;{userContent}&lt;/div&gt;
+
+// Good: Sanitize when HTML is necessary
+import DOMPurify from 'dompurify';
+
+function SafeHtml({ content }: { content: string }) {
+  const sanitized = DOMPurify.sanitize(content);
+  return &lt;div dangerouslySetInnerHTML={{ __html: sanitized }} /&gt;;
+}
+</div></code></pre>
+<h4 id="5-csrf-protection">5. CSRF Protection</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> csrf <span class="hljs-keyword">from</span> <span class="hljs-string">'csurf'</span>;
+
+<span class="hljs-comment">// Enable CSRF protection</span>
+app.use(csrf({ cookie: <span class="hljs-literal">true</span> }));
+
+<span class="hljs-comment">// Include CSRF token in forms</span>
+app.use(<span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
+</div></code></pre>
+<h4 id="6-security-headers">6. Security Headers</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> helmet <span class="hljs-keyword">from</span> <span class="hljs-string">'helmet'</span>;
+
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: [<span class="hljs-string">"'self'"</span>],
+      styleSrc: [<span class="hljs-string">"'self'"</span>, <span class="hljs-string">"'unsafe-inline'"</span>],
+      scriptSrc: [<span class="hljs-string">"'self'"</span>],
+      imgSrc: [<span class="hljs-string">"'self'"</span>, <span class="hljs-string">"data:"</span>, <span class="hljs-string">"https:"</span>],
+    },
+  },
+  hsts: {
+    maxAge: <span class="hljs-number">31536000</span>,
+    includeSubDomains: <span class="hljs-literal">true</span>,
+    preload: <span class="hljs-literal">true</span>
+  }
+}));
+</div></code></pre>
+<h3 id="secrets-management">Secrets Management</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Bad: Hardcoded secrets</span>
+<span class="hljs-keyword">const</span> apiKey = <span class="hljs-string">'sk-1234567890abcdef'</span>;
+
+<span class="hljs-comment">// Good: Environment variables</span>
+<span class="hljs-keyword">const</span> apiKey = process.env.API_KEY;
+<span class="hljs-keyword">if</span> (!apiKey) {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'API_KEY environment variable is required'</span>);
+}
+
+<span class="hljs-comment">// Good: Use dedicated secret management</span>
+<span class="hljs-keyword">import</span> { SecretsManager } <span class="hljs-keyword">from</span> <span class="hljs-string">'aws-sdk'</span>;
+
+<span class="hljs-keyword">class</span> SecretService {
+  <span class="hljs-keyword">private</span> secretsManager = <span class="hljs-keyword">new</span> SecretsManager();
+
+  <span class="hljs-keyword">async</span> getSecret(secretName: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">Promise</span>&lt;<span class="hljs-built_in">string</span>&gt; {
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.secretsManager
+        .getSecretValue({ SecretId: secretName })
+        .promise();
+      
+      <span class="hljs-keyword">return</span> result.SecretString || <span class="hljs-string">''</span>;
+    } <span class="hljs-keyword">catch</span> (error) {
+      <span class="hljs-built_in">console</span>.error(<span class="hljs-string">`Failed to retrieve secret <span class="hljs-subst">${secretName}</span>:`</span>, error);
+      <span class="hljs-keyword">throw</span> error;
+    }
+  }
+}
+</div></code></pre>
+<h3 id="role-based-access-control">Role-Based Access Control</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">enum</span> Role {
+  ADMIN = <span class="hljs-string">'admin'</span>,
+  USER = <span class="hljs-string">'user'</span>,
+  MODERATOR = <span class="hljs-string">'moderator'</span>
+}
+
+<span class="hljs-keyword">enum</span> Permission {
+  READ_USERS = <span class="hljs-string">'read:users'</span>,
+  WRITE_USERS = <span class="hljs-string">'write:users'</span>,
+  DELETE_USERS = <span class="hljs-string">'delete:users'</span>
+}
+
+<span class="hljs-keyword">const</span> rolePermissions: Record&lt;Role, Permission[]&gt; = {
+  [Role.ADMIN]: [Permission.READ_USERS, Permission.WRITE_USERS, Permission.DELETE_USERS],
+  [Role.MODERATOR]: [Permission.READ_USERS, Permission.WRITE_USERS],
+  [Role.USER]: [Permission.READ_USERS]
+};
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hasPermission</span>(<span class="hljs-params">userRole: Role, requiredPermission: Permission</span>): <span class="hljs-title">boolean</span> </span>{
+  <span class="hljs-keyword">return</span> rolePermissions[userRole].includes(requiredPermission);
+}
+
+<span class="hljs-comment">// Middleware for permission checking</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">requirePermission</span>(<span class="hljs-params">permission: Permission</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">req: Request, res: Response, next: NextFunction</span>) =&gt;</span> {
+    <span class="hljs-keyword">const</span> user = req.user;
+    <span class="hljs-keyword">if</span> (!user || !hasPermission(user.role, permission)) {
+      <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">403</span>).json({ error: <span class="hljs-string">'Insufficient permissions'</span> });
+    }
+    next();
+  };
+}
+
+<span class="hljs-comment">// Usage</span>
+app.delete(<span class="hljs-string">'/api/users/:id'</span>, requirePermission(Permission.DELETE_USERS), deleteUser);
+</div></code></pre>
+<hr>
+<h2 id="%F0%9F%93%91-6-documentation--developer-experience">📑 6. Documentation &amp; Developer Experience</h2>
+<h3 id="readme-structure">README Structure</h3>
+<pre class="hljs"><code><div><span class="hljs-section"># Project Name</span>
+
+Brief description of what your project does and why it exists.
+
+<span class="hljs-section">## 🚀 Quick Start</span>
+
+<span class="hljs-section">### Prerequisites</span>
+<span class="hljs-bullet">- </span>Node.js 18+
+<span class="hljs-bullet">- </span>PostgreSQL 14+
+<span class="hljs-bullet">- </span>Redis 6+
+
+<span class="hljs-section">### Installation</span>
+<span class="hljs-code">```bash
+# Clone the repository
+git clone https://github.com/username/project-name.git
+cd project-name
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your configuration
+
+# Set up database
+npm run db:migrate
+npm run db:seed
+
+# Start development server
+npm run dev
+</span></div></code></pre>
+<h2 id="%F0%9F%93%96-documentation">📖 Documentation</h2>
+<ul>
+<li><a href="https://claude.ai/chat/docs/api.md">API Documentation</a></li>
+<li><a href="https://claude.ai/chat/docs/architecture.md">Architecture Overview</a></li>
+<li><a href="https://claude.ai/chat/docs/deployment.md">Deployment Guide</a></li>
+</ul>
+<h2 id="%F0%9F%A7%AA-testing">🧪 Testing</h2>
+<pre class="hljs"><code><div>npm run <span class="hljs-built_in">test</span>        <span class="hljs-comment"># Run unit tests</span>
+npm run <span class="hljs-built_in">test</span>:e2e    <span class="hljs-comment"># Run E2E tests</span>
+npm run <span class="hljs-built_in">test</span>:coverage <span class="hljs-comment"># Generate coverage report</span>
+</div></code></pre>
+<h2 id="%F0%9F%A4%9D-contributing">🤝 Contributing</h2>
+<p>Please read <a href="https://claude.ai/chat/CONTRIBUTING.md">CONTRIBUTING.md</a> for guidelines.</p>
+<h2 id="%F0%9F%93%84-license">📄 License</h2>
+<p>This project is licensed under the MIT License - see <a href="https://claude.ai/chat/LICENSE">LICENSE</a> file.</p>
+<pre class="hljs"><code><div>
+### API Documentation with OpenAPI
+```yaml
+openapi: 3.0.0
+info:
+  title: User Management API
+  version: 1.0.0
+  description: API for managing users in the application
+
+servers:
+  - url: https://api.example.com/v1
+    description: Production server
+  - url: http://localhost:3000/v1
+    description: Development server
+
+paths:
+  /users:
+    get:
+      summary: List users
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+
+    post:
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        firstName:
+          type: string
+        lastName:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - email
+        - firstName
+        - lastName
+        - createdAt
+</div></code></pre>
+<h3 id="in-code-documentation">In-Code Documentation</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">/**
+ * Service for managing user operations
+ * 
+ * @example
+ * ```typescript
+ * const userService = new UserService(userRepository);
+ * const user = await userService.createUser({
+ *   email: 'john@example.com',
+ *   firstName: 'John',
+ *   lastName: 'Doe'
+ * });
+ * ```
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserService {
+  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> userRepository: UserRepository</span>) {}
+
+  <span class="hljs-comment">/**
+   * Creates a new user with the provided data
+   * 
+   * @param userData - The user data to create
+   * @returns Promise that resolves to the created user
+   * @throws {ValidationError} When user data is invalid
+   * @throws {ConflictError} When email already exists
+   * 
+   * @example
+   * ```typescript
+   * const user = await userService.createUser({
+   *   email: 'jane@example.com',
+   *   firstName: 'Jane',
+   *   lastName: 'Smith',
+   *   password: 'securePassword123'
+   * });
+   * ```
+   */</span>
+  <span class="hljs-keyword">async</span> createUser(userData: CreateUserData): <span class="hljs-built_in">Promise</span>&lt;User&gt; {
+    <span class="hljs-comment">// Implementation...</span>
+  }
+
+  <span class="hljs-comment">/**
+   * Retrieves users with optional filtering and pagination
+   * 
+   * @param options - Query options for filtering and pagination
+   * @param options.page - Page number (1-based)
+   * @param options.limit - Number of items per page
+   * @param options.email - Filter by email (partial match)
+   * @returns Promise that resolves to paginated user results
+   */</span>
+  <span class="hljs-keyword">async</span> getUsers(options: GetUsersOptions = {}): <span class="hljs-built_in">Promise</span>&lt;PaginatedUsers&gt; {
+    <span class="hljs-comment">// Implementation...</span>
+  }
+}
+</div></code></pre>
+<h3 id="comment-guidelines">Comment Guidelines</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Good: Comments explain WHY, not WHAT</span>
+<span class="hljs-comment">// We use exponential backoff to avoid overwhelming the API during failures</span>
+<span class="hljs-keyword">const</span> delay = <span class="hljs-built_in">Math</span>.min(<span class="hljs-number">1000</span> * <span class="hljs-built_in">Math</span>.pow(<span class="hljs-number">2</span>, attempt), <span class="hljs-number">30000</span>);
+
+<span class="hljs-comment">// Bad: Comments explain obvious code</span>
+<span class="hljs-comment">// Increment counter by 1</span>
+counter++;
+
+<span class="hljs-comment">// Good: Comments for complex business logic</span>
+<span class="hljs-comment">// Calculate tax based on user's state and product category</span>
+<span class="hljs-comment">// Special handling for digital products in certain states</span>
+<span class="hljs-keyword">if</span> (isDigitalProduct &amp;&amp; TAX_EXEMPT_STATES.includes(user.state)) {
+  taxRate = <span class="hljs-number">0</span>;
+} <span class="hljs-keyword">else</span> {
+  taxRate = getTaxRate(user.state, product.category);
+}
+
+<span class="hljs-comment">// Good: TODO comments with context</span>
+<span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> Replace with proper event sourcing once we implement CQRS</span>
+<span class="hljs-comment">// This temporary solution handles the audit trail requirement</span>
+logUserAction(user.id, <span class="hljs-string">'USER_UPDATED'</span>, { previousData, newData });
+</div></code></pre>
+<hr>
+<h2 id="%F0%9F%94%84-7-version-control--git-workflow">🔄 7. Version Control &amp; Git Workflow</h2>
+<h3 id="branching-strategy">Branching Strategy</h3>
+<h4 id="git-flow-recommended-for-release-based-projects">Git Flow (Recommended for Release-Based Projects)</h4>
+<pre class="hljs"><code><div>main          ──●─────●─────●──── (Production releases)
+             ╱       ╱       ╱
+develop   ───●───●───●───●───●──── (Integration branch)
+            ╱   ╱   ╱   ╱
+feature-*  ●───╱   ╱   ╱   ╱
+hotfix-*      ╱       ●───╱
+</div></code></pre>
+<p><strong>Branch Types:</strong></p>
+<ul>
+<li><code>main</code>: Production-ready code</li>
+<li><code>develop</code>: Integration branch for features</li>
+<li><code>feature/*</code>: New features (<code>feature/user-authentication</code>)</li>
+<li><code>release/*</code>: Release preparation (<code>release/v1.2.0</code>)</li>
+<li><code>hotfix/*</code>: Critical production fixes (<code>hotfix/security-patch</code>)</li>
+</ul>
+<h4 id="github-flow-recommended-for-continuous-deployment">GitHub Flow (Recommended for Continuous Deployment)</h4>
+<pre class="hljs"><code><div>main    ──●─────●─────●─────●──── (Always deployable)
+         ╱     ╱     ╱     ╱
+feature ●─────╱     ╱     ╱
+bugfix      ●─────╱     ╱
+hotfix            ●───╱
+</div></code></pre>
+<p><strong>Simple and effective:</strong></p>
+<ul>
+<li><code>main</code>: Always deployable</li>
+<li><code>feature/*</code>: All changes (features, bugs, etc.)</li>
+<li>Direct PR to main with CI/CD checks</li>
+</ul>
+<h3 id="commit-message-conventions-conventional-commits">Commit Message Conventions (Conventional Commits)</h3>
+<h4 id="format">Format</h4>
+<pre class="hljs"><code><div>&lt;type&gt;[optional scope]: &lt;description&gt;
+
+[optional body]
+
+[optional footer(s)]
+</div></code></pre>
+<h4 id="types">Types</h4>
+<pre class="hljs"><code><div>feat: add user authentication system
+fix: resolve memory leak <span class="hljs-keyword">in</span> image processor
+docs: update API documentation <span class="hljs-keyword">for</span> v2 endpoints
+style: format code according to prettier rules
+refactor: extract common validation logic
+<span class="hljs-built_in">test</span>: add integration tests <span class="hljs-keyword">for</span> payment flow
+chore: update dependencies to latest versions
+perf: optimize database queries <span class="hljs-keyword">for</span> user lookup
+ci: add automated deployment pipeline
+build: configure webpack <span class="hljs-keyword">for</span> production builds
+</div></code></pre>
+<h4 id="examples">Examples</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Simple feature</span>
+feat: add password reset functionality
+
+<span class="hljs-comment"># Bug fix with scope</span>
+fix(auth): handle expired tokens gracefully
+
+<span class="hljs-comment"># Breaking change</span>
+feat!: remove deprecated v1 API endpoints
+
+BREAKING CHANGE: v1 endpoints are no longer supported.
+Use v2 endpoints instead.
+
+<span class="hljs-comment"># Detailed commit with body</span>
+feat(payment): integrate Stripe payment processing
+
+- Add Stripe SDK integration
+- Implement webhook handling <span class="hljs-keyword">for</span> payment events
+- Add comprehensive error handling
+- Include tests <span class="hljs-keyword">for</span> payment flows
+
+Closes <span class="hljs-comment">#123</span>
+</div></code></pre>
+<h3 id="pull-request-best-practices">Pull Request Best Practices</h3>
+<h4 id="pr-template">PR Template</h4>
+<pre class="hljs"><code><div><span class="hljs-section">## Description</span>
+Brief description of changes made and why.
+
+<span class="hljs-section">## Type of Change</span>
+<span class="hljs-bullet">- </span>[ ] Bug fix (non-breaking change which fixes an issue)
+<span class="hljs-bullet">- </span>[ ] New feature (non-breaking change which adds functionality)
+<span class="hljs-bullet">- </span>[ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+<span class="hljs-bullet">- </span>[ ] Documentation update
+
+<span class="hljs-section">## Testing</span>
+<span class="hljs-bullet">- </span>[ ] Unit tests pass
+<span class="hljs-bullet">- </span>[ ] Integration tests pass
+<span class="hljs-bullet">- </span>[ ] Manual testing completed
+<span class="hljs-bullet">- </span>[ ] New tests added for new functionality
+
+<span class="hljs-section">## Checklist</span>
+<span class="hljs-bullet">- </span>[ ] Code follows project style guidelines
+<span class="hljs-bullet">- </span>[ ] Self-review completed
+<span class="hljs-bullet">- </span>[ ] Code is commented where necessary
+<span class="hljs-bullet">- </span>[ ] Documentation updated
+<span class="hljs-bullet">- </span>[ ] No new warnings or errors introduced
+
+<span class="hljs-section">## Screenshots (if applicable)</span>
+Add screenshots for UI changes.
+
+<span class="hljs-section">## Related Issues</span>
+Closes #123
+</div></code></pre>
+<h4 id="review-checklist">Review Checklist</h4>
+<p><strong>For Authors:</strong></p>
+<ol>
+<li>Keep PRs small (&lt; 400 lines when possible)</li>
+<li>Write descriptive titles and descriptions</li>
+<li>Test your changes thoroughly</li>
+<li>Update documentation</li>
+<li>Respond to feedback promptly</li>
+</ol>
+<p><strong>For Reviewers:</strong></p>
+<ol>
+<li>Check for security vulnerabilities</li>
+<li>Verify tests cover new functionality</li>
+<li>Ensure code follows project standards</li>
+<li>Look for performance implications</li>
+<li>Suggest improvements, not just find problems</li>
+</ol>
+<h3 id="git-hooks--automation">Git Hooks &amp; Automation</h3>
+<h4 id="pre-commit-hook-using-husky">Pre-commit Hook (using Husky)</h4>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"husky"</span>: {
+    <span class="hljs-attr">"hooks"</span>: {
+      <span class="hljs-attr">"pre-commit"</span>: <span class="hljs-string">"lint-staged"</span>,
+      <span class="hljs-attr">"commit-msg"</span>: <span class="hljs-string">"commitlint -E HUSKY_GIT_PARAMS"</span>,
+      <span class="hljs-attr">"pre-push"</span>: <span class="hljs-string">"npm run test:unit"</span>
+    }
+  },
+  <span class="hljs-attr">"lint-staged"</span>: {
+    <span class="hljs-attr">"*.{js,ts,tsx}"</span>: [
+      <span class="hljs-string">"eslint --fix"</span>,
+      <span class="hljs-string">"prettier --write"</span>,
+      <span class="hljs-string">"git add"</span>
+    ],
+    <span class="hljs-attr">"*.{css,scss,md}"</span>: [
+      <span class="hljs-string">"prettier --write"</span>,
+      <span class="hljs-string">"git add"</span>
+    ]
+  }
+}
+</div></code></pre>
+<hr>
+<h2 id="%E2%9A%99%EF%B8%8F-8-tooling--automation">⚙️ 8. Tooling &amp; Automation</h2>
+<h3 id="code-formatting--linting">Code Formatting &amp; Linting</h3>
+<h4 id="prettier-configuration">Prettier Configuration</h4>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"semi"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"trailingComma"</span>: <span class="hljs-string">"es5"</span>,
+  <span class="hljs-attr">"singleQuote"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"printWidth"</span>: <span class="hljs-number">80</span>,
+  <span class="hljs-attr">"tabWidth"</span>: <span class="hljs-number">2</span>,
+  <span class="hljs-attr">"useTabs"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"bracketSpacing"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"bracketSameLine"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"arrowParens"</span>: <span class="hljs-string">"avoid"</span>,
+  <span class="hljs-attr">"endOfLine"</span>: <span class="hljs-string">"lf"</span>
+}
+</div></code></pre>
+<h4 id="eslint-configuration">ESLint Configuration</h4>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"extends"</span>: [
+    <span class="hljs-string">"@typescript-eslint/recommended"</span>,
+    <span class="hljs-string">"prettier"</span>,
+    <span class="hljs-string">"plugin:react-hooks/recommended"</span>
+  ],
+  <span class="hljs-attr">"parser"</span>: <span class="hljs-string">"@typescript-eslint/parser"</span>,
+  <span class="hljs-attr">"plugins"</span>: [<span class="hljs-string">"@typescript-eslint"</span>, <span class="hljs-string">"import"</span>],
+  <span class="hljs-attr">"rules"</span>: {
+    <span class="hljs-attr">"@typescript-eslint/no-unused-vars"</span>: <span class="hljs-string">"error"</span>,
+    <span class="hljs-attr">"@typescript-eslint/explicit-function-return-type"</span>: <span class="hljs-string">"warn"</span>,
+    <span class="hljs-attr">"import/order"</span>: [
+      <span class="hljs-string">"error"</span>,
+      {
+        <span class="hljs-attr">"groups"</span>: [
+          <span class="hljs-string">"builtin"</span>,
+          <span class="hljs-string">"external"</span>,
+          <span class="hljs-string">"internal"</span>,
+          <span class="hljs-string">"parent"</span>,
+          <span class="hljs-string">"sibling"</span>,
+          <span class="hljs-string">"index"</span>
+        ],
+        <span class="hljs-attr">"newlines-between"</span>: <span class="hljs-string">"always"</span>
+      }
+    ],
+    <span class="hljs-attr">"prefer-const"</span>: <span class="hljs-string">"error"</span>,
+    <span class="hljs-attr">"no-var"</span>: <span class="hljs-string">"error"</span>
+  }
+}
+</div></code></pre>
+<h4 id="python-black--flake8">Python: Black + Flake8</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># pyproject.toml</span>
+<span class="hljs-section">[tool.black]</span>
+<span class="hljs-attr">line-length</span> = <span class="hljs-number">88</span>
+<span class="hljs-attr">target-version</span> = [<span class="hljs-string">'py38'</span>]
+<span class="hljs-attr">include</span> = <span class="hljs-string">'\.pyi?
+extend-exclude = '</span><span class="hljs-string">''</span>
+/(
+  <span class="hljs-comment"># directories</span>
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+<span class="hljs-comment"># setup.cfg</span>
+<span class="hljs-section">[flake8]</span>
+<span class="hljs-attr">max-line-length</span> = <span class="hljs-number">88</span>
+<span class="hljs-attr">extend-ignore</span> = E203, W503
+<span class="hljs-attr">exclude</span> = .git,__pycache__,docs/source/conf.py,old,build,dist
+</div></code></pre>
+<h3 id="build-scripts--task-runners">Build Scripts &amp; Task Runners</h3>
+<h4 id="packagejson-scripts">package.json Scripts</h4>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"scripts"</span>: {
+    <span class="hljs-attr">"dev"</span>: <span class="hljs-string">"next dev"</span>,
+    <span class="hljs-attr">"build"</span>: <span class="hljs-string">"next build"</span>,
+    <span class="hljs-attr">"start"</span>: <span class="hljs-string">"next start"</span>,
+    <span class="hljs-attr">"lint"</span>: <span class="hljs-string">"eslint . --ext .ts,.tsx --fix"</span>,
+    <span class="hljs-attr">"lint:check"</span>: <span class="hljs-string">"eslint . --ext .ts,.tsx"</span>,
+    <span class="hljs-attr">"format"</span>: <span class="hljs-string">"prettier --write ."</span>,
+    <span class="hljs-attr">"format:check"</span>: <span class="hljs-string">"prettier --check ."</span>,
+    <span class="hljs-attr">"test"</span>: <span class="hljs-string">"jest"</span>,
+    <span class="hljs-attr">"test:watch"</span>: <span class="hljs-string">"jest --watch"</span>,
+    <span class="hljs-attr">"test:coverage"</span>: <span class="hljs-string">"jest --coverage"</span>,
+    <span class="hljs-attr">"test:e2e"</span>: <span class="hljs-string">"playwright test"</span>,
+    <span class="hljs-attr">"type-check"</span>: <span class="hljs-string">"tsc --noEmit"</span>,
+    <span class="hljs-attr">"pre-commit"</span>: <span class="hljs-string">"npm run lint &amp;&amp; npm run format &amp;&amp; npm run type-check"</span>,
+    <span class="hljs-attr">"clean"</span>: <span class="hljs-string">"rm -rf .next out dist"</span>,
+    <span class="hljs-attr">"db:migrate"</span>: <span class="hljs-string">"npx prisma migrate dev"</span>,
+    <span class="hljs-attr">"db:seed"</span>: <span class="hljs-string">"npx prisma db seed"</span>,
+    <span class="hljs-attr">"docker:build"</span>: <span class="hljs-string">"docker build -t myapp ."</span>,
+    <span class="hljs-attr">"docker:run"</span>: <span class="hljs-string">"docker run -p 3000:3000 myapp"</span>
+  }
+}
+</div></code></pre>
+<h4 id="makefile-for-multi-language-projects">Makefile for Multi-Language Projects</h4>
+<pre class="hljs"><code><div><span class="hljs-meta"><span class="hljs-meta-keyword">.PHONY</span>: help install test lint format clean docker-build</span>
+
+<span class="hljs-section">help: ## Show this help message</span>
+	@echo 'Usage: make [target]'
+	@echo ''
+	@echo 'Targets:'
+	@awk 'BEGIN {FS = <span class="hljs-string">":.*?## "</span>} /^[a-zA-Z_-]+:.*?<span class="hljs-comment">## / {printf "  %-15s %s\n", $1, $2}' $(MAKEFILE_LIST)</span>
+
+<span class="hljs-section">install: ## Install dependencies</span>
+	npm install
+	pip install -r requirements.txt
+
+<span class="hljs-section">test: ## Run all tests</span>
+	npm run test
+	python -m pytest tests/
+
+<span class="hljs-section">lint: ## Run linters</span>
+	npm run lint:check
+	flake8 src/
+	mypy src/
+
+<span class="hljs-section">format: ## Format code</span>
+	npm run format
+	black src/
+	isort src/
+
+<span class="hljs-section">clean: ## Clean build artifacts</span>
+	rm -rf node_modules/.cache
+	rm -rf .next
+	rm -rf __pycache__
+	rm -rf .pytest_cache
+
+<span class="hljs-section">docker-build: ## Build Docker image</span>
+	docker build -t myapp .
+
+<span class="hljs-section">ci: lint test ## Run CI pipeline locally</span>
+	@echo <span class="hljs-string">"✅ CI pipeline completed successfully"</span>
+</div></code></pre>
+<h3 id="static-analysis-tools">Static Analysis Tools</h3>
+<h4 id="typescript-configuration">TypeScript Configuration</h4>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"compilerOptions"</span>: {
+    <span class="hljs-attr">"target"</span>: <span class="hljs-string">"ES2020"</span>,
+    <span class="hljs-attr">"lib"</span>: [<span class="hljs-string">"dom"</span>, <span class="hljs-string">"dom.iterable"</span>, <span class="hljs-string">"es6"</span>],
+    <span class="hljs-attr">"allowJs"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"skipLibCheck"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"strict"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"forceConsistentCasingInFileNames"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"noEmit"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"esModuleInterop"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"module"</span>: <span class="hljs-string">"esnext"</span>,
+    <span class="hljs-attr">"moduleResolution"</span>: <span class="hljs-string">"node"</span>,
+    <span class="hljs-attr">"resolveJsonModule"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"isolatedModules"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"jsx"</span>: <span class="hljs-string">"preserve"</span>,
+    <span class="hljs-attr">"incremental"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"noUncheckedIndexedAccess"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"noImplicitReturns"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"noFallthroughCasesInSwitch"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"baseUrl"</span>: <span class="hljs-string">"."</span>,
+    <span class="hljs-attr">"paths"</span>: {
+      <span class="hljs-attr">"@/*"</span>: [<span class="hljs-string">"./src/*"</span>],
+      <span class="hljs-attr">"@/components/*"</span>: [<span class="hljs-string">"./src/components/*"</span>],
+      <span class="hljs-attr">"@/utils/*"</span>: [<span class="hljs-string">"./src/utils/*"</span>]
+    }
+  },
+  <span class="hljs-attr">"include"</span>: [<span class="hljs-string">"next-env.d.ts"</span>, <span class="hljs-string">"**/*.ts"</span>, <span class="hljs-string">"**/*.tsx"</span>],
+  <span class="hljs-attr">"exclude"</span>: [<span class="hljs-string">"node_modules"</span>]
+}
+</div></code></pre>
+<h3 id="code-generation-tools">Code Generation Tools</h3>
+<h4 id="openapi-client-generation">OpenAPI Client Generation</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Generate TypeScript client from OpenAPI spec</span>
+npx @openapitools/openapi-generator-cli generate \
+  -i https://api.example.com/openapi.json \
+  -g typescript-axios \
+  -o src/generated/api \
+  --additional-properties=supportsES6=<span class="hljs-literal">true</span>,npmName=my-api-client
+</div></code></pre>
+<h4 id="prisma-schema-to-types">Prisma Schema to Types</h4>
+<pre class="hljs"><code><div>// schema.prisma
+generator client {
+  provider = &quot;prisma-client-js&quot;
+}
+
+generator typegen {
+  provider = &quot;prisma-typegen&quot;
+  output   = &quot;../types/generated&quot;
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  firstName String
+  lastName  String
+  posts     Post[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+</div></code></pre>
+<hr>
+<h2 id="%F0%9F%93%A6-9-dependency--package-management">📦 9. Dependency &amp; Package Management</h2>
+<h3 id="lock-file-best-practices">Lock File Best Practices</h3>
+<h4 id="npmyarnpnpm">npm/yarn/pnpm</h4>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"engines"</span>: {
+    <span class="hljs-attr">"node"</span>: <span class="hljs-string">"&gt;=18.0.0"</span>,
+    <span class="hljs-attr">"npm"</span>: <span class="hljs-string">"&gt;=8.0.0"</span>
+  },
+  <span class="hljs-attr">"packageManager"</span>: <span class="hljs-string">"pnpm@8.6.0"</span>
+}
+</div></code></pre>
+<p><strong>Rules:</strong></p>
+<ul>
+<li>Always commit lock files (<code>package-lock.json</code>, <code>yarn.lock</code>, <code>pnpm-lock.yaml</code>)</li>
+<li>Use exact versions for critical dependencies</li>
+<li>Regular dependency audits and updates</li>
+<li>Use <code>npm ci</code> in CI/CD pipelines</li>
+</ul>
+<h4 id="python-poetry">Python Poetry</h4>
+<pre class="hljs"><code><div><span class="hljs-section">[tool.poetry]</span>
+<span class="hljs-attr">name</span> = <span class="hljs-string">"myapp"</span>
+<span class="hljs-attr">version</span> = <span class="hljs-string">"0.1.0"</span>
+<span class="hljs-attr">description</span> = <span class="hljs-string">""</span>
+<span class="hljs-attr">authors</span> = [<span class="hljs-string">"Your Name &lt;you@example.com&gt;"</span>]
+
+<span class="hljs-section">[tool.poetry.dependencies]</span>
+<span class="hljs-attr">python</span> = <span class="hljs-string">"^3.8"</span>
+<span class="hljs-attr">fastapi</span> = <span class="hljs-string">"^0.68.0"</span>
+<span class="hljs-attr">uvicorn</span> = {extras = [<span class="hljs-string">"standard"</span>], version = <span class="hljs-string">"^0.15.0"</span>}
+
+<span class="hljs-section">[tool.poetry.group.dev.dependencies]</span>
+<span class="hljs-attr">pytest</span> = <span class="hljs-string">"^6.0"</span>
+<span class="hljs-attr">black</span> = <span class="hljs-string">"^21.0"</span>
+<span class="hljs-attr">flake8</span> = <span class="hljs-string">"^3.9"</span>
+<span class="hljs-attr">mypy</span> = <span class="hljs-string">"^0.910"</span>
+
+<span class="hljs-section">[build-system]</span>
+<span class="hljs-attr">requires</span> = [<span class="hljs-string">"poetry-core&gt;=1.0.0"</span>]
+<span class="hljs-attr">build-backend</span> = <span class="hljs-string">"poetry.core.masonry.api"</span>
+</div></code></pre>
+<h3 id="dependency-security">Dependency Security</h3>
+<h4 id="regular-security-audits">Regular Security Audits</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># npm</span>
+npm audit
+npm audit fix
+
+<span class="hljs-comment"># yarn</span>
+yarn audit
+yarn audit --fix
+
+<span class="hljs-comment"># Python</span>
+pip-audit
+safety check
+
+<span class="hljs-comment"># GitHub Dependabot configuration</span>
+<span class="hljs-comment"># .github/dependabot.yml</span>
+version: 2
+updates:
+  - package-ecosystem: <span class="hljs-string">"npm"</span>
+    directory: <span class="hljs-string">"/"</span>
+    schedule:
+      interval: <span class="hljs-string">"weekly"</span>
+    open-pull-requests-limit: 10
+  
+  - package-ecosystem: <span class="hljs-string">"pip"</span>
+    directory: <span class="hljs-string">"/"</span>
+    schedule:
+      interval: <span class="hljs-string">"weekly"</span>
+</div></code></pre>
+<h4 id="dependency-pinning-strategy">Dependency Pinning Strategy</h4>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"dependencies"</span>: {
+    <span class="hljs-attr">"react"</span>: <span class="hljs-string">"18.2.0"</span>,              <span class="hljs-comment">// Exact version for stable deps</span>
+    <span class="hljs-attr">"lodash"</span>: <span class="hljs-string">"^4.17.21"</span>,           <span class="hljs-comment">// Allow patch updates</span>
+    <span class="hljs-attr">"typescript"</span>: <span class="hljs-string">"~5.0.0"</span>          <span class="hljs-comment">// Allow patch updates only</span>
+  },
+  <span class="hljs-attr">"devDependencies"</span>: {
+    <span class="hljs-attr">"jest"</span>: <span class="hljs-string">"^29.0.0"</span>,              <span class="hljs-comment">// More flexible for dev tools</span>
+    <span class="hljs-attr">"@types/node"</span>: <span class="hljs-string">"*"</span>              <span class="hljs-comment">// Latest types are usually safe</span>
+  }
+}
+</div></code></pre>
+<hr>
+<h2 id="%F0%9F%94%8D-10-monitoring-observability--logs">🔍 10. Monitoring, Observability &amp; Logs</h2>
+<h3 id="structured-logging">Structured Logging</h3>
+<h4 id="application-logs">Application Logs</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> winston <span class="hljs-keyword">from</span> <span class="hljs-string">'winston'</span>;
+
+<span class="hljs-comment">// Configure structured logging</span>
+<span class="hljs-keyword">const</span> logger = winston.createLogger({
+  level: process.env.LOG_LEVEL || <span class="hljs-string">'info'</span>,
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.errors({ stack: <span class="hljs-literal">true</span> }),
+    winston.format.json()
+  ),
+  defaultMeta: {
+    service: <span class="hljs-string">'user-service'</span>,
+    version: process.env.APP_VERSION
+  },
+  transports: [
+    <span class="hljs-keyword">new</span> winston.transports.File({ filename: <span class="hljs-string">'logs/error.log'</span>, level: <span class="hljs-string">'error'</span> }),
+    <span class="hljs-keyword">new</span> winston.transports.File({ filename: <span class="hljs-string">'logs/combined.log'</span> }),
+    <span class="hljs-keyword">new</span> winston.transports.Console({
+      format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.simple()
+      )
+    })
+  ]
+});
+
+<span class="hljs-comment">// Usage with context</span>
+logger.info(<span class="hljs-string">'User created successfully'</span>, {
+  userId: user.id,
+  email: user.email,
+  requestId: req.id,
+  userAgent: req.get(<span class="hljs-string">'User-Agent'</span>),
+  ip: req.ip
+});
+
+logger.error(<span class="hljs-string">'Database connection failed'</span>, {
+  error: error.message,
+  stack: error.stack,
+  database: <span class="hljs-string">'users'</span>,
+  connectionString: process.env.DB_HOST <span class="hljs-comment">// Don't log sensitive data</span>
+});
+</div></code></pre>
+<h4 id="python-logging">Python Logging</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> logging
+<span class="hljs-keyword">import</span> json
+<span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> datetime
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JSONFormatter</span><span class="hljs-params">(logging.Formatter)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">format</span><span class="hljs-params">(self, record)</span>:</span>
+        log_entry = {
+            <span class="hljs-string">'timestamp'</span>: datetime.utcnow().isoformat(),
+            <span class="hljs-string">'level'</span>: record.levelname,
+            <span class="hljs-string">'message'</span>: record.getMessage(),
+            <span class="hljs-string">'module'</span>: record.module,
+            <span class="hljs-string">'function'</span>: record.funcName,
+            <span class="hljs-string">'line'</span>: record.lineno
+        }
+        
+        <span class="hljs-keyword">if</span> hasattr(record, <span class="hljs-string">'user_id'</span>):
+            log_entry[<span class="hljs-string">'user_id'</span>] = record.user_id
+            
+        <span class="hljs-keyword">if</span> hasattr(record, <span class="hljs-string">'request_id'</span>):
+            log_entry[<span class="hljs-string">'request_id'</span>] = record.request_id
+            
+        <span class="hljs-keyword">if</span> record.exc_info:
+            log_entry[<span class="hljs-string">'exception'</span>] = self.formatException(record.exc_info)
+            
+        <span class="hljs-keyword">return</span> json.dumps(log_entry)
+
+<span class="hljs-comment"># Configure logger</span>
+logging.basicConfig(
+    level=logging.INFO,
+    handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler(<span class="hljs-string">'app.log'</span>)
+    ]
+)
+
+logger = logging.getLogger(__name__)
+<span class="hljs-keyword">for</span> handler <span class="hljs-keyword">in</span> logger.handlers:
+    handler.setFormatter(JSONFormatter())
+
+<span class="hljs-comment"># Usage</span>
+logger.info(<span class="hljs-string">"User logged in"</span>, extra={
+    <span class="hljs-string">'user_id'</span>: user.id,
+    <span class="hljs-string">'request_id'</span>: request.id,
+    <span class="hljs-string">'ip_address'</span>: request.remote_addr
+})
+</div></code></pre>
+<h3 id="error-tracking--monitoring">Error Tracking &amp; Monitoring</h3>
+<h4 id="sentry-integration">Sentry Integration</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> Sentry <span class="hljs-keyword">from</span> <span class="hljs-string">'@sentry/node'</span>;
+
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  environment: process.env.NODE_ENV,
+  tracesSampleRate: process.env.NODE_ENV === <span class="hljs-string">'production'</span> ? <span class="hljs-number">0.1</span> : <span class="hljs-number">1.0</span>,
+  beforeSend(event) {
+    <span class="hljs-comment">// Filter out sensitive data</span>
+    <span class="hljs-keyword">if</span> (event.exception) {
+      <span class="hljs-keyword">const</span> error = event.exception.values?.[<span class="hljs-number">0</span>];
+      <span class="hljs-keyword">if</span> (error?.value?.includes(<span class="hljs-string">'password'</span>)) {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>; <span class="hljs-comment">// Don't send events containing passwords</span>
+      }
+    }
+    <span class="hljs-keyword">return</span> event;
+  }
+});
+
+<span class="hljs-comment">// Usage in Express middleware</span>
+app.use(Sentry.Handlers.requestHandler());
+app.use(Sentry.Handlers.tracingHandler());
+
+<span class="hljs-comment">// Custom error handling</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handleError</span>(<span class="hljs-params">error: <span class="hljs-built_in">Error</span>, context: Record&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">any</span>&gt; = {}</span>) </span>{
+  logger.error(<span class="hljs-string">'Application error'</span>, { error: error.message, stack: error.stack, ...context });
+  
+  Sentry.withScope(<span class="hljs-function"><span class="hljs-params">scope</span> =&gt;</span> {
+    <span class="hljs-built_in">Object</span>.keys(context).forEach(<span class="hljs-function"><span class="hljs-params">key</span> =&gt;</span> {
+      scope.setTag(key, context[key]);
+    });
+    Sentry.captureException(error);
+  });
+}
+</div></code></pre>
+<h3 id="performance-monitoring">Performance Monitoring</h3>
+<h4 id="application-performance-monitoring">Application Performance Monitoring</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> { performance } <span class="hljs-keyword">from</span> <span class="hljs-string">'perf_hooks'</span>;
+
+<span class="hljs-comment">// Performance middleware</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">performanceMiddleware</span>(<span class="hljs-params">req: Request, res: Response, next: NextFunction</span>) </span>{
+  <span class="hljs-keyword">const</span> start = performance.now();
+  
+  res.on(<span class="hljs-string">'finish'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">const</span> duration = performance.now() - start;
+    
+    logger.info(<span class="hljs-string">'Request completed'</span>, {
+      method: req.method,
+      url: req.url,
+      statusCode: res.statusCode,
+      duration: <span class="hljs-string">`<span class="hljs-subst">${duration.toFixed(<span class="hljs-number">2</span>)}</span>ms`</span>,
+      requestId: req.id
+    });
+    
+    <span class="hljs-comment">// Send metrics to monitoring service</span>
+    metrics.histogram(<span class="hljs-string">'request_duration'</span>, duration, {
+      method: req.method,
+      route: req.route?.path || <span class="hljs-string">'unknown'</span>,
+      status: res.statusCode.toString()
+    });
+  });
+  
+  next();
+}
+
+<span class="hljs-comment">// Database query monitoring</span>
+<span class="hljs-keyword">class</span> MonitoredRepository {
+  <span class="hljs-keyword">async</span> findUser(id: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">Promise</span>&lt;User | <span class="hljs-literal">null</span>&gt; {
+    <span class="hljs-keyword">const</span> start = performance.now();
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.db.user.findUnique({ where: { id } });
+      <span class="hljs-keyword">const</span> duration = performance.now() - start;
+      
+      metrics.histogram(<span class="hljs-string">'db_query_duration'</span>, duration, {
+        operation: <span class="hljs-string">'findUser'</span>,
+        table: <span class="hljs-string">'users'</span>
+      });
+      
+      <span class="hljs-keyword">return</span> user;
+    } <span class="hljs-keyword">catch</span> (error) {
+      <span class="hljs-keyword">const</span> duration = performance.now() - start;
+      metrics.histogram(<span class="hljs-string">'db_query_duration'</span>, duration, {
+        operation: <span class="hljs-string">'findUser'</span>,
+        table: <span class="hljs-string">'users'</span>,
+        error: <span class="hljs-string">'true'</span>
+      });
+      <span class="hljs-keyword">throw</span> error;
+    }
+  }
+}
+</div></code></pre>
+<h3 id="health-checks--readiness-probes">Health Checks &amp; Readiness Probes</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Health check endpoint</span>
+app.get(<span class="hljs-string">'/health'</span>, <span class="hljs-keyword">async</span> (req, res) =&gt; {
+  <span class="hljs-keyword">const</span> checks = {
+    status: <span class="hljs-string">'ok'</span>,
+    timestamp: <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().toISOString(),
+    uptime: process.uptime(),
+    checks: {
+      database: <span class="hljs-keyword">await</span> checkDatabase(),
+      redis: <span class="hljs-keyword">await</span> checkRedis(),
+      external_api: <span class="hljs-keyword">await</span> checkExternalAPI()
+    }
+  };
+  
+  <span class="hljs-keyword">const</span> isHealthy = <span class="hljs-built_in">Object</span>.values(checks.checks).every(<span class="hljs-function"><span class="hljs-params">check</span> =&gt;</span> check.status === <span class="hljs-string">'ok'</span>);
+  
+  res.status(isHealthy ? <span class="hljs-number">200</span> : <span class="hljs-number">503</span>).json(checks);
+});
+
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">checkDatabase</span>(<span class="hljs-params"></span>): <span class="hljs-title">Promise</span>&lt;<span class="hljs-title">HealthCheck</span>&gt; </span>{
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">await</span> db.$queryRaw<span class="hljs-string">`SELECT 1`</span>;
+    <span class="hljs-keyword">return</span> { status: <span class="hljs-string">'ok'</span>, responseTime: <span class="hljs-string">'&lt; 50ms'</span> };
+  } <span class="hljs-keyword">catch</span> (error) {
+    <span class="hljs-keyword">return</span> { status: <span class="hljs-string">'error'</span>, error: error.message };
+  }
+}
+
+<span class="hljs-comment">// Graceful shutdown</span>
+process.on(<span class="hljs-string">'SIGTERM'</span>, <span class="hljs-keyword">async</span> () =&gt; {
+  logger.info(<span class="hljs-string">'SIGTERM received, shutting down gracefully'</span>);
+  
+  <span class="hljs-comment">// Stop accepting new requests</span>
+  server.close(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    logger.info(<span class="hljs-string">'HTTP server closed'</span>);
+  });
+  
+  <span class="hljs-comment">// Close database connections</span>
+  <span class="hljs-keyword">await</span> db.$disconnect();
+  
+  <span class="hljs-comment">// Close other connections</span>
+  <span class="hljs-keyword">await</span> redis.disconnect();
+  
+  process.exit(<span class="hljs-number">0</span>);
+});
+</div></code></pre>
+<hr>
+<h2 id="%F0%9F%A7%B0-11-production-readiness-checklist">🧰 11. Production Readiness Checklist</h2>
+<h3 id="configuration-management-12-factor-app">Configuration Management (12 Factor App)</h3>
+<h4 id="environment-configuration">Environment Configuration</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">// config/index.ts</span>
+<span class="hljs-keyword">import</span> { z } <span class="hljs-keyword">from</span> <span class="hljs-string">'zod'</span>;
+
+<span class="hljs-keyword">const</span> configSchema = z.object({
+  NODE_ENV: z.enum([<span class="hljs-string">'development'</span>, <span class="hljs-string">'test'</span>, <span class="hljs-string">'production'</span>]),
+  PORT: z.coerce.number().default(<span class="hljs-number">3000</span>),
+  DATABASE_URL: z.string().url(),
+  REDIS_URL: z.string().url(),
+  JWT_SECRET: z.string().min(<span class="hljs-number">32</span>),
+  API_RATE_LIMIT: z.coerce.number().default(<span class="hljs-number">100</span>),
+  LOG_LEVEL: z.enum([<span class="hljs-string">'error'</span>, <span class="hljs-string">'warn'</span>, <span class="hljs-string">'info'</span>, <span class="hljs-string">'debug'</span>]).default(<span class="hljs-string">'info'</span>)
+});
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> config = configSchema.parse(process.env);
+
+<span class="hljs-comment">// Validate required environment variables at startup</span>
+<span class="hljs-keyword">if</span> (!config.JWT_SECRET) {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'JWT_SECRET environment variable is required'</span>);
+}
+</div></code></pre>
+<h4 id="feature-flags">Feature Flags</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">interface</span> FeatureFlags {
+  enableNewDashboard: <span class="hljs-built_in">boolean</span>;
+  enableAdvancedSearch: <span class="hljs-built_in">boolean</span>;
+  maxUploadSize: <span class="hljs-built_in">number</span>;
+}
+
+<span class="hljs-keyword">class</span> FeatureFlagService {
+  <span class="hljs-keyword">private</span> flags: FeatureFlags;
+  
+  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">this</span>.flags = {
+      enableNewDashboard: process.env.FEATURE_NEW_DASHBOARD === <span class="hljs-string">'true'</span>,
+      enableAdvancedSearch: process.env.FEATURE_ADVANCED_SEARCH === <span class="hljs-string">'true'</span>,
+      maxUploadSize: <span class="hljs-built_in">parseInt</span>(process.env.MAX_UPLOAD_SIZE || <span class="hljs-string">'10485760'</span>) <span class="hljs-comment">// 10MB default</span>
+    };
+  }
+  
+  isEnabled(flag: keyof FeatureFlags): <span class="hljs-built_in">boolean</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Boolean</span>(<span class="hljs-keyword">this</span>.flags[flag]);
+  }
+  
+  getValue&lt;T <span class="hljs-keyword">extends</span> keyof FeatureFlags&gt;(flag: T): FeatureFlags[T] {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.flags[flag];
+  }
+}
+
+<span class="hljs-comment">// Usage</span>
+<span class="hljs-keyword">const</span> featureFlags = <span class="hljs-keyword">new</span> FeatureFlagService();
+
+<span class="hljs-keyword">if</span> (featureFlags.isEnabled(<span class="hljs-string">'enableNewDashboard'</span>)) {
+  <span class="hljs-comment">// Render new dashboard</span>
+} <span class="hljs-keyword">else</span> {
+  <span class="hljs-comment">// Render legacy dashboard</span>
+}
+</div></code></pre>
+<h3 id="deployment-strategies">Deployment Strategies</h3>
+<h4 id="blue-green-deployment">Blue-Green Deployment</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># docker-compose.blue-green.yml</span>
+<span class="hljs-attr">version:</span> <span class="hljs-string">'3.8'</span>
+<span class="hljs-attr">services:</span>
+  <span class="hljs-attr">app-blue:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">myapp:${BLUE_VERSION}</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">NODE_ENV=production</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">DATABASE_URL=${DATABASE_URL}</span>
+    <span class="hljs-attr">labels:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"traefik.enable=false"</span>  <span class="hljs-comment"># Initially disabled</span>
+  
+  <span class="hljs-attr">app-green:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">myapp:${GREEN_VERSION}</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">NODE_ENV=production</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">DATABASE_URL=${DATABASE_URL}</span>
+    <span class="hljs-attr">labels:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"traefik.enable=true"</span>   <span class="hljs-comment"># Currently active</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"traefik.http.routers.app.rule=Host(`myapp.com`)"</span>
+</div></code></pre>
+<h4 id="rolling-deployment-with-health-checks">Rolling Deployment with Health Checks</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># kubernetes/deployment.yaml</span>
+<span class="hljs-attr">apiVersion:</span> <span class="hljs-string">apps/v1</span>
+<span class="hljs-attr">kind:</span> <span class="hljs-string">Deployment</span>
+<span class="hljs-attr">metadata:</span>
+  <span class="hljs-attr">name:</span> <span class="hljs-string">myapp</span>
+<span class="hljs-attr">spec:</span>
+  <span class="hljs-attr">replicas:</span> <span class="hljs-number">3</span>
+  <span class="hljs-attr">strategy:</span>
+    <span class="hljs-attr">type:</span> <span class="hljs-string">RollingUpdate</span>
+    <span class="hljs-attr">rollingUpdate:</span>
+      <span class="hljs-attr">maxSurge:</span> <span class="hljs-number">1</span>
+      <span class="hljs-attr">maxUnavailable:</span> <span class="hljs-number">0</span>
+  <span class="hljs-attr">template:</span>
+    <span class="hljs-attr">spec:</span>
+      <span class="hljs-attr">containers:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">myapp</span>
+        <span class="hljs-attr">image:</span> <span class="hljs-string">myapp:latest</span>
+        <span class="hljs-attr">ports:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">containerPort:</span> <span class="hljs-number">3000</span>
+        <span class="hljs-attr">livenessProbe:</span>
+          <span class="hljs-attr">httpGet:</span>
+            <span class="hljs-attr">path:</span> <span class="hljs-string">/health</span>
+            <span class="hljs-attr">port:</span> <span class="hljs-number">3000</span>
+          <span class="hljs-attr">initialDelaySeconds:</span> <span class="hljs-number">30</span>
+          <span class="hljs-attr">periodSeconds:</span> <span class="hljs-number">10</span>
+          <span class="hljs-attr">timeoutSeconds:</span> <span class="hljs-number">5</span>
+          <span class="hljs-attr">failureThreshold:</span> <span class="hljs-number">3</span>
+        <span class="hljs-attr">readinessProbe:</span>
+          <span class="hljs-attr">httpGet:</span>
+            <span class="hljs-attr">path:</span> <span class="hljs-string">/ready</span>
+            <span class="hljs-attr">port:</span> <span class="hljs-number">3000</span>
+          <span class="hljs-attr">initialDelaySeconds:</span> <span class="hljs-number">5</span>
+          <span class="hljs-attr">periodSeconds:</span> <span class="hljs-number">5</span>
+          <span class="hljs-attr">timeoutSeconds:</span> <span class="hljs-number">3</span>
+          <span class="hljs-attr">failureThreshold:</span> <span class="hljs-number">3</span>
+        <span class="hljs-attr">resources:</span>
+          <span class="hljs-attr">requests:</span>
+            <span class="hljs-attr">memory:</span> <span class="hljs-string">"256Mi"</span>
+            <span class="hljs-attr">cpu:</span> <span class="hljs-string">"100m"</span>
+          <span class="hljs-attr">limits:</span>
+            <span class="hljs-attr">memory:</span> <span class="hljs-string">"512Mi"</span>
+            <span class="hljs-attr">cpu:</span> <span class="hljs-string">"500m"</span>
+</div></code></pre>
+<h3 id="security-hardening">Security Hardening</h3>
+<h4 id="production-security-checklist">Production Security Checklist</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">// Security middleware for production</span>
+<span class="hljs-keyword">import</span> rateLimit <span class="hljs-keyword">from</span> <span class="hljs-string">'express-rate-limit'</span>;
+<span class="hljs-keyword">import</span> mongoSanitize <span class="hljs-keyword">from</span> <span class="hljs-string">'express-mongo-sanitize'</span>;
+<span class="hljs-keyword">import</span> xss <span class="hljs-keyword">from</span> <span class="hljs-string">'xss-clean'</span>;
+
+<span class="hljs-comment">// Rate limiting</span>
+<span class="hljs-keyword">const</span> limiter = rateLimit({
+  windowMs: <span class="hljs-number">15</span> * <span class="hljs-number">60</span> * <span class="hljs-number">1000</span>, <span class="hljs-comment">// 15 minutes</span>
+  max: <span class="hljs-number">100</span>, <span class="hljs-comment">// limit each IP to 100 requests per windowMs</span>
+  message: <span class="hljs-string">'Too many requests from this IP, please try again later.'</span>,
+  standardHeaders: <span class="hljs-literal">true</span>,
+  legacyHeaders: <span class="hljs-literal">false</span>,
+});
+
+<span class="hljs-comment">// Apply security middleware</span>
+app.use(limiter);
+app.use(mongoSanitize()); <span class="hljs-comment">// Prevent NoSQL injection</span>
+app.use(xss()); <span class="hljs-comment">// Clean user input from malicious HTML</span>
+app.use(express.json({ limit: <span class="hljs-string">'10mb'</span> })); <span class="hljs-comment">// Limit request size</span>
+
+<span class="hljs-comment">// Security headers</span>
+app.use(<span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {
+  res.setHeader(<span class="hljs-string">'X-Content-Type-Options'</span>, <span class="hljs-string">'nosniff'</span>);
+  res.setHeader(<span class="hljs-string">'X-Frame-Options'</span>, <span class="hljs-string">'DENY'</span>);
+  res.setHeader(<span class="hljs-string">'X-XSS-Protection'</span>, <span class="hljs-string">'1; mode=block'</span>);
+  res.setHeader(<span class="hljs-string">'Referrer-Policy'</span>, <span class="hljs-string">'strict-origin-when-cross-origin'</span>);
+  next();
+});
+</div></code></pre>
+<h3 id="monitoring--alerting">Monitoring &amp; Alerting</h3>
+<h4 id="production-monitoring-setup">Production Monitoring Setup</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">// metrics.ts</span>
+<span class="hljs-keyword">import</span> client <span class="hljs-keyword">from</span> <span class="hljs-string">'prom-client'</span>;
+
+<span class="hljs-keyword">const</span> collectDefaultMetrics = client.collectDefaultMetrics;
+collectDefaultMetrics({ timeout: <span class="hljs-number">5000</span> });
+
+<span class="hljs-comment">// Custom metrics</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> httpRequestDuration = <span class="hljs-keyword">new</span> client.Histogram({
+  name: <span class="hljs-string">'http_request_duration_seconds'</span>,
+  help: <span class="hljs-string">'Duration of HTTP requests in seconds'</span>,
+  labelNames: [<span class="hljs-string">'method'</span>, <span class="hljs-string">'route'</span>, <span class="hljs-string">'status_code'</span>],
+  buckets: [<span class="hljs-number">0.1</span>, <span class="hljs-number">0.5</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>]
+});
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> activeConnections = <span class="hljs-keyword">new</span> client.Gauge({
+  name: <span class="hljs-string">'active_connections'</span>,
+  help: <span class="hljs-string">'Number of active connections'</span>
+});
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> errorRate = <span class="hljs-keyword">new</span> client.Counter({
+  name: <span class="hljs-string">'application_errors_total'</span>,
+  help: <span class="hljs-string">'Total number of application errors'</span>,
+  labelNames: [<span class="hljs-string">'type'</span>, <span class="hljs-string">'severity'</span>]
+});
+
+<span class="hljs-comment">// Metrics endpoint</span>
+app.get(<span class="hljs-string">'/metrics'</span>, <span class="hljs-keyword">async</span> (req, res) =&gt; {
+  <span class="hljs-keyword">try</span> {
+    res.set(<span class="hljs-string">'Content-Type'</span>, client.register.contentType);
+    <span class="hljs-keyword">const</span> metrics = <span class="hljs-keyword">await</span> client.register.metrics();
+    res.end(metrics);
+  } <span class="hljs-keyword">catch</span> (error) {
+    res.status(<span class="hljs-number">500</span>).end(error);
+  }
+});
+</div></code></pre>
+<hr>
+<h2 id="%F0%9F%91%A5-12-collaboration-review-and-mentorship">👥 12. Collaboration, Review, and Mentorship</h2>
+<h3 id="code-review-guidelines">Code Review Guidelines</h3>
+<h4 id="review-checklist-for-authors">Review Checklist for Authors</h4>
+<p><strong>Before Submitting:</strong></p>
+<ul>
+<li><input type="checkbox" id="checkbox0"><label for="checkbox0">Code is self-tested and working</label></li>
+<li><input type="checkbox" id="checkbox1"><label for="checkbox1">Tests are added/updated</label></li>
+<li><input type="checkbox" id="checkbox2"><label for="checkbox2">Documentation is updated</label></li>
+<li><input type="checkbox" id="checkbox3"><label for="checkbox3">Code follows team standards</label></li>
+<li><input type="checkbox" id="checkbox4"><label for="checkbox4">No sensitive data in code</label></li>
+<li><input type="checkbox" id="checkbox5"><label for="checkbox5">Performance implications considered</label></li>
+<li><input type="checkbox" id="checkbox6"><label for="checkbox6">Error handling implemented</label></li>
+<li><input type="checkbox" id="checkbox7"><label for="checkbox7">Logging added where appropriate</label></li>
+</ul>
+<h4 id="review-checklist-for-reviewers">Review Checklist for Reviewers</h4>
+<p><strong>Technical Review:</strong></p>
+<ul>
+<li><input type="checkbox" id="checkbox8"><label for="checkbox8">Logic is correct and efficient</label></li>
+<li><input type="checkbox" id="checkbox9"><label for="checkbox9">Error handling is comprehensive</label></li>
+<li><input type="checkbox" id="checkbox10"><label for="checkbox10">Security vulnerabilities addressed</label></li>
+<li><input type="checkbox" id="checkbox11"><label for="checkbox11">Performance impact acceptable</label></li>
+<li><input type="checkbox" id="checkbox12"><label for="checkbox12">Code is maintainable and readable</label></li>
+<li><input type="checkbox" id="checkbox13"><label for="checkbox13">Tests adequately cover changes</label></li>
+<li><input type="checkbox" id="checkbox14"><label for="checkbox14">Dependencies are appropriate</label></li>
+</ul>
+<p><strong>Code Quality:</strong></p>
+<ul>
+<li><input type="checkbox" id="checkbox15"><label for="checkbox15">Naming is clear and consistent</label></li>
+<li><input type="checkbox" id="checkbox16"><label for="checkbox16">Functions are single-purpose</label></li>
+<li><input type="checkbox" id="checkbox17"><label for="checkbox17">Code duplication minimized</label></li>
+<li><input type="checkbox" id="checkbox18"><label for="checkbox18">Comments explain complex logic</label></li>
+<li><input type="checkbox" id="checkbox19"><label for="checkbox19">No magic numbers or strings</label></li>
+</ul>
+<h4 id="effective-review-comments">Effective Review Comments</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">// ❌ Bad review comment</span>
+<span class="hljs-string">"This is wrong"</span>
+
+<span class="hljs-comment">// ✅ Good review comment</span>
+<span class="hljs-string">"Consider using a Map instead of an object here for better performance 
+when dealing with dynamic keys. Objects have prototype pollution risks 
+and Maps provide better iteration performance."</span>
+
+<span class="hljs-comment">// ❌ Bad review comment  </span>
+<span class="hljs-string">"Fix this"</span>
+
+<span class="hljs-comment">// ✅ Good review comment</span>
+<span class="hljs-string">"This function could throw an error if `user` is undefined. Consider 
+adding a null check or using optional chaining: `user?.email`"</span>
+
+<span class="hljs-comment">// ✅ Constructive suggestion</span>
+<span class="hljs-string">"Nice solution! One small optimization: we could memoize this calculation 
+since the inputs don't change often. What do you think about adding 
+useMemo here?"</span>
+
+<span class="hljs-comment">// ✅ Learning opportunity</span>
+<span class="hljs-string">"This works well! For future reference, you might want to look into 
+the Repository pattern for data access - it would make this more testable."</span>
+</div></code></pre>
+<h3 id="pair-programming-best-practices">Pair Programming Best Practices</h3>
+<h4 id="driver-navigator-pattern">Driver-Navigator Pattern</h4>
+<p><strong>Driver (Person typing):</strong></p>
+<ul>
+<li>Focus on implementation details</li>
+<li>Think out loud about what you're doing</li>
+<li>Ask questions when stuck</li>
+<li>Take breaks every 25-30 minutes</li>
+</ul>
+<p><strong>Navigator (Person reviewing):</strong></p>
+<ul>
+<li>Think about overall design and approach</li>
+<li>Spot syntax errors and typos</li>
+<li>Suggest alternatives and improvements</li>
+<li>Keep track of bigger picture</li>
+<li>Take notes of issues to address later</li>
+</ul>
+<h4 id="remote-pair-programming-tools">Remote Pair Programming Tools</h4>
+<ul>
+<li><strong>VS Code Live Share</strong>: Real-time collaborative editing</li>
+<li><strong>Tuple</strong>: High-quality screen sharing for pairing</li>
+<li><strong>GitHub Codespaces</strong>: Cloud-based development environment</li>
+<li><strong>Replit</strong>: Browser-based collaborative coding</li>
+</ul>
+<h3 id="mentorship-guidelines">Mentorship Guidelines</h3>
+<h4 id="for-mentors">For Mentors</h4>
+<p><strong>Teaching Approach:</strong></p>
+<ul>
+<li>Ask guiding questions instead of giving answers</li>
+<li>Explain the &quot;why&quot; behind decisions</li>
+<li>Share real-world examples and war stories</li>
+<li>Be patient with learning curves</li>
+<li>Provide regular, constructive feedback</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">// Instead of: "Use async/await here"</span>
+<span class="hljs-comment">// Try: "What do you think would happen if this API call takes 5 seconds? </span>
+<span class="hljs-comment">// How might we handle that to keep the UI responsive?"</span>
+
+<span class="hljs-comment">// Instead of: "This code is inefficient"</span>
+<span class="hljs-comment">// Try: "I notice this loop runs for every item. What do you think the </span>
+<span class="hljs-comment">// performance impact might be with 10,000 items? Can we optimize this?"</span>
+</div></code></pre>
+<h4 id="for-mentees">For Mentees</h4>
+<p><strong>Learning Approach:</strong></p>
+<ul>
+<li>Ask questions freely - no question is too basic</li>
+<li>Request code reviews even for small changes</li>
+<li>Practice explaining your code to others</li>
+<li>Take ownership of your learning path</li>
+<li>Document what you learn for future reference</li>
+</ul>
+<h4 id="knowledge-sharing-sessions">Knowledge Sharing Sessions</h4>
+<pre class="hljs"><code><div><span class="hljs-section"># Weekly Tech Talk Template</span>
+
+<span class="hljs-section">## Topic: [Technology/Pattern/Tool]</span>
+<span class="hljs-section">## Presenter: [Name]</span>
+<span class="hljs-section">## Duration: 30 minutes</span>
+
+<span class="hljs-section">### Agenda</span>
+<span class="hljs-bullet">1. </span>Problem/Challenge (5 min)
+<span class="hljs-bullet">2. </span>Solution Overview (10 min)
+<span class="hljs-bullet">3. </span>Code Examples (10 min)
+<span class="hljs-bullet">4. </span>Q&amp;A and Discussion (5 min)
+
+<span class="hljs-section">### Resources</span>
+<span class="hljs-bullet">- </span>[Documentation links]
+<span class="hljs-bullet">- </span>[Code repository]
+<span class="hljs-bullet">- </span>[Additional reading]
+
+<span class="hljs-section">### Action Items</span>
+<span class="hljs-bullet">- </span>[ ] Try implementing in current project
+<span class="hljs-bullet">- </span>[ ] Share learnings with team
+<span class="hljs-bullet">- </span>[ ] Update team documentation
+</div></code></pre>
+<hr>
+<h2 id="%F0%9F%92%A1-13-career-agnostic-add-ons">💡 13. Career-Agnostic Add-Ons</h2>
+<h3 id="ide-setup--configuration">IDE Setup &amp; Configuration</h3>
+<h4 id="vs-code-recommended-settings">VS Code Recommended Settings</h4>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"editor.formatOnSave"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"editor.formatOnPaste"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"editor.codeActionsOnSave"</span>: {
+    <span class="hljs-attr">"source.fixAll.eslint"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"source.fixAll.tslint"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"source.organizeImports"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"source.removeUnusedImports"</span>: <span class="hljs-literal">true</span>
+  },
+  <span class="hljs-attr">"editor.rulers"</span>: [<span class="hljs-number">80</span>, <span class="hljs-number">120</span>],
+  <span class="hljs-attr">"editor.tabSize"</span>: <span class="hljs-number">2</span>,
+  <span class="hljs-attr">"editor.insertSpaces"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"editor.detectIndentation"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"editor.bracketPairColorization.enabled"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"editor.guides.bracketPairs"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"editor.guides.indentation"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"editor.minimap.enabled"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"editor.wordWrap"</span>: <span class="hljs-string">"on"</span>,
+  <span class="hljs-attr">"editor.semanticHighlighting.enabled"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"editor.inlineSuggest.enabled"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"editor.suggestSelection"</span>: <span class="hljs-string">"first"</span>,
+  <span class="hljs-attr">"editor.quickSuggestions"</span>: {
+    <span class="hljs-attr">"other"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"comments"</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">"strings"</span>: <span class="hljs-literal">false</span>
+  },
+  <span class="hljs-attr">"typescript.preferences.importModuleSpecifier"</span>: <span class="hljs-string">"relative"</span>,
+  <span class="hljs-attr">"typescript.updateImportsOnFileMove.enabled"</span>: <span class="hljs-string">"always"</span>,
+  <span class="hljs-attr">"typescript.suggest.autoImports"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"javascript.suggest.autoImports"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"eslint.validate"</span>: [
+    <span class="hljs-string">"javascript"</span>,
+    <span class="hljs-string">"typescript"</span>,
+    <span class="hljs-string">"javascriptreact"</span>,
+    <span class="hljs-string">"typescriptreact"</span>,
+    <span class="hljs-string">"vue"</span>,
+    <span class="hljs-string">"svelte"</span>
+  ],
+  <span class="hljs-attr">"files.exclude"</span>: {
+    <span class="hljs-attr">"**/node_modules"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"**/.git"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"**/.DS_Store"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"**/dist"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"**/build"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"**/.vscode"</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">"**/coverage"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"**/.nyc_output"</span>: <span class="hljs-literal">true</span>
+  },
+  <span class="hljs-attr">"files.watcherExclude"</span>: {
+    <span class="hljs-attr">"**/node_modules/**"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"**/dist/**"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"**/build/**"</span>: <span class="hljs-literal">true</span>
+  },
+  <span class="hljs-attr">"search.exclude"</span>: {
+    <span class="hljs-attr">"**/node_modules"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"**/dist"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"**/build"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"**/.git"</span>: <span class="hljs-literal">true</span>
+  },
+  <span class="hljs-attr">"emmet.includeLanguages"</span>: {
+    <span class="hljs-attr">"javascript"</span>: <span class="hljs-string">"javascriptreact"</span>,
+    <span class="hljs-attr">"typescript"</span>: <span class="hljs-string">"typescriptreact"</span>
+  },
+  <span class="hljs-attr">"git.autofetch"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"git.confirmSync"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"git.enableSmartCommit"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"terminal.integrated.fontSize"</span>: <span class="hljs-number">14</span>,
+  <span class="hljs-attr">"workbench.colorTheme"</span>: <span class="hljs-string">"One Dark Pro"</span>,
+  <span class="hljs-attr">"workbench.iconTheme"</span>: <span class="hljs-string">"material-icon-theme"</span>,
+  <span class="hljs-attr">"workbench.startupEditor"</span>: <span class="hljs-string">"newUntitledFile"</span>,
+  <span class="hljs-attr">"explorer.confirmDelete"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"explorer.confirmDragAndDrop"</span>: <span class="hljs-literal">false</span>
+}
+</div></code></pre>
+<h4 id="essential-vs-code-extensions">Essential VS Code Extensions</h4>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"recommendations"</span>: [
+    <span class="hljs-comment">// Core Development</span>
+    <span class="hljs-string">"esbenp.prettier-vscode"</span>,
+    <span class="hljs-string">"dbaeumer.vscode-eslint"</span>,
+    <span class="hljs-string">"ms-vscode.vscode-typescript-next"</span>,
+    <span class="hljs-string">"ms-typescript.typescript-importer"</span>,
+    <span class="hljs-string">"christian-kohler.path-intellisense"</span>,
+    <span class="hljs-string">"bradlc.vscode-tailwindcss"</span>,
+    
+    <span class="hljs-comment">// Git &amp; Version Control</span>
+    <span class="hljs-string">"eamodio.gitlens"</span>,
+    <span class="hljs-string">"github.vscode-pull-request-github"</span>,
+    <span class="hljs-string">"github.copilot"</span>,
+    <span class="hljs-string">"github.copilot-chat"</span>,
+    
+    <span class="hljs-comment">// Code Quality &amp; Analysis</span>
+    <span class="hljs-string">"sonarsource.sonarlint-vscode"</span>,
+    <span class="hljs-string">"streetsidesoftware.code-spell-checker"</span>,
+    <span class="hljs-string">"usernamehw.errorlens"</span>,
+    <span class="hljs-string">"oderwat.indent-rainbow"</span>,
+    <span class="hljs-string">"pkief.material-icon-theme"</span>,
+    
+    <span class="hljs-comment">// Language Support</span>
+    <span class="hljs-string">"bradlc.vscode-tailwindcss"</span>,
+    <span class="hljs-string">"ms-python.python"</span>,
+    <span class="hljs-string">"ms-python.pylint"</span>,
+    <span class="hljs-string">"golang.go"</span>,
+    <span class="hljs-string">"rust-lang.rust-analyzer"</span>,
+    <span class="hljs-string">"ms-dotnettools.csharp"</span>,
+    <span class="hljs-string">"oracle.oracle-java"</span>,
+    <span class="hljs-string">"redhat.java"</span>,
+    
+    <span class="hljs-comment">// Frontend Development</span>
+    <span class="hljs-string">"formulahendry.auto-rename-tag"</span>,
+    <span class="hljs-string">"bradlc.vscode-tailwindcss"</span>,
+    <span class="hljs-string">"zignd.html-css-class-completion"</span>,
+    <span class="hljs-string">"pranaygp.vscode-css-peek"</span>,
+    
+    <span class="hljs-comment">// Backend &amp; Database</span>
+    <span class="hljs-string">"ms-mssql.mssql"</span>,
+    <span class="hljs-string">"mongodb.mongodb-vscode"</span>,
+    <span class="hljs-string">"cweijan.vscode-mysql-client2"</span>,
+    
+    <span class="hljs-comment">// DevOps &amp; Cloud</span>
+    <span class="hljs-string">"ms-azuretools.vscode-docker"</span>,
+    <span class="hljs-string">"ms-kubernetes-tools.vscode-kubernetes-tools"</span>,
+    <span class="hljs-string">"hashicorp.terraform"</span>,
+    <span class="hljs-string">"amazonwebservices.aws-toolkit-vscode"</span>,
+    
+    <span class="hljs-comment">// Productivity</span>
+    <span class="hljs-string">"alefragnani.bookmarks"</span>,
+    <span class="hljs-string">"gruntfuggly.todo-tree"</span>,
+    <span class="hljs-string">"ms-vscode.live-server"</span>,
+    <span class="hljs-string">"ritwickdey.liveserver"</span>,
+    <span class="hljs-string">"formulahendry.code-runner"</span>,
+    <span class="hljs-string">"ms-vscode.remote-containers"</span>,
+    <span class="hljs-string">"ms-vscode-remote.remote-ssh"</span>
+  ]
+}
+</div></code></pre>
+<h3 id="jetbrains-ides-configuration-intellijwebstormpycharm">JetBrains IDEs Configuration (IntelliJ/WebStorm/PyCharm)</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">&lt;!-- Code Style Settings --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">code_scheme</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"Professional"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"FORMATTER_TAGS_ENABLED"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"true"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"SOFT_MARGINS"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"80,120"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"true"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">JavaCodeStyleSettings</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"IMPORT_LAYOUT_TABLE"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">package</span> <span class="hljs-attr">name</span>=<span class="hljs-string">""</span> <span class="hljs-attr">withSubpackages</span>=<span class="hljs-string">"true"</span> <span class="hljs-attr">static</span>=<span class="hljs-string">"false"</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">emptyLine</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">package</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"java"</span> <span class="hljs-attr">withSubpackages</span>=<span class="hljs-string">"true"</span> <span class="hljs-attr">static</span>=<span class="hljs-string">"false"</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">package</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"javax"</span> <span class="hljs-attr">withSubpackages</span>=<span class="hljs-string">"true"</span> <span class="hljs-attr">static</span>=<span class="hljs-string">"false"</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">emptyLine</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">package</span> <span class="hljs-attr">name</span>=<span class="hljs-string">""</span> <span class="hljs-attr">withSubpackages</span>=<span class="hljs-string">"true"</span> <span class="hljs-attr">static</span>=<span class="hljs-string">"true"</span> /&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">JavaCodeStyleSettings</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">code_scheme</span>&gt;</span>
+</div></code></pre>
+<h2 id="development-environment-setup">Development Environment Setup</h2>
+<h3 id="terminal-configuration">Terminal Configuration</h3>
+<h4 id="zsh-with-oh-my-zsh">Zsh with Oh My Zsh</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Install Oh My Zsh</span>
+sh -c <span class="hljs-string">"<span class="hljs-variable">$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)</span>"</span>
+
+<span class="hljs-comment"># Essential plugins in ~/.zshrc</span>
+plugins=(
+  git
+  docker
+  kubectl
+  npm
+  yarn
+  nvm
+  python
+  pip
+  terraform
+  aws
+  gcloud
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+)
+
+<span class="hljs-comment"># Useful aliases</span>
+<span class="hljs-built_in">alias</span> ll=<span class="hljs-string">"ls -la"</span>
+<span class="hljs-built_in">alias</span> la=<span class="hljs-string">"ls -A"</span>
+<span class="hljs-built_in">alias</span> l=<span class="hljs-string">"ls -CF"</span>
+<span class="hljs-built_in">alias</span> ..=<span class="hljs-string">"cd .."</span>
+<span class="hljs-built_in">alias</span> ...=<span class="hljs-string">"cd ../.."</span>
+<span class="hljs-built_in">alias</span> grep=<span class="hljs-string">"grep --color=auto"</span>
+<span class="hljs-built_in">alias</span> fgrep=<span class="hljs-string">"fgrep --color=auto"</span>
+<span class="hljs-built_in">alias</span> egrep=<span class="hljs-string">"egrep --color=auto"</span>
+
+<span class="hljs-comment"># Git aliases</span>
+<span class="hljs-built_in">alias</span> gs=<span class="hljs-string">"git status"</span>
+<span class="hljs-built_in">alias</span> ga=<span class="hljs-string">"git add"</span>
+<span class="hljs-built_in">alias</span> gc=<span class="hljs-string">"git commit"</span>
+<span class="hljs-built_in">alias</span> gp=<span class="hljs-string">"git push"</span>
+<span class="hljs-built_in">alias</span> gl=<span class="hljs-string">"git pull"</span>
+<span class="hljs-built_in">alias</span> gd=<span class="hljs-string">"git diff"</span>
+<span class="hljs-built_in">alias</span> gb=<span class="hljs-string">"git branch"</span>
+<span class="hljs-built_in">alias</span> gco=<span class="hljs-string">"git checkout"</span>
+
+<span class="hljs-comment"># Docker aliases</span>
+<span class="hljs-built_in">alias</span> d=<span class="hljs-string">"docker"</span>
+<span class="hljs-built_in">alias</span> dc=<span class="hljs-string">"docker-compose"</span>
+<span class="hljs-built_in">alias</span> dps=<span class="hljs-string">"docker ps"</span>
+<span class="hljs-built_in">alias</span> di=<span class="hljs-string">"docker images"</span>
+</div></code></pre>
+<h4 id="powershell-profile-windows">PowerShell Profile (Windows)</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Microsoft.PowerShell_profile.ps1</span>
+<span class="hljs-built_in">Set-PSReadLineOption</span> <span class="hljs-literal">-PredictionSource</span> History
+<span class="hljs-built_in">Set-PSReadLineOption</span> <span class="hljs-literal">-PredictionViewStyle</span> ListView
+<span class="hljs-built_in">Set-PSReadLineOption</span> <span class="hljs-literal">-EditMode</span> Windows
+
+<span class="hljs-comment"># Aliases</span>
+<span class="hljs-built_in">Set-Alias</span> <span class="hljs-literal">-Name</span> ll <span class="hljs-literal">-Value</span> <span class="hljs-built_in">Get-ChildItem</span>
+<span class="hljs-built_in">Set-Alias</span> <span class="hljs-literal">-Name</span> la <span class="hljs-literal">-Value</span> <span class="hljs-built_in">Get-ChildItem</span>
+<span class="hljs-built_in">Set-Alias</span> <span class="hljs-literal">-Name</span> grep <span class="hljs-literal">-Value</span> <span class="hljs-built_in">Select-String</span>
+
+<span class="hljs-comment"># Git functions</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">gs</span></span> { git status }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ga</span></span> { git add <span class="hljs-variable">$args</span> }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">gc</span></span> { git commit <span class="hljs-variable">$args</span> }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">gp</span></span> { git push <span class="hljs-variable">$args</span> }
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">gl</span></span> { git pull <span class="hljs-variable">$args</span> }
+
+<span class="hljs-comment"># Load modules</span>
+<span class="hljs-built_in">Import-Module</span> posh<span class="hljs-literal">-git</span>
+<span class="hljs-built_in">Import-Module</span> oh<span class="hljs-literal">-my</span><span class="hljs-literal">-posh</span>
+oh<span class="hljs-literal">-my</span><span class="hljs-literal">-posh</span> init pwsh | <span class="hljs-built_in">Invoke-Expression</span>
+</div></code></pre>
+<h3 id="package-managers--runtime-management">Package Managers &amp; Runtime Management</h3>
+<h4 id="nodejs-version-management">Node.js Version Management</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Using NVM</span>
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+nvm install --lts
+nvm use --lts
+nvm <span class="hljs-built_in">alias</span> default node
+
+<span class="hljs-comment"># Global packages</span>
+npm install -g @angular/cli
+npm install -g create-react-app
+npm install -g vue-cli
+npm install -g typescript
+npm install -g ts-node
+npm install -g nodemon
+npm install -g pm2
+npm install -g serve
+npm install -g http-server
+</div></code></pre>
+<h4 id="python-environment-management">Python Environment Management</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Using pyenv</span>
+curl https://pyenv.run | bash
+
+<span class="hljs-comment"># Install Python versions</span>
+pyenv install 3.11.0
+pyenv install 3.10.0
+pyenv global 3.11.0
+
+<span class="hljs-comment"># Virtual environments</span>
+python -m venv venv
+<span class="hljs-built_in">source</span> venv/bin/activate  <span class="hljs-comment"># Linux/Mac</span>
+<span class="hljs-comment"># or</span>
+venv\Scripts\activate     <span class="hljs-comment"># Windows</span>
+
+<span class="hljs-comment"># Essential packages</span>
+pip install black
+pip install flake8
+pip install mypy
+pip install pytest
+pip install requests
+pip install fastapi
+pip install django
+</div></code></pre>
+<h4 id="java-version-management">Java Version Management</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Using SDKMAN</span>
+curl -s <span class="hljs-string">"https://get.sdkman.io"</span> | bash
+sdk install java 17.0.2-open
+sdk install java 11.0.15-open
+sdk install gradle
+sdk install maven
+</div></code></pre>
+<h2 id="code-quality-tools">Code Quality Tools</h2>
+<h3 id="universal-linters--formatters">Universal Linters &amp; Formatters</h3>
+<h4 id="prettier-configuration">Prettier Configuration</h4>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"semi"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"trailingComma"</span>: <span class="hljs-string">"es5"</span>,
+  <span class="hljs-attr">"singleQuote"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"printWidth"</span>: <span class="hljs-number">80</span>,
+  <span class="hljs-attr">"tabWidth"</span>: <span class="hljs-number">2</span>,
+  <span class="hljs-attr">"useTabs"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"bracketSpacing"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"bracketSameLine"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"arrowParens"</span>: <span class="hljs-string">"avoid"</span>,
+  <span class="hljs-attr">"endOfLine"</span>: <span class="hljs-string">"lf"</span>,
+  <span class="hljs-attr">"overrides"</span>: [
+    {
+      <span class="hljs-attr">"files"</span>: <span class="hljs-string">"*.md"</span>,
+      <span class="hljs-attr">"options"</span>: {
+        <span class="hljs-attr">"printWidth"</span>: <span class="hljs-number">100</span>,
+        <span class="hljs-attr">"proseWrap"</span>: <span class="hljs-string">"always"</span>
+      }
+    },
+    {
+      <span class="hljs-attr">"files"</span>: <span class="hljs-string">"*.json"</span>,
+      <span class="hljs-attr">"options"</span>: {
+        <span class="hljs-attr">"tabWidth"</span>: <span class="hljs-number">2</span>
+      }
+    }
+  ]
+}
+</div></code></pre>
+<h4 id="editorconfig">EditorConfig</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># .editorconfig</span>
+<span class="hljs-attr">root</span> = <span class="hljs-literal">true</span>
+
+<span class="hljs-section">[*]</span>
+<span class="hljs-attr">charset</span> = utf-<span class="hljs-number">8</span>
+<span class="hljs-attr">end_of_line</span> = lf
+<span class="hljs-attr">indent_style</span> = space
+<span class="hljs-attr">indent_size</span> = <span class="hljs-number">2</span>
+<span class="hljs-attr">insert_final_newline</span> = <span class="hljs-literal">true</span>
+<span class="hljs-attr">trim_trailing_whitespace</span> = <span class="hljs-literal">true</span>
+<span class="hljs-attr">max_line_length</span> = <span class="hljs-number">80</span>
+
+<span class="hljs-section">[*.{js,jsx,ts,tsx,vue,svelte}]</span>
+<span class="hljs-attr">indent_size</span> = <span class="hljs-number">2</span>
+
+<span class="hljs-section">[*.{py,rb}]</span>
+<span class="hljs-attr">indent_size</span> = <span class="hljs-number">4</span>
+
+<span class="hljs-section">[*.{md,markdown}]</span>
+<span class="hljs-attr">trim_trailing_whitespace</span> = <span class="hljs-literal">false</span>
+<span class="hljs-attr">max_line_length</span> = <span class="hljs-number">100</span>
+
+<span class="hljs-section">[*.{yml,yaml}]</span>
+<span class="hljs-attr">indent_size</span> = <span class="hljs-number">2</span>
+
+<span class="hljs-section">[Makefile]</span>
+<span class="hljs-attr">indent_style</span> = tab
+</div></code></pre>
+<h3 id="language-specific-quality-tools">Language-Specific Quality Tools</h3>
+<h4 id="eslint-configuration-javascripttypescript">ESLint Configuration (JavaScript/TypeScript)</h4>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"extends"</span>: [
+    <span class="hljs-string">"eslint:recommended"</span>,
+    <span class="hljs-string">"@typescript-eslint/recommended"</span>,
+    <span class="hljs-string">"prettier"</span>
+  ],
+  <span class="hljs-attr">"plugins"</span>: [<span class="hljs-string">"@typescript-eslint"</span>, <span class="hljs-string">"import"</span>, <span class="hljs-string">"security"</span>],
+  <span class="hljs-attr">"rules"</span>: {
+    <span class="hljs-attr">"no-console"</span>: <span class="hljs-string">"warn"</span>,
+    <span class="hljs-attr">"no-debugger"</span>: <span class="hljs-string">"error"</span>,
+    <span class="hljs-attr">"no-unused-vars"</span>: <span class="hljs-string">"error"</span>,
+    <span class="hljs-attr">"prefer-const"</span>: <span class="hljs-string">"error"</span>,
+    <span class="hljs-attr">"no-var"</span>: <span class="hljs-string">"error"</span>,
+    <span class="hljs-attr">"eqeqeq"</span>: [<span class="hljs-string">"error"</span>, <span class="hljs-string">"always"</span>],
+    <span class="hljs-attr">"curly"</span>: [<span class="hljs-string">"error"</span>, <span class="hljs-string">"all"</span>],
+    <span class="hljs-attr">"no-eval"</span>: <span class="hljs-string">"error"</span>,
+    <span class="hljs-attr">"no-implied-eval"</span>: <span class="hljs-string">"error"</span>,
+    <span class="hljs-attr">"no-new-func"</span>: <span class="hljs-string">"error"</span>,
+    <span class="hljs-attr">"security/detect-object-injection"</span>: <span class="hljs-string">"warn"</span>,
+    <span class="hljs-attr">"import/order"</span>: [
+      <span class="hljs-string">"error"</span>,
+      {
+        <span class="hljs-attr">"groups"</span>: [
+          <span class="hljs-string">"builtin"</span>,
+          <span class="hljs-string">"external"</span>,
+          <span class="hljs-string">"internal"</span>,
+          <span class="hljs-string">"parent"</span>,
+          <span class="hljs-string">"sibling"</span>,
+          <span class="hljs-string">"index"</span>
+        ],
+        <span class="hljs-attr">"newlines-between"</span>: <span class="hljs-string">"always"</span>
+      }
+    ]
+  }
+}
+</div></code></pre>
+<h4 id="python-configuration-pyprojecttoml">Python Configuration (pyproject.toml)</h4>
+<pre class="hljs"><code><div><span class="hljs-section">[tool.black]</span>
+<span class="hljs-attr">line-length</span> = <span class="hljs-number">88</span>
+<span class="hljs-attr">target-version</span> = [<span class="hljs-string">'py311'</span>]
+<span class="hljs-attr">include</span> = <span class="hljs-string">'\.pyi?$'</span>
+
+<span class="hljs-section">[tool.isort]</span>
+<span class="hljs-attr">profile</span> = <span class="hljs-string">"black"</span>
+<span class="hljs-attr">multi_line_output</span> = <span class="hljs-number">3</span>
+<span class="hljs-attr">line_length</span> = <span class="hljs-number">88</span>
+
+<span class="hljs-section">[tool.flake8]</span>
+<span class="hljs-attr">max-line-length</span> = <span class="hljs-number">88</span>
+<span class="hljs-attr">extend-ignore</span> = [<span class="hljs-string">"E203"</span>, <span class="hljs-string">"W503"</span>]
+
+<span class="hljs-section">[tool.mypy]</span>
+<span class="hljs-attr">python_version</span> = <span class="hljs-string">"3.11"</span>
+<span class="hljs-attr">warn_return_any</span> = <span class="hljs-literal">true</span>
+<span class="hljs-attr">warn_unused_configs</span> = <span class="hljs-literal">true</span>
+<span class="hljs-attr">disallow_untyped_defs</span> = <span class="hljs-literal">true</span>
+</div></code></pre>
+<h2 id="git-configuration--workflows">Git Configuration &amp; Workflows</h2>
+<h3 id="git-configuration">Git Configuration</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Global Git configuration</span>
+git config --global user.name <span class="hljs-string">"Your Name"</span>
+git config --global user.email <span class="hljs-string">"your.email@example.com"</span>
+git config --global init.defaultBranch main
+git config --global pull.rebase <span class="hljs-literal">true</span>
+git config --global push.default simple
+git config --global core.autocrlf input  <span class="hljs-comment"># Linux/Mac</span>
+git config --global core.autocrlf <span class="hljs-literal">true</span>   <span class="hljs-comment"># Windows</span>
+git config --global core.editor <span class="hljs-string">"code --wait"</span>
+
+<span class="hljs-comment"># Aliases</span>
+git config --global alias.co checkout
+git config --global alias.br branch
+git config --global alias.ci commit
+git config --global alias.st status
+git config --global alias.unstash <span class="hljs-string">'stash pop'</span>
+git config --global alias.logg <span class="hljs-string">'log --graph --oneline --decorate --all'</span>
+git config --global alias.last <span class="hljs-string">'log -1 HEAD'</span>
+</div></code></pre>
+<h3 id="git-hooks-setup">Git Hooks Setup</h3>
+<pre class="hljs"><code><div><span class="hljs-meta">#!/bin/sh</span>
+<span class="hljs-comment"># .git/hooks/pre-commit</span>
+<span class="hljs-comment"># Format and lint code before commit</span>
+
+<span class="hljs-comment"># Run linters</span>
+npm run lint
+npm run <span class="hljs-built_in">type</span>-check
+
+<span class="hljs-comment"># Run tests</span>
+npm <span class="hljs-built_in">test</span>
+
+<span class="hljs-comment"># Format code</span>
+npm run format
+
+<span class="hljs-built_in">exit</span> 0
+</div></code></pre>
+<h3 id="github-workflow-templates">GitHub Workflow Templates</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># .github/workflows/ci.yml</span>
+<span class="hljs-attr">name:</span> <span class="hljs-string">CI</span>
+
+<span class="hljs-attr">on:</span>
+  <span class="hljs-attr">push:</span>
+    <span class="hljs-attr">branches:</span> <span class="hljs-string">[main,</span> <span class="hljs-string">develop]</span>
+  <span class="hljs-attr">pull_request:</span>
+    <span class="hljs-attr">branches:</span> <span class="hljs-string">[main]</span>
+
+<span class="hljs-attr">jobs:</span>
+  <span class="hljs-attr">test:</span>
+    <span class="hljs-attr">runs-on:</span> <span class="hljs-string">ubuntu-latest</span>
+    
+    <span class="hljs-attr">strategy:</span>
+      <span class="hljs-attr">matrix:</span>
+        <span class="hljs-attr">node-version:</span> <span class="hljs-string">[16.x,</span> <span class="hljs-number">18.</span><span class="hljs-string">x]</span>
+        
+    <span class="hljs-attr">steps:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/checkout@v3</span>
+    
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Use</span> <span class="hljs-string">Node.js</span> <span class="hljs-string">${{</span> <span class="hljs-string">matrix.node-version</span> <span class="hljs-string">}}</span>
+      <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/setup-node@v3</span>
+      <span class="hljs-attr">with:</span>
+        <span class="hljs-attr">node-version:</span> <span class="hljs-string">${{</span> <span class="hljs-string">matrix.node-version</span> <span class="hljs-string">}}</span>
+        <span class="hljs-attr">cache:</span> <span class="hljs-string">'npm'</span>
+        
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">run:</span> <span class="hljs-string">npm</span> <span class="hljs-string">ci</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">run:</span> <span class="hljs-string">npm</span> <span class="hljs-string">run</span> <span class="hljs-string">build</span> <span class="hljs-string">--if-present</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">run:</span> <span class="hljs-string">npm</span> <span class="hljs-string">run</span> <span class="hljs-string">lint</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">run:</span> <span class="hljs-string">npm</span> <span class="hljs-string">run</span> <span class="hljs-string">type-check</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">run:</span> <span class="hljs-string">npm</span> <span class="hljs-string">test</span>
+    
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Upload</span> <span class="hljs-string">coverage</span> <span class="hljs-string">to</span> <span class="hljs-string">Codecov</span>
+      <span class="hljs-attr">uses:</span> <span class="hljs-string">codecov/codecov-action@v3</span>
+</div></code></pre>
+<h2 id="database-tools--gui-clients">Database Tools &amp; GUI Clients</h2>
+<h3 id="universal-database-tools">Universal Database Tools</h3>
+<ul>
+<li><strong>DBeaver</strong>: Multi-platform database tool</li>
+<li><strong>TablePlus</strong>: Modern database client (Mac/Windows)</li>
+<li><strong>DataGrip</strong>: JetBrains database IDE</li>
+<li><strong>Sequel Pro</strong>: MySQL client (Mac)</li>
+<li><strong>pgAdmin</strong>: PostgreSQL administration</li>
+</ul>
+<h3 id="database-cli-tools">Database CLI Tools</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># PostgreSQL</span>
+brew install postgresql
+psql -h localhost -U username -d database
+
+<span class="hljs-comment"># MySQL</span>
+brew install mysql
+mysql -h localhost -u username -p
+
+<span class="hljs-comment"># MongoDB</span>
+brew install mongodb-community
+mongosh
+
+<span class="hljs-comment"># Redis</span>
+brew install redis
+redis-cli
+</div></code></pre>
+<h2 id="api-development--testing">API Development &amp; Testing</h2>
+<h3 id="http-clients">HTTP Clients</h3>
+<ul>
+<li><strong>Postman</strong>: Full-featured API testing</li>
+<li><strong>Insomnia</strong>: Lightweight REST client</li>
+<li><strong>Thunder Client</strong>: VS Code extension</li>
+<li><strong>HTTPie</strong>: Command-line HTTP client</li>
+</ul>
+<h3 id="api-documentation-tools">API Documentation Tools</h3>
+<ul>
+<li><strong>Swagger/OpenAPI</strong>: API specification</li>
+<li><strong>Redoc</strong>: API documentation generator</li>
+<li><strong>Insomnia Designer</strong>: API design tool</li>
+</ul>
+<h2 id="container--cloud-tools">Container &amp; Cloud Tools</h2>
+<h3 id="docker-configuration">Docker Configuration</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Multi-stage Dockerfile example</span>
+<span class="hljs-keyword">FROM</span> node:<span class="hljs-number">18</span>-alpine AS builder
+<span class="hljs-keyword">WORKDIR</span><span class="bash"> /app</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> package*.json ./</span>
+<span class="hljs-keyword">RUN</span><span class="bash"> npm ci --only=production</span>
+
+<span class="hljs-keyword">FROM</span> node:<span class="hljs-number">18</span>-alpine AS runtime
+<span class="hljs-keyword">WORKDIR</span><span class="bash"> /app</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> --from=builder /app/node_modules ./node_modules</span>
+<span class="hljs-keyword">COPY</span><span class="bash"> . .</span>
+<span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">3000</span>
+<span class="hljs-keyword">CMD</span><span class="bash"> [<span class="hljs-string">"npm"</span>, <span class="hljs-string">"start"</span>]</span>
+</div></code></pre>
+<h3 id="docker-compose">Docker Compose</h3>
+<pre class="hljs"><code><div><span class="hljs-attr">version:</span> <span class="hljs-string">'3.8'</span>
+<span class="hljs-attr">services:</span>
+  <span class="hljs-attr">app:</span>
+    <span class="hljs-attr">build:</span> <span class="hljs-string">.</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"3000:3000"</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">NODE_ENV=development</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">.:/app</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">/app/node_modules</span>
+    <span class="hljs-attr">depends_on:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">db</span>
+      
+  <span class="hljs-attr">db:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">postgres:14</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-attr">POSTGRES_DB:</span> <span class="hljs-string">myapp</span>
+      <span class="hljs-attr">POSTGRES_USER:</span> <span class="hljs-string">user</span>
+      <span class="hljs-attr">POSTGRES_PASSWORD:</span> <span class="hljs-string">password</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">postgres_data:/var/lib/postgresql/data</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"5432:5432"</span>
+
+<span class="hljs-attr">volumes:</span>
+  <span class="hljs-attr">postgres_data:</span>
+</div></code></pre>
+<h3 id="kubernetes-tools">Kubernetes Tools</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Essential tools</span>
+brew install kubectl
+brew install helm
+brew install k9s
+brew install kustomize
+
+<span class="hljs-comment"># Useful aliases</span>
+<span class="hljs-built_in">alias</span> k=kubectl
+<span class="hljs-built_in">alias</span> kgp=<span class="hljs-string">'kubectl get pods'</span>
+<span class="hljs-built_in">alias</span> kgs=<span class="hljs-string">'kubectl get services'</span>
+<span class="hljs-built_in">alias</span> kgd=<span class="hljs-string">'kubectl get deployments'</span>
+</div></code></pre>
+<h2 id="security-tools">Security Tools</h2>
+<h3 id="static-analysis">Static Analysis</h3>
+<ul>
+<li><strong>SonarQube</strong>: Code quality and security</li>
+<li><strong>Snyk</strong>: Vulnerability scanning</li>
+<li><strong>CodeQL</strong>: Semantic code analysis</li>
+<li><strong>Semgrep</strong>: Static analysis rules</li>
+</ul>
+<h3 id="dependency-management">Dependency Management</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Node.js security audit</span>
+npm audit
+npm audit fix
+
+<span class="hljs-comment"># Python security</span>
+pip install safety
+safety check
+
+<span class="hljs-comment"># General dependency checking</span>
+brew install osv-scanner
+osv-scanner --lockfile package-lock.json
+</div></code></pre>
+<h2 id="monitoring--performance">Monitoring &amp; Performance</h2>
+<h3 id="application-monitoring">Application Monitoring</h3>
+<ul>
+<li><strong>New Relic</strong>: Full-stack monitoring</li>
+<li><strong>DataDog</strong>: Infrastructure monitoring</li>
+<li><strong>Sentry</strong>: Error tracking</li>
+<li><strong>LogRocket</strong>: Frontend monitoring</li>
+</ul>
+<h3 id="performance-testing">Performance Testing</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Load testing</span>
+npm install -g artillery
+artillery quick --count 10 --num 5 https://example.com
+
+<span class="hljs-comment"># Lighthouse CI</span>
+npm install -g @lhci/cli
+lhci autorun
+</div></code></pre>
+<h2 id="professional-development">Professional Development</h2>
+<h3 id="learning-resources">Learning Resources</h3>
+<ul>
+<li><strong>Pluralsight</strong>: Technology courses</li>
+<li><strong>Udemy</strong>: Practical tutorials</li>
+<li><strong>Coursera</strong>: University-level courses</li>
+<li><strong>FreeCodeCamp</strong>: Free programming education</li>
+<li><strong>The Odin Project</strong>: Full-stack curriculum</li>
+</ul>
+<h3 id="technical-documentation">Technical Documentation</h3>
+<ul>
+<li><strong>Notion</strong>: Knowledge management</li>
+<li><strong>Obsidian</strong>: Note-taking with linking</li>
+<li><strong>GitBook</strong>: Technical documentation</li>
+<li><strong>Confluence</strong>: Team documentation</li>
+</ul>
+<h3 id="communication-tools">Communication Tools</h3>
+<ul>
+<li><strong>Slack</strong>: Team communication</li>
+<li><strong>Discord</strong>: Developer communities</li>
+<li><strong>Microsoft Teams</strong>: Enterprise communication</li>
+<li><strong>Linear</strong>: Issue tracking</li>
+<li><strong>Jira</strong>: Project management</li>
+</ul>
+<h2 id="backup--sync-solutions">Backup &amp; Sync Solutions</h2>
+<h3 id="code-backup">Code Backup</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Automated backup script</span>
+<span class="hljs-meta">#!/bin/bash</span>
+DATE=$(date +%Y%m%d_%H%M%S)
+tar -czf ~/backups/projects_<span class="hljs-variable">$DATE</span>.tar.gz ~/projects
+aws s3 cp ~/backups/projects_<span class="hljs-variable">$DATE</span>.tar.gz s3://my-backup-bucket/
+</div></code></pre>
+<h3 id="configuration-management">Configuration Management</h3>
+<ul>
+<li><strong>Dotfiles</strong>: Version control for configurations</li>
+<li><strong>Ansible</strong>: Configuration management</li>
+<li><strong>Puppet</strong>: Infrastructure automation</li>
+<li><strong>Chef</strong>: Configuration management</li>
+</ul>
+<h2 id="productivity-enhancements">Productivity Enhancements</h2>
+<h3 id="window-management">Window Management</h3>
+<ul>
+<li><strong>Rectangle</strong> (Mac): Window tiling</li>
+<li><strong>PowerToys</strong> (Windows): System utilities</li>
+<li><strong>i3</strong> (Linux): Tiling window manager</li>
+</ul>
+<h3 id="system-monitoring">System Monitoring</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># System resource monitoring</span>
+htop        <span class="hljs-comment"># Process viewer</span>
+iotop       <span class="hljs-comment"># I/O monitoring</span>
+nethogs     <span class="hljs-comment"># Network usage per process</span>
+df -h       <span class="hljs-comment"># Disk usage</span>
+free -h     <span class="hljs-comment"># Memory usage</span>
+</div></code></pre>
+<h3 id="file-management">File Management</h3>
+<ul>
+<li><strong>fzf</strong>: Fuzzy file finder</li>
+<li><strong>ripgrep</strong>: Fast text search</li>
+<li><strong>bat</strong>: Better cat with syntax highlighting</li>
+<li><strong>exa</strong>: Modern ls replacement</li>
+</ul>
+<h2 id="cross-platform-considerations">Cross-Platform Considerations</h2>
+<h3 id="path-handling">Path Handling</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Use path module for cross-platform compatibility</span>
+<span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+<span class="hljs-keyword">const</span> filePath = path.join(__dirname, <span class="hljs-string">'data'</span>, <span class="hljs-string">'file.txt'</span>);
+</div></code></pre>
+<h3 id="environment-variables">Environment Variables</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Cross-platform environment setup</span>
+<span class="hljs-comment"># .env file</span>
+NODE_ENV=development
+DATABASE_URL=postgresql://localhost:5432/myapp
+API_KEY=your-secret-key
+
+<span class="hljs-comment"># Use dotenv in applications</span>
+require(<span class="hljs-string">'dotenv'</span>).config();
+</div></code></pre>
+<h3 id="shell-scripts">Shell Scripts</h3>
+<pre class="hljs"><code><div><span class="hljs-meta">#!/usr/bin/env bash</span>
+<span class="hljs-comment"># Cross-platform shell script header</span>
+
+<span class="hljs-comment"># Check operating system</span>
+<span class="hljs-keyword">if</span> [[ <span class="hljs-string">"<span class="hljs-variable">$OSTYPE</span>"</span> == <span class="hljs-string">"darwin"</span>* ]]; <span class="hljs-keyword">then</span>
+    <span class="hljs-comment"># macOS</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Running on macOS"</span>
+<span class="hljs-keyword">elif</span> [[ <span class="hljs-string">"<span class="hljs-variable">$OSTYPE</span>"</span> == <span class="hljs-string">"linux-gnu"</span>* ]]; <span class="hljs-keyword">then</span>
+    <span class="hljs-comment"># Linux</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Running on Linux"</span>
+<span class="hljs-keyword">elif</span> [[ <span class="hljs-string">"<span class="hljs-variable">$OSTYPE</span>"</span> == <span class="hljs-string">"msys"</span> ]] || [[ <span class="hljs-string">"<span class="hljs-variable">$OSTYPE</span>"</span> == <span class="hljs-string">"cygwin"</span> ]]; <span class="hljs-keyword">then</span>
+    <span class="hljs-comment"># Windows</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Running on Windows"</span>
+<span class="hljs-keyword">fi</span>
+</div></code></pre>
+<p>This comprehensive setup provides a solid foundation for professional software development across any technology stack, ensuring consistency, quality, and productivity in your development workflow.</p>
+
+</body>
+</html>

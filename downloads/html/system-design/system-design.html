@@ -1,0 +1,2227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>system-design.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="complete-system-design-cheatsheet---beginner-to-advanced">Complete System Design Cheatsheet - Beginner to Advanced</h1>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#fundamentals">Fundamentals</a></li>
+<li><a href="#system-design-principles">System Design Principles</a></li>
+<li><a href="#scalability-concepts">Scalability Concepts</a></li>
+<li><a href="#database-design">Database Design</a></li>
+<li><a href="#caching-strategies">Caching Strategies</a></li>
+<li><a href="#load-balancing">Load Balancing</a></li>
+<li><a href="#message-queues--communication">Message Queues &amp; Communication</a></li>
+<li><a href="#microservices-architecture">Microservices Architecture</a></li>
+<li><a href="#security--authentication">Security &amp; Authentication</a></li>
+<li><a href="#monitoring--observability">Monitoring &amp; Observability</a></li>
+<li><a href="#design-patterns">Design Patterns</a></li>
+<li><a href="#real-world-system-examples">Real-World System Examples</a></li>
+<li><a href="#advanced-topics">Advanced Topics</a></li>
+</ol>
+<hr>
+<h2 id="fundamentals">Fundamentals</h2>
+<ul>
+<li><strong>System Design</strong> is the process of defining the architecture, components, modules, interfaces, and data for a system to satisfy specified requirements.</li>
+<li>Focus on scalability, reliability, maintainability, and performance.</li>
+<li>Key concepts: client-server model, stateless vs stateful, horizontal vs vertical scaling, CAP theorem, consistency models.</li>
+</ul>
+<h3 id="key-metrics-to-consider">Key Metrics to Consider</h3>
+<h4 id="scalability">Scalability</h4>
+<ul>
+<li><strong>Vertical Scaling (Scale Up)</strong>: Adding more power to existing machines</li>
+<li><strong>Horizontal Scaling (Scale Out)</strong>: Adding more machines to the pool of resources</li>
+</ul>
+<h4 id="reliability">Reliability</h4>
+<ul>
+<li>System continues to work correctly even when failures occur</li>
+<li>Measured by Mean Time Between Failures (MTBF)</li>
+<li>Target: 99.9% uptime = 8.76 hours downtime per year</li>
+</ul>
+<h4 id="availability">Availability</h4>
+<ul>
+<li>System remains operational over time</li>
+<li>Measured in &quot;nines&quot;: 99.9% = 43.8 minutes downtime per month</li>
+<li>High Availability (HA): 99.99% or higher</li>
+</ul>
+<h4 id="consistency">Consistency</h4>
+<ul>
+<li>All nodes see the same data simultaneously</li>
+<li><strong>Strong Consistency</strong>: All reads receive the most recent write</li>
+<li><strong>Eventual Consistency</strong>: System will become consistent over time</li>
+<li><strong>Weak Consistency</strong>: No guarantees when all nodes will be consistent</li>
+</ul>
+<h4 id="partition-tolerance">Partition Tolerance</h4>
+<ul>
+<li>System continues to operate despite network partitions</li>
+<li>Essential for distributed systems</li>
+</ul>
+<h3 id="cap-theorem">CAP Theorem</h3>
+<p><strong>You can only guarantee 2 out of 3:</strong></p>
+<ul>
+<li><strong>Consistency</strong>: All nodes see the same data simultaneously</li>
+<li><strong>Availability</strong>: System remains operational</li>
+<li><strong>Partition Tolerance</strong>: System continues despite network failures</li>
+</ul>
+<p><strong>Examples:</strong></p>
+<ul>
+<li><strong>CP Systems</strong>: Traditional RDBMS (MySQL, PostgreSQL)</li>
+<li><strong>AP Systems</strong>: DNS, Web Caching</li>
+<li><strong>CA Systems</strong>: Single-node systems (rare in distributed environments)</li>
+</ul>
+<h3 id="acid-properties-databases">ACID Properties (Databases)</h3>
+<ul>
+<li><strong>Atomicity</strong>: Transactions are all-or-nothing</li>
+<li><strong>Consistency</strong>: Database remains in valid state</li>
+<li><strong>Isolation</strong>: Concurrent transactions don't interfere</li>
+<li><strong>Durability</strong>: Committed transactions survive system failures</li>
+</ul>
+<h3 id="base-properties-nosql">BASE Properties (NoSQL)</h3>
+<ul>
+<li><strong>Basically Available</strong>: System guarantees availability</li>
+<li><strong>Soft State</strong>: State may change over time</li>
+<li><strong>Eventual Consistency</strong>: System will become consistent over time</li>
+</ul>
+<hr>
+<h2 id="system-design-principles">System Design Principles</h2>
+<ul>
+<li><strong>Single Responsibility Principle</strong>: Each component should have one responsibility.</li>
+<li><strong>Loose Coupling &amp; High Cohesion</strong>: Minimize dependencies, group related logic.</li>
+<li><strong>Separation of Concerns</strong>: Divide system into distinct features.</li>
+<li><strong>Fail Fast &amp; Graceful Degradation</strong>: Detect failures early, degrade gracefully.</li>
+<li><strong>Idempotency</strong>: Operations can be repeated safely.</li>
+<li><strong>Backpressure</strong>: Prevent overload by controlling request flow.</li>
+</ul>
+<h3 id="1-single-responsibility-principle">1. Single Responsibility Principle</h3>
+<p>Each component should have one reason to change.</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># Bad: User class handling multiple responsibilities</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, name, email)</span>:</span>
+        self.name = name
+        self.email = email
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">save_to_database</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-comment"># Database logic</span>
+        <span class="hljs-keyword">pass</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">send_email</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-comment"># Email logic</span>
+        <span class="hljs-keyword">pass</span>
+
+<span class="hljs-comment"># Good: Separate responsibilities</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, name, email)</span>:</span>
+        self.name = name
+        self.email = email
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserRepository</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">save</span><span class="hljs-params">(self, user)</span>:</span>
+        <span class="hljs-comment"># Database logic</span>
+        <span class="hljs-keyword">pass</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EmailService</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">send</span><span class="hljs-params">(self, user, message)</span>:</span>
+        <span class="hljs-comment"># Email logic</span>
+        <span class="hljs-keyword">pass</span>
+</div></code></pre>
+<h3 id="2-loose-coupling">2. Loose Coupling</h3>
+<p>Components should be independent and interact through well-defined interfaces.</p>
+<h3 id="3-high-cohesion">3. High Cohesion</h3>
+<p>Related functionality should be grouped together.</p>
+<h3 id="4-separation-of-concerns">4. Separation of Concerns</h3>
+<p>Different aspects of functionality should be separated into distinct sections.</p>
+<h3 id="5-dont-repeat-yourself-dry">5. Don't Repeat Yourself (DRY)</h3>
+<p>Avoid code duplication by abstracting common functionality.</p>
+<h3 id="6-kiss-keep-it-simple-stupid">6. KISS (Keep It Simple, Stupid)</h3>
+<p>Prefer simple solutions over complex ones.</p>
+<hr>
+<h2 id="scalability-concepts">Scalability Concepts</h2>
+<ul>
+<li><strong>Horizontal Scaling</strong>: Add more machines/instances.</li>
+<li><strong>Vertical Scaling</strong>: Add more resources (CPU, RAM) to a single machine.</li>
+<li><strong>Load Balancing</strong>: Distribute traffic across servers.</li>
+<li><strong>Partitioning/Sharding</strong>: Split data across nodes.</li>
+<li><strong>Replication</strong>: Copy data for redundancy and availability.</li>
+<li><strong>Caching</strong>: Store frequently accessed data in fast storage.</li>
+<li><strong>Eventual Consistency</strong>: Data will become consistent over time.</li>
+</ul>
+<h3 id="horizontal-vs-vertical-scaling">Horizontal vs Vertical Scaling</h3>
+<h4 id="vertical-scaling-scale-up">Vertical Scaling (Scale Up)</h4>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Simpler to implement</li>
+<li>No need to change application architecture</li>
+<li>Better for ACID compliance</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Hardware limits</li>
+<li>Single point of failure</li>
+<li>Expensive at high end</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment"># Before scaling</span>
+<span class="hljs-attr">Server:</span> <span class="hljs-number">4</span> <span class="hljs-string">CPU</span> <span class="hljs-string">cores,</span> <span class="hljs-string">8GB</span> <span class="hljs-string">RAM,</span> <span class="hljs-string">100GB</span> <span class="hljs-string">storage</span>
+
+<span class="hljs-comment"># After vertical scaling</span>
+<span class="hljs-attr">Server:</span> <span class="hljs-number">16</span> <span class="hljs-string">CPU</span> <span class="hljs-string">cores,</span> <span class="hljs-string">64GB</span> <span class="hljs-string">RAM,</span> <span class="hljs-string">1TB</span> <span class="hljs-string">storage</span>
+</div></code></pre>
+<h4 id="horizontal-scaling-scale-out">Horizontal Scaling (Scale Out)</h4>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>No theoretical limit</li>
+<li>Better fault tolerance</li>
+<li>Cost-effective</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Complex application architecture</li>
+<li>Data consistency challenges</li>
+<li>Network latency</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code><div><span class="hljs-comment"># Before scaling</span>
+<span class="hljs-attr">1 Server:</span> <span class="hljs-number">4</span> <span class="hljs-string">CPU</span> <span class="hljs-string">cores,</span> <span class="hljs-string">8GB</span> <span class="hljs-string">RAM</span>
+
+<span class="hljs-comment"># After horizontal scaling</span>
+<span class="hljs-attr">4 Servers:</span> <span class="hljs-string">Each</span> <span class="hljs-string">with</span> <span class="hljs-number">4</span> <span class="hljs-string">CPU</span> <span class="hljs-string">cores,</span> <span class="hljs-string">8GB</span> <span class="hljs-string">RAM</span>
+</div></code></pre>
+<h3 id="load-distribution-strategies">Load Distribution Strategies</h3>
+<h4 id="round-robin">Round Robin</h4>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RoundRobinBalancer</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, servers)</span>:</span>
+        self.servers = servers
+        self.current = <span class="hljs-number">0</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_server</span><span class="hljs-params">(self)</span>:</span>
+        server = self.servers[self.current]
+        self.current = (self.current + <span class="hljs-number">1</span>) % len(self.servers)
+        <span class="hljs-keyword">return</span> server
+</div></code></pre>
+<h4 id="weighted-round-robin">Weighted Round Robin</h4>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WeightedRoundRobinBalancer</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, servers_weights)</span>:</span>
+        self.servers_weights = servers_weights
+        self.current_weights = [<span class="hljs-number">0</span>] * len(servers_weights)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_server</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-comment"># Select server with highest current weight</span>
+        max_weight_index = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">for</span> i, weight <span class="hljs-keyword">in</span> enumerate(self.current_weights):
+            <span class="hljs-keyword">if</span> weight &gt; self.current_weights[max_weight_index]:
+                max_weight_index = i
+
+        <span class="hljs-comment"># Update weights</span>
+        self.current_weights[max_weight_index] -= sum(w <span class="hljs-keyword">for</span> _, w <span class="hljs-keyword">in</span> self.servers_weights)
+        <span class="hljs-keyword">for</span> i, (_, weight) <span class="hljs-keyword">in</span> enumerate(self.servers_weights):
+            self.current_weights[i] += weight
+
+        <span class="hljs-keyword">return</span> self.servers_weights[max_weight_index][<span class="hljs-number">0</span>]
+</div></code></pre>
+<h4 id="least-connections">Least Connections</h4>
+<p>Routes to server with fewest active connections.</p>
+<h4 id="hash-based">Hash-based</h4>
+<p>Routes based on client IP or session ID hash.</p>
+<hr>
+<h2 id="database-design">Database Design</h2>
+<ul>
+<li><strong>Normalization</strong>: Reduce redundancy, improve integrity.</li>
+<li><strong>Denormalization</strong>: Improve read performance by duplicating data.</li>
+<li><strong>SQL vs NoSQL</strong>: Relational (MySQL, PostgreSQL) vs Non-relational (MongoDB, Cassandra).</li>
+<li><strong>Indexing</strong>: Speed up queries.</li>
+<li><strong>Partitioning</strong>: Range, hash, list, composite.</li>
+<li><strong>Replication</strong>: Master-slave, master-master.</li>
+<li><strong>ACID</strong>: Atomicity, Consistency, Isolation, Durability.</li>
+<li><strong>BASE</strong>: Basically Available, Soft state, Eventual consistency.</li>
+</ul>
+<p><strong>Example: User Table (SQL)</strong></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-keyword">users</span> (
+    <span class="hljs-keyword">id</span> <span class="hljs-built_in">SERIAL</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    username <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">UNIQUE</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    email <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">UNIQUE</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    created_at <span class="hljs-built_in">TIMESTAMP</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">CURRENT_TIMESTAMP</span>
+);
+</div></code></pre>
+<h3 id="sql-vs-nosql">SQL vs NoSQL</h3>
+<h4 id="sql-databases-rdbms">SQL Databases (RDBMS)</h4>
+<p><strong>Best for:</strong></p>
+<ul>
+<li>Complex queries</li>
+<li>ACID compliance</li>
+<li>Structured data</li>
+<li>Financial systems</li>
+</ul>
+<p><strong>Examples:</strong> MySQL, PostgreSQL, Oracle, SQL Server</p>
+<p><strong>Scaling:</strong> Primarily vertical, read replicas for horizontal read scaling</p>
+<h4 id="nosql-databases">NoSQL Databases</h4>
+<h5 id="document-stores">Document Stores</h5>
+<p><strong>Best for:</strong> Content management, catalogs, user profiles
+<strong>Examples:</strong> MongoDB, CouchDB</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// MongoDB Document Example</span>
+{
+  <span class="hljs-string">"_id"</span>: <span class="hljs-string">"507f1f77bcf86cd799439011"</span>,
+  <span class="hljs-string">"name"</span>: <span class="hljs-string">"John Doe"</span>,
+  <span class="hljs-string">"email"</span>: <span class="hljs-string">"john@example.com"</span>,
+  <span class="hljs-string">"address"</span>: {
+    <span class="hljs-string">"street"</span>: <span class="hljs-string">"123 Main St"</span>,
+    <span class="hljs-string">"city"</span>: <span class="hljs-string">"New York"</span>,
+    <span class="hljs-string">"zip"</span>: <span class="hljs-string">"10001"</span>
+  },
+  <span class="hljs-string">"orders"</span>: [
+    {<span class="hljs-string">"id"</span>: <span class="hljs-number">1</span>, <span class="hljs-string">"total"</span>: <span class="hljs-number">99.99</span>},
+    {<span class="hljs-string">"id"</span>: <span class="hljs-number">2</span>, <span class="hljs-string">"total"</span>: <span class="hljs-number">149.99</span>}
+  ]
+}
+</div></code></pre>
+<h5 id="key-value-stores">Key-Value Stores</h5>
+<p><strong>Best for:</strong> Caching, session management, shopping carts
+<strong>Examples:</strong> Redis, DynamoDB, Riak</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># Redis Example</span>
+<span class="hljs-keyword">import</span> redis
+r = redis.Redis()
+
+<span class="hljs-comment"># Set values</span>
+r.set(<span class="hljs-string">"user:1000:name"</span>, <span class="hljs-string">"John Doe"</span>)
+r.set(<span class="hljs-string">"user:1000:email"</span>, <span class="hljs-string">"john@example.com"</span>)
+
+<span class="hljs-comment"># Get values</span>
+name = r.get(<span class="hljs-string">"user:1000:name"</span>)
+</div></code></pre>
+<h5 id="column-family">Column-Family</h5>
+<p><strong>Best for:</strong> Time-series data, IoT data, logging
+<strong>Examples:</strong> Cassandra, HBase</p>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Cassandra Example</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> user_activity (
+    user_id <span class="hljs-keyword">UUID</span>,
+    <span class="hljs-built_in">timestamp</span> <span class="hljs-built_in">TIMESTAMP</span>,
+    activity <span class="hljs-built_in">TEXT</span>,
+    PRIMARY <span class="hljs-keyword">KEY</span> (user_id, <span class="hljs-built_in">timestamp</span>)
+) <span class="hljs-keyword">WITH</span> <span class="hljs-keyword">CLUSTERING</span> <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> (<span class="hljs-built_in">timestamp</span> <span class="hljs-keyword">DESC</span>);
+</div></code></pre>
+<h5 id="graph-databases">Graph Databases</h5>
+<p><strong>Best for:</strong> Social networks, recommendation engines, fraud detection
+<strong>Examples:</strong> Neo4j, Amazon Neptune</p>
+<pre class="hljs"><code><div>// Neo4j Cypher Query
+MATCH (user:User {id: 123})-[:FRIEND]-&gt;(friend:User)
+RETURN friend.name
+</div></code></pre>
+<h3 id="database-sharding">Database Sharding</h3>
+<h4 id="what-is-sharding">What is Sharding?</h4>
+<p>Horizontal partitioning where data is split across multiple database instances.</p>
+<h4 id="sharding-strategies">Sharding Strategies</h4>
+<h5 id="range-based-sharding">Range-based Sharding</h5>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_shard</span><span class="hljs-params">(user_id)</span>:</span>
+    <span class="hljs-keyword">if</span> user_id &lt;= <span class="hljs-number">1000000</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"shard_1"</span>
+    <span class="hljs-keyword">elif</span> user_id &lt;= <span class="hljs-number">2000000</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"shard_2"</span>
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"shard_3"</span>
+</div></code></pre>
+<h5 id="hash-based-sharding">Hash-based Sharding</h5>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_shard</span><span class="hljs-params">(user_id)</span>:</span>
+    shard_count = <span class="hljs-number">3</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-string">f"shard_<span class="hljs-subst">{hash(user_id) % shard_count + <span class="hljs-number">1</span>}</span>"</span>
+</div></code></pre>
+<h5 id="directory-based-sharding">Directory-based Sharding</h5>
+<p>Lookup service that knows which shard contains which data.</p>
+<h4 id="challenges-with-sharding">Challenges with Sharding</h4>
+<ul>
+<li><strong>Rebalancing:</strong> Moving data when adding/removing shards</li>
+<li><strong>Joins:</strong> Complex queries across shards</li>
+<li><strong>Transactions:</strong> Maintaining ACID across shards</li>
+</ul>
+<h3 id="database-replication">Database Replication</h3>
+<h4 id="master-slave-replication">Master-Slave Replication</h4>
+<pre class="hljs"><code><div>Master (Write) → Slave 1 (Read)
+              → Slave 2 (Read)
+              → Slave 3 (Read)
+</div></code></pre>
+<h4 id="master-master-replication">Master-Master Replication</h4>
+<pre class="hljs"><code><div>Master 1 ↔ Master 2
+</div></code></pre>
+<h4 id="advantages-and-disadvantages">Advantages and Disadvantages</h4>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>High availability</li>
+<li>Read scalability</li>
+<li>Data backup</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Replication lag</li>
+<li>Complexity</li>
+<li>Consistency issues</li>
+</ul>
+<hr>
+<h2 id="caching-strategies">Caching Strategies</h2>
+<ul>
+<li><strong>Cache Aside (Lazy Loading)</strong>: Application loads data into cache on demand.</li>
+<li><strong>Read Through</strong>: Cache sits in front of database, loads data automatically.</li>
+<li><strong>Write Through</strong>: Writes go to cache and database simultaneously.</li>
+<li><strong>Write Back (Write Behind)</strong>: Writes go to cache, then asynchronously to database.</li>
+<li><strong>Eviction Policies</strong>: LRU, LFU, FIFO.</li>
+</ul>
+<p><strong>Example: Cache Aside (Python)</strong></p>
+<pre class="hljs"><code><div>cache = {}
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_user</span><span class="hljs-params">(user_id)</span>:</span>
+    <span class="hljs-keyword">if</span> user_id <span class="hljs-keyword">in</span> cache:
+        <span class="hljs-keyword">return</span> cache[user_id]
+    user = db.get_user(user_id)
+    cache[user_id] = user
+    <span class="hljs-keyword">return</span> user
+</div></code></pre>
+<h3 id="cache-levels">Cache Levels</h3>
+<h4 id="browser-cache">Browser Cache</h4>
+<p>Client-side caching for static resources.</p>
+<h4 id="cdn-content-delivery-network">CDN (Content Delivery Network)</h4>
+<p>Geographically distributed cache servers.</p>
+<h4 id="reverse-proxy-cache">Reverse Proxy Cache</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Nginx caching configuration</span>
+<span class="hljs-attribute">location</span> / {
+    <span class="hljs-attribute">proxy_cache</span> my_cache;
+    <span class="hljs-attribute">proxy_cache_valid</span> <span class="hljs-number">200</span> <span class="hljs-number">302</span> <span class="hljs-number">10m</span>;
+    <span class="hljs-attribute">proxy_cache_valid</span> <span class="hljs-number">404</span> <span class="hljs-number">1m</span>;
+    <span class="hljs-attribute">proxy_pass</span> http://backend;
+}
+</div></code></pre>
+<h4 id="application-level-cache">Application-Level Cache</h4>
+<p>In-memory caching within application servers.</p>
+<h4 id="database-cache">Database Cache</h4>
+<p>Query result caching at database level.</p>
+<h3 id="cache-eviction-policies">Cache Eviction Policies</h3>
+<h4 id="lru-least-recently-used">LRU (Least Recently Used)</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> OrderedDict
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LRUCache</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, capacity)</span>:</span>
+        self.capacity = capacity
+        self.cache = OrderedDict()
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get</span><span class="hljs-params">(self, key)</span>:</span>
+        <span class="hljs-keyword">if</span> key <span class="hljs-keyword">in</span> self.cache:
+            <span class="hljs-comment"># Move to end (most recently used)</span>
+            self.cache.move_to_end(key)
+            <span class="hljs-keyword">return</span> self.cache[key]
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">put</span><span class="hljs-params">(self, key, value)</span>:</span>
+        <span class="hljs-keyword">if</span> key <span class="hljs-keyword">in</span> self.cache:
+            <span class="hljs-comment"># Update existing key</span>
+            self.cache.move_to_end(key)
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-comment"># Add new key</span>
+            <span class="hljs-keyword">if</span> len(self.cache) &gt;= self.capacity:
+                <span class="hljs-comment"># Remove least recently used</span>
+                self.cache.popitem(last=<span class="hljs-literal">False</span>)
+        self.cache[key] = value
+</div></code></pre>
+<h4 id="lfu-least-frequently-used">LFU (Least Frequently Used)</h4>
+<p>Evicts items used least frequently.</p>
+<h4 id="fifo-first-in-first-out">FIFO (First In, First Out)</h4>
+<p>Evicts oldest items first.</p>
+<h4 id="ttl-time-to-live">TTL (Time To Live)</h4>
+<p>Items expire after specified time.</p>
+<hr>
+<h2 id="load-balancing">Load Balancing</h2>
+<ul>
+<li><strong>Round Robin</strong>: Requests distributed in order.</li>
+<li><strong>Least Connections</strong>: Send to server with fewest active connections.</li>
+<li><strong>IP Hash</strong>: Route based on client IP.</li>
+<li><strong>Health Checks</strong>: Remove unhealthy servers.</li>
+<li><strong>Sticky Sessions</strong>: Keep user on same server.</li>
+</ul>
+<p><strong>Example: Simple Round Robin (Python)</strong></p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LoadBalancer</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, servers)</span>:</span>
+        self.servers = servers
+        self.index = <span class="hljs-number">0</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_server</span><span class="hljs-params">(self)</span>:</span>
+        server = self.servers[self.index]
+        self.index = (self.index + <span class="hljs-number">1</span>) % len(self.servers)
+        <span class="hljs-keyword">return</span> server
+</div></code></pre>
+<h3 id="types-of-load-balancers">Types of Load Balancers</h3>
+<h4 id="layer-4-transport-layer">Layer 4 (Transport Layer)</h4>
+<p>Routes based on IP and port information.</p>
+<pre class="hljs"><code><div>Client → Load Balancer → Server
+         (IP:Port)
+</div></code></pre>
+<h4 id="layer-7-application-layer">Layer 7 (Application Layer)</h4>
+<p>Routes based on application data (HTTP headers, URLs).</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># Example routing rules</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">route_request</span><span class="hljs-params">(request)</span>:</span>
+    <span class="hljs-keyword">if</span> request.path.startswith(<span class="hljs-string">'/api/'</span>):
+        <span class="hljs-keyword">return</span> api_servers
+    <span class="hljs-keyword">elif</span> request.path.startswith(<span class="hljs-string">'/static/'</span>):
+        <span class="hljs-keyword">return</span> static_servers
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> web_servers
+</div></code></pre>
+<h3 id="load-balancing-algorithms">Load Balancing Algorithms</h3>
+<h4 id="health-checks">Health Checks</h4>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HealthChecker</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, servers)</span>:</span>
+        self.servers = servers
+        self.healthy_servers = set(servers)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">check_health</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">for</span> server <span class="hljs-keyword">in</span> self.servers:
+            <span class="hljs-keyword">try</span>:
+                response = requests.get(<span class="hljs-string">f"http://<span class="hljs-subst">{server}</span>/health"</span>, timeout=<span class="hljs-number">5</span>)
+                <span class="hljs-keyword">if</span> response.status_code == <span class="hljs-number">200</span>:
+                    self.healthy_servers.add(server)
+                <span class="hljs-keyword">else</span>:
+                    self.healthy_servers.discard(server)
+            <span class="hljs-keyword">except</span>:
+                self.healthy_servers.discard(server)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_healthy_servers</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">return</span> list(self.healthy_servers)
+</div></code></pre>
+<h3 id="session-affinity-sticky-sessions">Session Affinity (Sticky Sessions)</h3>
+<p>Ensures user requests go to same server.</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_server_with_affinity</span><span class="hljs-params">(session_id, servers)</span>:</span>
+    server_index = hash(session_id) % len(servers)
+    <span class="hljs-keyword">return</span> servers[server_index]
+</div></code></pre>
+<hr>
+<h2 id="message-queues--communication">Message Queues &amp; Communication</h2>
+<ul>
+<li><strong>Message Queue</strong>: Buffer for asynchronous communication (RabbitMQ, Kafka, SQS).</li>
+<li><strong>Pub/Sub</strong>: Publishers send messages to topics, subscribers receive them.</li>
+<li><strong>At-Least-Once, At-Most-Once, Exactly-Once Delivery</strong>: Guarantees for message delivery.</li>
+<li><strong>Backpressure</strong>: Prevent queue overload.</li>
+</ul>
+<p><strong>Example: Simple Queue (Python)</strong></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> queue <span class="hljs-keyword">import</span> Queue
+q = Queue()
+q.put(<span class="hljs-string">'message1'</span>)
+msg = q.get()
+</div></code></pre>
+<h3 id="synchronous-vs-asynchronous-communication">Synchronous vs Asynchronous Communication</h3>
+<h4 id="synchronous-request-response">Synchronous (Request-Response)</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># HTTP API call</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_user_data</span><span class="hljs-params">(user_id)</span>:</span>
+    response = requests.get(<span class="hljs-string">f"/api/users/<span class="hljs-subst">{user_id}</span>"</span>)
+    <span class="hljs-keyword">return</span> response.json()  <span class="hljs-comment"># Blocks until response received</span>
+</div></code></pre>
+<h4 id="asynchronous-message-based">Asynchronous (Message-based)</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Message queue</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">process_user_signup</span><span class="hljs-params">(user_data)</span>:</span>
+    <span class="hljs-comment"># Send welcome email (async)</span>
+    email_queue.send({
+        <span class="hljs-string">'type'</span>: <span class="hljs-string">'welcome_email'</span>,
+        <span class="hljs-string">'user_data'</span>: user_data
+    })
+
+    <span class="hljs-comment"># Update analytics (async)</span>
+    analytics_queue.send({
+        <span class="hljs-string">'type'</span>: <span class="hljs-string">'user_signup'</span>,
+        <span class="hljs-string">'user_id'</span>: user_data[<span class="hljs-string">'id'</span>]
+    })
+</div></code></pre>
+<h3 id="message-queue-patterns">Message Queue Patterns</h3>
+<h4 id="point-to-point-queue">Point-to-Point Queue</h4>
+<p>One producer, one consumer per message.</p>
+<pre class="hljs"><code><div>Producer → Queue → Consumer
+</div></code></pre>
+<h4 id="publish-subscribe">Publish-Subscribe</h4>
+<p>One producer, multiple consumers.</p>
+<pre class="hljs"><code><div>Publisher → Topic → Subscriber 1
+                 → Subscriber 2
+                 → Subscriber 3
+</div></code></pre>
+<h3 id="popular-message-queue-systems">Popular Message Queue Systems</h3>
+<h4 id="redis-pubsub">Redis Pub/Sub</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> redis
+
+<span class="hljs-comment"># Publisher</span>
+r = redis.Redis()
+r.publish(<span class="hljs-string">'user_events'</span>, json.dumps({<span class="hljs-string">'user_id'</span>: <span class="hljs-number">123</span>, <span class="hljs-string">'action'</span>: <span class="hljs-string">'login'</span>}))
+
+<span class="hljs-comment"># Subscriber</span>
+pubsub = r.pubsub()
+pubsub.subscribe(<span class="hljs-string">'user_events'</span>)
+
+<span class="hljs-keyword">for</span> message <span class="hljs-keyword">in</span> pubsub.listen():
+    <span class="hljs-keyword">if</span> message[<span class="hljs-string">'type'</span>] == <span class="hljs-string">'message'</span>:
+        data = json.loads(message[<span class="hljs-string">'data'</span>])
+        process_user_event(data)
+</div></code></pre>
+<h4 id="apache-kafka">Apache Kafka</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> kafka <span class="hljs-keyword">import</span> KafkaProducer, KafkaConsumer
+
+<span class="hljs-comment"># Producer</span>
+producer = KafkaProducer(
+    bootstrap_servers=[<span class="hljs-string">'localhost:9092'</span>],
+    value_serializer=<span class="hljs-keyword">lambda</span> x: json.dumps(x).encode(<span class="hljs-string">'utf-8'</span>)
+)
+
+producer.send(<span class="hljs-string">'user_events'</span>, {<span class="hljs-string">'user_id'</span>: <span class="hljs-number">123</span>, <span class="hljs-string">'action'</span>: <span class="hljs-string">'login'</span>})
+
+<span class="hljs-comment"># Consumer</span>
+consumer = KafkaConsumer(
+    <span class="hljs-string">'user_events'</span>,
+    bootstrap_servers=[<span class="hljs-string">'localhost:9092'</span>],
+    value_deserializer=<span class="hljs-keyword">lambda</span> m: json.loads(m.decode(<span class="hljs-string">'utf-8'</span>))
+)
+
+<span class="hljs-keyword">for</span> message <span class="hljs-keyword">in</span> consumer:
+    process_user_event(message.value)
+</div></code></pre>
+<h4 id="rabbitmq">RabbitMQ</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> pika
+
+<span class="hljs-comment"># Producer</span>
+connection = pika.BlockingConnection(pika.ConnectionParameters(<span class="hljs-string">'localhost'</span>))
+channel = connection.channel()
+
+channel.queue_declare(queue=<span class="hljs-string">'user_events'</span>)
+channel.basic_publish(
+    exchange=<span class="hljs-string">''</span>,
+    routing_key=<span class="hljs-string">'user_events'</span>,
+    body=json.dumps({<span class="hljs-string">'user_id'</span>: <span class="hljs-number">123</span>, <span class="hljs-string">'action'</span>: <span class="hljs-string">'login'</span>})
+)
+
+<span class="hljs-comment"># Consumer</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">callback</span><span class="hljs-params">(ch, method, properties, body)</span>:</span>
+    data = json.loads(body)
+    process_user_event(data)
+
+channel.basic_consume(queue=<span class="hljs-string">'user_events'</span>, on_message_callback=callback, auto_ack=<span class="hljs-literal">True</span>)
+channel.start_consuming()
+</div></code></pre>
+<h3 id="event-driven-architecture">Event-Driven Architecture</h3>
+<h4 id="event-sourcing">Event Sourcing</h4>
+<p>Store all changes as sequence of events.</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EventStore</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span>
+        self.events = []
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">append</span><span class="hljs-params">(self, event)</span>:</span>
+        self.events.append(event)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_events</span><span class="hljs-params">(self, aggregate_id)</span>:</span>
+        <span class="hljs-keyword">return</span> [e <span class="hljs-keyword">for</span> e <span class="hljs-keyword">in</span> self.events <span class="hljs-keyword">if</span> e.aggregate_id == aggregate_id]
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserAggregate</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, user_id)</span>:</span>
+        self.user_id = user_id
+        self.events = []
+        self.name = <span class="hljs-literal">None</span>
+        self.email = <span class="hljs-literal">None</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">create_user</span><span class="hljs-params">(self, name, email)</span>:</span>
+        event = UserCreatedEvent(self.user_id, name, email)
+        self.apply(event)
+        self.events.append(event)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">apply</span><span class="hljs-params">(self, event)</span>:</span>
+        <span class="hljs-keyword">if</span> isinstance(event, UserCreatedEvent):
+            self.name = event.name
+            self.email = event.email
+</div></code></pre>
+<h4 id="cqrs-command-query-responsibility-segregation">CQRS (Command Query Responsibility Segregation)</h4>
+<p>Separate read and write models.</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># Write Model (Commands)</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CreateUserCommand</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, name, email)</span>:</span>
+        self.name = name
+        self.email = email
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserCommandHandler</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">handle</span><span class="hljs-params">(self, command)</span>:</span>
+        user = User(command.name, command.email)
+        user_repository.save(user)
+        event_bus.publish(UserCreatedEvent(user.id, user.name, user.email))
+
+<span class="hljs-comment"># Read Model (Queries)</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserReadModel</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, user_id, name, email, created_at)</span>:</span>
+        self.user_id = user_id
+        self.name = name
+        self.email = email
+        self.created_at = created_at
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserQueryHandler</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_user</span><span class="hljs-params">(self, user_id)</span>:</span>
+        <span class="hljs-keyword">return</span> user_read_repository.get_by_id(user_id)
+</div></code></pre>
+<hr>
+<h2 id="microservices-architecture">Microservices Architecture</h2>
+<ul>
+<li><strong>Microservices</strong>: Small, independent services communicating over network.</li>
+<li><strong>API Gateway</strong>: Entry point for clients, routes requests to services.</li>
+<li><strong>Service Discovery</strong>: Find service locations dynamically.</li>
+<li><strong>Circuit Breaker</strong>: Prevent cascading failures.</li>
+<li><strong>Data Consistency</strong>: Sagas, 2PC, eventual consistency.</li>
+</ul>
+<p><strong>Example: Service Communication (Python requests)</strong></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> requests
+response = requests.get(<span class="hljs-string">'http://user-service/users/123'</span>)
+</div></code></pre>
+<h3 id="monolith-vs-microservices">Monolith vs Microservices</h3>
+<h4 id="monolithic-architecture">Monolithic Architecture</h4>
+<pre class="hljs"><code><div>┌─────────────────────────┐
+│     Single Application  │
+│  ┌─────────────────────┐│
+│  │   User Service      ││
+│  │   Order Service     ││
+│  │   Payment Service   ││
+│  │   Notification Svc  ││
+│  └─────────────────────┘│
+│     Single Database     │
+└─────────────────────────┘
+</div></code></pre>
+<h4 id="microservices-architecture">Microservices Architecture</h4>
+<pre class="hljs"><code><div>┌──────────────┐  ┌──────────────┐  ┌──────────────┐
+│ User Service │  │Order Service │  │Payment Svc   │
+│     ┌──────┐ │  │    ┌──────┐  │  │   ┌──────┐   │
+│     │ DB   │ │  │    │ DB   │  │  │   │ DB   │   │
+│     └──────┘ │  │    └──────┘  │  │   └──────┘   │
+└──────────────┘  └──────────────┘  └──────────────┘
+        │                 │                 │
+        └─────────────────┼─────────────────┘
+                          │
+                    API Gateway
+</div></code></pre>
+<h3 id="service-communication">Service Communication</h3>
+<h4 id="rest-apis">REST APIs</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># User Service</span>
+<span class="hljs-meta">@app.route('/users/&lt;user_id&gt;', methods=['GET'])</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_user</span><span class="hljs-params">(user_id)</span>:</span>
+    user = user_repository.get_by_id(user_id)
+    <span class="hljs-keyword">return</span> jsonify(user.to_dict())
+
+<span class="hljs-comment"># Order Service calling User Service</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">create_order</span><span class="hljs-params">(user_id, items)</span>:</span>
+    <span class="hljs-comment"># Validate user exists</span>
+    user_response = requests.get(<span class="hljs-string">f"http://user-service/users/<span class="hljs-subst">{user_id}</span>"</span>)
+    <span class="hljs-keyword">if</span> user_response.status_code != <span class="hljs-number">200</span>:
+        <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">"User not found"</span>)
+
+    order = Order(user_id, items)
+    order_repository.save(order)
+    <span class="hljs-keyword">return</span> order
+</div></code></pre>
+<h4 id="grpc">gRPC</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">// user.proto</span>
+<span class="hljs-class"><span class="hljs-keyword">service</span> <span class="hljs-title">UserService</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">rpc</span> GetUser(GetUserRequest) <span class="hljs-keyword">returns</span> (User)</span>;
+    <span class="hljs-function"><span class="hljs-keyword">rpc</span> CreateUser(CreateUserRequest) <span class="hljs-keyword">returns</span> (User)</span>;
+}
+
+<span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">User</span> </span>{
+    <span class="hljs-built_in">string</span> id = <span class="hljs-number">1</span>;
+    <span class="hljs-built_in">string</span> name = <span class="hljs-number">2</span>;
+    <span class="hljs-built_in">string</span> email = <span class="hljs-number">3</span>;
+}
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment"># gRPC Client</span>
+<span class="hljs-keyword">import</span> grpc
+<span class="hljs-keyword">import</span> user_pb2_grpc
+
+channel = grpc.insecure_channel(<span class="hljs-string">'user-service:50051'</span>)
+stub = user_pb2_grpc.UserServiceStub(channel)
+
+response = stub.GetUser(user_pb2.GetUserRequest(id=<span class="hljs-string">'123'</span>))
+</div></code></pre>
+<h3 id="service-discovery">Service Discovery</h3>
+<h4 id="client-side-discovery">Client-Side Discovery</h4>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ServiceRegistry</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span>
+        self.services = {}
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">register</span><span class="hljs-params">(self, service_name, host, port)</span>:</span>
+        <span class="hljs-keyword">if</span> service_name <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> self.services:
+            self.services[service_name] = []
+        self.services[service_name].append(<span class="hljs-string">f"<span class="hljs-subst">{host}</span>:<span class="hljs-subst">{port}</span>"</span>)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">discover</span><span class="hljs-params">(self, service_name)</span>:</span>
+        <span class="hljs-keyword">return</span> self.services.get(service_name, [])
+
+<span class="hljs-comment"># Service client</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">call_user_service</span><span class="hljs-params">(user_id)</span>:</span>
+    instances = service_registry.discover(<span class="hljs-string">'user-service'</span>)
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> instances:
+        <span class="hljs-keyword">raise</span> Exception(<span class="hljs-string">"No user-service instances available"</span>)
+
+    <span class="hljs-comment"># Load balance between instances</span>
+    instance = random.choice(instances)
+    response = requests.get(<span class="hljs-string">f"http://<span class="hljs-subst">{instance}</span>/users/<span class="hljs-subst">{user_id}</span>"</span>)
+    <span class="hljs-keyword">return</span> response.json()
+</div></code></pre>
+<h4 id="server-side-discovery-with-load-balancer">Server-Side Discovery (with Load Balancer)</h4>
+<p>Services register with a load balancer that handles discovery.</p>
+<h3 id="api-gateway-pattern">API Gateway Pattern</h3>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">APIGateway</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span>
+        self.routes = {
+            <span class="hljs-string">'/api/users'</span>: <span class="hljs-string">'user-service'</span>,
+            <span class="hljs-string">'/api/orders'</span>: <span class="hljs-string">'order-service'</span>,
+            <span class="hljs-string">'/api/payments'</span>: <span class="hljs-string">'payment-service'</span>
+        }
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">route_request</span><span class="hljs-params">(self, path, request)</span>:</span>
+        service = self.find_service(path)
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> service:
+            <span class="hljs-keyword">return</span> {<span class="hljs-string">'error'</span>: <span class="hljs-string">'Service not found'</span>}, <span class="hljs-number">404</span>
+
+        <span class="hljs-comment"># Authentication</span>
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> self.authenticate(request):
+            <span class="hljs-keyword">return</span> {<span class="hljs-string">'error'</span>: <span class="hljs-string">'Unauthorized'</span>}, <span class="hljs-number">401</span>
+
+        <span class="hljs-comment"># Rate limiting</span>
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> self.check_rate_limit(request):
+            <span class="hljs-keyword">return</span> {<span class="hljs-string">'error'</span>: <span class="hljs-string">'Rate limit exceeded'</span>}, <span class="hljs-number">429</span>
+
+        <span class="hljs-comment"># Forward request to service</span>
+        <span class="hljs-keyword">return</span> self.forward_request(service, request)
+</div></code></pre>
+<h3 id="circuit-breaker-pattern">Circuit Breaker Pattern</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> time
+<span class="hljs-keyword">from</span> enum <span class="hljs-keyword">import</span> Enum
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CircuitState</span><span class="hljs-params">(Enum)</span>:</span>
+    CLOSED = <span class="hljs-number">1</span>
+    OPEN = <span class="hljs-number">2</span>
+    HALF_OPEN = <span class="hljs-number">3</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CircuitBreaker</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, failure_threshold=<span class="hljs-number">5</span>, timeout=<span class="hljs-number">60</span>)</span>:</span>
+        self.failure_threshold = failure_threshold
+        self.timeout = timeout
+        self.failure_count = <span class="hljs-number">0</span>
+        self.state = CircuitState.CLOSED
+        self.last_failure_time = <span class="hljs-literal">None</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">call</span><span class="hljs-params">(self, func, *args, **kwargs)</span>:</span>
+        <span class="hljs-keyword">if</span> self.state == CircuitState.OPEN:
+            <span class="hljs-keyword">if</span> time.time() - self.last_failure_time &gt; self.timeout:
+                self.state = CircuitState.HALF_OPEN
+            <span class="hljs-keyword">else</span>:
+                <span class="hljs-keyword">raise</span> Exception(<span class="hljs-string">"Circuit breaker is OPEN"</span>)
+
+        <span class="hljs-keyword">try</span>:
+            result = func(*args, **kwargs)
+            self.on_success()
+            <span class="hljs-keyword">return</span> result
+        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:
+            self.on_failure()
+            <span class="hljs-keyword">raise</span> e
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">on_success</span><span class="hljs-params">(self)</span>:</span>
+        self.failure_count = <span class="hljs-number">0</span>
+        self.state = CircuitState.CLOSED
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">on_failure</span><span class="hljs-params">(self)</span>:</span>
+        self.failure_count += <span class="hljs-number">1</span>
+        self.last_failure_time = time.time()
+
+        <span class="hljs-keyword">if</span> self.failure_count &gt;= self.failure_threshold:
+            self.state = CircuitState.OPEN
+
+<span class="hljs-comment"># Usage</span>
+user_service_breaker = CircuitBreaker()
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_user_with_circuit_breaker</span><span class="hljs-params">(user_id)</span>:</span>
+    <span class="hljs-keyword">return</span> user_service_breaker.call(
+        <span class="hljs-keyword">lambda</span>: requests.get(<span class="hljs-string">f"http://user-service/users/<span class="hljs-subst">{user_id}</span>"</span>)
+    )
+</div></code></pre>
+<hr>
+<h2 id="security--authentication">Security &amp; Authentication</h2>
+<ul>
+<li><strong>Authentication</strong>: Verify user identity (JWT, OAuth, SSO).</li>
+<li><strong>Authorization</strong>: Check user permissions (RBAC, ABAC).</li>
+<li><strong>Encryption</strong>: TLS/SSL for data in transit, AES for data at rest.</li>
+<li><strong>Input Validation</strong>: Prevent injection attacks.</li>
+<li><strong>Rate Limiting</strong>: Prevent abuse.</li>
+<li><strong>Audit Logging</strong>: Track access and changes.</li>
+</ul>
+<p><strong>Example: JWT Authentication (Python)</strong></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> jwt
+token = jwt.encode({<span class="hljs-string">'user_id'</span>: <span class="hljs-number">123</span>}, <span class="hljs-string">'secret'</span>, algorithm=<span class="hljs-string">'HS256'</span>)
+data = jwt.decode(token, <span class="hljs-string">'secret'</span>, algorithms=[<span class="hljs-string">'HS256'</span>])
+</div></code></pre>
+<h3 id="authentication-vs-authorization">Authentication vs Authorization</h3>
+<h4 id="authentication">Authentication</h4>
+<p>Verifying identity (&quot;Who are you?&quot;)</p>
+<h4 id="authorization">Authorization</h4>
+<p>Verifying permissions (&quot;What can you do?&quot;)</p>
+<h3 id="authentication-methods">Authentication Methods</h3>
+<h4 id="session-based-authentication">Session-Based Authentication</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask, session, request
+<span class="hljs-keyword">import</span> uuid
+
+app = Flask(__name__)
+app.secret_key = <span class="hljs-string">'your-secret-key'</span>
+
+<span class="hljs-comment"># In-memory session store (use Redis in production)</span>
+sessions = {}
+
+<span class="hljs-meta">@app.route('/login', methods=['POST'])</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">login</span><span class="hljs-params">()</span>:</span>
+    username = request.json[<span class="hljs-string">'username'</span>]
+    password = request.json[<span class="hljs-string">'password'</span>]
+
+    <span class="hljs-keyword">if</span> authenticate_user(username, password):
+        session_id = str(uuid.uuid4())
+        sessions[session_id] = {<span class="hljs-string">'user_id'</span>: username}
+        session[<span class="hljs-string">'session_id'</span>] = session_id
+        <span class="hljs-keyword">return</span> {<span class="hljs-string">'success'</span>: <span class="hljs-literal">True</span>}
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> {<span class="hljs-string">'error'</span>: <span class="hljs-string">'Invalid credentials'</span>}, <span class="hljs-number">401</span>
+
+<span class="hljs-meta">@app.route('/protected')</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">protected</span><span class="hljs-params">()</span>:</span>
+    session_id = session.get(<span class="hljs-string">'session_id'</span>)
+    <span class="hljs-keyword">if</span> session_id <span class="hljs-keyword">and</span> session_id <span class="hljs-keyword">in</span> sessions:
+        <span class="hljs-keyword">return</span> {<span class="hljs-string">'message'</span>: <span class="hljs-string">'Access granted'</span>}
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> {<span class="hljs-string">'error'</span>: <span class="hljs-string">'Unauthorized'</span>}, <span class="hljs-number">401</span>
+</div></code></pre>
+<h4 id="token-based-authentication-jwt">Token-Based Authentication (JWT)</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> jwt
+<span class="hljs-keyword">import</span> datetime
+
+SECRET_KEY = <span class="hljs-string">'your-secret-key'</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">generate_token</span><span class="hljs-params">(user_id)</span>:</span>
+    payload = {
+        <span class="hljs-string">'user_id'</span>: user_id,
+        <span class="hljs-string">'exp'</span>: datetime.datetime.utcnow() + datetime.timedelta(hours=<span class="hljs-number">24</span>)
+    }
+    token = jwt.encode(payload, SECRET_KEY, algorithm=<span class="hljs-string">'HS256'</span>)
+    <span class="hljs-keyword">return</span> token
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">verify_token</span><span class="hljs-params">(token)</span>:</span>
+    <span class="hljs-keyword">try</span>:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[<span class="hljs-string">'HS256'</span>])
+        <span class="hljs-keyword">return</span> payload[<span class="hljs-string">'user_id'</span>]
+    <span class="hljs-keyword">except</span> jwt.ExpiredSignatureError:
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>
+    <span class="hljs-keyword">except</span> jwt.InvalidTokenError:
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>
+
+<span class="hljs-meta">@app.route('/login', methods=['POST'])</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">login</span><span class="hljs-params">()</span>:</span>
+    username = request.json[<span class="hljs-string">'username'</span>]
+    password = request.json[<span class="hljs-string">'password'</span>]
+
+    <span class="hljs-keyword">if</span> authenticate_user(username, password):
+        token = generate_token(username)
+        <span class="hljs-keyword">return</span> {<span class="hljs-string">'token'</span>: token}
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> {<span class="hljs-string">'error'</span>: <span class="hljs-string">'Invalid credentials'</span>}, <span class="hljs-number">401</span>
+
+<span class="hljs-meta">@app.route('/protected')</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">protected</span><span class="hljs-params">()</span>:</span>
+    auth_header = request.headers.get(<span class="hljs-string">'Authorization'</span>)
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> auth_header <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> auth_header.startswith(<span class="hljs-string">'Bearer '</span>):
+        <span class="hljs-keyword">return</span> {<span class="hljs-string">'error'</span>: <span class="hljs-string">'No token provided'</span>}, <span class="hljs-number">401</span>
+
+    token = auth_header.split(<span class="hljs-string">' '</span>)[<span class="hljs-number">1</span>]
+    user_id = verify_token(token)
+
+    <span class="hljs-keyword">if</span> user_id:
+        <span class="hljs-keyword">return</span> {<span class="hljs-string">'message'</span>: <span class="hljs-string">f'Access granted for user <span class="hljs-subst">{user_id}</span>'</span>}
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> {<span class="hljs-string">'error'</span>: <span class="hljs-string">'Invalid token'</span>}, <span class="hljs-number">401</span>
+</div></code></pre>
+<h4 id="oauth-20">OAuth 2.0</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># OAuth 2.0 Authorization Code Flow</span>
+<span class="hljs-meta">@app.route('/auth/google')</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">google_auth</span><span class="hljs-params">()</span>:</span>
+    google_auth_url = (
+        <span class="hljs-string">"https://accounts.google.com/o/oauth2/auth?"</span>
+        <span class="hljs-string">"response_type=code&amp;"</span>
+        <span class="hljs-string">f"client_id=<span class="hljs-subst">{GOOGLE_CLIENT_ID}</span>&amp;"</span>
+        <span class="hljs-string">f"redirect_uri=<span class="hljs-subst">{REDIRECT_URI}</span>&amp;"</span>
+        <span class="hljs-string">"scope=openid email profile"</span>
+    )
+    <span class="hljs-keyword">return</span> redirect(google_auth_url)
+
+<span class="hljs-meta">@app.route('/callback')</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">callback</span><span class="hljs-params">()</span>:</span>
+    code = request.args.get(<span class="hljs-string">'code'</span>)
+
+    <span class="hljs-comment"># Exchange code for access token</span>
+    token_response = requests.post(<span class="hljs-string">'https://oauth2.googleapis.com/token'</span>, data={
+        <span class="hljs-string">'client_id'</span>: GOOGLE_CLIENT_ID,
+        <span class="hljs-string">'client_secret'</span>: GOOGLE_CLIENT_SECRET,
+        <span class="hljs-string">'code'</span>: code,
+        <span class="hljs-string">'grant_type'</span>: <span class="hljs-string">'authorization_code'</span>,
+        <span class="hljs-string">'redirect_uri'</span>: REDIRECT_URI
+    })
+
+    access_token = token_response.json()[<span class="hljs-string">'access_token'</span>]
+
+    <span class="hljs-comment"># Get user info</span>
+    user_response = requests.get(
+        <span class="hljs-string">'https://www.googleapis.com/oauth2/v2/userinfo'</span>,
+        headers={<span class="hljs-string">'Authorization'</span>: <span class="hljs-string">f'Bearer <span class="hljs-subst">{access_token}</span>'</span>}
+    )
+
+    user_info = user_response.json()
+    <span class="hljs-comment"># Create session or JWT token</span>
+    <span class="hljs-keyword">return</span> {<span class="hljs-string">'user'</span>: user_info}
+</div></code></pre>
+<h3 id="authorization-patterns">Authorization Patterns</h3>
+<h4 id="role-based-access-control-rbac">Role-Based Access Control (RBAC)</h4>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Role</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, name, permissions)</span>:</span>
+        self.name = name
+        self.permissions = permissions
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, username, roles)</span>:</span>
+        self.username = username
+        self.roles = roles
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">has_permission</span><span class="hljs-params">(self, permission)</span>:</span>
+        <span class="hljs-keyword">for</span> role <span class="hljs-keyword">in</span> self.roles:
+            <span class="hljs-keyword">if</span> permission <span class="hljs-keyword">in</span> role.permissions:
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+
+<span class="hljs-comment"># Define roles</span>
+admin_role = Role(<span class="hljs-string">'admin'</span>, [<span class="hljs-string">'read'</span>, <span class="hljs-string">'write'</span>, <span class="hljs-string">'delete'</span>])
+user_role = Role(<span class="hljs-string">'user'</span>, [<span class="hljs-string">'read'</span>, <span class="hljs-string">'write'</span>])
+guest_role = Role(<span class="hljs-string">'guest'</span>, [<span class="hljs-string">'read'</span>])
+
+<span class="hljs-comment"># Authorization decorator</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">require_permission</span><span class="hljs-params">(permission)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">decorator</span><span class="hljs-params">(func)</span>:</span>
+        <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">wrapper</span><span class="hljs-params">(*args, **kwargs)</span>:</span>
+            user = get_current_user()
+            <span class="hljs-keyword">if</span> user.has_permission(permission):
+                <span class="hljs-keyword">return</span> func(*args, **kwargs)
+            <span class="hljs-keyword">else</span>:
+                <span class="hljs-keyword">return</span> {<span class="hljs-string">'error'</span>: <span class="hljs-string">'Insufficient permissions'</span>}, <span class="hljs-number">403</span>
+        <span class="hljs-keyword">return</span> wrapper
+    <span class="hljs-keyword">return</span> decorator
+
+<span class="hljs-meta">@app.route('/admin/users')</span>
+<span class="hljs-meta">@require_permission('delete')</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">delete_user</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">return</span> {<span class="hljs-string">'message'</span>: <span class="hljs-string">'User deleted'</span>}
+</div></code></pre>
+<h4 id="attribute-based-access-control-abac">Attribute-Based Access Control (ABAC)</h4>
+<p>More flexible, policy-based authorization.</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Policy</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, condition)</span>:</span>
+        self.condition = condition
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">evaluate</span><span class="hljs-params">(self, subject, resource, action, environment)</span>:</span>
+        <span class="hljs-keyword">return</span> self.condition(subject, resource, action, environment)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">owner_policy</span><span class="hljs-params">(subject, resource, action, environment)</span>:</span>
+    <span class="hljs-keyword">return</span> resource.owner_id == subject.user_id
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">time_based_policy</span><span class="hljs-params">(subject, resource, action, environment)</span>:</span>
+    current_hour = environment.get(<span class="hljs-string">'current_hour'</span>)
+    <span class="hljs-keyword">return</span> <span class="hljs-number">9</span> &lt;= current_hour &lt;= <span class="hljs-number">17</span>  <span class="hljs-comment"># Business hours only</span>
+
+<span class="hljs-comment"># Policy engine</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PolicyEngine</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span>
+        self.policies = []
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add_policy</span><span class="hljs-params">(self, policy)</span>:</span>
+        self.policies.append(policy)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">authorize</span><span class="hljs-params">(self, subject, resource, action, environment)</span>:</span>
+        <span class="hljs-keyword">for</span> policy <span class="hljs-keyword">in</span> self.policies:
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> policy.evaluate(subject, resource, action, environment):
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+
+<span class="hljs-comment"># Usage</span>
+engine = PolicyEngine()
+engine.add_policy(Policy(owner_policy))
+engine.add_policy(Policy(time_based_policy))
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">check_access</span><span class="hljs-params">(user, document, action)</span>:</span>
+    environment = {<span class="hljs-string">'current_hour'</span>: datetime.now().hour}
+    <span class="hljs-keyword">return</span> engine.authorize(user, document, action, environment)
+</div></code></pre>
+<h3 id="security-best-practices">Security Best Practices</h3>
+<h4 id="input-validation">Input Validation</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> re
+<span class="hljs-keyword">from</span> html <span class="hljs-keyword">import</span> escape
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">validate_email</span><span class="hljs-params">(email)</span>:</span>
+    pattern = <span class="hljs-string">r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}
+    return re.match(pattern, email) is not None
+
+def sanitize_input(user_input):
+    # Remove HTML tags and escape special characters
+    sanitized = escape(user_input.strip())
+    return sanitized
+
+@app.route('</span>/users<span class="hljs-string">', methods=['</span>POST<span class="hljs-string">'])
+def create_user():
+    data = request.json
+
+    # Validate input
+    if not validate_email(data.get('</span>email<span class="hljs-string">', '</span><span class="hljs-string">')):
+        return {'</span>erro<span class="hljs-string">r': '</span>Invalid email format<span class="hljs-string">'}, 400
+
+    if len(data.get('</span>name<span class="hljs-string">', '</span><span class="hljs-string">')) &lt; 2:
+        return {'</span>erro<span class="hljs-string">r': '</span>Name too short<span class="hljs-string">'}, 400
+
+    # Sanitize input
+    name = sanitize_input(data['</span>name<span class="hljs-string">'])
+    email = sanitize_input(data['</span>email<span class="hljs-string">'])
+
+    user = create_user_record(name, email)
+    return {'</span>use<span class="hljs-string">r': user}
+</span></div></code></pre>
+<h4 id="sql-injection-prevention">SQL Injection Prevention</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Bad - Vulnerable to SQL injection</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_user_bad</span><span class="hljs-params">(user_id)</span>:</span>
+    query = <span class="hljs-string">f"SELECT * FROM users WHERE id = <span class="hljs-subst">{user_id}</span>"</span>
+    <span class="hljs-keyword">return</span> db.execute(query)
+
+<span class="hljs-comment"># Good - Using parameterized queries</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_user_good</span><span class="hljs-params">(user_id)</span>:</span>
+    query = <span class="hljs-string">"SELECT * FROM users WHERE id = %s"</span>
+    <span class="hljs-keyword">return</span> db.execute(query, (user_id,))
+
+<span class="hljs-comment"># Using ORM (SQLAlchemy example)</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_user_orm</span><span class="hljs-params">(user_id)</span>:</span>
+    <span class="hljs-keyword">return</span> User.query.filter_by(id=user_id).first()
+</div></code></pre>
+<h4 id="password-security">Password Security</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> bcrypt
+<span class="hljs-keyword">import</span> secrets
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hash_password</span><span class="hljs-params">(password)</span>:</span>
+    <span class="hljs-comment"># Generate salt and hash password</span>
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(password.encode(<span class="hljs-string">'utf-8'</span>), salt)
+    <span class="hljs-keyword">return</span> hashed.decode(<span class="hljs-string">'utf-8'</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">verify_password</span><span class="hljs-params">(password, hashed)</span>:</span>
+    <span class="hljs-keyword">return</span> bcrypt.checkpw(password.encode(<span class="hljs-string">'utf-8'</span>), hashed.encode(<span class="hljs-string">'utf-8'</span>))
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">generate_secure_token</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">return</span> secrets.token_urlsafe(<span class="hljs-number">32</span>)
+
+<span class="hljs-comment"># Password strength validation</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">is_strong_password</span><span class="hljs-params">(password)</span>:</span>
+    <span class="hljs-keyword">if</span> len(password) &lt; <span class="hljs-number">8</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> re.search(<span class="hljs-string">r'[A-Z]'</span>, password):
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> re.search(<span class="hljs-string">r'[a-z]'</span>, password):
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> re.search(<span class="hljs-string">r'\d'</span>, password):
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> re.search(<span class="hljs-string">r'[!@#$%^&amp;*(),.?":{}|&lt;&gt;]'</span>, password):
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+</div></code></pre>
+<hr>
+<h2 id="monitoring--observability">Monitoring &amp; Observability</h2>
+<ul>
+<li><strong>Metrics</strong>: CPU, memory, latency, error rates.</li>
+<li><strong>Logging</strong>: Centralized, structured logs.</li>
+<li><strong>Tracing</strong>: Track requests across services (OpenTracing, Jaeger).</li>
+<li><strong>Alerting</strong>: Notify on anomalies.</li>
+<li><strong>Dashboards</strong>: Visualize system health (Grafana, Prometheus).</li>
+</ul>
+<p><strong>Example: Simple Logging (Python)</strong></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> logging
+logging.basicConfig(level=logging.INFO)
+logging.info(<span class="hljs-string">'Service started'</span>)
+</div></code></pre>
+<h3 id="the-three-pillars-of-observability">The Three Pillars of Observability</h3>
+<h4 id="1-metrics">1. Metrics</h4>
+<p>Numerical measurements of system behavior over time.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> prometheus_client <span class="hljs-keyword">import</span> Counter, Histogram, Gauge, start_http_server
+<span class="hljs-keyword">import</span> time
+
+<span class="hljs-comment"># Define metrics</span>
+request_count = Counter(<span class="hljs-string">'http_requests_total'</span>, <span class="hljs-string">'Total HTTP requests'</span>, [<span class="hljs-string">'method'</span>, <span class="hljs-string">'endpoint'</span>])
+request_duration = Histogram(<span class="hljs-string">'http_request_duration_seconds'</span>, <span class="hljs-string">'HTTP request duration'</span>)
+active_connections = Gauge(<span class="hljs-string">'active_connections'</span>, <span class="hljs-string">'Number of active connections'</span>)
+
+<span class="hljs-comment"># Middleware to collect metrics</span>
+<span class="hljs-meta">@app.before_request</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">before_request</span><span class="hljs-params">()</span>:</span>
+    request.start_time = time.time()
+
+<span class="hljs-meta">@app.after_request</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">after_request</span><span class="hljs-params">(response)</span>:</span>
+    request_duration.observe(time.time() - request.start_time)
+    request_count.labels(method=request.method, endpoint=request.endpoint).inc()
+    <span class="hljs-keyword">return</span> response
+
+<span class="hljs-comment"># Start metrics server</span>
+start_http_server(<span class="hljs-number">8000</span>)
+</div></code></pre>
+<h4 id="2-logs">2. Logs</h4>
+<p>Discrete events with timestamps.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> logging
+<span class="hljs-keyword">import</span> json
+<span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> datetime
+
+<span class="hljs-comment"># Structured logging</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JSONFormatter</span><span class="hljs-params">(logging.Formatter)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">format</span><span class="hljs-params">(self, record)</span>:</span>
+        log_entry = {
+            <span class="hljs-string">'timestamp'</span>: datetime.utcnow().isoformat(),
+            <span class="hljs-string">'level'</span>: record.levelname,
+            <span class="hljs-string">'message'</span>: record.getMessage(),
+            <span class="hljs-string">'module'</span>: record.module,
+            <span class="hljs-string">'function'</span>: record.funcName,
+            <span class="hljs-string">'line'</span>: record.lineno
+        }
+
+        <span class="hljs-comment"># Add extra fields if present</span>
+        <span class="hljs-keyword">if</span> hasattr(record, <span class="hljs-string">'user_id'</span>):
+            log_entry[<span class="hljs-string">'user_id'</span>] = record.user_id
+        <span class="hljs-keyword">if</span> hasattr(record, <span class="hljs-string">'request_id'</span>):
+            log_entry[<span class="hljs-string">'request_id'</span>] = record.request_id
+
+        <span class="hljs-keyword">return</span> json.dumps(log_entry)
+
+<span class="hljs-comment"># Configure logger</span>
+logger = logging.getLogger(__name__)
+handler = logging.StreamHandler()
+handler.setFormatter(JSONFormatter())
+logger.addHandler(handler)
+logger.setLevel(logging.INFO)
+
+<span class="hljs-comment"># Usage</span>
+<span class="hljs-meta">@app.route('/users/&lt;user_id&gt;')</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_user</span><span class="hljs-params">(user_id)</span>:</span>
+    logger.info(<span class="hljs-string">'Fetching user'</span>, extra={<span class="hljs-string">'user_id'</span>: user_id, <span class="hljs-string">'request_id'</span>: request.headers.get(<span class="hljs-string">'X-Request-ID'</span>)})
+
+    <span class="hljs-keyword">try</span>:
+        user = user_service.get_user(user_id)
+        logger.info(<span class="hljs-string">'User fetched successfully'</span>, extra={<span class="hljs-string">'user_id'</span>: user_id})
+        <span class="hljs-keyword">return</span> jsonify(user)
+    <span class="hljs-keyword">except</span> UserNotFoundError:
+        logger.warning(<span class="hljs-string">'User not found'</span>, extra={<span class="hljs-string">'user_id'</span>: user_id})
+        <span class="hljs-keyword">return</span> {<span class="hljs-string">'error'</span>: <span class="hljs-string">'User not found'</span>}, <span class="hljs-number">404</span>
+    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:
+        logger.error(<span class="hljs-string">'Error fetching user'</span>, extra={<span class="hljs-string">'user_id'</span>: user_id, <span class="hljs-string">'error'</span>: str(e)})
+        <span class="hljs-keyword">return</span> {<span class="hljs-string">'error'</span>: <span class="hljs-string">'Internal server error'</span>}, <span class="hljs-number">500</span>
+</div></code></pre>
+<h4 id="3-traces">3. Traces</h4>
+<p>Request flows through distributed systems.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> opentelemetry <span class="hljs-keyword">import</span> trace
+<span class="hljs-keyword">from</span> opentelemetry.exporter.jaeger.thrift <span class="hljs-keyword">import</span> JaegerExporter
+<span class="hljs-keyword">from</span> opentelemetry.sdk.trace <span class="hljs-keyword">import</span> TracerProvider
+<span class="hljs-keyword">from</span> opentelemetry.sdk.trace.export <span class="hljs-keyword">import</span> BatchSpanProcessor
+
+<span class="hljs-comment"># Configure tracing</span>
+trace.set_tracer_provider(TracerProvider())
+tracer = trace.get_tracer(__name__)
+
+jaeger_exporter = JaegerExporter(
+    agent_host_name=<span class="hljs-string">"jaeger"</span>,
+    agent_port=<span class="hljs-number">6831</span>,
+)
+
+span_processor = BatchSpanProcessor(jaeger_exporter)
+trace.get_tracer_provider().add_span_processor(span_processor)
+
+<span class="hljs-comment"># Instrument code with spans</span>
+<span class="hljs-meta">@app.route('/orders', methods=['POST'])</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">create_order</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">with</span> tracer.start_as_current_span(<span class="hljs-string">"create_order"</span>) <span class="hljs-keyword">as</span> span:
+        order_data = request.json
+        span.set_attribute(<span class="hljs-string">"order.items_count"</span>, len(order_data[<span class="hljs-string">'items'</span>]))
+        span.set_attribute(<span class="hljs-string">"order.user_id"</span>, order_data[<span class="hljs-string">'user_id'</span>])
+
+        <span class="hljs-comment"># Validate user</span>
+        <span class="hljs-keyword">with</span> tracer.start_as_current_span(<span class="hljs-string">"validate_user"</span>) <span class="hljs-keyword">as</span> user_span:
+            user = validate_user(order_data[<span class="hljs-string">'user_id'</span>])
+            user_span.set_attribute(<span class="hljs-string">"user.validated"</span>, <span class="hljs-literal">True</span>)
+
+        <span class="hljs-comment"># Calculate total</span>
+        <span class="hljs-keyword">with</span> tracer.start_as_current_span(<span class="hljs-string">"calculate_total"</span>) <span class="hljs-keyword">as</span> calc_span:
+            total = calculate_order_total(order_data[<span class="hljs-string">'items'</span>])
+            calc_span.set_attribute(<span class="hljs-string">"order.total"</span>, total)
+
+        <span class="hljs-comment"># Save order</span>
+        <span class="hljs-keyword">with</span> tracer.start_as_current_span(<span class="hljs-string">"save_order"</span>) <span class="hljs-keyword">as</span> save_span:
+            order = save_order(order_data, total)
+            save_span.set_attribute(<span class="hljs-string">"order.id"</span>, order.id)
+
+        <span class="hljs-keyword">return</span> {<span class="hljs-string">'order_id'</span>: order.id}
+</div></code></pre>
+<h3 id="health-checks">Health Checks</h3>
+<h4 id="basic-health-check">Basic Health Check</h4>
+<pre class="hljs"><code><div><span class="hljs-meta">@app.route('/health')</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">health_check</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">return</span> {<span class="hljs-string">'status'</span>: <span class="hljs-string">'healthy'</span>, <span class="hljs-string">'timestamp'</span>: datetime.utcnow().isoformat()}
+
+<span class="hljs-comment"># Detailed health check</span>
+<span class="hljs-meta">@app.route('/health/detailed')</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">detailed_health_check</span><span class="hljs-params">()</span>:</span>
+    health_status = {
+        <span class="hljs-string">'status'</span>: <span class="hljs-string">'healthy'</span>,
+        <span class="hljs-string">'timestamp'</span>: datetime.utcnow().isoformat(),
+        <span class="hljs-string">'checks'</span>: {}
+    }
+
+    <span class="hljs-comment"># Database connectivity</span>
+    <span class="hljs-keyword">try</span>:
+        db.execute(<span class="hljs-string">'SELECT 1'</span>)
+        health_status[<span class="hljs-string">'checks'</span>][<span class="hljs-string">'database'</span>] = {<span class="hljs-string">'status'</span>: <span class="hljs-string">'healthy'</span>}
+    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:
+        health_status[<span class="hljs-string">'checks'</span>][<span class="hljs-string">'database'</span>] = {<span class="hljs-string">'status'</span>: <span class="hljs-string">'unhealthy'</span>, <span class="hljs-string">'error'</span>: str(e)}
+        health_status[<span class="hljs-string">'status'</span>] = <span class="hljs-string">'unhealthy'</span>
+
+    <span class="hljs-comment"># External service connectivity</span>
+    <span class="hljs-keyword">try</span>:
+        response = requests.get(<span class="hljs-string">'http://external-service/health'</span>, timeout=<span class="hljs-number">5</span>)
+        <span class="hljs-keyword">if</span> response.status_code == <span class="hljs-number">200</span>:
+            health_status[<span class="hljs-string">'checks'</span>][<span class="hljs-string">'external_service'</span>] = {<span class="hljs-string">'status'</span>: <span class="hljs-string">'healthy'</span>}
+        <span class="hljs-keyword">else</span>:
+            health_status[<span class="hljs-string">'checks'</span>][<span class="hljs-string">'external_service'</span>] = {<span class="hljs-string">'status'</span>: <span class="hljs-string">'degraded'</span>}
+    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:
+        health_status[<span class="hljs-string">'checks'</span>][<span class="hljs-string">'external_service'</span>] = {<span class="hljs-string">'status'</span>: <span class="hljs-string">'unhealthy'</span>, <span class="hljs-string">'error'</span>: str(e)}
+
+    <span class="hljs-comment"># Memory usage</span>
+    <span class="hljs-keyword">import</span> psutil
+    memory_percent = psutil.virtual_memory().percent
+    health_status[<span class="hljs-string">'checks'</span>][<span class="hljs-string">'memory'</span>] = {
+        <span class="hljs-string">'status'</span>: <span class="hljs-string">'healthy'</span> <span class="hljs-keyword">if</span> memory_percent &lt; <span class="hljs-number">90</span> <span class="hljs-keyword">else</span> <span class="hljs-string">'warning'</span>,
+        <span class="hljs-string">'usage_percent'</span>: memory_percent
+    }
+
+    <span class="hljs-keyword">return</span> health_status
+</div></code></pre>
+<h3 id="alerting">Alerting</h3>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AlertManager</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span>
+        self.thresholds = {
+            <span class="hljs-string">'cpu_usage'</span>: <span class="hljs-number">80</span>,
+            <span class="hljs-string">'memory_usage'</span>: <span class="hljs-number">85</span>,
+            <span class="hljs-string">'error_rate'</span>: <span class="hljs-number">5</span>,
+            <span class="hljs-string">'response_time'</span>: <span class="hljs-number">1000</span>  <span class="hljs-comment"># ms</span>
+        }
+        self.alert_channels = []
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add_channel</span><span class="hljs-params">(self, channel)</span>:</span>
+        self.alert_channels.append(channel)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">check_metrics</span><span class="hljs-params">(self, metrics)</span>:</span>
+        alerts = []
+
+        <span class="hljs-keyword">for</span> metric, value <span class="hljs-keyword">in</span> metrics.items():
+            <span class="hljs-keyword">if</span> metric <span class="hljs-keyword">in</span> self.thresholds <span class="hljs-keyword">and</span> value &gt; self.thresholds[metric]:
+                alert = {
+                    <span class="hljs-string">'metric'</span>: metric,
+                    <span class="hljs-string">'value'</span>: value,
+                    <span class="hljs-string">'threshold'</span>: self.thresholds[metric],
+                    <span class="hljs-string">'severity'</span>: self.get_severity(metric, value),
+                    <span class="hljs-string">'timestamp'</span>: datetime.utcnow().isoformat()
+                }
+                alerts.append(alert)
+
+        <span class="hljs-keyword">for</span> alert <span class="hljs-keyword">in</span> alerts:
+            self.send_alert(alert)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">send_alert</span><span class="hljs-params">(self, alert)</span>:</span>
+        <span class="hljs-keyword">for</span> channel <span class="hljs-keyword">in</span> self.alert_channels:
+            channel.send(alert)
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SlackAlertChannel</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, webhook_url)</span>:</span>
+        self.webhook_url = webhook_url
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">send</span><span class="hljs-params">(self, alert)</span>:</span>
+        message = {
+            <span class="hljs-string">'text'</span>: <span class="hljs-string">f"🚨 Alert: <span class="hljs-subst">{alert[<span class="hljs-string">'metric'</span>]}</span> is <span class="hljs-subst">{alert[<span class="hljs-string">'value'</span>]}</span> (threshold: <span class="hljs-subst">{alert[<span class="hljs-string">'threshold'</span>]}</span>)"</span>
+        }
+        requests.post(self.webhook_url, json=message)
+
+<span class="hljs-comment"># Usage</span>
+alert_manager = AlertManager()
+alert_manager.add_channel(SlackAlertChannel(<span class="hljs-string">'https://hooks.slack.com/...'</span>))
+
+<span class="hljs-comment"># Check metrics periodically</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">monitor_system</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:
+        metrics = {
+            <span class="hljs-string">'cpu_usage'</span>: psutil.cpu_percent(),
+            <span class="hljs-string">'memory_usage'</span>: psutil.virtual_memory().percent,
+            <span class="hljs-string">'error_rate'</span>: get_error_rate_last_5_minutes(),
+            <span class="hljs-string">'response_time'</span>: get_avg_response_time_last_5_minutes()
+        }
+
+        alert_manager.check_metrics(metrics)
+        time.sleep(<span class="hljs-number">60</span>)  <span class="hljs-comment"># Check every minute</span>
+</div></code></pre>
+<hr>
+<h2 id="design-patterns">Design Patterns</h2>
+<ul>
+<li><strong>Singleton</strong>: One instance per application.</li>
+<li><strong>Factory</strong>: Create objects without specifying exact class.</li>
+<li><strong>Observer</strong>: Notify subscribers of changes.</li>
+<li><strong>Circuit Breaker</strong>: Stop calls to failing service.</li>
+<li><strong>Bulkhead</strong>: Isolate failures.</li>
+<li><strong>Strangler Fig</strong>: Gradually replace legacy system.</li>
+</ul>
+<p><strong>Example: Singleton (Python)</strong></p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span>:</span>
+    _instance = <span class="hljs-literal">None</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__new__</span><span class="hljs-params">(cls, *args, **kwargs)</span>:</span>
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> cls._instance:
+            cls._instance = super().__new__(cls)
+        <span class="hljs-keyword">return</span> cls._instance
+</div></code></pre>
+<h3 id="singleton-pattern">Singleton Pattern</h3>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DatabaseConnection</span>:</span>
+    _instance = <span class="hljs-literal">None</span>
+    _lock = threading.Lock()
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__new__</span><span class="hljs-params">(cls)</span>:</span>
+        <span class="hljs-keyword">if</span> cls._instance <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+            <span class="hljs-keyword">with</span> cls._lock:
+                <span class="hljs-keyword">if</span> cls._instance <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+                    cls._instance = super().__new__(cls)
+                    cls._instance.connection = create_db_connection()
+        <span class="hljs-keyword">return</span> cls._instance
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">query</span><span class="hljs-params">(self, sql)</span>:</span>
+        <span class="hljs-keyword">return</span> self.connection.execute(sql)
+
+<span class="hljs-comment"># Usage</span>
+db1 = DatabaseConnection()
+db2 = DatabaseConnection()
+<span class="hljs-keyword">assert</span> db1 <span class="hljs-keyword">is</span> db2  <span class="hljs-comment"># Same instance</span>
+</div></code></pre>
+<h3 id="factory-pattern">Factory Pattern</h3>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DatabaseFactory</span>:</span>
+<span class="hljs-meta">    @staticmethod</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">create_database</span><span class="hljs-params">(db_type, config)</span>:</span>
+        <span class="hljs-keyword">if</span> db_type == <span class="hljs-string">'mysql'</span>:
+            <span class="hljs-keyword">return</span> MySQLDatabase(config)
+        <span class="hljs-keyword">elif</span> db_type == <span class="hljs-string">'postgresql'</span>:
+            <span class="hljs-keyword">return</span> PostgreSQLDatabase(config)
+        <span class="hljs-keyword">elif</span> db_type == <span class="hljs-string">'mongodb'</span>:
+            <span class="hljs-keyword">return</span> MongoDatabase(config)
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">f"Unknown database type: <span class="hljs-subst">{db_type}</span>"</span>)
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MySQLDatabase</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, config)</span>:</span>
+        self.config = config
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">connect</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-comment"># MySQL-specific connection logic</span>
+        <span class="hljs-keyword">pass</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PostgreSQLDatabase</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, config)</span>:</span>
+        self.config = config
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">connect</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-comment"># PostgreSQL-specific connection logic</span>
+        <span class="hljs-keyword">pass</span>
+
+<span class="hljs-comment"># Usage</span>
+db = DatabaseFactory.create_database(<span class="hljs-string">'mysql'</span>, {<span class="hljs-string">'host'</span>: <span class="hljs-string">'localhost'</span>, <span class="hljs-string">'port'</span>: <span class="hljs-number">3306</span>})
+</div></code></pre>
+<h3 id="observer-pattern">Observer Pattern</h3>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EventPublisher</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span>
+        self.observers = []
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">subscribe</span><span class="hljs-params">(self, observer)</span>:</span>
+        self.observers.append(observer)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">unsubscribe</span><span class="hljs-params">(self, observer)</span>:</span>
+        self.observers.remove(observer)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">notify</span><span class="hljs-params">(self, event)</span>:</span>
+        <span class="hljs-keyword">for</span> observer <span class="hljs-keyword">in</span> self.observers:
+            observer.handle_event(event)
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EmailNotificationObserver</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">handle_event</span><span class="hljs-params">(self, event)</span>:</span>
+        <span class="hljs-keyword">if</span> event.type == <span class="hljs-string">'user_registered'</span>:
+            send_welcome_email(event.user_email)
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AnalyticsObserver</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">handle_event</span><span class="hljs-params">(self, event)</span>:</span>
+        track_event(event.type, event.data)
+
+<span class="hljs-comment"># Usage</span>
+publisher = EventPublisher()
+publisher.subscribe(EmailNotificationObserver())
+publisher.subscribe(AnalyticsObserver())
+
+<span class="hljs-comment"># When user registers</span>
+publisher.notify(UserRegisteredEvent(user_email=<span class="hljs-string">'user@example.com'</span>))
+</div></code></pre>
+<h3 id="strategy-pattern">Strategy Pattern</h3>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PaymentProcessor</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, strategy)</span>:</span>
+        self.strategy = strategy
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">process_payment</span><span class="hljs-params">(self, amount, payment_details)</span>:</span>
+        <span class="hljs-keyword">return</span> self.strategy.process(amount, payment_details)
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CreditCardStrategy</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">process</span><span class="hljs-params">(self, amount, payment_details)</span>:</span>
+        <span class="hljs-comment"># Credit card processing logic</span>
+        <span class="hljs-keyword">return</span> {<span class="hljs-string">'status'</span>: <span class="hljs-string">'success'</span>, <span class="hljs-string">'transaction_id'</span>: <span class="hljs-string">'cc_123'</span>}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PayPalStrategy</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">process</span><span class="hljs-params">(self, amount, payment_details)</span>:</span>
+        <span class="hljs-comment"># PayPal processing logic</span>
+        <span class="hljs-keyword">return</span> {<span class="hljs-string">'status'</span>: <span class="hljs-string">'success'</span>, <span class="hljs-string">'transaction_id'</span>: <span class="hljs-string">'pp_456'</span>}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CryptoStrategy</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">process</span><span class="hljs-params">(self, amount, payment_details)</span>:</span>
+        <span class="hljs-comment"># Cryptocurrency processing logic</span>
+        <span class="hljs-keyword">return</span> {<span class="hljs-string">'status'</span>: <span class="hljs-string">'success'</span>, <span class="hljs-string">'transaction_id'</span>: <span class="hljs-string">'crypto_789'</span>}
+
+<span class="hljs-comment"># Usage</span>
+processor = PaymentProcessor(CreditCardStrategy())
+result = processor.process_payment(<span class="hljs-number">100.0</span>, {<span class="hljs-string">'card_number'</span>: <span class="hljs-string">'1234'</span>})
+</div></code></pre>
+<h3 id="command-pattern">Command Pattern</h3>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Command</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">execute</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">pass</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">undo</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">pass</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CreateUserCommand</span><span class="hljs-params">(Command)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, user_service, user_data)</span>:</span>
+        self.user_service = user_service
+        self.user_data = user_data
+        self.created_user_id = <span class="hljs-literal">None</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">execute</span><span class="hljs-params">(self)</span>:</span>
+        self.created_user_id = self.user_service.create_user(self.user_data)
+        <span class="hljs-keyword">return</span> self.created_user_id
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">undo</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">if</span> self.created_user_id:
+            self.user_service.delete_user(self.created_user_id)
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CommandInvoker</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span>
+        self.history = []
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">execute_command</span><span class="hljs-params">(self, command)</span>:</span>
+        result = command.execute()
+        self.history.append(command)
+        <span class="hljs-keyword">return</span> result
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">undo_last_command</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">if</span> self.history:
+            command = self.history.pop()
+            command.undo()
+
+<span class="hljs-comment"># Usage</span>
+invoker = CommandInvoker()
+create_command = CreateUserCommand(user_service, {<span class="hljs-string">'name'</span>: <span class="hljs-string">'John'</span>, <span class="hljs-string">'email'</span>: <span class="hljs-string">'john@example.com'</span>})
+user_id = invoker.execute_command(create_command)
+
+<span class="hljs-comment"># Later, undo the creation</span>
+invoker.undo_last_command()
+</div></code></pre>
+<hr>
+<h2 id="real-world-system-examples">Real-World System Examples</h2>
+<h3 id="url-shortener">URL Shortener</h3>
+<ul>
+<li>Use hash or counter for short URL.</li>
+<li>Store mapping in database.</li>
+<li>Cache popular URLs.</li>
+<li>Handle collisions.</li>
+</ul>
+<h3 id="rate-limiter">Rate Limiter</h3>
+<ul>
+<li>Token bucket or leaky bucket algorithm.</li>
+<li>Store counters in Redis.</li>
+</ul>
+<p><strong>Example: Token Bucket (Python)</strong></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> time
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TokenBucket</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, rate, capacity)</span>:</span>
+        self.rate = rate
+        self.capacity = capacity
+        self.tokens = capacity
+        self.timestamp = time.time()
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">allow_request</span><span class="hljs-params">(self)</span>:</span>
+        now = time.time()
+        elapsed = now - self.timestamp
+        self.tokens = min(self.capacity, self.tokens + elapsed * self.rate)
+        self.timestamp = now
+        <span class="hljs-keyword">if</span> self.tokens &gt;= <span class="hljs-number">1</span>:
+            self.tokens -= <span class="hljs-number">1</span>
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+</div></code></pre>
+<h3 id="social-media-feed-twitterinstagram">Social Media Feed (Twitter/Instagram)</h3>
+<h4 id="requirements">Requirements</h4>
+<ul>
+<li>User posts/tweets</li>
+<li>Follow/unfollow users</li>
+<li>News feed generation</li>
+<li>Like/comment on posts</li>
+<li>Real-time notifications</li>
+<li>Media uploads</li>
+</ul>
+<h4 id="database-design">Database Design</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Users table</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-keyword">users</span> (
+    <span class="hljs-keyword">id</span> <span class="hljs-keyword">UUID</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    username <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">UNIQUE</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    email <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">UNIQUE</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    display_name <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">100</span>),
+    bio <span class="hljs-built_in">TEXT</span>,
+    profile_image_url <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">500</span>),
+    follower_count <span class="hljs-built_in">INTEGER</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span>,
+    following_count <span class="hljs-built_in">INTEGER</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span>,
+    created_at <span class="hljs-built_in">TIMESTAMP</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">CURRENT_TIMESTAMP</span>
+);
+
+<span class="hljs-comment">-- Posts table</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> posts (
+    <span class="hljs-keyword">id</span> <span class="hljs-keyword">UUID</span> PRIMARY <span class="hljs-keyword">KEY</span>,
+    user_id <span class="hljs-keyword">UUID</span> <span class="hljs-keyword">REFERENCES</span> <span class="hljs-keyword">users</span>(<span class="hljs-keyword">id</span>),
+    <span class="hljs-keyword">content</span> <span class="hljs-built_in">TEXT</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span>,
+    media_urls <span class="hljs-keyword">JSON</span>,
+    like_count <span class="hljs-built_in">INTEGER</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span>,
+    comment_count <span class="hljs-built_in">INTEGER</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span>,
+    repost_count <span class="hljs-built_in">INTEGER</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span>,
+    created_at <span class="hljs-built_in">TIMESTAMP</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="hljs-built_in">TIMESTAMP</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">CURRENT_TIMESTAMP</span>
+);
+
+<span class="hljs-comment">-- Follows table</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-keyword">follows</span> (
+    follower_id <span class="hljs-keyword">UUID</span> <span class="hljs-keyword">REFERENCES</span> <span class="hljs-keyword">users</span>(<span class="hljs-keyword">id</span>),
+    following_id <span class="hljs-keyword">UUID</span> <span class="hljs-keyword">REFERENCES</span> <span class="hljs-keyword">users</span>(<span class="hljs-keyword">id</span>),
+    created_at <span class="hljs-built_in">TIMESTAMP</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">CURRENT_TIMESTAMP</span>,
+    PRIMARY <span class="hljs-keyword">KEY</span> (follower_id, following_id)
+);
+
+<span class="hljs-comment">-- Likes table</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> likes (
+    user_id <span class="hljs-keyword">UUID</span> <span class="hljs-keyword">REFERENCES</span> <span class="hljs-keyword">users</span>(<span class="hljs-keyword">id</span>),
+    post_id <span class="hljs-keyword">UUID</span> <span class="hljs-keyword">REFERENCES</span> posts(<span class="hljs-keyword">id</span>),
+    created_at <span class="hljs-built_in">TIMESTAMP</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">CURRENT_TIMESTAMP</span>,
+    PRIMARY <span class="hljs-keyword">KEY</span> (user_id, post_id)
+);
+
+<span class="hljs-comment">-- Feed generation strategies</span>
+<span class="hljs-comment">-- Option 1: Pull model (generate on request)</span>
+<span class="hljs-comment">-- Option 2: Push model (pre-compute feeds)</span>
+<span class="hljs-comment">-- Option 3: Hybrid model</span>
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> user_feeds (
+    user_id <span class="hljs-keyword">UUID</span> <span class="hljs-keyword">REFERENCES</span> <span class="hljs-keyword">users</span>(<span class="hljs-keyword">id</span>),
+    post_id <span class="hljs-keyword">UUID</span> <span class="hljs-keyword">REFERENCES</span> posts(<span class="hljs-keyword">id</span>),
+    created_at <span class="hljs-built_in">TIMESTAMP</span>,
+    score <span class="hljs-built_in">FLOAT</span>,  <span class="hljs-comment">-- For ranking algorithm</span>
+    PRIMARY <span class="hljs-keyword">KEY</span> (user_id, post_id)
+);
+</div></code></pre>
+<h4 id="feed-generation">Feed Generation</h4>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FeedService</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span>
+        self.redis_client = redis.Redis()
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">generate_feed_pull_model</span><span class="hljs-params">(self, user_id, limit=<span class="hljs-number">20</span>, offset=<span class="hljs-number">0</span>)</span>:</span>
+        <span class="hljs-comment"># 1. Get list of users this user follows</span>
+        following_ids = db.get_following_ids(user_id)
+        <span class="hljs-comment"># 2. Query recent posts from those users</span>
+        posts = db.query(
+            <span class="hljs-string">"SELECT * FROM posts WHERE user_id IN %s ORDER BY created_at DESC LIMIT %s OFFSET %s"</span>,
+            (tuple(following_ids), limit, offset)
+        )
+        <span class="hljs-keyword">return</span> posts
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fanout_on_write</span><span class="hljs-params">(post_id, author_id)</span>:</span>
+    follower_ids = db.get_follower_ids(author_id)
+    <span class="hljs-keyword">for</span> follower_id <span class="hljs-keyword">in</span> follower_ids:
+        db.insert(<span class="hljs-string">'user_feeds'</span>, {
+        <span class="hljs-string">'user_id'</span>: follower_id,
+        <span class="hljs-string">'post_id'</span>: post_id,
+        <span class="hljs-string">'created_at'</span>: datetime.utcnow(),
+        <span class="hljs-string">'score'</span>: compute_score(post_id, follower_id)
+        })
+</div></code></pre>
+<h3 id="feed-ranking">Feed Ranking</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">compute_score</span><span class="hljs-params">(post, user)</span>:</span>
+    <span class="hljs-comment"># Example: combine recency and engagement</span>
+    age_seconds = (datetime.utcnow() - post[<span class="hljs-string">'created_at'</span>]).total_seconds()
+    engagement = post[<span class="hljs-string">'like_count'</span>] + post[<span class="hljs-string">'comment_count'</span>]
+    <span class="hljs-keyword">return</span> engagement * <span class="hljs-number">2</span> - age_seconds / <span class="hljs-number">3600</span>  <span class="hljs-comment"># Higher is better</span>
+</div></code></pre>
+<h3 id="real-time-notifications">Real-Time Notifications</h3>
+<ul>
+<li>Use message queues (e.g., Redis, Kafka) to notify users of new posts, likes, comments, etc.</li>
+<li>WebSockets or push notifications for instant updates.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">notify_followers</span><span class="hljs-params">(post_id, author_id)</span>:</span>
+    follower_ids = db.get_follower_ids(author_id)
+    <span class="hljs-keyword">for</span> follower_id <span class="hljs-keyword">in</span> follower_ids:
+        notification_service.send(follower_id, <span class="hljs-string">f"New post from <span class="hljs-subst">{author_id}</span>: <span class="hljs-subst">{post_id}</span>"</span>)
+</div></code></pre>
+<h3 id="caching">Caching</h3>
+<ul>
+<li>Cache hot feeds in Redis or Memcached for fast access.</li>
+<li>Cache user timelines, post details, and counts.</li>
+</ul>
+<hr>
+<h2 id="advanced-topics">Advanced Topics</h2>
+<h3 id="event-sourcing">Event Sourcing</h3>
+<p>Instead of storing current state, you store every change as an event. Think of it like a bank account - rather than just keeping the current balance ($500), you store every transaction:</p>
+<ul>
+<li>Day 1: +$1000 (deposit)</li>
+<li>Day 2: -$300 (withdrawal)</li>
+<li>Day 3: -$200 (withdrawal)</li>
+</ul>
+<p>To get current state, you replay all events: 1000 - 300 - 200 = $500</p>
+<p><strong>Benefits:</strong></p>
+<ul>
+<li>Complete audit trail of all changes</li>
+<li>Can rebuild state at any point in time</li>
+<li>Enables time travel debugging</li>
+<li>Natural fit for collaborative systems</li>
+</ul>
+<p><strong>Drawbacks:</strong></p>
+<ul>
+<li>Increased complexity</li>
+<li>Storage grows continuously</li>
+<li>Eventual consistency</li>
+<li>Event schema evolution challenges</li>
+</ul>
+<p><strong>When to Use:</strong> Financial systems, collaborative editing, systems requiring full audit trails</p>
+<hr>
+<h3 id="cqrs-command-query-responsibility-segregation">CQRS (Command Query Responsibility Segregation)</h3>
+<p>Separate your read operations from write operations using different models and potentially different databases.</p>
+<p><strong>Commands:</strong> Modify data (CreateOrder, UpdateInventory)
+<strong>Queries:</strong> Read data (GetProductCatalog, GetUserDashboard)</p>
+<p><strong>Example Architecture:</strong></p>
+<pre class="hljs"><code><div>Write Side: Normalized PostgreSQL → Events → Message Bus
+Read Side: Denormalized MongoDB/Redis ← Event Handlers
+</div></code></pre>
+<p><strong>Benefits:</strong></p>
+<ul>
+<li>Independent scaling (read-heavy vs write-heavy)</li>
+<li>Optimized data models for each use case</li>
+<li>Better performance for complex queries</li>
+<li>Can use different technologies for reads vs writes</li>
+</ul>
+<p><strong>Trade-offs:</strong></p>
+<ul>
+<li>Added complexity</li>
+<li>Data synchronization between read/write models</li>
+<li>Eventual consistency</li>
+</ul>
+<p><strong>When to Use:</strong> High-scale applications with different read/write patterns, complex reporting requirements</p>
+<hr>
+<h3 id="distributed-transactions">Distributed Transactions</h3>
+<h4 id="two-phase-commit-2pc">Two-Phase Commit (2PC)</h4>
+<p><strong>Phase 1 (Prepare):</strong> Coordinator asks all participants &quot;Can you commit?&quot;
+<strong>Phase 2 (Commit/Abort):</strong> If all say yes, coordinator tells everyone to commit</p>
+<p><strong>Problems:</strong></p>
+<ul>
+<li>Blocking protocol - if coordinator fails, participants wait indefinitely</li>
+<li>Not suitable for microservices across WAN</li>
+<li>Performance overhead</li>
+</ul>
+<h4 id="sagas">Sagas</h4>
+<p>Break large transactions into smaller compensatable steps. If any step fails, run compensating actions for completed steps.</p>
+<p><strong>Example - Order Processing Saga:</strong></p>
+<ol>
+<li>Reserve inventory → Compensate: Release inventory</li>
+<li>Charge payment → Compensate: Refund payment</li>
+<li>Create shipment → Compensate: Cancel shipment</li>
+</ol>
+<p>If step 2 fails, automatically release the reserved inventory.</p>
+<p><strong>Types:</strong></p>
+<ul>
+<li><strong>Choreography:</strong> Each service knows what to do next</li>
+<li><strong>Orchestration:</strong> Central coordinator manages the workflow</li>
+</ul>
+<p><strong>When to Use:</strong> Microservices architectures, long-running business processes</p>
+<hr>
+<h3 id="geo-replication">Geo-Replication</h3>
+<p>Distribute data across multiple geographic regions for better performance and disaster recovery.</p>
+<p><strong>Patterns:</strong></p>
+<ul>
+<li><strong>Master-Slave:</strong> One region handles writes, others serve reads</li>
+<li><strong>Multi-Master:</strong> Multiple regions can handle writes (conflict resolution needed)</li>
+<li><strong>Sharding by Geography:</strong> US users → US data center, EU users → EU data center</li>
+</ul>
+<p><strong>Challenges:</strong></p>
+<ul>
+<li>Network latency between regions</li>
+<li>Data consistency across regions</li>
+<li>Conflict resolution for concurrent updates</li>
+<li>Compliance with data residency laws</li>
+</ul>
+<p><strong>Technologies:</strong> AWS RDS Cross-Region, Google Cloud Spanner, MongoDB Global Clusters</p>
+<hr>
+<h3 id="api-rate-limiting">API Rate Limiting</h3>
+<p>Control the number of requests clients can make to prevent abuse and ensure fair usage.</p>
+<h4 id="global-rate-limiting">Global Rate Limiting</h4>
+<p>Limit across entire system: &quot;1M requests/hour for the entire API&quot;</p>
+<h4 id="per-user-rate-limiting">Per-User Rate Limiting</h4>
+<p>Individual limits: &quot;1000 requests/hour per user&quot;</p>
+<p><strong>Algorithms:</strong></p>
+<ul>
+<li><strong>Token Bucket:</strong> Refill tokens at fixed rate, consume tokens per request</li>
+<li><strong>Sliding Window:</strong> Track requests in rolling time window</li>
+<li><strong>Fixed Window:</strong> Reset counter every time period</li>
+</ul>
+<p><strong>Implementation:</strong></p>
+<pre class="hljs"><code><div>Redis: INCR user:123:requests:2024-06-07-14
+If count &gt; limit: return 429 Too Many Requests
+Set TTL to expire at end of window
+</div></code></pre>
+<p><strong>Headers to Return:</strong></p>
+<ul>
+<li>X-RateLimit-Limit: 1000</li>
+<li>X-RateLimit-Remaining: 999</li>
+<li>X-RateLimit-Reset: 1717776000</li>
+</ul>
+<hr>
+<h3 id="chaos-engineering">Chaos Engineering</h3>
+<p>Deliberately introduce failures to test system resilience and identify weaknesses before they cause outages.</p>
+<p><strong>Principles:</strong></p>
+<ol>
+<li>Hypothesize steady state behavior</li>
+<li>Vary real-world events (server crashes, network delays)</li>
+<li>Run experiments in production (carefully!)</li>
+<li>Automate experiments</li>
+</ol>
+<p><strong>Common Experiments:</strong></p>
+<ul>
+<li><strong>Latency:</strong> Add random delays to service calls</li>
+<li><strong>Error Injection:</strong> Return errors from dependencies</li>
+<li><strong>Resource Exhaustion:</strong> Consume CPU/memory</li>
+<li><strong>Network Partitions:</strong> Simulate network splits</li>
+</ul>
+<p><strong>Tools:</strong></p>
+<ul>
+<li>Netflix Chaos Monkey (terminates instances)</li>
+<li>Gremlin (comprehensive chaos platform)</li>
+<li>Litmus (Kubernetes chaos engineering)</li>
+</ul>
+<p><strong>Example:</strong> &quot;What happens if our payment service becomes 50% slower?&quot; Run experiment and measure impact on user experience.</p>
+<hr>
+<h3 id="blue-green-deployments">Blue-Green Deployments</h3>
+<p>Maintain two identical production environments and switch traffic between them for zero-downtime deployments.</p>
+<p><strong>Process:</strong></p>
+<ol>
+<li><strong>Blue Environment:</strong> Currently serving production traffic</li>
+<li><strong>Green Environment:</strong> Deploy new version here</li>
+<li><strong>Testing:</strong> Verify green environment works correctly</li>
+<li><strong>Switch:</strong> Route traffic from blue to green</li>
+<li><strong>Rollback:</strong> If issues arise, instantly switch back to blue</li>
+</ol>
+<p><strong>Benefits:</strong></p>
+<ul>
+<li>Zero downtime deployments</li>
+<li>Instant rollback capability</li>
+<li>Full production testing before switch</li>
+<li>Reduced deployment risk</li>
+</ul>
+<p><strong>Requirements:</strong></p>
+<ul>
+<li>Load balancer that can switch traffic</li>
+<li>Identical infrastructure for both environments</li>
+<li>Database migration strategy</li>
+<li>Monitoring to detect issues quickly</li>
+</ul>
+<p><strong>Variations:</strong></p>
+<ul>
+<li><strong>Canary Deployments:</strong> Gradually shift percentage of traffic</li>
+<li><strong>A/B Testing:</strong> Split traffic to test different versions</li>
+<li><strong>Rolling Updates:</strong> Replace instances one by one</li>
+</ul>
+<p><strong>Tools:</strong> AWS CodeDeploy, Kubernetes rolling updates, HAProxy, NGINX</p>
+<hr>
+<h3 id="when-to-use-these-patterns">When to Use These Patterns</h3>
+<p><strong>Event Sourcing + CQRS:</strong> Financial systems, collaborative platforms, audit-heavy domains
+<strong>Distributed Transactions:</strong> Microservices with cross-service business transactions
+<strong>Geo-Replication:</strong> Global applications, disaster recovery requirements
+<strong>Rate Limiting:</strong> Public APIs, preventing abuse, fair usage policies
+<strong>Chaos Engineering:</strong> Critical systems, microservices architectures
+<strong>Blue-Green Deployments:</strong> Applications requiring high availability, zero-downtime requirements</p>
+
+</body>
+</html>

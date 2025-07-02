@@ -1,6 +1,6 @@
 # Basic DSA Questions for beginners
 
-[Download PDF](https://gdurl.com/Fp4G)
+### [Download PDF](https://gdurl.com/c6hl)
 
 ## 1. ARRAYS
 

@@ -1,5 +1,7 @@
 # Complete Git/GitHub Cheatsheet - Beginner to Advanced
 
+### [Download PDF](https://gdurl.com/rBTn)
+
 ## Table of Contents
 
 1. [What is Git and GitHub?](#what-is-git-and-github)
