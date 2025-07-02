@@ -2,6 +2,8 @@
 
 Your comprehensive collection of development cheatsheets, guides, and references all in one place.
 
+If you like these Cheatsheets, please ⭐ star it on [Github](https://github.com/malharchauhan7/the-only-cheatsheets)!
+
 ## 🎯 Quick Navigation
 
 - [The Only Cheatsheets 📚](#the-only-cheatsheets-)
