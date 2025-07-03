@@ -1,4 +1,4 @@
-# The Only Cheatsheets 📚
+# ![DotDot](/assets/dotdot.png) The Only Cheatsheets 
 
 Your comprehensive collection of development cheatsheets, guides, and references all in one place.
 
@@ -6,7 +6,7 @@ If you like these Cheatsheets, please ⭐ star it on [Github](https://github.com
 
 ## 🎯 Quick Navigation
 
-- [The Only Cheatsheets 📚](#the-only-cheatsheets-)
+- [ The Only Cheatsheets](#-the-only-cheatsheets)
   - [🎯 Quick Navigation](#-quick-navigation)
   - [Available Cheatsheets 📑](#available-cheatsheets-)
     - [📘 Core Development Guide](#-core-development-guide)
