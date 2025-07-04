@@ -4,6 +4,7 @@
 
 Your comprehensive collection of development cheatsheets, guides, and references all in one place.
 
+
 <div align="center">
   <a href="https://github.com/malharchauhan7/the-only-cheatsheets">
     <img src="https://img.shields.io/github/stars/malharchauhan7/the-only-cheatsheets?style=social" alt="GitHub Stars">
@@ -15,7 +16,7 @@ Your comprehensive collection of development cheatsheets, guides, and references
 
   <p>
     <a href="#features-">Features</a> •
-    <a href="#quick-start-">Quick Start</a> •
+    <a href="#-quick-navigation">Quick Start</a> •
     <a href="#available-cheatsheets-">Cheatsheets</a> •
     <a href="#contributing-">Contributing</a>
   </p>
@@ -123,7 +124,10 @@ Please read our [Contributing Guidelines](CONTRIBUTING.md) for details.
 This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
 
 ---
-[⬆ Back to Top](#dotdot-the-only-cheatsheets)
+
+ <a href="#dotdot-the-only-cheatsheets" >⬆ Back to Top</a> 
+
 <p align="center">
 Made with ❤️ by developers, for developers
+
 </p>
