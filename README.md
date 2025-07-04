@@ -1,13 +1,13 @@
 # ![DotDot](/assets/dotdot.png) The Only Cheatsheets 
 
-
 Your comprehensive collection of development cheatsheets, guides, and references all in one place.
 
 If you like these Cheatsheets, please ⭐ star it on [Github](https://github.com/malharchauhan7/the-only-cheatsheets)!
 
 Upvote us on 👉 [Producthunt](https://www.producthunt.com/products/the-only-cheatsheets)
 
-![Visitors](https://count.getloli.com/get/@malharchauhan7-the-only-cheatsheets?theme=rule34)
+![Visitor Count](https://visitor-badge.glitch.me/badge?page_id=malharchauhan7.the-only-cheatsheets&left_color=black&right_color=green)
+
 
 
 ## 🎯 Quick Navigation
