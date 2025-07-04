@@ -1,14 +1,16 @@
 # ![DotDot](/assets/dotdot.png) The Only Cheatsheets 
 
+<div align="center">
+
 Your comprehensive collection of development cheatsheets, guides, and references all in one place.
 
-If you like these Cheatsheets, please ⭐ star it on [Github](https://github.com/malharchauhan7/the-only-cheatsheets)!
+[![GitHub Stars](https://img.shields.io/github/stars/malharchauhan7/the-only-cheatsheets?style=social)](https://github.com/malharchauhan7/the-only-cheatsheets)
+[![Product Hunt](https://img.shields.io/badge/Product%20Hunt-Vote-orange)](https://www.producthunt.com/products/the-only-cheatsheets)
+![Visitors](https://komarev.com/ghpvc/?username=malharchauhan7&label=%20views&color=0e75b6&style=flat)
 
-Upvote us on 👉 [Producthunt](https://www.producthunt.com/products/the-only-cheatsheets)
+[Features](#features-) • [Quick Start](#quick-start-) • [Cheatsheets](#available-cheatsheets-) • [Contributing](#contributing-)
 
-<p align="left"> <img src="https://komarev.com/ghpvc/?username=malharchauhan7&label=%20views&color=0e75b6&style=flat" alt="malharchauhan7" /> </p>
-
-
+</div>
 
 ## 🎯 Quick Navigation
 
@@ -111,7 +113,7 @@ Please read our [Contributing Guidelines](CONTRIBUTING.md) for details.
 This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
 
 ---
-
+[⬆ Back to Top](#dotdot-the-only-cheatsheets)
 <p align="center">
 Made with ❤️ by developers, for developers
 </p>
