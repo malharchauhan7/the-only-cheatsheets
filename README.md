@@ -4,12 +4,22 @@
 
 Your comprehensive collection of development cheatsheets, guides, and references all in one place.
 
-[![GitHub Stars](https://img.shields.io/github/stars/malharchauhan7/the-only-cheatsheets?style=social)](https://github.com/malharchauhan7/the-only-cheatsheets)
-[![Product Hunt](https://img.shields.io/badge/Product%20Hunt-Vote-orange)](https://www.producthunt.com/products/the-only-cheatsheets)
-![Visitors](https://komarev.com/ghpvc/?username=malharchauhan7&label=%20views&color=0e75b6&style=flat)
+<div align="center">
+  <a href="https://github.com/malharchauhan7/the-only-cheatsheets">
+    <img src="https://img.shields.io/github/stars/malharchauhan7/the-only-cheatsheets?style=social" alt="GitHub Stars">
+  </a>
+  <a href="https://www.producthunt.com/products/the-only-cheatsheets">
+    <img src="https://img.shields.io/badge/Product%20Hunt-Vote-orange" alt="Product Hunt">
+  </a>
+  <img src="https://komarev.com/ghpvc/?username=malharchauhan7&label=%20views&color=0e75b6&style=flat" alt="Visitors">
 
-[Features](#features-) • [Quick Start](#quick-start-) • [Cheatsheets](#available-cheatsheets-) • [Contributing](#contributing-)
-
+  <p>
+    <a href="#features-">Features</a> •
+    <a href="#quick-start-">Quick Start</a> •
+    <a href="#available-cheatsheets-">Cheatsheets</a> •
+    <a href="#contributing-">Contributing</a>
+  </p>
+</div>
 </div>
 
 ## 🎯 Quick Navigation
