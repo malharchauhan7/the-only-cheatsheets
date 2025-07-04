@@ -6,7 +6,7 @@ If you like these Cheatsheets, please ⭐ star it on [Github](https://github.com
 
 Upvote us on 👉 [Producthunt](https://www.producthunt.com/products/the-only-cheatsheets)
 
-![Visitor Count](https://visitor-badge.glitch.me/badge?page_id=malharchauhan7.the-only-cheatsheets&left_color=black&right_color=green)
+<p align="left"> <img src="https://komarev.com/ghpvc/?username=malharchauhan7&label=%20views&color=0e75b6&style=flat" alt="malharchauhan7" /> </p>
 
 
 
