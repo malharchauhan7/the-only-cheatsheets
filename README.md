@@ -36,6 +36,7 @@ Your comprehensive collection of development cheatsheets, guides, and references
     - [Database Management System 🛢️](#database-management-system-️)
     - [System Design ⚙️](#system-design-️)
     - [Git \& GitHub 📦](#git--github-)
+    - [Aptitude guide ➕](#aptitude-guide-)
   - [Features ✨](#features-)
   - [How to Use 📖](#how-to-use-)
   - [Contributing 🤝](#contributing-)
@@ -90,6 +91,10 @@ Your comprehensive collection of development cheatsheets, guides, and references
   - Basic to advanced workflows
   - Branching strategies
   - Best practices
+
+### Aptitude guide ➕
+
+- [**Complete Aptitude Guide**](/aptitude/aptitude-guide.md)
 
 ## Features ✨
 

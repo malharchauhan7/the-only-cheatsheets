@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>aptitude-guide.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="complete-aptitude-guide">Complete Aptitude Guide</h1>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#1-quantitative-aptitude">Quantitative Aptitude</a></li>
+<li><a href="#2-logical-reasoning">Logical Reasoning</a></li>
+<li><a href="#3-verbal-ability">Verbal Ability</a></li>
+<li><a href="#4-data-interpretation">Data Interpretation</a></li>
+<li><a href="#5-computer-science-fundamentals">Computer Science Fundamentals</a></li>
+<li><a href="#6-programming-logic">Programming Logic</a></li>
+<li><a href="#7-mathematical-reasoning">Mathematical Reasoning</a></li>
+</ol>
+<hr>
+<h2 id="1-quantitative-aptitude">1. Quantitative Aptitude</h2>
+<h3 id="a-number-system">A. Number System</h3>
+<p><strong>Key Concepts:</strong></p>
+<ul>
+<li>Natural Numbers: 1, 2, 3, 4, ...</li>
+<li>Whole Numbers: 0, 1, 2, 3, 4, ...</li>
+<li>Integers: ..., -2, -1, 0, 1, 2, ...</li>
+<li>Rational Numbers: Numbers that can be expressed as p/q where q ≠ 0</li>
+<li>Prime Numbers: Numbers divisible only by 1 and themselves</li>
+<li>Composite Numbers: Numbers with more than two factors</li>
+</ul>
+<p><strong>Important Properties:</strong></p>
+<ul>
+<li>Divisibility Rules for 2, 3, 4, 5, 6, 8, 9, 10, 11</li>
+<li>LCM × HCF = Product of two numbers</li>
+<li>Sum of first n natural numbers = n(n+1)/2</li>
+<li>Sum of first n odd numbers = n²</li>
+</ul>
+<p><strong>Practice Questions:</strong></p>
+<ol>
+<li>
+<p>Find the HCF of 18, 24, and 36.
+<strong>Answer:</strong> 6 (Common factors: 1, 2, 3, 6)</p>
+</li>
+<li>
+<p>What is the LCM of 15, 20, and 25?
+<strong>Answer:</strong> 300 (15 = 3×5, 20 = 2²×5, 25 = 5²; LCM = 2²×3×5² = 300)</p>
+</li>
+</ol>
+<h3 id="b-percentages">B. Percentages</h3>
+<p><strong>Key Formulas:</strong></p>
+<ul>
+<li>Percentage = (Part/Whole) × 100</li>
+<li>Increase % = (New Value - Old Value)/Old Value × 100</li>
+<li>Decrease % = (Old Value - New Value)/Old Value × 100</li>
+<li>Successive percentage changes: If two changes of a% and b% occur, net change = a + b + (ab/100)</li>
+</ul>
+<p><strong>Practice Questions:</strong></p>
+<ol>
+<li>
+<p>A number is increased by 20% and then decreased by 15%. What is the net change?
+<strong>Answer:</strong> Net change = 20 + (-15) + (20×(-15)/100) = 5 - 3 = 2% increase</p>
+</li>
+<li>
+<p>If 60% of a number is 240, what is 25% of that number?
+<strong>Answer:</strong> Number = 240/0.60 = 400; 25% of 400 = 100</p>
+</li>
+</ol>
+<h3 id="c-profit-and-loss">C. Profit and Loss</h3>
+<p><strong>Key Formulas:</strong></p>
+<ul>
+<li>Profit = Selling Price - Cost Price</li>
+<li>Loss = Cost Price - Selling Price</li>
+<li>Profit% = (Profit/Cost Price) × 100</li>
+<li>Loss% = (Loss/Cost Price) × 100</li>
+<li>SP = CP × (100 + Profit%)/100</li>
+<li>CP = SP × 100/(100 + Profit%)</li>
+</ul>
+<p><strong>Practice Questions:</strong></p>
+<ol>
+<li>
+<p>A shopkeeper bought an item for ₹800 and sold it for ₹920. Find the profit percentage.
+<strong>Answer:</strong> Profit = 920 - 800 = ₹120; Profit% = (120/800) × 100 = 15%</p>
+</li>
+<li>
+<p>An article is sold at 25% profit. If the cost price is ₹1200, find the selling price.
+<strong>Answer:</strong> SP = 1200 × (100 + 25)/100 = 1200 × 1.25 = ₹1500</p>
+</li>
+</ol>
+<h3 id="d-simple-and-compound-interest">D. Simple and Compound Interest</h3>
+<p><strong>Simple Interest (SI):</strong></p>
+<ul>
+<li>SI = (P × R × T)/100</li>
+<li>Amount = P + SI</li>
+<li>P = Principal, R = Rate, T = Time</li>
+</ul>
+<p><strong>Compound Interest (CI):</strong></p>
+<ul>
+<li>CI = P(1 + R/100)^T - P</li>
+<li>Amount = P(1 + R/100)^T</li>
+</ul>
+<p><strong>Practice Questions:</strong></p>
+<ol>
+<li>
+<p>Find SI on ₹5000 at 8% per annum for 3 years.
+<strong>Answer:</strong> SI = (5000 × 8 × 3)/100 = ₹1200</p>
+</li>
+<li>
+<p>Find CI on ₹10000 at 10% per annum for 2 years.
+<strong>Answer:</strong> CI = 10000(1 + 10/100)² - 10000 = 10000(1.1)² - 10000 = 12100 - 10000 = ₹2100</p>
+</li>
+</ol>
+<h3 id="e-time-and-work">E. Time and Work</h3>
+<p><strong>Key Concepts:</strong></p>
+<ul>
+<li>If A can do work in 'a' days, A's one day work = 1/a</li>
+<li>If A and B together can do work in 'c' days, (A+B)'s one day work = 1/c</li>
+<li>If A's one day work = 1/a and B's one day work = 1/b, then together they can complete work in ab/(a+b) days</li>
+</ul>
+<p><strong>Practice Questions:</strong></p>
+<ol>
+<li>
+<p>A can do a work in 10 days, B can do it in 15 days. How long will they take together?
+<strong>Answer:</strong> Combined work = 1/10 + 1/15 = 3/30 + 2/30 = 5/30 = 1/6; Time = 6 days</p>
+</li>
+<li>
+<p>A and B together can do a work in 12 days. A alone can do it in 20 days. In how many days can B alone do it?
+<strong>Answer:</strong> B's work = 1/12 - 1/20 = 5/60 - 3/60 = 2/60 = 1/30; B alone = 30 days</p>
+</li>
+</ol>
+<h3 id="f-time-speed-and-distance">F. Time, Speed, and Distance</h3>
+<p><strong>Key Formulas:</strong></p>
+<ul>
+<li>Speed = Distance/Time</li>
+<li>Distance = Speed × Time</li>
+<li>Time = Distance/Speed</li>
+<li>Average Speed = Total Distance/Total Time</li>
+<li>Relative Speed (same direction) = |S₁ - S₂|</li>
+<li>Relative Speed (opposite direction) = S₁ + S₂</li>
+</ul>
+<p><strong>Practice Questions:</strong></p>
+<ol>
+<li>
+<p>A car travels 240 km in 4 hours. What is its speed?
+<strong>Answer:</strong> Speed = 240/4 = 60 km/h</p>
+</li>
+<li>
+<p>Two trains 150m and 100m long are moving in opposite directions at 60 km/h and 40 km/h. Time to cross each other?
+<strong>Answer:</strong> Relative speed = 60 + 40 = 100 km/h = 100 × 5/18 = 250/9 m/s
+Total distance = 150 + 100 = 250m; Time = 250 ÷ (250/9) = 9 seconds</p>
+</li>
+</ol>
+<hr>
+<h2 id="2-logical-reasoning">2. Logical Reasoning</h2>
+<h3 id="a-coding-decoding">A. Coding-Decoding</h3>
+<p><strong>Types:</strong></p>
+<ol>
+<li><strong>Letter Shifting:</strong> Each letter is shifted by a fixed number</li>
+<li><strong>Number Coding:</strong> Letters are replaced by numbers</li>
+<li><strong>Substitution:</strong> Direct letter-to-letter substitution</li>
+</ol>
+<p><strong>Example:</strong>
+If COMPUTER is coded as DPNQVUFS, how is SCIENCE coded?
+<strong>Solution:</strong> Each letter is shifted by +1. SCIENCE → TDJFODF</p>
+<h3 id="b-blood-relations">B. Blood Relations</h3>
+<p><strong>Key Terms:</strong></p>
+<ul>
+<li>Paternal: Father's side</li>
+<li>Maternal: Mother's side</li>
+<li>Siblings: Brothers and sisters</li>
+<li>Spouse: Husband/Wife</li>
+<li>In-laws: Spouse's relatives</li>
+</ul>
+<p><strong>Practice Question:</strong>
+Pointing to a man, a woman said, &quot;His mother is the only daughter of my mother.&quot; How is the woman related to the man?
+<strong>Answer:</strong> Mother (The only daughter of woman's mother is the woman herself)</p>
+<h3 id="c-direction-sense">C. Direction Sense</h3>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Remember: North-East-South-West (clockwise)</li>
+<li>Left turn = 90° anticlockwise</li>
+<li>Right turn = 90° clockwise</li>
+<li>About turn = 180°</li>
+</ul>
+<p><strong>Practice Question:</strong>
+A person walks 5km North, then 3km East, then 4km South. What is the shortest distance from starting point?
+<strong>Answer:</strong> Final position: 3km East, 1km North from start. Distance = √(3² + 1²) = √10 km</p>
+<h3 id="d-logical-sequences">D. Logical Sequences</h3>
+<p><strong>Number Series:</strong></p>
+<ul>
+<li>Arithmetic Progression: Common difference</li>
+<li>Geometric Progression: Common ratio</li>
+<li>Fibonacci: Each term = sum of previous two terms</li>
+</ul>
+<p><strong>Letter Series:</strong></p>
+<ul>
+<li>Alphabetical order</li>
+<li>Positional values (A=1, B=2, ...)</li>
+<li>Skip patterns</li>
+</ul>
+<p><strong>Practice Questions:</strong></p>
+<ol>
+<li>
+<p>Find next term: 2, 6, 12, 20, 30, ?
+<strong>Answer:</strong> 42 (Differences: 4, 6, 8, 10, 12)</p>
+</li>
+<li>
+<p>Find next term: B, F, J, N, ?
+<strong>Answer:</strong> R (Gap of 3 letters each time)</p>
+</li>
+</ol>
+<h3 id="e-syllogisms">E. Syllogisms</h3>
+<p><strong>Rules:</strong></p>
+<ul>
+<li>All statements are assumed true</li>
+<li>Draw conclusions based only on given premises</li>
+<li>No external knowledge should be used</li>
+</ul>
+<p><strong>Example:</strong>
+Premises: All roses are flowers. Some flowers are red.
+Conclusion: Some roses are red.
+<strong>Answer:</strong> Invalid (Cannot be concluded from given premises)</p>
+<hr>
+<h2 id="3-verbal-ability">3. Verbal Ability</h2>
+<h3 id="a-vocabulary">A. Vocabulary</h3>
+<p><strong>Common Prefixes:</strong></p>
+<ul>
+<li>Pre- (before): Preview, Predict</li>
+<li>Post- (after): Postgraduate, Postpone</li>
+<li>Anti- (against): Antibiotic, Antisocial</li>
+<li>Multi- (many): Multimedia, Multitask</li>
+</ul>
+<p><strong>Common Suffixes:</strong></p>
+<ul>
+<li>-tion (action): Creation, Innovation</li>
+<li>-ly (manner): Quickly, Carefully</li>
+<li>-ful (full of): Helpful, Meaningful</li>
+<li>-less (without): Helpless, Meaningless</li>
+</ul>
+<p><strong>Synonyms &amp; Antonyms:</strong>
+Study word pairs and their relationships. Use context clues in sentences.</p>
+<h3 id="b-grammar">B. Grammar</h3>
+<p><strong>Subject-Verb Agreement:</strong></p>
+<ul>
+<li>Singular subject takes singular verb</li>
+<li>Plural subject takes plural verb</li>
+<li>With &quot;either...or&quot;, &quot;neither...nor&quot;, verb agrees with nearer subject</li>
+</ul>
+<p><strong>Tenses:</strong></p>
+<ul>
+<li>Present: Simple, Continuous, Perfect, Perfect Continuous</li>
+<li>Past: Simple, Continuous, Perfect, Perfect Continuous</li>
+<li>Future: Simple, Continuous, Perfect, Perfect Continuous</li>
+</ul>
+<p><strong>Common Errors:</strong></p>
+<ul>
+<li>Preposition usage (in, on, at, by, with, etc.)</li>
+<li>Article usage (a, an, the)</li>
+<li>Pronoun agreement</li>
+<li>Dangling modifiers</li>
+</ul>
+<h3 id="c-reading-comprehension">C. Reading Comprehension</h3>
+<p><strong>Strategies:</strong></p>
+<ol>
+<li>Read passage carefully</li>
+<li>Identify main idea and supporting details</li>
+<li>Note author's tone and purpose</li>
+<li>Look for keywords in questions</li>
+<li>Eliminate obviously wrong options</li>
+</ol>
+<p><strong>Question Types:</strong></p>
+<ul>
+<li>Main idea questions</li>
+<li>Detail questions</li>
+<li>Inference questions</li>
+<li>Vocabulary in context</li>
+<li>Author's purpose/tone</li>
+</ul>
+<h3 id="d-sentence-completion">D. Sentence Completion</h3>
+<p><strong>Approach:</strong></p>
+<ol>
+<li>Read the sentence completely</li>
+<li>Identify clues (contrast, cause-effect, comparison)</li>
+<li>Predict the type of word needed</li>
+<li>Check each option in context</li>
+<li>Choose the best fit</li>
+</ol>
+<p><strong>Example:</strong>
+The new policy was so _____ that it caused widespread protests.
+a) Popular b) Controversial c) Effective d) Simple
+<strong>Answer:</strong> b) Controversial (causes protests)</p>
+<hr>
+<h2 id="4-data-interpretation">4. Data Interpretation</h2>
+<h3 id="a-tables">A. Tables</h3>
+<p><strong>Skills Required:</strong></p>
+<ul>
+<li>Reading data accurately</li>
+<li>Calculating percentages, ratios</li>
+<li>Finding averages, totals</li>
+<li>Comparing data across categories</li>
+</ul>
+<p><strong>Example Practice:</strong>
+Given a table showing sales figures for different products across quarters, calculate:</p>
+<ul>
+<li>Which product had highest growth?</li>
+<li>What was the average sales in Q2?</li>
+<li>Which quarter had maximum total sales?</li>
+</ul>
+<h3 id="b-bar-charts">B. Bar Charts</h3>
+<p><strong>Types:</strong></p>
+<ul>
+<li>Simple bar chart</li>
+<li>Multiple bar chart</li>
+<li>Stacked bar chart</li>
+</ul>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Read scales carefully</li>
+<li>Compare heights/lengths</li>
+<li>Calculate differences and ratios</li>
+<li>Identify trends</li>
+</ul>
+<h3 id="c-line-graphs">C. Line Graphs</h3>
+<p><strong>Skills:</strong></p>
+<ul>
+<li>Identify trends (increasing/decreasing)</li>
+<li>Find maximum/minimum points</li>
+<li>Calculate slope/rate of change</li>
+<li>Compare multiple lines</li>
+</ul>
+<h3 id="d-pie-charts">D. Pie Charts</h3>
+<p><strong>Calculations:</strong></p>
+<ul>
+<li>Each sector = (Value/Total) × 360°</li>
+<li>Percentage = (Value/Total) × 100</li>
+<li>Value = (Angle/360°) × Total</li>
+</ul>
+<p><strong>Example:</strong>
+If a sector shows 72°, what percentage of total does it represent?
+<strong>Answer:</strong> (72/360) × 100 = 20%</p>
+<hr>
+<h2 id="5-computer-science-fundamentals">5. Computer Science Fundamentals</h2>
+<h3 id="a-programming-concepts">A. Programming Concepts</h3>
+<p><strong>Data Types:</strong></p>
+<ul>
+<li>Primitive: int, float, char, boolean</li>
+<li>Non-primitive: arrays, strings, objects</li>
+</ul>
+<p><strong>Control Structures:</strong></p>
+<ul>
+<li>Sequential: statements executed in order</li>
+<li>Conditional: if-else, switch</li>
+<li>Iterative: for, while, do-while</li>
+</ul>
+<p><strong>Complexity Analysis:</strong></p>
+<ul>
+<li>Time Complexity: O(1), O(log n), O(n), O(n log n), O(n²)</li>
+<li>Space Complexity: Additional memory used</li>
+</ul>
+<h3 id="b-data-structures">B. Data Structures</h3>
+<p><strong>Arrays:</strong></p>
+<ul>
+<li>Fixed size, contiguous memory</li>
+<li>Access: O(1), Search: O(n), Insert/Delete: O(n)</li>
+</ul>
+<p><strong>Linked Lists:</strong></p>
+<ul>
+<li>Dynamic size, non-contiguous memory</li>
+<li>Access: O(n), Insert/Delete: O(1) at known position</li>
+</ul>
+<p><strong>Stacks:</strong></p>
+<ul>
+<li>LIFO (Last In, First Out)</li>
+<li>Operations: Push, Pop, Top, IsEmpty</li>
+</ul>
+<p><strong>Queues:</strong></p>
+<ul>
+<li>FIFO (First In, First Out)</li>
+<li>Operations: Enqueue, Dequeue, Front, Rear</li>
+</ul>
+<p><strong>Trees:</strong></p>
+<ul>
+<li>Binary Tree: Each node has at most 2 children</li>
+<li>Binary Search Tree: Left &lt; Parent &lt; Right</li>
+<li>Balanced trees: AVL, Red-Black</li>
+</ul>
+<h3 id="c-algorithms">C. Algorithms</h3>
+<p><strong>Sorting:</strong></p>
+<ul>
+<li>Bubble Sort: O(n²)</li>
+<li>Selection Sort: O(n²)</li>
+<li>Insertion Sort: O(n²)</li>
+<li>Merge Sort: O(n log n)</li>
+<li>Quick Sort: Average O(n log n), Worst O(n²)</li>
+</ul>
+<p><strong>Searching:</strong></p>
+<ul>
+<li>Linear Search: O(n)</li>
+<li>Binary Search: O(log n) - requires sorted array</li>
+</ul>
+<h3 id="d-database-concepts">D. Database Concepts</h3>
+<p><strong>SQL Basics:</strong></p>
+<ul>
+<li>SELECT: Retrieve data</li>
+<li>INSERT: Add new records</li>
+<li>UPDATE: Modify existing records</li>
+<li>DELETE: Remove records</li>
+</ul>
+<p><strong>Joins:</strong></p>
+<ul>
+<li>INNER JOIN: Records matching in both tables</li>
+<li>LEFT JOIN: All records from left table</li>
+<li>RIGHT JOIN: All records from right table</li>
+<li>FULL JOIN: All records from both tables</li>
+</ul>
+<p><strong>Normalization:</strong></p>
+<ul>
+<li>1NF: No repeating groups</li>
+<li>2NF: No partial dependencies</li>
+<li>3NF: No transitive dependencies</li>
+</ul>
+<hr>
+<h2 id="6-programming-logic">6. Programming Logic</h2>
+<h3 id="a-flowcharts">A. Flowcharts</h3>
+<p><strong>Symbols:</strong></p>
+<ul>
+<li>Oval: Start/End</li>
+<li>Rectangle: Process</li>
+<li>Diamond: Decision</li>
+<li>Parallelogram: Input/Output</li>
+<li>Circle: Connector</li>
+</ul>
+<p><strong>Example Problem:</strong>
+Draw flowchart to find largest of three numbers.</p>
+<h3 id="b-pseudocode">B. Pseudocode</h3>
+<p><strong>Structure:</strong></p>
+<pre class="hljs"><code><div>BEGIN
+  INPUT variables
+  PROCESS logic
+  OUTPUT result
+END
+</div></code></pre>
+<p><strong>Example:</strong></p>
+<pre class="hljs"><code><div>BEGIN
+  READ a, b, c
+  IF a &gt; b AND a &gt; c THEN
+    PRINT a
+  ELSE IF b &gt; c THEN
+    PRINT b
+  ELSE
+    PRINT c
+  END IF
+END
+</div></code></pre>
+<h3 id="c-pattern-recognition">C. Pattern Recognition</h3>
+<p><strong>Common Patterns:</strong></p>
+<ul>
+<li>Number patterns: arithmetic, geometric progressions</li>
+<li>Star patterns: triangles, pyramids</li>
+<li>Matrix patterns: spiral, diagonal</li>
+</ul>
+<p><strong>Practice Questions:</strong></p>
+<ol>
+<li>
+<p>Print pattern:</p>
+<pre class="hljs"><code><div>*
+**
+***
+****
+</div></code></pre>
+</li>
+<li>
+<p>Find output:</p>
+<pre class="hljs"><code><div>for i = 1 to 5
+  for j = 1 to i
+    print i
+</div></code></pre>
+<p><strong>Answer:</strong> 1 22 333 4444 55555</p>
+</li>
+</ol>
+<hr>
+<h2 id="7-mathematical-reasoning">7. Mathematical Reasoning</h2>
+<h3 id="a-probability">A. Probability</h3>
+<p><strong>Basic Concepts:</strong></p>
+<ul>
+<li>Probability = Favorable outcomes / Total outcomes</li>
+<li>P(A) + P(not A) = 1</li>
+<li>P(A and B) = P(A) × P(B) [for independent events]</li>
+<li>P(A or B) = P(A) + P(B) - P(A and B)</li>
+</ul>
+<p><strong>Practice Questions:</strong></p>
+<ol>
+<li>
+<p>A die is thrown. What is the probability of getting an even number?
+<strong>Answer:</strong> 3/6 = 1/2 (even numbers: 2, 4, 6)</p>
+</li>
+<li>
+<p>Two coins are tossed. What is the probability of getting at least one head?
+<strong>Answer:</strong> 1 - P(no heads) = 1 - 1/4 = 3/4</p>
+</li>
+</ol>
+<h3 id="b-permutations-and-combinations">B. Permutations and Combinations</h3>
+<p><strong>Formulas:</strong></p>
+<ul>
+<li>Permutation: P(n,r) = n!/(n-r)!</li>
+<li>Combination: C(n,r) = n!/(r!(n-r)!)</li>
+<li>Circular permutation: (n-1)!</li>
+</ul>
+<p><strong>Practice Questions:</strong></p>
+<ol>
+<li>
+<p>In how many ways can 5 people sit in a row?
+<strong>Answer:</strong> 5! = 120</p>
+</li>
+<li>
+<p>How many ways can 3 people be selected from 10 people?
+<strong>Answer:</strong> C(10,3) = 10!/(3!×7!) = 120</p>
+</li>
+</ol>
+<h3 id="c-set-theory">C. Set Theory</h3>
+<p><strong>Operations:</strong></p>
+<ul>
+<li>Union (A ∪ B): Elements in A or B or both</li>
+<li>Intersection (A ∩ B): Elements in both A and B</li>
+<li>Difference (A - B): Elements in A but not in B</li>
+<li>Complement (A'): Elements not in A</li>
+</ul>
+<p><strong>Venn Diagrams:</strong>
+Use for solving problems involving multiple sets.</p>
+<h3 id="d-statistics">D. Statistics</h3>
+<p><strong>Measures of Central Tendency:</strong></p>
+<ul>
+<li>Mean = Sum of values / Number of values</li>
+<li>Median = Middle value when arranged in order</li>
+<li>Mode = Most frequently occurring value</li>
+</ul>
+<p><strong>Measures of Dispersion:</strong></p>
+<ul>
+<li>Range = Maximum - Minimum</li>
+<li>Variance = Average of squared differences from mean</li>
+<li>Standard Deviation = √Variance</li>
+</ul>
+<hr>
+<h2 id="quick-reference-formulas">Quick Reference Formulas</h2>
+<h3 id="arithmetic">Arithmetic</h3>
+<ul>
+<li>(a + b)² = a² + 2ab + b²</li>
+<li>(a - b)² = a² - 2ab + b²</li>
+<li>a² - b² = (a + b)(a - b)</li>
+<li>(a + b)³ = a³ + 3a²b + 3ab² + b³</li>
+</ul>
+<h3 id="geometry">Geometry</h3>
+<ul>
+<li>Area of rectangle = length × width</li>
+<li>Area of triangle = (1/2) × base × height</li>
+<li>Area of circle = πr²</li>
+<li>Circumference of circle = 2πr</li>
+</ul>
+<h3 id="algebra">Algebra</h3>
+<ul>
+<li>If ax + b = 0, then x = -b/a</li>
+<li>Quadratic formula: x = (-b ± √(b² - 4ac))/(2a)</li>
+<li>Laws of exponents: aᵐ × aⁿ = aᵐ⁺ⁿ, (aᵐ)ⁿ = aᵐⁿ</li>
+</ul>
+<hr>
+<h2 id="study-tips">Study Tips</h2>
+<ol>
+<li><strong>Practice Regularly:</strong> Solve at least 20-30 questions daily</li>
+<li><strong>Time Management:</strong> Allocate specific time for each section</li>
+<li><strong>Identify Weak Areas:</strong> Focus more on topics you find difficult</li>
+<li><strong>Mock Tests:</strong> Take full-length tests to improve speed and accuracy</li>
+<li><strong>Review Mistakes:</strong> Analyze wrong answers to avoid repetition</li>
+<li><strong>Formula Sheet:</strong> Maintain a quick reference for formulas</li>
+<li><strong>Speed vs Accuracy:</strong> Balance between solving quickly and correctly</li>
+<li><strong>Stay Updated:</strong> Keep up with latest patterns in competitive exams</li>
+</ol>
+<hr>
+<h2 id="common-mistakes-to-avoid">Common Mistakes to Avoid</h2>
+<ol>
+<li><strong>Calculation Errors:</strong> Double-check arithmetic operations</li>
+<li><strong>Misreading Questions:</strong> Read questions carefully</li>
+<li><strong>Time Mismanagement:</strong> Don't spend too much time on one question</li>
+<li><strong>Negative Marking:</strong> Be cautious with guessing</li>
+<li><strong>Ignoring Options:</strong> Sometimes elimination is faster than solving</li>
+<li><strong>Incomplete Solutions:</strong> Show all steps in subjective questions</li>
+<li><strong>Panic:</strong> Stay calm during the exam</li>
+</ol>
+<hr>
+<p>This comprehensive guide covers all major areas of aptitude testing for computer science engineering students. Regular practice and understanding of concepts will lead to success in competitive examinations and placement tests.</p>
+
+</body>
+</html>
