@@ -9,9 +9,6 @@ Your comprehensive collection of development cheatsheets, guides, and references
   <a href="https://github.com/malharchauhan7/the-only-cheatsheets">
     <img src="https://img.shields.io/github/stars/malharchauhan7/the-only-cheatsheets?style=social" alt="GitHub Stars">
   </a>
-  <a href="https://www.producthunt.com/products/the-only-cheatsheets">
-    <img src="https://img.shields.io/badge/Product%20Hunt-Vote-orange" alt="Product Hunt">
-  </a>
   <img src="https://komarev.com/ghpvc/?username=malharchauhan7&label=%20views&color=0e75b6&style=flat" alt="Visitors">
 
   <p>
